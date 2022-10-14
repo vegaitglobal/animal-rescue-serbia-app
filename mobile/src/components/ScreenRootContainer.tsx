@@ -24,7 +24,9 @@ export const ScreenRootContainer = ({
           <BackButton text="Nazad" onPress={onBackPress} />
         </View>
         <View style={styles.header}>
-          <Text style={styles.headerText}>{title}</Text>
+          <Text numberOfLines={2} style={styles.headerText}>
+            {title}
+          </Text>
         </View>
       </View>
       <StripedBar />
@@ -44,9 +46,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerText: {
-    fontSize: 40,
+    fontSize: 33,
     textTransform: 'uppercase',
     color: ColorPallet.plainWhite,
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
   backButton: {
     position: 'absolute',
@@ -55,6 +59,6 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   headerContainer: {
-    height: 120,
+    height: 150,
   },
 });

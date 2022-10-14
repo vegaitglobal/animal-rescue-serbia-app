@@ -6,7 +6,7 @@ import {ScreenRootContainer} from '../components/ScreenRootContainer';
 export const SosScreen = () => {
   return (
     <View>
-      <ScreenRootContainer title="tekst">
+      <ScreenRootContainer title="Sos poziv">
         <View>
           <Text>test</Text>
         </View>
