@@ -1,18 +1,10 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-import {RootStackNavigator} from './navigation/RootStackNavigator';
+import {RootTabNavigator as RootTabNavigator} from './navigation/RootTabNavigator';
 
 const App = () => (
   <NavigationContainer>
-    <RootStackNavigator />
+    <RootTabNavigator />
   </NavigationContainer>
 );
 
