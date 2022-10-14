@@ -27,8 +27,9 @@ export const StripedBar = ({
   return (
     <View onLayout={onLayout} style={style.rootContainer}>
       <View style={[style.itemListContainer, {backgroundColor}]}>
-        {[...Array(numberOfSegments).keys()].map((i, index) => (
+        {[...Array(numberOfSegments).keys()].map((_, index) => (
           <Box
+            key={index}
             color={
               index % 2 === 0 ? ColorPallet.yellow : ColorPallet.transparent
             }
