@@ -13,7 +13,11 @@ export const RootTabNavigator = () => {
         component={HomeStackNavigator}
         options={{headerShown: false}}
       />
-      <Tab.Screen name="Sos" component={SosScreen} />
+      <Tab.Screen
+        name="Sos"
+        component={SosScreen}
+        options={{headerShown: false}}
+      />
     </Tab.Navigator>
   );
 };
