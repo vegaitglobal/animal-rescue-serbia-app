@@ -4,14 +4,18 @@ import {StyleSheet, Text, View} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 import {BackButton} from './BackButton';
 import {StripedBar} from './StripedBar';
+import Logo from '../assets/icons/megaphoneLogo.svg';
 
 type ScreenRootContainerProps = {
   title: string;
   children: ReactNode;
+  showLogo?: boolean;
 };
+
 export const ScreenRootContainer = ({
   children,
   title,
+  showLogo,
 }: ScreenRootContainerProps) => {
   const navigation = useNavigation();
 
@@ -29,7 +33,14 @@ export const ScreenRootContainer = ({
           </Text>
         </View>
       </View>
-      <StripedBar />
+      <View style={styles.stripedBarContainer}>
+        {showLogo ? (
+          <View style={styles.headerLogoContainer}>
+            <Logo width={64} height={64} />
+          </View>
+        ) : null}
+        <StripedBar />
+      </View>
       {children}
     </View>
   );
@@ -60,5 +71,13 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     height: 150,
+  },
+  headerLogoContainer: {
+    position: 'absolute',
+    zIndex: 1,
+    transform: [{translateY: -24}],
+  },
+  stripedBarContainer: {
+    alignItems: 'center',
   },
 });

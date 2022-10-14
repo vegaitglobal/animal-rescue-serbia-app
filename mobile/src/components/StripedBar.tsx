@@ -2,7 +2,7 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {LayoutChangeEvent, StyleSheet, View} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 
-const boxHeight = 17;
+const boxHeight = 18;
 const boxWidth = 20;
 
 const Box = ({color}: {color: string}) => (
