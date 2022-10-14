@@ -7,7 +7,7 @@ export const HomeStackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="Some" component={SomeScreen} />
     </Stack.Navigator>
   );
