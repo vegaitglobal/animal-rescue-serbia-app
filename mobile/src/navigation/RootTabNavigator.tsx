@@ -1,5 +1,5 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import React, {useCallback} from 'react';
+import React from 'react';
 import {SosScreen} from '../screens/SosScreen';
 import {HomeStackNavigator} from './HomeStackNavigator';
 import HomeActive from '../assets/icons/homeActive.svg';
