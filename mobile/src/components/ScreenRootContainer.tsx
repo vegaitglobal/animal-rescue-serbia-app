@@ -2,7 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import React, {ReactNode, useCallback} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
-import {Link} from './Link';
+import {BackButton} from './BackButton';
 import {StripedBar} from './StripedBar';
 
 type ScreenRootContainerProps = {
@@ -21,7 +21,7 @@ export const ScreenRootContainer = ({
     <View style={styles.rootContainer}>
       <View style={styles.headerContainer}>
         <View style={styles.backButton}>
-          <Link text="< Nazad" onPress={onBackPress} />
+          <BackButton text="Nazad" onPress={onBackPress} />
         </View>
         <View style={styles.header}>
           <Text style={styles.headerText}>{title}</Text>
