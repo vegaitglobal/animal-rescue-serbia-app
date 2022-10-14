@@ -4,4 +4,5 @@ export const ColorPallet = {
   plainWhite: 'white',
   red: '#eb1f26',
   transparent: 'transparent',
+  yellow_20: 'rgba(253, 232, 43, 0.79)',
 };

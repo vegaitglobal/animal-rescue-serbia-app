@@ -22,7 +22,7 @@ export const ScreenRootContainer = ({
   const onBackPress = useCallback(() => navigation.goBack(), [navigation]);
 
   return (
-    <View style={styles.rootContainer}>
+    <View>
       <View style={styles.headerContainer}>
         <View style={styles.backButton}>
           <BackButton text="Nazad" onPress={onBackPress} />
@@ -47,9 +47,6 @@ export const ScreenRootContainer = ({
 };
 
 const styles = StyleSheet.create({
-  rootContainer: {
-    flex: 1,
-  },
   header: {
     flex: 1,
     backgroundColor: ColorPallet.gray,

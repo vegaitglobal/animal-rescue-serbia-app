@@ -25,7 +25,7 @@ export const StripedBar = ({
 
   //TODO: Make sure to use padding instead of transparent element
   return (
-    <View onLayout={onLayout} style={style.rootContainer}>
+    <View onLayout={onLayout}>
       <View style={[style.itemListContainer, {backgroundColor}]}>
         {[...Array(numberOfSegments).keys()].map((_, index) => (
           <Box
@@ -46,9 +46,6 @@ const style = StyleSheet.create({
     overflow: 'hidden',
     height: boxHeight,
     alignItems: 'center',
-  },
-  rootContainer: {
-    flex: 1,
   },
 });
 
