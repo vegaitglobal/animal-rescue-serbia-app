@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import App from './App';
-import Login from './pages/Login/Login';
-import Reports from './pages/Reports/Reports';
-import Users from './pages/Users/Users';
+import Login from './pages/Login';
+import Reports from './pages/Reports';
+import Users from './pages/Users';
 
 const GlobalRouter: React.FC = () => {
     return (
