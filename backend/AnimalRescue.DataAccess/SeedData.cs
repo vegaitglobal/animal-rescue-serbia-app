@@ -26,12 +26,25 @@ public class SeedData
                         Username = $"user{nr}",
                         FirstName = "user",
                         LastName = $"{nr}",
-                        Email = $"user{nr}@email.com",
+                        Email = $"user{nr}@test.com",
                         Id = Guid.NewGuid(),
                         Password = _securityService.HashPassword($"user{nr}"),
+                        Role = UserRoles.User,
                     });
 
             _dbContext.Users.AddRange(entries);
+            _dbContext.SaveChanges();
+
+            _dbContext.Users.Add(new User
+            {
+                Username = "superadmin",
+                FirstName = "super",
+                LastName = "admin",
+                Email = "superadmin@test.com",
+                Id = Guid.NewGuid(),
+                Password = _securityService.HashPassword("superadmin"),
+                Role = UserRoles.Admin,
+            });
             _dbContext.SaveChanges();
         }
 

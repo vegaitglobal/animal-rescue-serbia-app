@@ -36,6 +36,7 @@ public class UserService : IUserService
             LastName = dto.LastName,
             Username = dto.Username,
             Password = _securityService.HashPassword(dto.Password),
+            Role = UserRoles.User,
         };
 
         var created = await _userRepository.AddAsync(user);
