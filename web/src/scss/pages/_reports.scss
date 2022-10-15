@@ -1,0 +1,12 @@
+.panel__list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 20px;
+}
+
+.intro {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
