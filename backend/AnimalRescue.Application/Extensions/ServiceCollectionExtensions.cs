@@ -2,6 +2,7 @@
 using AnimalRescue.Application.Services;
 using AnimalRescue.Contracts.Abstractions.Repositories;
 using AnimalRescue.Contracts.Abstractions.Services;
+using AnimalRescue.Contracts.Options;
 using AnimalRescue.DataAccess;
 using AnimalRescue.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,8 @@ public static class ServiceCollectionExtensions
                 options.UseSqlServer(connectionString);
             },
             ServiceLifetime.Scoped);
+
+        serviceCollection.Configure<EmailOptions>(configuration.GetSection(AppSettingKeys.EmailOptions));
 
         serviceCollection
             .AddScoped<SeedData>()
