@@ -1,4 +1,5 @@
 @import './config/reset';
+@import './config/base';
 @import './config/vars';
 
 @import './shared/sidebar.scss';
@@ -9,6 +10,7 @@
 
 @import './pages/login.scss';
 @import './pages/reports.scss';
+@import './pages/not-found';
 
 @import './components/report-item';
 @import './components/reports-filter';
