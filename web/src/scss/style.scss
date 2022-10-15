@@ -1,0 +1,17 @@
+@import './config/reset';
+@import './config/base';
+@import './config/vars';
+
+@import './shared/sidebar.scss';
+@import './shared/layout.scss';
+@import './shared/pagination.scss';
+@import './shared/search';
+@import './shared/back';
+
+@import './pages/login.scss';
+@import './pages/reports.scss';
+@import './pages/not-found';
+
+@import './components/report-item';
+@import './components/reports-filter';
+@import './components/report-edit-form';
