@@ -2,11 +2,8 @@ version: "3.4"
 
 services:
   api:
-    image: backend
+    image: codeforacause/animal-rescue-serbia-app:backend-#{TAG_NUMBER}#
     container_name: animal-rescue-api
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
     ports:
       - 5113
     environment:
@@ -16,11 +13,8 @@ services:
       - JwtAuthentication__Key="#{JWT_KEY}#"
       - JwtAuthentication__Salt="#{JWT_SALT}#"
   web:
-    image: web
+    image: codeforacause/animal-rescue-serbia-app:web-#{TAG_NUMBER}#
     container_name: animal-rescue-web
-    build:
-      context: ./web
-      dockerfile: Dockerfile
     ports:
       - "22000:3000"
     environment:
