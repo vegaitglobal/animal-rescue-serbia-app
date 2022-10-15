@@ -13,5 +13,4 @@ public interface IViolationCategoryService
     Task<ViolationCategoryDto> AddAsync(ViolationCategoryCreateDto violationCategory);
 
     Task<ViolationCategoryDto> UpdateAsync(Guid id, ViolationCategoryUpdateDto violationCategory);
-
 }

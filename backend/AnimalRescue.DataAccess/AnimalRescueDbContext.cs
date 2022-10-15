@@ -17,6 +17,8 @@ public class AnimalRescueDbContext : DbContext
 
     public virtual DbSet<LiteViolation> LiteViolations { get; set; } = null!;
 
+    public virtual DbSet<Violation> Violations { get; set; } = null!;
+
     public virtual DbSet<User> Users { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,6 +27,7 @@ public class AnimalRescueDbContext : DbContext
 
         modelBuilder.ApplyConfiguration(new ViolationCategoryEntityTypeConfiguration())
                     .ApplyConfiguration(new LiteViolationEntityTypeConfiguration())
+                    .ApplyConfiguration(new ViolationEntityTypeConfiguration())
                     .ApplyConfiguration(new UserEntityTypeConfiguration())
                     .ApplyConfiguration(new ArticleCategoryEntityTypeConfiguration());
     }
