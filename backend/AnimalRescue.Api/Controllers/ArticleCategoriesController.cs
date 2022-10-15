@@ -16,39 +16,10 @@ public class ArticleCategoriesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ArticleCategoryDto>>> GetAllAsync(bool? onlyEnabled)
+    public async Task<ActionResult<IEnumerable<ArticleCategoryDto>>> GetAllAsync()
     {
-        var categories = onlyEnabled.GetValueOrDefault()
-            ? await _articleCategoryService.GetAllEnabledAsync()
-            : await _articleCategoryService.GetAllAsync();
+        var categories = await _articleCategoryService.GetAllEnabledAsync();
 
         return Ok(categories);
     }
-
-    [HttpGet("{id}", Name = "GetArticleCategoryAsync")]
-    public async Task<ActionResult<ArticleCategoryDto>> GetArticleCategoryAsync(Guid id)
-    {
-        var category = await _articleCategoryService.GetAsync(id);
-
-        return category is null
-            ? NotFound()
-            : Ok(category);
-    }
-
-    [HttpPost]
-    public async Task<ActionResult<ArticleCategoryDto>> CreateAsync(ArticleCategoryCreateDto categoryCreateDto)
-    {
-        var category = await _articleCategoryService.AddAsync(categoryCreateDto);
-
-        return CreatedAtRoute("GetArticleCategoryAsync", new { id = category.Id }, category);
-    }
-
-    [HttpPut("{id}")]
-    public async Task<ActionResult<ArticleCategoryDto>> UpdateAsync(Guid id, ArticleCategoryUpdateDto categoryCreateDto)
-    {
-        var updatedEntity = await _articleCategoryService.UpdateAsync(id, categoryCreateDto);
-
-        return Ok(updatedEntity);
-    }
-
 }

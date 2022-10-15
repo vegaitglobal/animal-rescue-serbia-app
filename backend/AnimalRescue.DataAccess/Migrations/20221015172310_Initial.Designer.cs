@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AnimalRescue.DataAccess.Migrations
 {
     [DbContext(typeof(AnimalRescueDbContext))]
-    [Migration("20221015125254_Initial")]
+    [Migration("20221015172310_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,10 @@ namespace AnimalRescue.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -68,6 +72,32 @@ namespace AnimalRescue.DataAccess.Migrations
                     b.HasIndex("ViolationCategoryId");
 
                     b.ToTable("LiteViolations");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("LiteViolation");
+                });
+
+            modelBuilder.Entity("AnimalRescue.Domain.Models.MediaContent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ViolationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ViolationId");
+
+                    b.ToTable("MediaContent");
                 });
 
             modelBuilder.Entity("AnimalRescue.Domain.Models.User", b =>
@@ -128,6 +158,34 @@ namespace AnimalRescue.DataAccess.Migrations
                     b.ToTable("ViolationCategories");
                 });
 
+            modelBuilder.Entity("AnimalRescue.Domain.Models.Violation", b =>
+                {
+                    b.HasBaseType("AnimalRescue.Domain.Models.LiteViolation");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AdminNotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("Violation");
+                });
+
             modelBuilder.Entity("AnimalRescue.Domain.Models.LiteViolation", b =>
                 {
                     b.HasOne("AnimalRescue.Domain.Models.User", "User")
@@ -145,6 +203,18 @@ namespace AnimalRescue.DataAccess.Migrations
                     b.Navigation("User");
 
                     b.Navigation("ViolationCategory");
+                });
+
+            modelBuilder.Entity("AnimalRescue.Domain.Models.MediaContent", b =>
+                {
+                    b.HasOne("AnimalRescue.Domain.Models.Violation", null)
+                        .WithMany("MediaContent")
+                        .HasForeignKey("ViolationId");
+                });
+
+            modelBuilder.Entity("AnimalRescue.Domain.Models.Violation", b =>
+                {
+                    b.Navigation("MediaContent");
                 });
 #pragma warning restore 612, 618
         }

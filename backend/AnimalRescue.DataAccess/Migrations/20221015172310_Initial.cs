@@ -58,7 +58,14 @@ namespace AnimalRescue.DataAccess.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ViolationCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AdminNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -77,6 +84,25 @@ namespace AnimalRescue.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "MediaContent",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ViolationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MediaContent", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MediaContent_LiteViolations_ViolationId",
+                        column: x => x.ViolationId,
+                        principalTable: "LiteViolations",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ArticleCategories_Name",
                 table: "ArticleCategories",
@@ -92,6 +118,11 @@ namespace AnimalRescue.DataAccess.Migrations
                 name: "IX_LiteViolations_ViolationCategoryId",
                 table: "LiteViolations",
                 column: "ViolationCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MediaContent_ViolationId",
+                table: "MediaContent",
+                column: "ViolationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
@@ -116,6 +147,9 @@ namespace AnimalRescue.DataAccess.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ArticleCategories");
+
+            migrationBuilder.DropTable(
+                name: "MediaContent");
 
             migrationBuilder.DropTable(
                 name: "LiteViolations");
