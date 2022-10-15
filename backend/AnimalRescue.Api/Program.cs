@@ -1,8 +1,8 @@
 using AnimalRescue.Api.Extensions;
 using AnimalRescue.Application.Constants;
 using AnimalRescue.Application.Extensions;
+using AnimalRescue.DataAccess;
 using Hellang.Middleware.ProblemDetails;
-using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 
 namespace AnimalRescue.Api;
@@ -98,6 +98,14 @@ public class Program
             {
                 MinimumSameSitePolicy = SameSiteMode.Lax,
             });
+
+            try
+            {
+                using var scope = applicationBuilder.ApplicationServices.CreateScope();
+                var dataSeeder = scope.ServiceProvider.GetRequiredService<SeedData>();
+                dataSeeder.SeedTestData();
+            }
+            catch { }
         }
 
         applicationBuilder

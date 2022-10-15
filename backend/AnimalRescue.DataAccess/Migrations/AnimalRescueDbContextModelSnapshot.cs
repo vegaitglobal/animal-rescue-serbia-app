@@ -22,6 +22,27 @@ namespace AnimalRescue.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("AnimalRescue.Domain.Models.ArticleCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ArticleCategories");
+                });
+
             modelBuilder.Entity("AnimalRescue.Domain.Models.LiteViolation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -44,7 +65,7 @@ namespace AnimalRescue.DataAccess.Migrations
 
                     b.HasIndex("ViolationCategoryId");
 
-                    b.ToTable("LiteViolations", (string)null);
+                    b.ToTable("LiteViolations");
                 });
 
             modelBuilder.Entity("AnimalRescue.Domain.Models.User", b =>
@@ -70,7 +91,7 @@ namespace AnimalRescue.DataAccess.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("AnimalRescue.Domain.Models.ViolationCategory", b =>
@@ -91,7 +112,7 @@ namespace AnimalRescue.DataAccess.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("ViolationCategories", (string)null);
+                    b.ToTable("ViolationCategories");
                 });
 
             modelBuilder.Entity("AnimalRescue.Domain.Models.LiteViolation", b =>
