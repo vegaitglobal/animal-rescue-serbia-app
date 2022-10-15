@@ -21,17 +21,16 @@ export const CustomModal = ({
   return (
     <Modal transparent visible={visible} statusBarTranslucent={true}>
       <View style={styles.modalBg}>
-        <View style={styles.topIconContainer}>{icon}</View>
         <View style={styles.modalContainer}>
-          <View style={styles.iconContainer}>
-            <Pressable onPress={onPress}>
+          <View style={styles.header}>
+            <View style={styles.topIconContainer}>{icon}</View>
+            <Pressable onPress={onPress} style={styles.pressableContainer}>
               <Close width={30} height={30} />
             </Pressable>
           </View>
-          <View style={styles.textContainer}>
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.text}>{text}</Text>
-          </View>
+
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.text}>{text}</Text>
         </View>
       </View>
     </Modal>
@@ -63,12 +62,17 @@ const styles = StyleSheet.create({
   text: {
     paddingTop: 20,
   },
-  textContainer: {
-    paddingTop: 40,
-  },
+
   topIconContainer: {
     position: 'absolute',
     zIndex: 1,
-    paddingBottom: 120,
+    alignSelf: 'center',
+  },
+  header: {
+    zIndex: 2,
+    justifyContent: 'flex-end',
+  },
+  pressableContainer: {
+    alignSelf: 'flex-end',
   },
 });
