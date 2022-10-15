@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {ReactNode, useCallback} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Platform, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 import {BackButton} from './BackButton';
 import {StripedBar} from './StripedBar';
@@ -22,7 +22,7 @@ export const ScreenRootContainer = ({
   const onBackPress = useCallback(() => navigation.goBack(), [navigation]);
 
   return (
-    <View>
+    <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.headerContainer}>
         <View style={styles.backButton}>
           <BackButton text="Nazad" onPress={onBackPress} />
@@ -33,7 +33,7 @@ export const ScreenRootContainer = ({
           </Text>
         </View>
       </View>
-      <View style={styles.stripedBarContainer}>
+      <View>
         {showLogo ? (
           <View style={styles.headerLogoContainer}>
             <Logo width={64} height={64} />
@@ -42,7 +42,7 @@ export const ScreenRootContainer = ({
         <StripedBar />
       </View>
       {children}
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -67,14 +67,16 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   headerContainer: {
-    height: 150,
+    height: Platform.OS === 'ios' ? 120 : 150,
   },
   headerLogoContainer: {
     position: 'absolute',
     zIndex: 1,
     transform: [{translateY: -24}],
+    alignSelf: 'center',
   },
-  stripedBarContainer: {
-    alignItems: 'center',
+  safeAreaContainer: {
+    backgroundColor: ColorPallet.gray,
+    height: 150,
   },
 });
