@@ -1,4 +1,4 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 
 const ReportItem = () => {
   return (
@@ -15,7 +15,7 @@ const ReportItem = () => {
         </p>
         <div className="panel__holder">
           <span className="panel__status panel__status--red">Odbijen</span>
-          <button type="button" className="panel__edit">
+          <Link to="/prijave/edit" type="button" className="panel__edit">
             <svg
               width="16"
               height="16"
@@ -28,7 +28,7 @@ const ReportItem = () => {
               />
             </svg>
             Izmeni
-          </button>
+          </Link>
         </div>
       </div>
     </li>
