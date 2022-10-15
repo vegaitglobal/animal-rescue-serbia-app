@@ -11,10 +11,10 @@ import {ColorPallet} from '../resources/ColorPallet';
 
 type CustomButtonProps = {
   text?: string;
-  isSmall: boolean;
+  isSmall?: boolean;
   onPress: () => void;
   isWhite?: boolean;
-  style: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
 };
 export const CustomButton = ({

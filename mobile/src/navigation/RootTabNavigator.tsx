@@ -1,7 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import {SosScreen} from '../screens/SosScreen';
-import {HomeStackNavigator} from './HomeStackNavigator';
 import HomeActive from '../assets/icons/homeActive.svg';
 import HomeInactive from '../assets/icons/homeInactive.svg';
 import SosActive from '../assets/icons/sosActive.svg';
@@ -11,6 +10,7 @@ import ProfileInactive from '../assets/icons/profileInactive.svg';
 import {ProfileScreen} from '../screens/ProfileScreen';
 import {Platform, StyleSheet, View} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
+import {HomeScreen} from '../screens/HomeScreen';
 
 export const RootTabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -58,7 +58,7 @@ export const RootTabNavigator = () => {
       })}>
       <Tab.Screen
         name="Home"
-        component={HomeStackNavigator}
+        component={HomeScreen}
         options={{headerShown: false}}
       />
       <Tab.Screen

@@ -1,14 +1,34 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {HomeScreen} from '../screens/HomeScreen';
-import {SomeScreen} from '../screens/SomeScreen';
+import {ReportScreen} from '../screens/ReportScreen';
+import {LoginScreen} from '../screens/LoginScreen';
+import {RootTabNavigator} from './RootTabNavigator';
+import {RegistrationScreen} from '../screens/RegistrationScreen';
 
 export const HomeStackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="HomeScreen" component={HomeScreen} />
-      <Stack.Screen name="Some" component={SomeScreen} />
+    <Stack.Navigator initialRouteName="Login">
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Registration"
+        component={RegistrationScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="HomeScreen"
+        component={RootTabNavigator}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Report"
+        component={ReportScreen}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };

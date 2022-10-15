@@ -4,13 +4,14 @@ import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {NavigationContainer} from '@react-navigation/native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {RootTabNavigator as RootTabNavigator} from './navigation/RootTabNavigator';
+import {HomeStackNavigator} from './navigation/HomeStackNavigator';
 
 const App = () => (
   <GestureHandlerRootView style={style.rootGestureView}>
     <BottomSheetModalProvider>
       <NavigationContainer>
         <StatusBar hidden />
-        <RootTabNavigator />
+        <HomeStackNavigator />
       </NavigationContainer>
     </BottomSheetModalProvider>
   </GestureHandlerRootView>

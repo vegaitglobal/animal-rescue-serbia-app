@@ -10,12 +10,14 @@ type ScreenRootContainerProps = {
   title: string;
   children: ReactNode;
   showLogo?: boolean;
+  hideGoBack?: boolean;
 };
 
 export const ScreenRootContainer = ({
   children,
   title,
   showLogo,
+  hideGoBack,
 }: ScreenRootContainerProps) => {
   const navigation = useNavigation();
 
@@ -24,9 +26,11 @@ export const ScreenRootContainer = ({
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.headerContainer}>
-        <View style={styles.backButton}>
-          <BackButton text="Nazad" onPress={onBackPress} />
-        </View>
+        {!hideGoBack && (
+          <View style={styles.backButton}>
+            <BackButton text="Nazad" onPress={onBackPress} />
+          </View>
+        )}
         <View style={styles.header}>
           <Text numberOfLines={2} style={styles.headerText}>
             {title}
@@ -64,7 +68,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 10,
     top: 10,
-    zIndex: 1,
+    zIndex: 10,
   },
   headerContainer: {
     height: Platform.OS === 'ios' ? 120 : 150,
@@ -77,6 +81,8 @@ const styles = StyleSheet.create({
   },
   safeAreaContainer: {
     backgroundColor: ColorPallet.gray,
-    height: 150,
+    height: 180,
+    flex: 1,
+    marginBottom: Platform.OS === 'ios' ? -40 : 0,
   },
 });
