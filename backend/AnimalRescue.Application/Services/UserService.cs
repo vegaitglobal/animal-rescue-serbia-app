@@ -32,7 +32,9 @@ public class UserService : IUserService
         {
             Id = Guid.NewGuid(),
             Email = dto.Email,
-            FullName = dto.FullName,
+            FirstName = dto.FirstName,
+            LastName = dto.LastName,
+            Username = dto.Username,
             Password = _securityService.HashPassword(dto.Password),
         };
 

@@ -11,8 +11,9 @@ public class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
         entity.HasKey(u => u.Id);
 
         entity.Property(u => u.Email).IsRequired();
-        entity.Property(u => u.FullName).IsRequired();
-
         entity.HasIndex(u => u.Email).IsUnique();
+
+        entity.Property(u => u.Username).IsRequired();
+        entity.HasIndex(u => u.Username).IsUnique();
     }
 }

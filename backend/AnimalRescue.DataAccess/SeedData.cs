@@ -20,7 +20,9 @@ public class SeedData
                 .Select(nr =>
                     new User
                     {
-                        FullName = $"user{nr}",
+                        Username = $"user{nr}",
+                        FirstName = "user",
+                        LastName = $"{nr}",
                         Email = $"user{nr}@email.com",
                         Id = Guid.NewGuid(),
                         Password = $"user{nr}",
