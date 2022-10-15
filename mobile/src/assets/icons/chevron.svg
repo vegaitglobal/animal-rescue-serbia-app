@@ -7,6 +7,10 @@
                 stroke-miterlimit: 10;
                 stroke-width: 2px;
             }
+
+            path {
+                fill: #000;
+            }
         </style>
     </defs>
     <g id="Layer_2" data-name="Layer 2">
