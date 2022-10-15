@@ -1,0 +1,30 @@
+.intro__right {
+  position: relative;
+}
+
+.search {
+  width: 320px;
+  border: 0;
+  font-size: 20px;
+  line-height: 30px;
+  border-bottom: 2px solid #363535;
+  padding-right: 40px;
+  &::placeholder {
+    color: #c8c8c8;
+    font-weight: 300;
+  }
+}
+
+.search-btn {
+  cursor: pointer;
+  padding: 5px;
+  position: absolute;
+  right: 0;
+  top: 2px;
+  background: transparent;
+  border: 0;
+  transition: 0.3s ease;
+  &:hover {
+    opacity: 0.7;
+  }
+}

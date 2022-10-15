@@ -3,4 +3,11 @@
 
 @import './shared/sidebar.scss';
 @import './shared/layout.scss';
+@import './shared/pagination.scss';
+@import './shared/search';
+
 @import './pages/login.scss';
+@import './pages/reports.scss';
+
+@import './components/report-item';
+@import './components/reports-filter';

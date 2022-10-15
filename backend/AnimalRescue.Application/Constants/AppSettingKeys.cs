@@ -9,4 +9,6 @@ public class AppSettingKeys
     public const string JwtAuthenticationKey = "JwtAuthentication:Key";
 
     public const string JwtAuthenticationSalt = "JwtAuthentication:Salt";
+
+    public const string MediaRoothPath = "FilePath:MediaRootFilePath";
 }

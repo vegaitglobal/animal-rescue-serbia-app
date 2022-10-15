@@ -1,0 +1,20 @@
+.main {
+  width: calc(100% - 320px);
+  height: 100vh;
+  margin-left: 320px;
+  padding: 30px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar-track {
+    background-color: $silver;
+  }
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    background-color: $silver;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $yellow;
+  }
+}
