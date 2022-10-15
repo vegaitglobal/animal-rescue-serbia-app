@@ -38,7 +38,6 @@ public class ViolationCategoryRepository : IViolationCategoryRepository
     public async Task<ViolationCategory?> GetAsync(Guid id)
         => await _dbContext
             .ViolationCategories
-            .AsNoTracking()
             .FirstOrDefaultAsync(entity => entity.Id == id);
 
     public async Task<ViolationCategory> UpdateAsync(ViolationCategory violationCategory)

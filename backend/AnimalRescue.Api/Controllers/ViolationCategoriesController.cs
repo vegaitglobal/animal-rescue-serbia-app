@@ -16,7 +16,7 @@ namespace AnimalRescue.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync(bool? onlyEnabled)
+        public async Task<ActionResult<IEnumerable<ViolationCategoryDto>>> GetAllAsync(bool? onlyEnabled)
         {
             var categories = onlyEnabled.GetValueOrDefault()
                 ? await _violationCategoryService.GetAllEnabledAsync()
@@ -26,7 +26,7 @@ namespace AnimalRescue.Api.Controllers
         }
 
         [HttpGet("{id}", Name = "GetAsync")]
-        public async Task<IActionResult> GetAsync(Guid id)
+        public async Task<ActionResult<ViolationCategoryDto>> GetAsync(Guid id)
         {
             var category = await _violationCategoryService.GetAsync(id);
 
@@ -36,7 +36,7 @@ namespace AnimalRescue.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(ViolationCategoryCreateDto categoryCreateDto)
+        public async Task<ActionResult<ViolationCategoryDto>> CreateAsync(ViolationCategoryCreateDto categoryCreateDto)
         {
             var category = await _violationCategoryService.AddAsync(categoryCreateDto);
 
@@ -44,7 +44,7 @@ namespace AnimalRescue.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(Guid id, ViolationCategoryUpdateDto categoryCreateDto)
+        public async Task<ActionResult<ViolationCategoryDto>> UpdateAsync(Guid id, ViolationCategoryUpdateDto categoryCreateDto)
         {
             var updatedEntity = await _violationCategoryService.UpdateAsync(id, categoryCreateDto);
 
