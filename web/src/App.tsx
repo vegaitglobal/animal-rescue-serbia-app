@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import './App.scss';
 import Sidebar from './shared/Sidebar';
+import './scss/style.scss';
 
 function App() {
     return (
