@@ -1,6 +1,7 @@
 using AnimalRescue.Api.Extensions;
 using AnimalRescue.Application.Constants;
 using AnimalRescue.Application.Extensions;
+using Hellang.Middleware.ProblemDetails;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 
@@ -38,6 +39,7 @@ public class Program
         services.AddJwtAuthentication(configuration);
         services.AddServices(configuration);
 
+        services.AddProblemDetails(webHostEnvironment);
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(config =>
         {
@@ -98,6 +100,7 @@ public class Program
         }
 
         applicationBuilder
+            .UseProblemDetails()
             .UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();

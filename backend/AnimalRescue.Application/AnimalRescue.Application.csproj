@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Extensions\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AnimalRescue.Contracts\AnimalRescue.Contracts.csproj" />
     <ProjectReference Include="..\AnimalRescue.DataAccess\AnimalRescue.DataAccess.csproj" />
     <ProjectReference Include="..\AnimalRescue.Domain\AnimalRescue.Domain.csproj" />
   </ItemGroup>
