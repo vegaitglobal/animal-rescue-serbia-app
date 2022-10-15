@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  api:
+    image: backend
+    container_name: antimal-rescue-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5113:5113"
+    env_file:
+      - .env.local
+    environment:
+      - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
