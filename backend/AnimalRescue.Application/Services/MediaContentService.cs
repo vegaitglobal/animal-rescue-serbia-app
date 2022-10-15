@@ -1,4 +1,5 @@
 ﻿using AnimalRescue.Application.Constants;
+using AnimalRescue.Application.Validators;
 using AnimalRescue.Contracts.Abstractions.Repositories;
 using AnimalRescue.Contracts.Abstractions.Services;
 using AnimalRescue.Domain.Models;
@@ -19,7 +20,8 @@ namespace AnimalRescue.Application.Services
         }
         public async Task<MediaContent> UploadMediaContentAsync(IFormFile fileToUpload)
         {
-            // add validation for media
+            MediaValidator.ValidateMedia(fileToUpload);
+
             return await _mediaContentRepository.UploadMediaContentAsync(_configuration.GetSection(AppSettingKeys.MediaRoothPath).Value, fileToUpload);
         }
     }

@@ -34,13 +34,11 @@ public static class ServiceCollectionExtensions
             .AddTransient<IUserRepository, UserRepository>()
             .AddTransient<IUserService, UserService>()
             .AddTransient<IViolationRepository, ViolationRepository>()
-            .AddTransient<IViolationService, ViolationService>();
-
-        serviceCollection.AddTransient<IArticleCategoryRepository, ArticleCategoryRepository>();
-        serviceCollection.AddTransient<IArticleCategoryService, ArticleCategoryService>();
-
-        serviceCollection.AddTransient<IMediaContentRepository, MediaContentRepository>();
-        serviceCollection.AddTransient<IMediaContentService, MediaContentService>();
+            .AddTransient<IViolationService, ViolationService>()
+            .AddTransient<IArticleCategoryRepository, ArticleCategoryRepository>()
+            .AddTransient<IArticleCategoryService, ArticleCategoryService>()
+            .AddTransient<IMediaContentRepository, MediaContentRepository>()
+            .AddTransient<IMediaContentService, MediaContentService>();
 
         return serviceCollection;
     }
