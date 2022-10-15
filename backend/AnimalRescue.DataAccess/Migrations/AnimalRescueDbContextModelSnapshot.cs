@@ -43,6 +43,68 @@ namespace AnimalRescue.DataAccess.Migrations
                     b.ToTable("ArticleCategories");
                 });
 
+            modelBuilder.Entity("AnimalRescue.Domain.Models.LiteViolation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ViolationCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("ViolationCategoryId");
+
+                    b.ToTable("LiteViolations");
+                });
+
+            modelBuilder.Entity("AnimalRescue.Domain.Models.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("AnimalRescue.Domain.Models.ViolationCategory", b =>
                 {
                     b.Property<Guid>("Id")
@@ -62,6 +124,25 @@ namespace AnimalRescue.DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("ViolationCategories");
+                });
+
+            modelBuilder.Entity("AnimalRescue.Domain.Models.LiteViolation", b =>
+                {
+                    b.HasOne("AnimalRescue.Domain.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AnimalRescue.Domain.Models.ViolationCategory", "ViolationCategory")
+                        .WithMany()
+                        .HasForeignKey("ViolationCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+
+                    b.Navigation("ViolationCategory");
                 });
 #pragma warning restore 612, 618
         }

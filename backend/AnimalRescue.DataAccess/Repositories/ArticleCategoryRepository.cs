@@ -37,7 +37,6 @@ namespace AnimalRescue.DataAccess.Repositories
         public async Task<ArticleCategory?> GetAsync(Guid id)
             => await _dbContext
                 .ArticleCategories
-                .AsNoTracking()
                 .FirstOrDefaultAsync(entity => entity.Id == id);
 
         public async Task<ArticleCategory> UpdateAsync(ArticleCategory articleCategory)
