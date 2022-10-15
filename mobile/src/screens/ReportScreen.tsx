@@ -4,8 +4,13 @@ import {CustomModal} from '../components/CustomModal';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
 import Report from '../assets/icons/educationGrayBg.svg';
+import {useAppDispatch, useAppSelector} from '../hooks/storeHooks';
+import {getNewReport} from '../store/src/reports/selectors';
 
 export const ReportScreen = () => {
+  const {firstName, lastName} = useAppSelector(getNewReport);
+  const dispatch = useAppDispatch();
+
   const headerTitle = 'Prijava prekršaja';
   const text = 'Lorem ipsum';
 
