@@ -30,6 +30,9 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddTransient<IArticleCategoryRepository, ArticleCategoryRepository>();
         serviceCollection.AddTransient<IArticleCategoryService, ArticleCategoryService>();
 
+        serviceCollection.AddTransient<IMediaContentRepository, MediaContentRepository>();
+        serviceCollection.AddTransient<IMediaContentService, MediaContentService>();
+
         return serviceCollection;
     }
 }
