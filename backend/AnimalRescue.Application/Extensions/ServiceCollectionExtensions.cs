@@ -14,10 +14,13 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddServices(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
+        var connectionString = Environment.GetEnvironmentVariable(AppSettingKeys.ConnectionString) ??
+                               configuration.GetConnectionString(AppSettingKeys.ConnectionString);
+
         serviceCollection.AddDbContext<AnimalRescueDbContext>(
             options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString(AppSettingKeys.ConnectionString));
+                options.UseSqlServer(connectionString);
             },
             ServiceLifetime.Scoped);
 
