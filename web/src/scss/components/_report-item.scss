@@ -1,0 +1,73 @@
+.panel__item {
+  border-radius: 5px;
+  background-color: $grey;
+  padding: 15px 20px;
+  border: 2px solid $grey-dark;
+  width: calc(50% - 54px);
+}
+
+.panel__item--declined {
+  border-color: $red;
+}
+
+.panel__item--approved {
+  border-color: $green;
+}
+
+.panel__address {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.panel__text {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.panel__holder {
+  display: flex;
+  justify-content: space-between;
+}
+
+.panel__edit {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $yellow;
+  border: 0;
+  border-radius: 10px;
+  font-size: 18px;
+  line-height: 22px;
+  padding: 12px 20px;
+  width: 140px;
+  transition: 0.3s ease;
+  svg {
+    margin-right: 8px;
+  }
+  &:hover {
+    background-color: $grey-2;
+  }
+}
+
+.panel__status {
+  display: block;
+  border: 0;
+  color: $white;
+  background-color: $grey-dark;
+  font-size: 12px;
+  width: 80px;
+  align-self: flex-end;
+  text-align: center;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.panel__status--red {
+  background-color: $red;
+}
+
+.panel__status--green {
+  background-color: $green;
+}

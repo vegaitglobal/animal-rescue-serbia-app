@@ -37,13 +37,13 @@
 .header__name {
   font-size: 18px;
   line-height: 22px;
-  color: #fff;
+  color: $white;
   font-weight: 600;
   margin-bottom: 10px;
 }
 
 .header__address {
-  color: #fff;
+  color: $white;
   font-size: 14px;
   line-height: 16px;
 }
@@ -54,15 +54,15 @@
   bottom: 50px;
   left: 50%;
   transform: translateX(-50%);
-  color: #fff;
+  color: $white;
   background-color: transparent;
   border: 0;
   font-size: 16px;
   line-height: 19px;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid $white;
   transition: 0.3s ease;
   &:hover {
-    color: #fce51f;
+    color: $yellow;
   }
 }
 
@@ -76,7 +76,7 @@
   border: 0;
   width: 100%;
   text-align: center;
-  color: #fff;
+  color: $white;
   font-size: 14px;
   line-height: 16px;
   text-transform: uppercase;
@@ -85,18 +85,18 @@
   font-weight: 700;
   padding: 15px 20px;
   background-color: #3e3d3d;
-  border-bottom: 1px solid #fce51f;
+  border-bottom: 1px solid $yellow;
   transition: 0.3s ease;
   &:hover {
-    color: #fce51f;
+    color: $yellow;
   }
 }
 
 .nav__btn--active {
-  background-color: #fce51f;
+  background-color: $yellow;
   color: #3e3d3d;
   border: 0;
   &:hover {
-    color: #fff;
+    color: $white;
   }
 }

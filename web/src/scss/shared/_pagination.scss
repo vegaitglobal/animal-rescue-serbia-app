@@ -1,0 +1,34 @@
+.pagination {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination__holder {
+  display: flex;
+}
+
+.pagination__item {
+  margin: 0 3px;
+}
+
+.pagination__btn {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #c8c8c8;
+  border-radius: 3px;
+  background-color: transparent;
+  color: $grey-dark;
+  font-weight: 700;
+}
+
+.pagination__btn--active {
+  background-color: $yellow;
+  border-color: $yellow;
+}
+
+.pagination__item--disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
