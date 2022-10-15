@@ -1,4 +1,4 @@
-import { useGetFakeJson } from '../../hooks/api/fakeJson/useGetFakeJson';
+import { useGetFakeJson } from '../../hooks/api/fakeJson';
 import Layout from '../../shared/Layout';
 
 const Users = () => {
