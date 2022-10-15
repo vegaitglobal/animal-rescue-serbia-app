@@ -11,7 +11,7 @@ export const SosScreen = () => {
       <ScreenRootContainer title="Sos poziv" showLogo>
         <EmptySpace height={30} />
         <SelectionInput
-          onValueSelected={item => console.log('KOSTA SMARA: ', item)}
+          onValueSelected={item => console.log('Test: ', item)}
           data={[
             {id: 'asdd', label: 'Prvi izbor'},
             {id: 'aasd', label: 'Drugi izbor'},
