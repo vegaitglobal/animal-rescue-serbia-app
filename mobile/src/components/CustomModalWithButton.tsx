@@ -18,9 +18,9 @@ type CustomModalWithButtonProps = {
   children?: ReactNode;
   icon?: ReactElement;
   buttonPositive: string;
-  buttonNegative: string;
+  buttonNegative?: string;
   onPressPositiveBtn: () => void;
-  onPressNegativeBtn: () => void;
+  onPressNegativeBtn?: () => void;
   isOneButtonModal?: boolean;
 };
 export const CustomModalWithButton = ({
@@ -83,7 +83,7 @@ export const CustomModalWithButton = ({
               {!isOneButtonModal && (
                 <CustomButton
                   textStyle={styles.textStyle}
-                  onPress={onPressNegativeBtn}
+                  onPress={onPressNegativeBtn!}
                   text={buttonNegative}
                   isSmall={true}
                   style={styles.buttonStyle}

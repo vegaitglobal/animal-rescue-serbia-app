@@ -11,6 +11,8 @@ import {ProfileScreen} from '../screens/ProfileScreen';
 import {Platform, StyleSheet, View} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 import {HomeScreen} from '../screens/HomeScreen';
+import {ReportScreen} from '../screens/ReportScreen';
+import {HomeStackNavigator} from './HomeStackNavigator';
 
 export const RootTabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -67,6 +69,14 @@ export const RootTabNavigator = () => {
         options={{headerShown: false}}
       />
       <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen
+        name="Report"
+        component={ReportScreen}
+        options={{
+          headerShown: false,
+          tabBarButton: () => null,
+        }}
+      />
     </Tab.Navigator>
   );
 };
