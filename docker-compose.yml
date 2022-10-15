@@ -3,7 +3,7 @@ version: "3.9"
 services:
   api:
     image: backend
-    container_name: antimal-rescue-api
+    container_name: animal-rescue-api
     build:
       context: ./backend
       dockerfile: Dockerfile
