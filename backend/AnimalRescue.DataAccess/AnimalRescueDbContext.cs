@@ -12,11 +12,14 @@ public class AnimalRescueDbContext : DbContext
     }
 
     public virtual DbSet<ViolationCategory> ViolationCategories { get; set; } = null!;
+    public virtual DbSet<ArticleCategory> ArticleCategories { get; set; } = null!;
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.ApplyConfiguration(new ViolationCategoryEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new ViolationCategoryEntityTypeConfiguration())
+                    .ApplyConfiguration(new ArticleCategoryEntityTypeConfiguration());
     }
 }

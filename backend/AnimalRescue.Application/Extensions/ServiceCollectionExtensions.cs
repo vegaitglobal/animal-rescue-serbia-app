@@ -24,6 +24,9 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddTransient<IViolationCategoryRepository, ViolationCategoryRepository>();
         serviceCollection.AddTransient<IViolationCategoryService, ViolationCategoryService>();
 
+        serviceCollection.AddTransient<IArticleCategoryRepository, ArticleCategoryRepository>();
+        serviceCollection.AddTransient<IArticleCategoryService, ArticleCategoryService>();
+
         return serviceCollection;
     }
 }
