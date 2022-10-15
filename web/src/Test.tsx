@@ -1,12 +1,13 @@
 import React from 'react';
 import './App.css';
 
-function App() {
+function Test() {
     return (
         <div className="App">
             <header className="App-header">
                 <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
+                    Edit <code>src/App.tsx</code> and save to reload. i am on
+                    fire
                 </p>
                 <a
                     className="App-link"
@@ -21,4 +22,4 @@ function App() {
     );
 }
 
-export default App;
+export default Test;
