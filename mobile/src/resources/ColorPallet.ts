@@ -8,4 +8,5 @@ export const ColorPallet = {
   transparent: 'transparent',
   yellow_20: 'rgba(253, 232, 43, 0.79)',
   plainBlack: 'black',
+  black_20: 'rgba(0, 0, 0, 0.5)',
 };

@@ -1,5 +1,12 @@
 import React, {useMemo} from 'react';
-import {Pressable, StyleProp, StyleSheet, Text, ViewStyle} from 'react-native';
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 
 type CustomButtonProps = {
@@ -7,13 +14,21 @@ type CustomButtonProps = {
   isSmall: boolean;
   onPress: () => void;
   isWhite?: boolean;
+  style: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
 };
-export const CustomButton = ({text, isSmall, onPress}: CustomButtonProps) => {
+export const CustomButton = ({
+  text,
+  isSmall,
+  onPress,
+  style,
+  textStyle,
+}: CustomButtonProps) => {
   const dynamicStyle = useMemo(
     () => ({
       item: {
         alignSelf: isSmall ? 'flex-start' : 'stretch',
-        paddingHorizontal: isSmall ? 40 : 0,
+        paddingHorizontal: isSmall ? 20 : 0,
         height: isSmall ? 40 : 50,
       },
       font: {
@@ -28,9 +43,10 @@ export const CustomButton = ({text, isSmall, onPress}: CustomButtonProps) => {
       style={[
         styles.buttonContainer,
         dynamicStyle.item as StyleProp<ViewStyle>,
+        style,
       ]}
       onPress={onPress}>
-      <Text style={[styles.text, dynamicStyle.font]}>{text}</Text>
+      <Text style={[styles.text, dynamicStyle.font, textStyle]}>{text}</Text>
     </Pressable>
   );
 };
