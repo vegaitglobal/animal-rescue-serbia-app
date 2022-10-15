@@ -1,0 +1,48 @@
+.edit__profil {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.edit__profile-img {
+  width: 80px;
+  border-radius: 6px;
+  margin-right: 20px;
+}
+
+.edit__name {
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 600;
+}
+
+.edit__user-form {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 500px;
+}
+
+.edit__user-label {
+  display: block;
+  font-size: 12px;
+  line-height: 15px;
+  margin-bottom: 6px;
+  color: #686868;
+}
+
+.edit__user-item {
+  width: 230px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.edit__user-input {
+  width: 100%;
+  font-size: 14px;
+  line-height: 26px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #363535;
+}

@@ -5,6 +5,7 @@ import { EditReport } from './pages/EditReport';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import Reports from './pages/Reports';
+import EditUser from './pages/EditUser';
 import Users from './pages/Users';
 
 const GlobalRouter: React.FC = () => {
@@ -18,6 +19,7 @@ const GlobalRouter: React.FC = () => {
           <Route path="/prijave/edit" element={<EditReport />} />
           <Route path="/stranice" element />
           <Route path="/korisnici" element={<Users />} />
+          <Route path="/korisnici/:id" element={<EditUser />} />
           <Route path="/" element={<Navigate to="/prijave" replace />} />
         </Route>
       </Routes>
