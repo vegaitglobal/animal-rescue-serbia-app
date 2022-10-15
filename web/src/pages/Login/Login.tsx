@@ -1,18 +1,23 @@
 import React, { FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/logo.png';
 import { useLogin } from '../../hooks/api/login/useLogin';
 import { ILoginRequest, ILoginResponse } from '../../services/api/auth';
+import storageApi from '../../services/storage.service';
 
 const Login = () => {
-  const handleSuccess = (data: ILoginResponse) => {
-    console.log(data);
-  };
-  const { mutate: loginSubmit } = useLogin({ onSuccess: handleSuccess });
-
   const [loginData, setloginData] = useState<ILoginRequest>({
     email: '',
     password: '',
   });
+
+  const navigate = useNavigate();
+
+  const handleSuccess = (data: ILoginResponse) => {
+    storageApi.storeToken(data.accessToken);
+    navigate('/prijave');
+  };
+  const { mutate: loginSubmit } = useLogin({ onSuccess: handleSuccess });
 
   const handleLoginSubmit = (e: FormEvent) => {
     e.preventDefault();
