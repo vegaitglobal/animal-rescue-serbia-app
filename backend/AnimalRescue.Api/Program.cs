@@ -3,6 +3,7 @@ using AnimalRescue.Application.Constants;
 using AnimalRescue.Application.Extensions;
 using AnimalRescue.DataAccess;
 using Hellang.Middleware.ProblemDetails;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 namespace AnimalRescue.Api;
@@ -16,6 +17,12 @@ public class Program
         ConfigureServices(builder.Services, builder.Configuration, builder.Environment);
 
         var app = builder.Build();
+
+        using (var scope = app.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AnimalRescueDbContext>();
+            db.Database.Migrate();
+        }
 
         Configure(app, app.Environment);
 

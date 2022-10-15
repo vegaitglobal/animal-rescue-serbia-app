@@ -10,6 +10,8 @@ public static class UserExtensions
         {
             Id = user.Id,
             Email = user.Email,
-            FullName = user.FullName,
+            Username = user.Username,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
         };
 }
