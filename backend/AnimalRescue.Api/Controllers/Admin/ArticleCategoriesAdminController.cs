@@ -1,11 +1,14 @@
-﻿using AnimalRescue.Contracts.Abstractions.Services;
+﻿using AnimalRescue.Application.Constants;
+using AnimalRescue.Contracts.Abstractions.Services;
 using AnimalRescue.Contracts.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnimalRescue.Api.Controllers.Admin
 {
     [Route("api/admin/ArticleCategories")]
     [ApiController]
+    [Authorize(Roles = Roles.AdminRole)]
     public class ArticleCategoriesAdminController : ControllerBase
     {
         private readonly IArticleCategoryService _articleCategoryService;

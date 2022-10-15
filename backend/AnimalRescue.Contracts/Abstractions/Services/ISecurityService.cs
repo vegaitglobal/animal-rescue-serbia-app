@@ -2,7 +2,7 @@
 
 public interface ISecurityService
 {
-    string CreateToken(string userEmail);
+    Task<string> CreateToken(string userEmail);
 
     string HashPassword(string password);
 }

@@ -1,0 +1,16 @@
+.intro__back-btn {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+  line-height: 24px;
+  border: 0;
+  background-color: transparent;
+  transition: 0.3s ease;
+  svg {
+    margin-right: 10px;
+  }
+  &:hover {
+    color: #fce51f;
+  }
+}

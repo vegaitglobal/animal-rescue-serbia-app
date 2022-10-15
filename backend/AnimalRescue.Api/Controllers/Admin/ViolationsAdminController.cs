@@ -1,11 +1,14 @@
-﻿using AnimalRescue.Contracts.Abstractions.Services;
+﻿using AnimalRescue.Application.Constants;
+using AnimalRescue.Contracts.Abstractions.Services;
 using AnimalRescue.Contracts.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnimalRescue.Api.Controllers.Admin
 {
     [Route("api/admin/violations")]
     [ApiController]
+    [Authorize(Roles = Roles.AdminRole)]
     public class ViolationsAdminController : ControllerBase
     {
         private readonly IViolationService _violationService;
