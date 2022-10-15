@@ -13,3 +13,13 @@ services:
       - backend/.env.local
     environment:
       - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
+  web:
+    image: web
+    container_name: animal-rescue-web
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - web/.env.local
