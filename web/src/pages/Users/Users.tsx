@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from '../../shared/Layout/Layout';
+import Layout from '../../shared/Layout';
 
 const Users = () => {
     return <Layout>Users</Layout>;

@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from '../../shared/Layout/Layout';
+import Layout from '../../shared/Layout';
 
 const Reports = () => {
     return <Layout>Reports</Layout>;
