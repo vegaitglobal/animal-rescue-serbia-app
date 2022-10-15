@@ -26,6 +26,7 @@ public static class ServiceCollectionExtensions
             ServiceLifetime.Scoped);
 
         serviceCollection.Configure<EmailOptions>(configuration.GetSection(AppSettingKeys.EmailOptions));
+        serviceCollection.Configure<ViolationSubmittedNotificationOptions>(configuration.GetSection(AppSettingKeys.ViolationSubmittedNotificationOptions));
 
         serviceCollection
             .AddScoped<SeedData>()
@@ -37,7 +38,8 @@ public static class ServiceCollectionExtensions
             .AddTransient<IUserRepository, UserRepository>()
             .AddTransient<IUserService, UserService>()
             .AddTransient<IViolationRepository, ViolationRepository>()
-            .AddTransient<IViolationService, ViolationService>();
+            .AddTransient<IViolationService, ViolationService>()
+            .AddTransient<IMailingServiceClient, MailingServiceClient>();
 
         serviceCollection.AddTransient<IArticleCategoryRepository, ArticleCategoryRepository>();
         serviceCollection.AddTransient<IArticleCategoryService, ArticleCategoryService>();

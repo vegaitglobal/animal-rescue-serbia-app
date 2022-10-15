@@ -13,4 +13,6 @@ public class AppSettingKeys
     public const string MediaRoothPath = "FilePath:MediaRootFilePath";
 
     public const string EmailOptions = "EmailNotifications:EmailOptions";
+
+    public const string ViolationSubmittedNotificationOptions = "EmailNotifications:ViolationSubmittedNotificationOptions";
 }
