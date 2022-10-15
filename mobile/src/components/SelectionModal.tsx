@@ -7,12 +7,13 @@ import Close from '../assets/icons/close.svg';
 import {IconButton} from './IconButton';
 import {BottomSheetModal, BottomSheetFlatList} from '@gorhom/bottom-sheet';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
+import {ItemData} from './commonTypes';
 
 type SelectionModalProps = {
-  data: string[];
+  data: ItemData[];
   myRef: React.Ref<BottomSheetModalMethods>;
   onShouldClose: () => void;
-  onValueSelected: (item: string) => void;
+  onValueSelected: (selectedItem: ItemData) => void;
 };
 
 export const SelectionModal = ({
@@ -21,15 +22,15 @@ export const SelectionModal = ({
   onShouldClose,
   onValueSelected,
 }: SelectionModalProps) => {
-  const handleItemSelected = (item: string) => () => {
+  const handleItemSelected = (item: ItemData) => () => {
     onValueSelected(item);
     onShouldClose();
   };
 
-  const renderItem = ({item}: {item: string}) => (
+  const renderItem = ({item}: {item: ItemData}) => (
     <Pressable onPress={handleItemSelected(item)}>
       <View style={style.itemRootContainer}>
-        <Text style={style.itemText}>{item}</Text>
+        <Text style={style.itemText}>{item.label}</Text>
       </View>
     </Pressable>
   );
@@ -59,7 +60,7 @@ export const SelectionModal = ({
 
       <BottomSheetFlatList
         data={data}
-        keyExtractor={i => i}
+        keyExtractor={i => i.id}
         renderItem={renderItem}
         ItemSeparatorComponent={() => <Separator />}
         ListHeaderComponent={<Separator />}

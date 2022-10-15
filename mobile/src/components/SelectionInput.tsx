@@ -4,13 +4,20 @@ import {Pressable, StyleSheet, View} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 import {Chevron, Orientation} from './Chevron';
 import {commonStyles} from './commonStyles';
+import {ItemData} from './commonTypes';
 import {SelectionModal} from './SelectionModal';
 import {TextInput} from './TextInput';
 
 type SelectionInputProps = {
-  data: string[];
+  data: ItemData[];
+  placeholderLabel: string;
+  onValueSelected: (selectedItem: ItemData) => void;
 };
-export const SelectionInput = ({data}: SelectionInputProps) => {
+export const SelectionInput = ({
+  data,
+  placeholderLabel,
+  onValueSelected,
+}: SelectionInputProps) => {
   const sheetRef = useRef<BottomSheetModal>(null);
   const [selectedValue, setSelectedValue] = useState<string>();
 
@@ -20,19 +27,27 @@ export const SelectionInput = ({data}: SelectionInputProps) => {
     sheetRef.current?.present();
   }, []);
 
+  const onModalValueSelected = useCallback(
+    (selectedItem: ItemData) => {
+      setSelectedValue(selectedItem.label);
+      onValueSelected(selectedItem);
+    },
+    [onValueSelected],
+  );
+
   return (
     <>
       <SelectionModal
         data={data}
         myRef={sheetRef}
         onShouldClose={closeModal}
-        onValueSelected={setSelectedValue}
+        onValueSelected={onModalValueSelected}
       />
       <Pressable onPress={onPress}>
         <View style={style.inputContainer}>
           <TextInput
             value={selectedValue}
-            placeholder={'text'}
+            placeholder={placeholderLabel}
             editable={false}
             selectTextOnFocus={false}
             style={[commonStyles.inputField, style.input]}

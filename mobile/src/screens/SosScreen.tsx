@@ -10,7 +10,15 @@ export const SosScreen = () => {
     <View>
       <ScreenRootContainer title="Sos poziv" showLogo>
         <EmptySpace height={30} />
-        <SelectionInput data={['asdasd', 'asdfas', 'dasds']} />
+        <SelectionInput
+          onValueSelected={item => console.log('KOSTA SMARA: ', item)}
+          data={[
+            {id: 'asdd', label: 'Prvi izbor'},
+            {id: 'aasd', label: 'Drugi izbor'},
+            {id: 'asfasfas', label: 'Treci izbor'},
+          ]}
+          placeholderLabel={'Zameni me'}
+        />
         <View>
           <Text>test</Text>
         </View>
