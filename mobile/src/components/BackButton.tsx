@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
-import BackChevron from '../assets/icons/backChevron.svg';
+import {Chevron, Orientation} from './Chevron';
 import {EmptySpace} from './EmptySpace';
 
 export const BackButton = ({
@@ -14,7 +14,7 @@ export const BackButton = ({
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={style.rootContainer}>
-        <BackChevron color={ColorPallet.yellow} height={15} width={15} />
+        <Chevron orientation={Orientation.Back} size={15} />
         <EmptySpace width={5} />
         <Text style={style.text}>{text}</Text>
       </View>

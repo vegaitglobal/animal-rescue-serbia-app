@@ -4,19 +4,14 @@ import {
   TextInputProps as TextInputPropsNative,
 } from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
+import {commonStyles} from './commonStyles';
 
 type TextInputProps = TextInputPropsNative & {};
 
 export const TextInput = (props: TextInputProps) => {
   const styleOverrideProps: TextInputPropsNative = {
     placeholderTextColor: ColorPallet.lightGray,
-    style: {
-      borderWidth: 3,
-      borderBottomColor: ColorPallet.mediumGray,
-      borderColor: ColorPallet.plainWhite,
-      color: ColorPallet.plainBlack,
-      textAlign: 'center',
-    },
+    style: commonStyles.inputField,
   };
   return <TextInputNative {...styleOverrideProps} {...props} />;
 };
