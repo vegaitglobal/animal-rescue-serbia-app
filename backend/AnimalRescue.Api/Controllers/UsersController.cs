@@ -11,14 +11,11 @@ namespace AnimalRescue.Api.Controllers
     {
         private readonly ISecurityService _securityService;
         private readonly IUserService _userService;
-        private IHttpContextAccessor _httpContextAccessor;
 
-
-        public UsersController(ISecurityService securityService, IUserService userService, IHttpContextAccessor httpContextAccessor)
+        public UsersController(ISecurityService securityService, IUserService userService)
         {
             _securityService = securityService;
             _userService = userService;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpPost("login")]
@@ -32,10 +29,12 @@ namespace AnimalRescue.Api.Controllers
                 return Unauthorized();
             }
 
+            var accessToken = await _securityService.CreateToken(loginModel.Email);
+
             var dto = new LoggedInUserDto
             {
                 Email = loginModel.Email,
-                AccessToken = _securityService.CreateToken(loginModel.Email),
+                AccessToken = accessToken,
             };
 
             return Ok(dto);
@@ -46,11 +45,12 @@ namespace AnimalRescue.Api.Controllers
         public async Task<ActionResult<LoggedInUserDto>> Register([FromBody] UserCreateDto createDto)
         {
             var created = await _userService.AddAsync(createDto);
+            var accessToken = await _securityService.CreateToken(created.Email);
 
             var dto = new LoggedInUserDto
             {
                 Email = created.Email,
-                AccessToken = _securityService.CreateToken(created.Email),
+                AccessToken = accessToken,
             };
 
             return Ok(dto);
