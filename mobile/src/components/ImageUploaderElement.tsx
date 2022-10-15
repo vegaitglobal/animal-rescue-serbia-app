@@ -5,6 +5,7 @@ import {ColorPallet} from '../resources/ColorPallet';
 import {CustomButton} from './CustomButton';
 import {EmptySpace} from './EmptySpace';
 import {reduceFileDataIntoString} from './helpers';
+import {Video} from 'react-native-compressor';
 
 type ImageUploadElementProps = {
   placeholderText: string;
@@ -15,7 +16,7 @@ export const ImageUploadElement = ({
   buttonLabel,
   placeholderText,
 }: ImageUploadElementProps) => {
-  const [path, setPath] = useState('');
+  const [fileLog, setFileLog] = useState('');
 
   const onPress = useCallback(async () => {
     const result = await ImagePicker.openPicker({
@@ -23,15 +24,23 @@ export const ImageUploadElement = ({
       mediaType: 'any',
     });
 
-    setPath(reduceFileDataIntoString(result));
+    const firstElement = result?.[0] ?? {};
+    console.log('PathBeforeCompress: ', firstElement.path);
+    console.log('File size before: ', firstElement);
+    const pathAfterCompress = await Video.compress(firstElement.path, {
+      minimumFileSizeForCompress: 9,
+    });
+
+    console.log('PATH: ', pathAfterCompress);
+    setFileLog(reduceFileDataIntoString(result));
   }, []);
 
-  const dynamicPlaceholderTextStyle = path ? {} : style.textPlaceholder;
+  const dynamicPlaceholderTextStyle = fileLog ? {} : style.textPlaceholder;
 
   return (
     <View style={style.rootContainer}>
       <Text numberOfLines={3} style={[style.text, dynamicPlaceholderTextStyle]}>
-        {path || placeholderText}
+        {fileLog || placeholderText}
       </Text>
       <EmptySpace width={20} />
       <View>
