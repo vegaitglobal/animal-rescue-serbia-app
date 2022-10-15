@@ -24,8 +24,14 @@ public static class ServiceCollectionExtensions
             },
             ServiceLifetime.Scoped);
 
-        serviceCollection.AddTransient<IViolationCategoryRepository, ViolationCategoryRepository>();
-        serviceCollection.AddTransient<IViolationCategoryService, ViolationCategoryService>();
+        serviceCollection
+            .AddTransient<IViolationCategoryRepository, ViolationCategoryRepository>()
+            .AddTransient<IViolationCategoryService, ViolationCategoryService>()
+            .AddTransient<ILiteViolationsRepository, LiteViolationsRepository>()
+            .AddTransient<ILiteViolationService, LiteViolationService>()
+            .AddTransient<ISecurityService, SecurityService>()
+            .AddTransient<IUserRepository, UserRepository>()
+            .AddTransient<IUserService, UserService>();
 
         return serviceCollection;
     }

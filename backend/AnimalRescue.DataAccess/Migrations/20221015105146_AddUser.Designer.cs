@@ -4,6 +4,7 @@ using AnimalRescue.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AnimalRescue.DataAccess.Migrations
 {
     [DbContext(typeof(AnimalRescueDbContext))]
-    partial class AnimalRescueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221015105146_AddUser")]
+    partial class AddUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +46,7 @@ namespace AnimalRescue.DataAccess.Migrations
 
                     b.HasIndex("ViolationCategoryId");
 
-                    b.ToTable("LiteViolations", (string)null);
+                    b.ToTable("LiteViolations");
                 });
 
             modelBuilder.Entity("AnimalRescue.Domain.Models.User", b =>
@@ -70,7 +72,7 @@ namespace AnimalRescue.DataAccess.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("AnimalRescue.Domain.Models.ViolationCategory", b =>
@@ -91,7 +93,7 @@ namespace AnimalRescue.DataAccess.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("ViolationCategories", (string)null);
+                    b.ToTable("ViolationCategories");
                 });
 
             modelBuilder.Entity("AnimalRescue.Domain.Models.LiteViolation", b =>

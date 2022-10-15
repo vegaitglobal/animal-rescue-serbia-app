@@ -37,6 +37,7 @@ public class Program
 
         services.AddAuthorization();
         services.AddJwtAuthentication(configuration);
+        services.AddHttpContextAccessor();
         services.AddServices(configuration);
 
         services.AddProblemDetails(webHostEnvironment);
