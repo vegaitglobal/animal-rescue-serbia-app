@@ -5,6 +5,7 @@ using AnimalRescue.DataAccess;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
 
 namespace AnimalRescue.Api;
 
@@ -79,7 +80,11 @@ public class Program
             });
         });
 
-        services.AddControllers();
+        services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(allowIntegerValues: false));
+            });
     }
 
     private static void Configure(IApplicationBuilder applicationBuilder, IHostEnvironment env)

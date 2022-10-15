@@ -22,6 +22,15 @@ public class ViolationRepository : IViolationRepository
         return created.Entity;
     }
 
+    public async Task<IEnumerable<Violation>> GetAllApprovedAsync()
+        => await _dbContext
+            .Violations
+            .Include(lv => lv.User)
+            .Include(lv => lv.ViolationCategory)
+            .AsNoTracking()
+            .Where(v => v.Status == ViolationStatus.Accepted || v.Status == ViolationStatus.Processed)
+            .ToListAsync();
+
     public async Task<IEnumerable<Violation>> GetAllAsync()
         => await _dbContext
             .Violations
@@ -36,4 +45,13 @@ public class ViolationRepository : IViolationRepository
             .Include(lv => lv.User)
             .Include(lv => lv.ViolationCategory)
             .FirstOrDefaultAsync(entity => entity.Id == id);
+
+    public async Task<Violation> UpdateAsync(Violation violation)
+    {
+        var updated = _dbContext.Violations.Update(violation);
+
+        await _dbContext.SaveChangesAsync();
+
+        return updated.Entity;
+    }
 }

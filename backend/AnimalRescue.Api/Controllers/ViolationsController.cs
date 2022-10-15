@@ -16,15 +16,15 @@ namespace AnimalRescue.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<LiteViolationDto>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<ViolationDto>>> GetAllAsync()
         {
-            var violations = await _violationService.GetAllAsync();
+            var violations = await _violationService.GetAllApprovedAsync();
 
             return Ok(violations);
         }
 
         [HttpPost]
-        public async Task<ActionResult<LiteViolationDto>> CreateAsync(ViolationCreateDto dto)
+        public async Task<ActionResult<ViolationDto>> CreateAsync([FromForm] ViolationCreateDto dto)
         {
             var created = await _violationService.AddAsync(dto);
 
@@ -32,7 +32,7 @@ namespace AnimalRescue.Api.Controllers
         }
 
         [HttpGet("{id}", Name = "GetViolationAsync")]
-        public async Task<ActionResult<LiteViolationDto>> GetViolationAsync(Guid id)
+        public async Task<ActionResult<ViolationDto>> GetViolationAsync(Guid id)
         {
             var violation = await _violationService.GetAsync(id);
 

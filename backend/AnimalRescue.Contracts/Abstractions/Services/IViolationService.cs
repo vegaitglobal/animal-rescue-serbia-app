@@ -6,7 +6,11 @@ public interface IViolationService
 {
     Task<ViolationDto?> GetAsync(Guid id);
 
-    Task<IEnumerable<ViolationDto>> GetAllAsync();
+    Task<IEnumerable<AdminViolationDto>> GetAllAsync();
+
+    Task<IEnumerable<ViolationDto>> GetAllApprovedAsync();
 
     Task<ViolationDto> AddAsync(ViolationCreateDto violationDto);
+
+    Task<AdminViolationDto> UpdateAsync(Guid id, AdminViolationUpdateDto updateDto);
 }

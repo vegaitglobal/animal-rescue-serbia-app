@@ -8,5 +8,9 @@ public interface IViolationRepository
 
     Task<IEnumerable<Violation>> GetAllAsync();
 
+    Task<IEnumerable<Violation>> GetAllApprovedAsync();
+
     Task<Violation> AddAsync(Violation violation);
+
+    Task<Violation> UpdateAsync(Violation existing);
 }

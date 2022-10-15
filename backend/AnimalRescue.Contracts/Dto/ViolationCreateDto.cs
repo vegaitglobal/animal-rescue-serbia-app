@@ -15,4 +15,6 @@ public class ViolationCreateDto
     public string PhoneNumber { get; set; }
 
     public IEnumerable<IFormFile>? Files { get; set; }
+
+    public string? Description { get; set; }
 }

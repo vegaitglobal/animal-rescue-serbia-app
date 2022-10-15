@@ -13,17 +13,20 @@ public class ViolationService : IViolationService
     private readonly IUserService _userService;
     private readonly IUserRepository _userRepository;
     private readonly IViolationRepository _violationRepository;
+    private readonly IMediaContentService _mediaContentService;
 
     public ViolationService(
         IViolationCategoryRepository violationCategoryRepository,
         IUserService userService,
         IUserRepository userRepository,
-        IViolationRepository violationRepository)
+        IViolationRepository violationRepository,
+        IMediaContentService mediaContentService)
     {
         _violationCategoryRepository = violationCategoryRepository;
         _userService = userService;
         _userRepository = userRepository;
         _violationRepository = violationRepository;
+        _mediaContentService = mediaContentService;
     }
 
     public async Task<ViolationDto> AddAsync(ViolationCreateDto violationDto)
@@ -38,6 +41,13 @@ public class ViolationService : IViolationService
 
         var user = await _userRepository.GetByEmailAsync(currentUser.Email);
 
+        var fileUploadTasks = violationDto.Files?.Select(f => _mediaContentService.UploadMediaContentAsync(f));
+        var mediaContent = Array.Empty<MediaContent>();
+        if (fileUploadTasks is not null)
+        {
+            mediaContent = await Task.WhenAll(fileUploadTasks);
+        }
+
         var violationToCreate = new Violation
         {
             Id = Guid.NewGuid(),
@@ -47,6 +57,10 @@ public class ViolationService : IViolationService
             Address = violationDto.Address,
             FullName = violationDto.FullName,
             PhoneNumber = violationDto.PhoneNumber,
+            Description = violationDto.Description,
+            MediaContent = mediaContent,
+            Status = ViolationStatus.Pending,
+            AdminNotes = null,
         };
 
         var created = await _violationRepository.AddAsync(violationToCreate);
@@ -54,11 +68,18 @@ public class ViolationService : IViolationService
         return created.ToDto();
     }
 
-    public async Task<IEnumerable<ViolationDto>> GetAllAsync()
+    public async Task<IEnumerable<ViolationDto>> GetAllApprovedAsync()
+    {
+        var violations = await _violationRepository.GetAllApprovedAsync();
+
+        return violations.Select(violation => violation.ToDto());
+    }
+
+    public async Task<IEnumerable<AdminViolationDto>> GetAllAsync()
     {
         var violations = await _violationRepository.GetAllAsync();
 
-        return violations.Select(violation => violation.ToDto());
+        return violations.Select(violation => violation.ToAdminDto());
     }
 
     public async Task<ViolationDto?> GetAsync(Guid id)
@@ -66,5 +87,22 @@ public class ViolationService : IViolationService
         var entity = await _violationRepository.GetAsync(id);
 
         return entity?.ToDto();
+    }
+
+    public async Task<AdminViolationDto> UpdateAsync(Guid id, AdminViolationUpdateDto updateDto)
+    {
+        var existing = await _violationRepository.GetAsync(id);
+        if (existing is null)
+        {
+            throw new EntityNotFoundException($"Violation with id: '{id}' does not exist!");
+        }
+
+        existing.AdminNotes = updateDto.AdminNotes;
+        existing.Status = updateDto.Status;
+        existing.Description = updateDto.Description;
+
+        var updated = await _violationRepository.UpdateAsync(existing);
+
+        return updated.ToAdminDto();
     }
 }
