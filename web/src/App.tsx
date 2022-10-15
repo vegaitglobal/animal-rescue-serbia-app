@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Outlet } from 'react-router-dom';
-import './App.scss';
 import Sidebar from './shared/Sidebar';
+import './scss/style.scss';
 
 const queryClient = new QueryClient();
 
