@@ -1,14 +1,17 @@
-﻿using AnimalRescue.Domain.Models;
+﻿using AnimalRescue.Contracts.Abstractions.Services;
+using AnimalRescue.Domain.Models;
 
 namespace AnimalRescue.DataAccess;
 
 public class SeedData
 {
     private readonly AnimalRescueDbContext _dbContext;
+    private ISecurityService _securityService;
 
-    public SeedData(AnimalRescueDbContext dbContext)
+    public SeedData(AnimalRescueDbContext dbContext, ISecurityService securityService)
     {
         _dbContext = dbContext;
+        _securityService = securityService;
     }
 
     public void SeedTestData()
@@ -25,7 +28,7 @@ public class SeedData
                         LastName = $"{nr}",
                         Email = $"user{nr}@email.com",
                         Id = Guid.NewGuid(),
-                        Password = $"user{nr}",
+                        Password = _securityService.HashPassword($"user{nr}"),
                     });
 
             _dbContext.Users.AddRange(entries);

@@ -32,7 +32,9 @@ public static class ServiceCollectionExtensions
             .AddTransient<ILiteViolationService, LiteViolationService>()
             .AddTransient<ISecurityService, SecurityService>()
             .AddTransient<IUserRepository, UserRepository>()
-            .AddTransient<IUserService, UserService>();
+            .AddTransient<IUserService, UserService>()
+            .AddTransient<IViolationRepository, ViolationRepository>()
+            .AddTransient<IViolationService, ViolationService>();
 
         serviceCollection.AddTransient<IArticleCategoryRepository, ArticleCategoryRepository>();
         serviceCollection.AddTransient<IArticleCategoryService, ArticleCategoryService>();
