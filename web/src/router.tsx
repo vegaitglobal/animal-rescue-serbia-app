@@ -4,6 +4,8 @@ import App from './App';
 import { EditReport } from './pages/EditReport';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
+import Pages from './pages/Pages';
+import { PageForm } from './pages/Pages/Components';
 import Reports from './pages/Reports';
 import Users from './pages/Users';
 
@@ -16,7 +18,8 @@ const GlobalRouter: React.FC = () => {
         <Route path="/" element={<App />}>
           <Route path="/prijave" element={<Reports />} />
           <Route path="/prijave/edit" element={<EditReport />} />
-          <Route path="/stranice" element />
+          <Route path="/stranice" element={<Pages />} />
+          <Route path="/stranice/kreiranje" element={<PageForm />} />
           <Route path="/korisnici" element={<Users />} />
           <Route path="/" element={<Navigate to="/prijave" replace />} />
         </Route>
