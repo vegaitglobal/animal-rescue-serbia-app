@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  api:
+    image: backend
+    container_name: animal-rescue-api
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5113:5113"
+    env_file:
+      - backend/.env.local
+    environment:
+      - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
+  web:
+    image: web
+    container_name: animal-rescue-web
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - web/.env.local
