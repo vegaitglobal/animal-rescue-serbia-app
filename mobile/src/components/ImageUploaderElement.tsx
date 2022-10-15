@@ -6,8 +6,16 @@ import {CustomButton} from './CustomButton';
 import {EmptySpace} from './EmptySpace';
 import {reduceFileDataIntoString} from './helpers';
 
-export const ImageUploadElement = () => {
-  const [path, setPath] = useState('Dodajte fotografiju');
+type ImageUploadElementProps = {
+  placeholderText: string;
+  buttonLabel?: string;
+};
+
+export const ImageUploadElement = ({
+  buttonLabel,
+  placeholderText,
+}: ImageUploadElementProps) => {
+  const [path, setPath] = useState('');
 
   const onPress = useCallback(async () => {
     const result = await ImagePicker.openPicker({
@@ -18,14 +26,20 @@ export const ImageUploadElement = () => {
     setPath(reduceFileDataIntoString(result));
   }, []);
 
+  const dynamicPlaceholderTextStyle = path ? {} : style.textPlaceholder;
+
   return (
     <View style={style.rootContainer}>
-      <Text numberOfLines={3} style={style.text}>
-        {path}
+      <Text numberOfLines={3} style={[style.text, dynamicPlaceholderTextStyle]}>
+        {path || placeholderText}
       </Text>
       <EmptySpace width={20} />
       <View>
-        <CustomButton text="Dodaj" isSmall={true} onPress={onPress} />
+        <CustomButton
+          text={buttonLabel ?? 'Dodaj'}
+          isSmall={true}
+          onPress={onPress}
+        />
       </View>
     </View>
   );
@@ -38,7 +52,11 @@ const style = StyleSheet.create({
     flex: 1,
     textAlignVertical: 'center',
   },
+  textPlaceholder: {
+    color: ColorPallet.mediumGray,
+  },
   rootContainer: {
+    flex: 1,
     height: 60,
     flexDirection: 'row',
     alignItems: 'center',

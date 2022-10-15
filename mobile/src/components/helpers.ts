@@ -8,5 +8,5 @@ const extractFileName = (fileData: ImageOrVideo) => {
 
 export const reduceFileDataIntoString = (fileData: ImageOrVideo[]) => {
   const names = fileData.map(extractFileName);
-  return names.reduce((acc, current) => `${acc},\n${current}`, '');
+  return names.reduce((acc, current) => `${acc},\n${current}`);
 };

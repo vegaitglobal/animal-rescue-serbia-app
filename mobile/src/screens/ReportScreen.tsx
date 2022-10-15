@@ -12,6 +12,7 @@ import {SelectionInput} from '../components/SelectionInput';
 import {MultilineTextInput} from '../components/MulitilineTextInput';
 import {CustomModalWithButton} from '../components/CustomModalWithButton';
 import {useNavigation} from '@react-navigation/native';
+import {ImageUploadElement} from '../components/ImageUploaderElement';
 
 export const ReportScreen = () => {
   const {firstName, lastName} = useAppSelector(getNewReport);
@@ -79,8 +80,7 @@ export const ReportScreen = () => {
           />
         </View>
         <View style={style.photoContainer}>
-          <Text style={style.text}>{fotoVideo}</Text>
-          <CustomButton onPress={() => {}} text="Dodaj" isSmall />
+          <ImageUploadElement placeholderText={fotoVideo} />
         </View>
         <MultilineTextInput
           style={style.textInputContainer}
