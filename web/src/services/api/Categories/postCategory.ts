@@ -8,9 +8,13 @@ export interface IPostCategoryRequest {
 export const postCategory = async (
   catData: IPostCategoryRequest
 ): Promise<ICategoryResponse> => {
-  const { data } = await axiosRequest('POST', '/admin/ViolationCategories', {
-    data: catData,
-  });
+  const { data } = await axiosRequest(
+    'POST',
+    '/api/admin/ViolationCategories',
+    {
+      data: catData,
+    }
+  );
 
   return data;
 };
