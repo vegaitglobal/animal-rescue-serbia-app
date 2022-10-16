@@ -70,6 +70,14 @@
   padding-top: 60px;
 }
 
+.nav__item {
+  &:first-of-type {
+    .nav__btn {
+      border-top: 1px solid $yellow;
+    }
+  }
+}
+
 .nav__btn {
   cursor: pointer;
   display: block;
@@ -84,9 +92,10 @@
   line-height: 20px;
   font-weight: 700;
   padding: 15px 20px;
-  background-color: #3e3d3d;
+  background-color: $grey-dark;
   border-bottom: 1px solid $yellow;
   transition: 0.3s ease;
+
   &:hover {
     color: $yellow;
   }

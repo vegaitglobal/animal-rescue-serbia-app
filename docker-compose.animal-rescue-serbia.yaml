@@ -1,0 +1,32 @@
+version: "3.4"
+
+services:
+  api:
+    image: codeforacause/animal-rescue-serbia-app:backend-#{TAG_NUMBER}#
+    container_name: animal-rescue-api
+    ports:
+      - 5113
+    environment:
+      - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__AnimalRescueDbContext=Server=db;Database=arserbia;user id=sa;password=#{DB_PASSWORD}#;
+      - JwtAuthentication__Key="#{JWT_KEY}#"
+      - JwtAuthentication__Salt="#{JWT_SALT}#"
+  web:
+    image: codeforacause/animal-rescue-serbia-app:web-#{TAG_NUMBER}#
+    container_name: animal-rescue-web
+    ports:
+      - "22000:3000"
+    environment:
+      - REACT_APP_API_URL=backend
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: animal-rescue-db
+    ports:
+      - 1433
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=#{DB_PASSWORD}#
+    volumes:
+      - ".:/app:rw"

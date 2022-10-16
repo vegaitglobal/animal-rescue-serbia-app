@@ -11,7 +11,12 @@
 @import './pages/login.scss';
 @import './pages/reports.scss';
 @import './pages/not-found';
+@import './pages/pages';
+@import './pages/create-page';
 
 @import './components/report-item';
 @import './components/reports-filter';
 @import './components/report-edit-form';
+
+@import './pages/edit-user';
+@import './pages/users';

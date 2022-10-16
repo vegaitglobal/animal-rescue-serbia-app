@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.4"
 
 services:
   api:
@@ -9,10 +9,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5113:5113"
-    env_file:
-      - backend/.env.local
     environment:
       - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__AnimalRescueDbContext=Server=db;Database=arserbia;user id=sa;password=MySecret123!hahaha;
+      - JwtAuthentication__Key="[DONOTCOMMITDONOTCOMMITDONOTCOMMITDONOTCOMMIT]"
+      - JwtAuthentication__Salt="[DONOTCOMMITDONOTCOMMITDONOTCOMMITDONOTCOMMIT]"
   web:
     image: web
     container_name: animal-rescue-web
@@ -21,5 +23,16 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    env_file:
-      - web/.env.local
+    environment:
+      - REACT_APP_API_URL=backend
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: animal-rescue-db
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=MySecret123!hahaha
+    volumes:
+      - ".:/app:rw"

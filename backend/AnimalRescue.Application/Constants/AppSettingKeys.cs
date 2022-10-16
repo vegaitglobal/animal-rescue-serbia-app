@@ -11,4 +11,8 @@ public class AppSettingKeys
     public const string JwtAuthenticationSalt = "JwtAuthentication:Salt";
 
     public const string MediaRoothPath = "FilePath:MediaRootFilePath";
+
+    public const string EmailOptions = "EmailNotifications:EmailOptions";
+
+    public const string ViolationSubmittedNotificationOptions = "EmailNotifications:ViolationSubmittedNotificationOptions";
 }

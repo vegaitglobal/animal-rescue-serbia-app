@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnimalRescue.DataAccess", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimalRescue.Contracts", "AnimalRescue.Contracts\AnimalRescue.Contracts.csproj", "{84D5E041-C55E-4EEA-BECA-5B11357F0A33}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnimalRescue.HtmlTemplates", "AnimalRescue.HtmlTemplates\AnimalRescue.HtmlTemplates.csproj", "{ACB3A467-9E91-4739-AE2F-009D4999508D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{84D5E041-C55E-4EEA-BECA-5B11357F0A33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84D5E041-C55E-4EEA-BECA-5B11357F0A33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84D5E041-C55E-4EEA-BECA-5B11357F0A33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACB3A467-9E91-4739-AE2F-009D4999508D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACB3A467-9E91-4739-AE2F-009D4999508D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACB3A467-9E91-4739-AE2F-009D4999508D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACB3A467-9E91-4739-AE2F-009D4999508D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

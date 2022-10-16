@@ -1,0 +1,49 @@
+.post__item {
+  display: flex;
+  margin-bottom: 24px;
+}
+
+.post__name {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 700;
+  width: 200px;
+  display: block;
+  margin-right: 50px;
+}
+
+.post__input {
+  width: 460px;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.post__desc {
+  display: block;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  color: #8d8d8d;
+}
+
+.post__btn {
+  cursor: pointer;
+  background-color: #fce51f;
+  border: 0;
+  align-self: flex-start;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 12px 16px;
+  border-radius: 4px;
+  transition: 0.3s ease;
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.post__editor {
+  border: 1px solid #ccc;
+  width: calc(100% - 250px);
+  border-radius: 4px;
+}
