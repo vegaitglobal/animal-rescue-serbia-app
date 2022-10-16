@@ -55,7 +55,7 @@ const Sidebar = () => {
                 isActive ? 'nav__btn nav__btn--active' : 'nav__btn'
               }
             >
-              Kategorije i tipovi
+              Kategorije
             </NavLink>
           </li>
         </ul>
