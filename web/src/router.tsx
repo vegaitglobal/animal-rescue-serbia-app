@@ -18,7 +18,7 @@ const GlobalRouter: React.FC = () => {
         <Route path="/*" element={<NotFound />} />
         <Route path="/" element={<App />}>
           <Route path="/prijave" element={<Reports />} />
-          <Route path="/prijave/edit" element={<EditReport />} />
+          <Route path="/prijave/:id" element={<EditReport />} />
           <Route path="/stranice" element={<Pages />} />
           <Route path="/stranice/kreiranje" element={<PageForm />} />
           <Route path="/korisnici" element={<Users />} />

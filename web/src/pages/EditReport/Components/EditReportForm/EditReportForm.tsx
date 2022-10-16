@@ -1,51 +1,121 @@
-const EditReportForm = () => {
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useUpdateReport } from '../../../../hooks/api/reports/useUpdateReport';
+import {
+  IReportsResponse,
+  ReportsStatus,
+} from '../../../../services/api/reports/getReports';
+
+type Props = {
+  report: IReportsResponse;
+};
+
+const EditReportForm: React.FC<Props> = ({ report }) => {
+  const navigate = useNavigate();
+  const handleSuccess = () => {
+    navigate('/prijave');
+  };
+
+  const [desc, setDesc] = useState<string>(
+    report.description ? report.description : ''
+  );
+
+  const { mutate: updateSubmit } = useUpdateReport({
+    onSuccess: handleSuccess,
+  });
+
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setDesc(event.target.value);
+  };
+
+  const handleClick = (status: ReportsStatus) => {
+    updateSubmit({
+      id: report.id,
+      putData: {
+        description: desc,
+        adminNotes: '',
+        status,
+      },
+    });
+  };
+
   return (
     <div className="edit">
       <form action="" className="edit__form">
         <div className="edit__item">
           <label className="edit__label">Ime i Prezime</label>
-          <input type="text" className="edit__input" value="Petar Pertovic" />
+          <input
+            type="text"
+            className="edit__input"
+            value={report.fullName}
+            readOnly
+          />
         </div>
         <div className="edit__item">
           <label className="edit__label">Broj telefona</label>
-          <input type="text" className="edit__input" value="066 952 6533" />
+          <input
+            type="text"
+            className="edit__input"
+            value={report.phoneNumber}
+            readOnly
+          />
         </div>
         <div className="edit__item">
           <label className="edit__label">lokacija prekrsaja</label>
-          <input type="text" className="edit__input" value="Novi Sad" />
+          <input
+            type="text"
+            className="edit__input"
+            value={report.location}
+            readOnly
+          />
         </div>
         <div className="edit__item">
           <label className="edit__label">Adresa Prekrsaja</label>
           <input
             type="text"
             className="edit__input"
-            value="Novosadskog Sajma 2"
+            value={report.address}
+            readOnly
           />
         </div>
         <div className="edit__item">
           <label className="edit__label">Tip prekrsaja</label>
-          <input type="text" className="edit__input" value="Prekrsaj 1" />
+          <input
+            type="text"
+            className="edit__input"
+            value={report.violationCategory.name}
+            readOnly
+          />
         </div>
         <div className="edit__item">
           <label className="edit__label">Fotografija / video</label>
-          <input type="text" className="edit__input" value="" />
+          <input type="text" className="edit__input" value="" readOnly />
         </div>
         <div className="edit__item edit__item--full">
           <label className="edit__label">Opis prekrsaja</label>
-          <textarea name="" id="" className="edit__textarea">
-            Lorem ipsum dolor sit amet consectetur adipiscing elit, platea diam
-            eu viverra curabitur semper, mollis ad leo sed condimentum mauris.
-            Proin consequat penatibus vitae diam netus aliquet elementum eros
-            ligula eget conubia et dignissim, nostra natoque senectus hac
-            tincidunt justo purus habitasse felis iaculis blandit aptent. Rutrum
-            ultricies risus arcu porta erat suscipit sociosqu
-          </textarea>
+          <textarea
+            name="description"
+            id=""
+            className="edit__textarea"
+            onChange={handleDescriptionChange}
+            value={desc}
+          />
         </div>
       </form>
-      <button type="button" className="edit__btn edit__btn--approve">
+      <button
+        type="button"
+        className="edit__btn edit__btn--approve"
+        onClick={() => handleClick(ReportsStatus.Accepted)}
+      >
         Odobri
       </button>
-      <button type="button" className="edit__btn edit__btn--decline">
+      <button
+        type="button"
+        className="edit__btn edit__btn--decline"
+        onClick={() => handleClick(ReportsStatus.Rejected)}
+      >
         Odbij
       </button>
     </div>

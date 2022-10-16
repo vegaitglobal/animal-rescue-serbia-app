@@ -6,12 +6,18 @@ import { ILoginRequest, ILoginResponse } from '../../services/api/auth';
 import storageApi from '../../services/storage.service';
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [loginData, setloginData] = useState<ILoginRequest>({
     email: '',
     password: '',
   });
 
-  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (storageApi.hasToken()) {
+      navigate('/prijave');
+    }
+  }, [navigate]);
 
   const handleSuccess = (data: ILoginResponse) => {
     storageApi.storeToken(data.accessToken);

@@ -21,6 +21,7 @@ export const axiosRequest = <T = any>(
     },
     (err) => {
       if (err.response.status === 401 || err.response.status === 403) {
+        storageApi.clearToken();
         window.location.href = '/prijavljivanje';
       }
     }
@@ -28,8 +29,8 @@ export const axiosRequest = <T = any>(
 
   axios.interceptors.request.use((config) => {
     const accessToken = storageApi.getToken();
-    if (config.url !== '/api/Users/login' && !!accessToken) {
-      axios.defaults.headers.common['Authorization'] = accessToken;
+    if (config.headers && config.url !== '/api/Users/login' && !!accessToken) {
+      config.headers['Authorization'] = 'Bearer ' + accessToken;
     }
     return config;
   });
