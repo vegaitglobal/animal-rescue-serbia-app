@@ -1,0 +1,51 @@
+.users__table {
+  width: 100%;
+  tr {
+    border-bottom: 1px solid #e2e2e2;
+  }
+  th {
+    text-align: left;
+    padding: 12px 0;
+    font-size: 14px;
+    line-height: 17px;
+    color: #a4a4a4;
+  }
+  td {
+    padding: 20px 0;
+    font-size: 16px;
+    line-height: 19px;
+    font-weight: 500;
+    color: #363535;
+    vertical-align: middle;
+  }
+}
+
+.users__buttons {
+  display: flex;
+}
+
+.users__btn {
+  cursor: pointer;
+  border: 0;
+  background-color: transparent;
+  font-size: 14px;
+  line-height: 19px;
+  padding: 10px 22px;
+  border-radius: 10px;
+  color: #fff;
+  margin-right: 20px;
+  min-width: 130px;
+  transition: 0.3s ease;
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.users__btn--change {
+  background-color: #fce51f;
+  color: #363535;
+}
+
+.users__btn--delete {
+  background-color: #ea4f4f;
+}
