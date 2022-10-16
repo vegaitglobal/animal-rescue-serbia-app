@@ -119,6 +119,13 @@ public class ViolationService : IViolationService
         return entity?.ToDto();
     }
 
+    public async Task<AdminViolationDto?> GetForAdminAsync(Guid id)
+    {
+        var entity = await _violationRepository.GetAsync(id);
+
+        return entity?.ToAdminDto();
+    }
+
     public async Task<AdminViolationDto> UpdateAsync(Guid id, AdminViolationUpdateDto updateDto)
     {
         var existing = await _violationRepository.GetAsync(id);

@@ -1,11 +1,10 @@
 ﻿using AnimalRescue.Application.Constants;
-using AnimalRescue.Contracts.Pagination;
 using AnimalRescue.Contracts.Abstractions.Services;
 using AnimalRescue.Contracts.Dto;
+using AnimalRescue.Contracts.FilterRequests;
+using AnimalRescue.Contracts.Pagination;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using AnimalRescue.Domain.Models;
-using AnimalRescue.Contracts.FilterRequests;
 
 namespace AnimalRescue.Api.Controllers.Admin
 {
@@ -23,7 +22,7 @@ namespace AnimalRescue.Api.Controllers.Admin
 
         [HttpGet("PaginatedViolations")]
         public async Task<ActionResult<PaginatedResponse<AdminViolationDto>>> GetAllForAdminAsync(
-            [FromQuery] PaginationParameters violationParameters, 
+            [FromQuery] PaginationParameters violationParameters,
             [FromQuery] ViolationFilterRequest violationFilterRequest)
         {
             var violations = await _violationService.GetAllPaginatedAsync(violationFilterRequest, violationParameters);
@@ -42,7 +41,7 @@ namespace AnimalRescue.Api.Controllers.Admin
         [HttpGet("{id}")]
         public async Task<ActionResult<AdminViolationDto>> GetViolationForAdminAsync(Guid id)
         {
-            var violation = await _violationService.GetAsync(id);
+            var violation = await _violationService.GetForAdminAsync(id);
 
             return violation is null
                 ? NotFound()
