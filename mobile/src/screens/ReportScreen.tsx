@@ -5,7 +5,11 @@ import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
 import Report from '../assets/icons/educationGrayBg.svg';
 import {useAppDispatch, useAppSelector} from '../hooks/storeHooks';
-import {getNewReport} from '../store/src/reports/selectors';
+import {
+  getLocations,
+  getNewReport,
+  getViolationCategories,
+} from '../store/src/reports/selectors';
 import {TextInput} from '../components/TextInput';
 import {CustomButton} from '../components/CustomButton';
 import {SelectionInput} from '../components/SelectionInput';
@@ -16,9 +20,24 @@ import {ImageUploadElement} from '../components/ImageUploaderElement';
 import axios from 'axios';
 import {SelectionResult} from '../components/types';
 import {batchCompress} from '../components/helpers';
+import {
+  loadLocations,
+  loadViolationCategories,
+  setAddress,
+  setDescription,
+  setNameSurname,
+  setPhoneNumber,
+} from '../store/src/reports/actions';
 
 export const ReportScreen = () => {
-  const {firstName, lastName} = useAppSelector(getNewReport);
+  // const {firstName, lastName} = useAppSelector(getNewReport);
+
+  const violationCategories = useAppSelector(getViolationCategories);
+
+  const locations = useAppSelector(getLocations);
+
+  console.log('locations ', locations);
+
   const dispatch = useAppDispatch();
 
   const headerTitle = 'Prijava prekršaja';
@@ -39,26 +58,10 @@ export const ReportScreen = () => {
 
   useEffect(() => setVisible(true), []);
 
-  // TODO: Remove Begin
-  const token =
-    'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIwQHRlc3QuY29tIiwicm9sZSI6IlVzZXIiLCJuYmYiOjE2NjU4NjY5MzcsImV4cCI6MTY2NTk1MzMzNywiaWF0IjoxNjY1ODY2OTM3fQ.EWB4MXKfd-cDk6q9QbomBWFr5Z6EQVvTFrdWmOHSRzSkOeEqbelIIpwJ4UAneTYv-3F3TjXMNQ7eDof4KiD46Q';
-  axios.defaults.timeout = 5000;
-  const asdfgasf = async () => {
-    try {
-      //TODO: Make sure to use axios.create() instead of this static call
-      await axios
-        //.get('https://178f-82-117-210-2.ngrok.io/api/ArticleCategories', {
-        .get('https://2556-82-117-210-2.ngrok.io/api/Reports', {
-          headers: {Authorization: `Bearer ${token}`},
-        })
-        .then(response => {
-          console.log('RESP: ', response);
-        });
-    } catch (error) {
-      console.log(JSON.stringify(error, null, 2));
-    }
-  };
-  // TODO: Remove End
+  useEffect(() => {
+    dispatch(loadViolationCategories());
+    dispatch(loadLocations());
+  }, [dispatch]);
 
   const onFilesSelected = useCallback(
     async (selectedFiles: SelectionResult[]) => {
@@ -86,16 +89,16 @@ export const ReportScreen = () => {
           <TextInput
             placeholder={imeIPrezime}
             placeholderTextColor={ColorPallet.lightGray}
+            onChangeText={value => setNameSurname(value)}
           />
         </View>
         <View style={style.inputContainer}>
           <SelectionInput
             onValueSelected={item => console.log('Test: ', item)}
-            data={[
-              {id: 'asdd', label: 'Prvi izbor'},
-              {id: 'aasd', label: 'Drugi izbor'},
-              {id: 'asfasfas', label: 'Treci izbor'},
-            ]}
+            data={locations?.locations?.map((item, index) => ({
+              label: item,
+              id: index.toString(),
+            }))}
             placeholderLabel={lokacija}
           />
         </View>
@@ -103,22 +106,26 @@ export const ReportScreen = () => {
           <TextInput
             placeholder={adresa}
             placeholderTextColor={ColorPallet.lightGray}
+            onChangeText={value => setAddress(value)}
           />
         </View>
         <View style={style.inputContainer}>
           <TextInput
             placeholder={brTelefona}
             placeholderTextColor={ColorPallet.lightGray}
+            onChangeText={value => setPhoneNumber(value)}
           />
         </View>
         <View style={style.inputContainer}>
           <SelectionInput
             onValueSelected={item => console.log('Test: ', item)}
-            data={[
-              {id: 'asdd', label: 'Prvi izbor'},
-              {id: 'aasd', label: 'Drugi izbor'},
-              {id: 'asfasfas', label: 'Treci izbor'},
-            ]}
+            data={violationCategories?.map(
+              item =>
+                ({
+                  id: item.id,
+                  label: item.name,
+                } ?? []),
+            )}
             placeholderLabel={tipPrekrsaja}
           />
         </View>
@@ -140,7 +147,6 @@ export const ReportScreen = () => {
           />
           <CustomButton
             onPress={() => {
-              asdfgasf(); //TODO: Remove
               setSendReport(true);
             }}
             text="Prijavi"

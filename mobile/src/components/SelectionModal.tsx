@@ -36,7 +36,7 @@ export const SelectionModal = ({
   );
 
   const dynamicModalSnappingPoint =
-    data.length * listElementHeight + verticalListPadding * 2 + 30 + iconSize;
+    data?.length * listElementHeight + verticalListPadding * 2 + 30 + iconSize;
 
   const guarderDynamicModalSnappingPoint =
     dynamicModalSnappingPoint < maxModalSnappingPoint

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
@@ -9,7 +9,6 @@ import Education from '../assets/icons/education.svg';
 import {CustomButton} from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {useAppDispatch, useAppSelector} from '../hooks/storeHooks';
-import {loadArticleCategories} from '../store/src/reports/actions';
 import {getAccessToken} from '../store/src/authentication/selectors';
 
 export const HomeScreen = () => {
@@ -27,11 +26,6 @@ export const HomeScreen = () => {
 
   const asdasd = useAppSelector(getAccessToken);
   console.log('asfafrasf: ', asdasd);
-
-  //TODO remove
-  useEffect(() => {
-    dispatch(loadArticleCategories());
-  }, [dispatch]);
 
   return (
     <ScreenRootContainer title={headerTitle} showLogo hideGoBack>
