@@ -159,7 +159,7 @@ export const ReportScreen = () => {
 const style = StyleSheet.create({
   container: {
     paddingHorizontal: 30,
-    paddingTop: 50,
+    paddingTop: 25,
     backgroundColor: ColorPallet.plainWhite,
     flex: 1,
   },

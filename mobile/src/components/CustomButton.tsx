@@ -62,6 +62,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textTransform: 'uppercase',
     alignSelf: 'center',
-    fontWeight: '600',
   },
 });
