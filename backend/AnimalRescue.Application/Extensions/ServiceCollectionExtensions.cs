@@ -43,7 +43,10 @@ public static class ServiceCollectionExtensions
             .AddTransient<IArticleCategoryRepository, ArticleCategoryRepository>()
             .AddTransient<IArticleCategoryService, ArticleCategoryService>()
             .AddTransient<IMediaContentRepository, MediaContentRepository>()
-            .AddTransient<IMediaContentService, MediaContentService>();
+            .AddTransient<IMediaContentService, MediaContentService>()
+            .AddTransient<ILocationRepository, LocationRepository>()
+            .AddTransient<ILocationService, LocationService>()
+            .AddTransient<IReportsService, ReportsService>();
 
         return serviceCollection;
     }

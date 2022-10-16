@@ -81,7 +81,7 @@ public class ViolationService : IViolationService
 
         var created = await _violationRepository.AddAsync(violationToCreate);
 
-        await SendEmailAsync();
+        await SendEmailAsync(violationToCreate.Id);
 
         return created.ToDto();
     }
@@ -136,9 +136,10 @@ public class ViolationService : IViolationService
         return updated.ToAdminDto();
     }
 
-    private async Task SendEmailAsync()
+    private async Task SendEmailAsync(Guid id)
     {
-        var htmlMessageBody = await GenerateHtmlMessageBody(string.Empty).ConfigureAwait(false);
+        var urlToForwardTo = string.Format(_notificationOptions.UrlTemplate, id);
+        var htmlMessageBody = await GenerateHtmlMessageBody(urlToForwardTo);
         var emailRequest = new EmailRequestDto
         {
             Subject = _notificationOptions.Subject,
@@ -148,7 +149,7 @@ public class ViolationService : IViolationService
 
         try
         {
-            await _mailingServiceClient.SendEmailAsync(emailRequest).ConfigureAwait(false);
+            await _mailingServiceClient.SendEmailAsync(emailRequest);
         }
         catch (Exception ex)
         {
