@@ -13,6 +13,7 @@ import {MultilineTextInput} from '../components/MulitilineTextInput';
 import {CustomModalWithButton} from '../components/CustomModalWithButton';
 import {useNavigation} from '@react-navigation/native';
 import {ImageUploadElement} from '../components/ImageUploaderElement';
+import axios from 'axios';
 
 export const ReportScreen = () => {
   const {firstName, lastName} = useAppSelector(getNewReport);
@@ -35,6 +36,27 @@ export const ReportScreen = () => {
   const [sendReport, setSendReport] = useState(false);
 
   useEffect(() => setVisible(true), []);
+
+  // TODO: Remove Begin
+  const token =
+    'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIwQHRlc3QuY29tIiwicm9sZSI6IlVzZXIiLCJuYmYiOjE2NjU4NjY5MzcsImV4cCI6MTY2NTk1MzMzNywiaWF0IjoxNjY1ODY2OTM3fQ.EWB4MXKfd-cDk6q9QbomBWFr5Z6EQVvTFrdWmOHSRzSkOeEqbelIIpwJ4UAneTYv-3F3TjXMNQ7eDof4KiD46Q';
+  axios.defaults.timeout = 5000;
+  const asdfgasf = async () => {
+    try {
+      //TODO: Make sure to use axios.create() instead of this static call
+      await axios
+        //.get('https://178f-82-117-210-2.ngrok.io/api/ArticleCategories', {
+        .get('https://2556-82-117-210-2.ngrok.io/api/Reports', {
+          //headers: {Authorization: `Bearer ${token}`},
+        })
+        .then(response => {
+          console.log('RESP: ', response);
+        });
+    } catch (error) {
+      console.log(JSON.stringify(error, null, 2));
+    }
+  };
+  // TODO: Remove End
 
   return (
     <ScreenRootContainer title={headerTitle} showLogo>
@@ -93,7 +115,10 @@ export const ReportScreen = () => {
             isSmall
           />
           <CustomButton
-            onPress={() => setSendReport(true)}
+            onPress={() => {
+              asdfgasf(); //TODO: Remove
+              setSendReport(true);
+            }}
             text="Prijavi"
             isSmall
           />
