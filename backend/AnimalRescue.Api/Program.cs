@@ -99,8 +99,14 @@ public class Program
         applicationBuilder
             .UseStaticFiles()
             .UseRouting()
-            .UseCors()
-            .UseHttpsRedirection()
+            .UseCors();
+
+        if (!env.IsDevelopment())
+        {
+            applicationBuilder.UseHttpsRedirection();
+        }
+
+        applicationBuilder
             .UseAuthentication()
             .UseAuthorization();
 

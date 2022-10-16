@@ -32,7 +32,7 @@ public class LocationService : ILocationService
             "application/json");
 
         var response = await client.PostAsync("/api/v0.1/countries/cities", jsonContent);
-        var responseStr = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+        var responseStr = await response.Content.ReadAsStringAsync();
 
         var countryResponse = JsonHelper.Deserialize<CountryResponseDto>(responseStr);
 
