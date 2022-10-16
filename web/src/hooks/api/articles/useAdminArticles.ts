@@ -1,10 +1,10 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { getReports } from '../../../services/api/reports/getReports';
+import { getAdminArticles } from '../../../services/api/articles/getAdminArticles';
 
-export const useGetReports = (status?: number | null, search?: string) => {
+export const useAdminArticles = () => {
   return useInfiniteQuery(
-    ['reports', search],
-    ({ pageParam = 1 }) => getReports(pageParam, status, search),
+    ['adminArticles'],
+    ({ pageParam = 1 }) => getAdminArticles(pageParam),
     {
       cacheTime: 0,
       getNextPageParam: (lastPage, allPages) => {

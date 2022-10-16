@@ -81,6 +81,9 @@ public class ViolationRepository : IViolationRepository
             .Where(x => (violationFilterRequest.Location == null || violationFilterRequest.Location == x.Location) &&
                         (violationFilterRequest.CategoryId == null || violationFilterRequest.CategoryId == x.ViolationCategory.Id) &&
                         (violationFilterRequest.ViolationStatus == null || violationFilterRequest.ViolationStatus == x.Status))
+            .Where(x =>
+                        violationFilterRequest.SearchText == null || x.Address.Contains(violationFilterRequest.SearchText) ||
+                        (x.Description != null &&  x.Description.Contains(violationFilterRequest.SearchText)))
             .AsNoTracking()
             .ToListAsync();
 }

@@ -16,6 +16,7 @@ public class SeedData
 
     public void SeedSuperUser()
     {
+        // MOVE THIS TO APP SETTINGS
         if (_dbContext.Users.FirstOrDefault(u => u.Email == "superadmin@test.com") == null)
         {
             _dbContext.Users.Add(new User
@@ -138,6 +139,45 @@ public class SeedData
                     };
 
                     _dbContext.Violations.AddRange(violation1, violation2, violation3);
+                }
+            }
+
+            _dbContext.SaveChanges();
+        }
+
+        if (!_dbContext.Articles.Any())
+        {
+            var user = _dbContext.Users.First();
+
+            var categories = _dbContext
+                .ArticleCategories
+                .Take(5);
+
+            foreach (var category in categories)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    var article = new Article
+                    {
+                        Id = Guid.NewGuid(),
+                        User = user,
+                        Category = category,
+                        Decription = "article description",
+                        Title = "Title of article",
+                        Type = ArticleType.Article,
+                    };
+
+                    var page = new Article
+                    {
+                        Id = Guid.NewGuid(),
+                        User = user,
+                        Category = category,
+                        Decription = "page description",
+                        Title = "Title of page",
+                        Type = ArticleType.Page,
+                    };
+
+                    _dbContext.Articles.AddRange(article, page);
                 }
             }
 

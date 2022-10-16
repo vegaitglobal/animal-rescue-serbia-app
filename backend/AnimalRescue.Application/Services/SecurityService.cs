@@ -30,8 +30,10 @@ public class SecurityService : ISecurityService
         var claims = new List<Claim>
         {
             new (JwtRegisteredClaimNames.Email, userEmail),
+            new (ClaimTypes.Name, user!.FirstName),
+            new (ClaimTypes.Surname, user.LastName),
         };
-        claims.AddRange(GetRoles(user!.Role));
+        claims.AddRange(GetRoles(user.Role));
 
         var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 

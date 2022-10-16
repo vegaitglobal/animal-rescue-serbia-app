@@ -1,10 +1,10 @@
+import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import {
   IReportsResponse,
   ReportsStatus,
 } from '../../../../services/api/reports/getReports';
 import { Pencil } from '../../../../shared/Icons';
-import classNames from 'classnames';
 
 type Props = {
   singleReport: IReportsResponse;
@@ -14,9 +14,9 @@ const ReportItem: React.FC<Props> = ({ singleReport }) => {
   const editLink = '/prijave/' + singleReport.id;
 
   const statusText = () => {
-    if (singleReport.status === ReportsStatus.Accepted) return 'prihvaćen';
-    if (singleReport.status === ReportsStatus.Rejected) return 'odbijen';
-    return 'u obradi';
+    if (singleReport.status === ReportsStatus.Accepted) return 'Prihvaćen';
+    if (singleReport.status === ReportsStatus.Rejected) return 'Odbijen';
+    return 'Na čekanju';
   };
 
   return (
