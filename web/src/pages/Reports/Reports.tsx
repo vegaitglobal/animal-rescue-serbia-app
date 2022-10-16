@@ -35,7 +35,11 @@ const Reports = () => {
         </div>
       </div>
       <ul className="panel__list">{renderReports}</ul>
-      {hasNextPage && <button onClick={handleLoadMore}>Učitaj još</button>}
+      {hasNextPage && (
+        <button className="load-more__button" onClick={handleLoadMore}>
+          Učitaj još
+        </button>
+      )}
     </Layout>
   );
 };

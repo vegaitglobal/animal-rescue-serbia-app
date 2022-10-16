@@ -1,8 +1,8 @@
+import { useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetCategories } from '../../hooks/api/Categories/useGetCategories';
 import { usePostCategory } from '../../hooks/api/Categories/usePostCategory';
-import { ICategoryResponse } from '../../services/api/Categories/getCategories';
 import Plus from '../../shared/Icons/Plus/Plus';
 import Layout from '../../shared/Layout';
 import Loader from '../../shared/Loader';
@@ -10,35 +10,23 @@ import CategoryItem from './Components/CategoryItem';
 
 const Categories = () => {
   const navigate = useNavigate();
-  const handleSuccess = (data: ICategoryResponse[]) => {
-    setCategories(data.filter((item) => item.isEnabled === true));
-  };
+  const queryClient = useQueryClient();
 
   const handlePostSuccess = () => {
-    navigate(0);
+    queryClient.refetchQueries(['getCategories']);
   };
 
   const [name, setName] = useState('');
 
-  const [categories, setCategories] = useState<ICategoryResponse[]>();
-
-  const { isLoading } = useGetCategories({ onSuccess: handleSuccess });
+  const { data: categories, isLoading } = useGetCategories();
 
   const { mutate: postSubmit } = usePostCategory({
     onSuccess: handlePostSuccess,
   });
 
-  const refetchCategories = () => {
-    navigate(0);
-  };
-
-  const reportItemsHTML = categories?.map((item) => (
-    <CategoryItem
-      category={item}
-      refetchCategories={refetchCategories}
-      key={item.id}
-    />
-  ));
+  const reportItemsHTML = categories
+    ?.filter((category) => category.isEnabled)
+    .map((item) => <CategoryItem category={item} key={item.id} />);
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
