@@ -1,13 +1,16 @@
 import React, {useMemo} from 'react';
 import {
+  ActivityIndicator,
   Pressable,
   StyleProp,
   StyleSheet,
   Text,
   TextStyle,
+  View,
   ViewStyle,
 } from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
+import {EmptySpace} from './EmptySpace';
 
 type CustomButtonProps = {
   text?: string;
@@ -16,6 +19,7 @@ type CustomButtonProps = {
   isWhite?: boolean;
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
+  isLoading?: boolean;
 };
 export const CustomButton = ({
   text,
@@ -23,6 +27,7 @@ export const CustomButton = ({
   onPress,
   style,
   textStyle,
+  isLoading,
 }: CustomButtonProps) => {
   const dynamicStyle = useMemo(
     () => ({
@@ -47,6 +52,12 @@ export const CustomButton = ({
       ]}
       onPress={onPress}>
       <Text style={[styles.text, dynamicStyle.font, textStyle]}>{text}</Text>
+      {isLoading ? (
+        <>
+          <EmptySpace width={10} />
+          <ActivityIndicator />
+        </>
+      ) : null}
     </Pressable>
   );
 };
@@ -57,6 +68,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     backgroundColor: ColorPallet.yellow,
+    flexDirection: 'row',
   },
   text: {
     fontSize: 18,

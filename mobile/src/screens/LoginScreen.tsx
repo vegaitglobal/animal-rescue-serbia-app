@@ -27,21 +27,23 @@ export const LoginScreen = () => {
 
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
+  const [isSigningIn, setIsSigngingIn] = useState<boolean>();
 
   const navigation = useNavigation();
 
   const handleLogin = useCallback(async () => {
-    //login dispatch
     if (!email || !password) {
       return;
     }
 
+    setIsSigngingIn(true);
     const result = await dispatch(logIn({email, password}));
     if (result.meta.requestStatus === 'rejected') {
       return;
     }
     const unwraped = unwrapResult(result);
     AsyncStorage.setItem('accessToken', unwraped.accessToken);
+    setIsSigngingIn(false);
     navigation.navigate('HomeScreen');
   }, [dispatch, email, navigation, password]);
 
@@ -66,7 +68,11 @@ export const LoginScreen = () => {
         />
         <Text style={style.password}>{zaboravljenaLozinka}</Text>
         <View style={style.buttonContainer}>
-          <CustomButton text={prijaviteSe} onPress={handleLogin} />
+          <CustomButton
+            text={prijaviteSe}
+            onPress={handleLogin}
+            isLoading={isSigningIn}
+          />
         </View>
         <View style={style.registrationContainer}>
           <Text style={style.password}>{nemateNalog}</Text>
