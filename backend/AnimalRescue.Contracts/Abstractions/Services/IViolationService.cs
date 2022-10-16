@@ -1,10 +1,14 @@
 ﻿using AnimalRescue.Contracts.Dto;
+using AnimalRescue.Contracts.FilterRequests;
+using AnimalRescue.Contracts.Pagination;
 
 namespace AnimalRescue.Contracts.Abstractions.Services;
 
 public interface IViolationService
 {
     Task<ViolationDto?> GetAsync(Guid id);
+
+    Task<PaginatedResponse<AdminViolationDto>> GetAllPaginatedAsync(ViolationFilterRequest violationFilterRequest, PaginationParameters paginationParameters);
 
     Task<IEnumerable<AdminViolationDto>> GetAllAsync();
 
