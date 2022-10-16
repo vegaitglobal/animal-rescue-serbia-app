@@ -13,5 +13,6 @@ public static class UserExtensions
             Username = user.Username,
             FirstName = user.FirstName,
             LastName = user.LastName,
+            IsActive = user.IsActive,
         };
 }
