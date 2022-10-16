@@ -6,6 +6,7 @@ import {CustomButton} from './CustomButton';
 import {EmptySpace} from './EmptySpace';
 import {reduceFileDataIntoString} from './helpers';
 import {Video} from 'react-native-compressor';
+import {Dirs, FileSystem} from 'react-native-file-access';
 
 type ImageUploadElementProps = {
   placeholderText: string;
@@ -24,15 +25,27 @@ export const ImageUploadElement = ({
       mediaType: 'any',
     });
 
-    const firstElement = result?.[0] ?? {};
-    console.log('PathBeforeCompress: ', firstElement.path);
-    console.log('File size before: ', firstElement);
-    const pathAfterCompress = await Video.compress(firstElement.path, {
-      minimumFileSizeForCompress: 9,
-    });
+    try {
+      const firstElement = result?.[0] ?? {};
+      console.log('PathBeforeCompress: ', firstElement.path);
+      console.log('File size before: ', firstElement.size);
+      const pathAfterCompress = await Video.compress(firstElement.path);
 
-    console.log('PATH: ', pathAfterCompress);
-    setFileLog(reduceFileDataIntoString(result));
+      console.log('PATH: ', pathAfterCompress);
+      const pathPlus = pathAfterCompress.replace('\\/\\/', '\\/\\/\\/');
+      console.log('With three: ', pathPlus);
+      //const pathPlusPlus = pathAfterCompress.substring(6, pat);
+      const segments = pathAfterCompress.split('file://');
+      const withTreePlusPlusTemp = segments[1];
+      const withTreePlusPlus = `file:///${withTreePlusPlusTemp}`;
+      console.log('With three ajmo: ', withTreePlusPlus);
+      const video = await FileSystem.stat(withTreePlusPlus);
+      console.log('File size: ', video.size);
+      // console.log('Cache: ', Dirs.CacheDir);
+      setFileLog(reduceFileDataIntoString(result));
+    } catch (error) {
+      console.log('ERRRORRRRR: ', JSON.stringify(error));
+    }
   }, []);
 
   const dynamicPlaceholderTextStyle = fileLog ? {} : style.textPlaceholder;
