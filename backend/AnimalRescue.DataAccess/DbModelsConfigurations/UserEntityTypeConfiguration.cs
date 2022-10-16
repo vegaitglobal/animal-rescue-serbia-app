@@ -15,5 +15,7 @@ public class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
 
         entity.Property(u => u.Username).IsRequired();
         entity.HasIndex(u => u.Username).IsUnique();
+
+        entity.Property(u => u.IsActive).HasDefaultValue(true);
     }
 }

@@ -14,5 +14,7 @@ public class User
 
     public string Password { get; set; }
 
+    public bool IsActive { get; set; } = true;
+
     public UserRoles Role { get; set; } = UserRoles.User;
 }
