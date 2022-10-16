@@ -12,12 +12,4 @@ public static class ViolationCategoryExtensions
             Name = violationCategory.Name,
             IsEnabled = violationCategory.IsEnabled,
         };
-
-    public static ViolationCategory ToEntity(this ViolationCategoryUpdateDto violationCategory, Guid id)
-        => new()
-        {
-            Id = id,
-            Name = violationCategory.Name,
-            IsEnabled = violationCategory.IsEnabled,
-        };
 }

@@ -123,8 +123,10 @@ public class Program
                 var dataSeeder = scope.ServiceProvider.GetRequiredService<SeedData>();
                 dataSeeder.SeedTestData();
             }
-            catch { }
+            catch (Exception ex) { }
         }
+
+        SeedSuperUser(applicationBuilder);
 
         applicationBuilder
             .UseProblemDetails()
@@ -132,5 +134,12 @@ public class Program
             {
                 endpoints.MapDefaultControllerRoute();
             });
+    }
+
+    private static void SeedSuperUser(IApplicationBuilder applicationBuilder)
+    {
+        using var scope = applicationBuilder.ApplicationServices.CreateScope();
+        var dataSeeder = scope.ServiceProvider.GetRequiredService<SeedData>();
+        dataSeeder.SeedSuperUser();
     }
 }

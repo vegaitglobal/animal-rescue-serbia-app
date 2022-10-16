@@ -44,7 +44,7 @@ namespace AnimalRescue.Application.Services
             return articleCategories.Select(articleCategory => articleCategory.ToDto());
         }
 
-        public async  Task<ArticleCategoryDto?> GetAsync(Guid id)
+        public async Task<ArticleCategoryDto?> GetAsync(Guid id)
         {
             var entity = await _articleCategoryRepository.GetAsync(id);
 
@@ -59,7 +59,10 @@ namespace AnimalRescue.Application.Services
                 throw new EntityNotFoundException($"Article category with id: '{id}' does not exist!");
             }
 
-            var updatedEntity = await _articleCategoryRepository.UpdateAsync(articleCategory.ToEntity(id));
+            existingEntity.IsEnabled = articleCategory.IsEnabled;
+            existingEntity.Name = articleCategory.Name;
+
+            var updatedEntity = await _articleCategoryRepository.UpdateAsync(existingEntity);
 
             return updatedEntity.ToDto();
         }

@@ -59,7 +59,10 @@ public class ViolationCategoryService : IViolationCategoryService
             throw new EntityNotFoundException($"Violation category with id: '{id}' does not exist!");
         }
 
-        var updatedEntity = await _violationCategoryRepository.UpdateAsync(violationCategory.ToEntity(id));
+        existingEntity.IsEnabled = violationCategory.IsEnabled;
+        existingEntity.Name = violationCategory.Name;
+
+        var updatedEntity = await _violationCategoryRepository.UpdateAsync(existingEntity);
 
         return updatedEntity.ToDto();
     }
