@@ -31,7 +31,7 @@ export const getAdminArticles = async (
   pageParam: number
 ): Promise<IAdminArticlesPageResponse> => {
   console.log('usao');
-  const baseUrl = `/api/admin/articles/PaginatedArticles?PageNumber=${pageParam}`;
+  const baseUrl = `/api/admin/articles/PaginatedArticles?PageSize=9&PageNumber=${pageParam}`;
   const { data } = await axiosRequest('GET', baseUrl);
 
   return data;

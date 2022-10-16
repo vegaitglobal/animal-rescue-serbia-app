@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAdminArticles } from '../../hooks/api/articles/useAdminArticles';
 import Layout from '../../shared/Layout';
+import Loader from '../../shared/Loader';
 import Search from '../../shared/Search';
 import { PagesCard } from './Components';
 
@@ -11,6 +12,7 @@ const Pages = () => {
 
   const {
     data: adminArticles,
+    isLoading,
     hasNextPage,
     fetchNextPage,
   } = useAdminArticles();
@@ -29,6 +31,8 @@ const Pages = () => {
 
   const handleLoadMore = () => fetchNextPage();
 
+  if (isLoading) return <Loader />;
+
   return (
     <Layout>
       <div className="intro">
@@ -43,7 +47,11 @@ const Pages = () => {
         <Search />
       </div>
       <div className="cards">{renderAdminArticles}</div>
-      {hasNextPage && <button onClick={handleLoadMore}>Učitaj još</button>}
+      {hasNextPage && (
+        <button className="load-more__button" onClick={handleLoadMore}>
+          Učitaj još
+        </button>
+      )}
     </Layout>
   );
 };
