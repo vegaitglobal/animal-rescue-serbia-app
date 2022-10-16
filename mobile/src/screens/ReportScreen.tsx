@@ -47,7 +47,7 @@ export const ReportScreen = () => {
       await axios
         //.get('https://178f-82-117-210-2.ngrok.io/api/ArticleCategories', {
         .get('https://2556-82-117-210-2.ngrok.io/api/Reports', {
-          //headers: {Authorization: `Bearer ${token}`},
+          headers: {Authorization: `Bearer ${token}`},
         })
         .then(response => {
           console.log('RESP: ', response);
