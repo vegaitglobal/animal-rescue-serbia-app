@@ -42,6 +42,8 @@ public static class ServiceCollectionExtensions
             .AddTransient<IMailingServiceClient, MailingServiceClient>()
             .AddTransient<IArticleCategoryRepository, ArticleCategoryRepository>()
             .AddTransient<IArticleCategoryService, ArticleCategoryService>()
+            .AddTransient<IArticleRepository, ArticleRepository>()
+            .AddTransient<IArticleService, ArticleService>()
             .AddTransient<IMediaContentRepository, MediaContentRepository>()
             .AddTransient<IMediaContentService, MediaContentService>()
             .AddTransient<ILocationRepository, LocationRepository>()

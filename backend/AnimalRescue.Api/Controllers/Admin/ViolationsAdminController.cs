@@ -42,7 +42,7 @@ namespace AnimalRescue.Api.Controllers.Admin
         [HttpGet("{id}")]
         public async Task<ActionResult<AdminViolationDto>> GetViolationForAdminAsync(Guid id)
         {
-            var violation = await _violationService.GetAsync(id);
+            var violation = await _violationService.GetForAdminAsync(id);
 
             return violation is null
                 ? NotFound()

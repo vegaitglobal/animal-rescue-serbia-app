@@ -8,6 +8,8 @@ public interface IViolationService
 {
     Task<ViolationDto?> GetAsync(Guid id);
 
+    Task<AdminViolationDto?> GetForAdminAsync(Guid id);
+
     Task<PaginatedResponse<AdminViolationDto>> GetAllPaginatedAsync(ViolationFilterRequest violationFilterRequest, PaginationParameters paginationParameters);
 
     Task<IEnumerable<AdminViolationDto>> GetAllAsync();
