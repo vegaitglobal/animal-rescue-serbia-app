@@ -16,7 +16,7 @@ export const putCategory = async (
 ): Promise<ICategoryResponse> => {
   const { data } = await axiosRequest(
     'PUT',
-    '/api/admin/ViolationCategories/' + updateData.id,
+    '/admin/ViolationCategories/' + updateData.id,
     {
       data: updateData.putData,
     }
