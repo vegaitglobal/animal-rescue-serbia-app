@@ -5,48 +5,30 @@ import {ColorPallet} from '../resources/ColorPallet';
 import {CustomButton} from './CustomButton';
 import {EmptySpace} from './EmptySpace';
 import {reduceFileDataIntoString} from './helpers';
-import {Video} from 'react-native-compressor';
-import {Dirs, FileSystem} from 'react-native-file-access';
+import {SelectionResult} from './types';
 
 type ImageUploadElementProps = {
   placeholderText: string;
   buttonLabel?: string;
+  onFilesSelected: (data: SelectionResult[]) => void;
 };
 
 export const ImageUploadElement = ({
   buttonLabel,
   placeholderText,
+  onFilesSelected,
 }: ImageUploadElementProps) => {
   const [fileLog, setFileLog] = useState('');
 
   const onPress = useCallback(async () => {
-    const result = await ImagePicker.openPicker({
+    const pickedFiles = await ImagePicker.openPicker({
       multiple: true,
       mediaType: 'any',
     });
 
-    try {
-      const firstElement = result?.[0] ?? {};
-      console.log('PathBeforeCompress: ', firstElement.path);
-      console.log('File size before: ', firstElement.size);
-      const pathAfterCompress = await Video.compress(firstElement.path);
-
-      console.log('PATH: ', pathAfterCompress);
-      const pathPlus = pathAfterCompress.replace('\\/\\/', '\\/\\/\\/');
-      console.log('With three: ', pathPlus);
-      //const pathPlusPlus = pathAfterCompress.substring(6, pat);
-      const segments = pathAfterCompress.split('file://');
-      const withTreePlusPlusTemp = segments[1];
-      const withTreePlusPlus = `file:///${withTreePlusPlusTemp}`;
-      console.log('With three ajmo: ', withTreePlusPlus);
-      const video = await FileSystem.stat(withTreePlusPlus);
-      console.log('File size: ', video.size);
-      // console.log('Cache: ', Dirs.CacheDir);
-      setFileLog(reduceFileDataIntoString(result));
-    } catch (error) {
-      console.log('ERRRORRRRR: ', JSON.stringify(error));
-    }
-  }, []);
+    setFileLog(reduceFileDataIntoString(pickedFiles));
+    onFilesSelected(pickedFiles.map(({path, mime}) => ({path, mime})));
+  }, [onFilesSelected]);
 
   const dynamicPlaceholderTextStyle = fileLog ? {} : style.textPlaceholder;
 

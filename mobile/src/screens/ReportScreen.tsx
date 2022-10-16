@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import {CustomModal} from '../components/CustomModal';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
@@ -14,6 +14,8 @@ import {CustomModalWithButton} from '../components/CustomModalWithButton';
 import {useNavigation} from '@react-navigation/native';
 import {ImageUploadElement} from '../components/ImageUploaderElement';
 import axios from 'axios';
+import {SelectionResult} from '../components/types';
+import {batchCompress} from '../components/helpers';
 
 export const ReportScreen = () => {
   const {firstName, lastName} = useAppSelector(getNewReport);
@@ -57,6 +59,25 @@ export const ReportScreen = () => {
     }
   };
   // TODO: Remove End
+
+  const onFilesSelected = useCallback(
+    async (selectedFiles: SelectionResult[]) => {
+      const imagesOnly = selectedFiles.filter(file =>
+        file.mime.startsWith('image'),
+      );
+      const videosOnly = selectedFiles.filter(file =>
+        file.mime.startsWith('video'),
+      );
+
+      const compressedVideoFilePaths = await batchCompress(
+        videosOnly.map(file => file.path),
+      );
+
+      console.log('Image paths: ', imagesOnly);
+      console.log('Video PATHS: ', compressedVideoFilePaths);
+    },
+    [],
+  );
 
   return (
     <ScreenRootContainer title={headerTitle} showLogo>
@@ -102,7 +123,10 @@ export const ReportScreen = () => {
           />
         </View>
         <View style={style.photoContainer}>
-          <ImageUploadElement placeholderText={fotoVideo} />
+          <ImageUploadElement
+            placeholderText={fotoVideo}
+            onFilesSelected={onFilesSelected}
+          />
         </View>
         <MultilineTextInput
           style={style.textInputContainer}
