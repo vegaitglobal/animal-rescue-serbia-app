@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {Text} from 'react-native';
 import {CustomButton} from '../components/CustomButton';
@@ -7,6 +7,10 @@ import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {TextInput} from '../components/TextInput';
 import {ColorPallet} from '../resources/ColorPallet';
 import {SocialButtons} from '../components/SocialButtons';
+import {useAppDispatch} from '../hooks/storeHooks';
+import {logIn} from '../store/src/authentication/actions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {unwrapResult} from '@reduxjs/toolkit';
 
 export const LoginScreen = () => {
   const headerTitle = 'Dobro došli';
@@ -19,7 +23,27 @@ export const LoginScreen = () => {
   const registracija = 'Registrujte se';
   const ili = 'ili';
 
+  const dispatch = useAppDispatch();
+
+  const [email, setEmail] = useState<string>();
+  const [password, setPassword] = useState<string>();
+
   const navigation = useNavigation();
+
+  const handleLogin = useCallback(async () => {
+    //login dispatch
+    if (!email || !password) {
+      return;
+    }
+
+    const result = await dispatch(logIn({email, password}));
+    if (result.meta.requestStatus === 'rejected') {
+      return;
+    }
+    const unwraped = unwrapResult(result);
+    AsyncStorage.setItem('accessToken', unwraped.accessToken);
+    navigation.navigate('HomeScreen');
+  }, [dispatch, email, navigation, password]);
 
   return (
     <ScreenRootContainer title={headerTitle} showLogo hideGoBack>
@@ -27,20 +51,22 @@ export const LoginScreen = () => {
         <Text style={style.screenTitle}>{screenTitle}</Text>
         <View style={style.inputContainer}>
           <TextInput
+            onChangeText={setEmail}
+            value={email}
             placeholder={korisnickoIme}
             placeholderTextColor={ColorPallet.lightGray}
           />
         </View>
         <TextInput
+          onChangeText={setPassword}
+          value={password}
+          secureTextEntry
           placeholder={lozinka}
           placeholderTextColor={ColorPallet.lightGray}
         />
         <Text style={style.password}>{zaboravljenaLozinka}</Text>
         <View style={style.buttonContainer}>
-          <CustomButton
-            text={prijaviteSe}
-            onPress={() => navigation.navigate('HomeScreen')} //TODO change
-          />
+          <CustomButton text={prijaviteSe} onPress={handleLogin} />
         </View>
         <View style={style.registrationContainer}>
           <Text style={style.password}>{nemateNalog}</Text>

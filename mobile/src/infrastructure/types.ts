@@ -27,4 +27,5 @@ export interface IAuthManager {
 
 export interface IApiClient {
   request: <TReturn>(config: RequestConfig) => Promise<TReturn>;
+  signInRequest: <TReturn>(config: RequestConfig) => Promise<TReturn>;
 }

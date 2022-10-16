@@ -8,8 +8,9 @@ import Add from '../assets/icons/add.svg';
 import Education from '../assets/icons/education.svg';
 import {CustomButton} from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
-import {useAppDispatch} from '../hooks/storeHooks';
+import {useAppDispatch, useAppSelector} from '../hooks/storeHooks';
 import {loadArticleCategories} from '../store/src/reports/actions';
+import {getAccessToken} from '../store/src/authentication/selectors';
 
 export const HomeScreen = () => {
   const headerTitle = 'Prijavi';
@@ -23,6 +24,9 @@ export const HomeScreen = () => {
 
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
+
+  const asdasd = useAppSelector(getAccessToken);
+  console.log('asfafrasf: ', asdasd);
 
   //TODO remove
   useEffect(() => {
