@@ -1,7 +1,9 @@
-﻿using AnimalRescue.Application.Extensions;
+using AnimalRescue.Application.Extensions;
 using AnimalRescue.Contracts.Abstractions.Repositories;
 using AnimalRescue.Contracts.Abstractions.Services;
 using AnimalRescue.Contracts.Dto;
+using AnimalRescue.Contracts.FilterRequests;
+using AnimalRescue.Contracts.Pagination;
 using AnimalRescue.Contracts.Options;
 using AnimalRescue.Domain.Exceptions;
 using AnimalRescue.Domain.Models;
@@ -96,6 +98,18 @@ public class ViolationService : IViolationService
         var violations = await _violationRepository.GetAllAsync();
 
         return violations.Select(violation => violation.ToAdminDto());
+    }
+
+    public async Task<PaginatedResponse<AdminViolationDto>> GetAllPaginatedAsync(ViolationFilterRequest violationFilterRequest, PaginationParameters paginationParameters)
+    {
+        var paginatedResponse = await _violationRepository.GetAllPaginatedAsync(violationFilterRequest, paginationParameters);
+
+        return new PaginatedResponse<AdminViolationDto>()
+        {
+            PageNumber = paginatedResponse.PageNumber,
+            FilteredCount = paginatedResponse.FilteredCount,
+            Entities = paginatedResponse.Entities.Select(entity => entity.ToAdminDto())
+        };
     }
 
     public async Task<ViolationDto?> GetAsync(Guid id)
