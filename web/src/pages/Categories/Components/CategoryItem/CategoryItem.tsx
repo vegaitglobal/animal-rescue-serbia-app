@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { usePutCategory } from '../../../../hooks/api/Categories/usePutCategory';
 import { ICategoryResponse } from '../../../../services/api/Categories/getCategories';
@@ -7,11 +8,13 @@ import Modal from '../../../../shared/Modal/Modal';
 
 type Props = {
   category: ICategoryResponse;
-  refetchCategories: () => void;
 };
 
-const CategoryItem: React.FC<Props> = ({ category, refetchCategories }) => {
+const CategoryItem: React.FC<Props> = ({ category }) => {
+  const queryClient = useQueryClient();
+
   const handleEditSuccess = () => {
+    queryClient.refetchQueries(['getCategories']);
     setShowEditModal(false);
   };
 
@@ -37,7 +40,6 @@ const CategoryItem: React.FC<Props> = ({ category, refetchCategories }) => {
       },
     });
     setShowEditModal(false);
-    refetchCategories();
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +59,6 @@ const CategoryItem: React.FC<Props> = ({ category, refetchCategories }) => {
       },
     });
     setShowDeleteModal(false);
-    refetchCategories();
   };
 
   const handleTrashcanClick = () => {

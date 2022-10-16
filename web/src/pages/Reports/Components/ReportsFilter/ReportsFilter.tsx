@@ -1,23 +1,15 @@
-import React from 'react';
 import Select, { CSSObjectWithLabel } from 'react-select';
 
 const ReportsFilter = () => {
-  const locationOptions = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-  ];
+  const locationOptions = [{ value: '', label: '' }];
 
-  const categoryOptions = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-  ];
+  const categoryOptions = [{ value: '', label: '' }];
 
   const statusOptions = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
+    { value: '0', label: 'Na čekanju' },
+    { value: '1', label: 'Odbijen' },
+    { value: '2', label: 'Prihvaćen' },
+    { value: '3', label: 'Procesuiran' },
   ];
 
   const filterStyles = {
