@@ -25,9 +25,12 @@ import {
   loadViolationCategories,
   setAddress,
   setDescription,
+  setLocation,
   setNameSurname,
   setPhoneNumber,
+  setViolationCategory,
 } from '../store/src/reports/actions';
+import {ItemData} from '../components/commonTypes';
 
 export const ReportScreen = () => {
   // const {firstName, lastName} = useAppSelector(getNewReport);
@@ -89,16 +92,19 @@ export const ReportScreen = () => {
           <TextInput
             placeholder={imeIPrezime}
             placeholderTextColor={ColorPallet.lightGray}
-            onChangeText={value => setNameSurname(value)}
+            onChangeText={value => dispatch(setNameSurname(value))}
           />
         </View>
         <View style={style.inputContainer}>
           <SelectionInput
-            onValueSelected={item => console.log('Test: ', item)}
-            data={locations?.locations?.map((item, index) => ({
-              label: item,
-              id: index.toString(),
-            }))}
+            onValueSelected={item => dispatch(setLocation(item.label))}
+            data={locations?.map(
+              (item, index) =>
+                ({
+                  label: item,
+                  id: index.toString(),
+                } as ItemData),
+            )}
             placeholderLabel={lokacija}
           />
         </View>
@@ -106,19 +112,21 @@ export const ReportScreen = () => {
           <TextInput
             placeholder={adresa}
             placeholderTextColor={ColorPallet.lightGray}
-            onChangeText={value => setAddress(value)}
+            onChangeText={value => dispatch(setAddress(value))}
           />
         </View>
         <View style={style.inputContainer}>
           <TextInput
             placeholder={brTelefona}
             placeholderTextColor={ColorPallet.lightGray}
-            onChangeText={value => setPhoneNumber(value)}
+            onChangeText={value => dispatch(setPhoneNumber(value))}
           />
         </View>
         <View style={style.inputContainer}>
           <SelectionInput
-            onValueSelected={item => console.log('Test: ', item)}
+            onValueSelected={item =>
+              item.id && dispatch(setViolationCategory(item.id))
+            }
             data={violationCategories?.map(
               item =>
                 ({
@@ -136,6 +144,7 @@ export const ReportScreen = () => {
           />
         </View>
         <MultilineTextInput
+          onChangeText={value => dispatch(setDescription(value))}
           style={style.textInputContainer}
           placeholder="Opis"
         />

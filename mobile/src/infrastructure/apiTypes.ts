@@ -14,9 +14,7 @@ export type LogInResponseDto = {
   accessToken: string;
 };
 
-export type LocationsDto = {
-  locations: string[];
-};
+export type LocationsDto = string[];
 
 export type ViolationsDto = {
   location: string;

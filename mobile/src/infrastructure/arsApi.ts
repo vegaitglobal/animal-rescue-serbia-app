@@ -1,4 +1,4 @@
-import {Violations} from '../store/src/reports/types';
+import {Violation} from '../store/src/reports/types';
 import {
   ArticleCategoriesDto,
   LocationsDto,
@@ -41,7 +41,7 @@ export const arsApi = (apiClient: IApiClient) => ({
       method: 'get',
     });
   },
-  postViolation: (violations: Violations) => {
+  postViolation: (violations: Violation) => {
     return apiClient.request<ViolationsDto>({
       url: setViolations,
       method: 'post',

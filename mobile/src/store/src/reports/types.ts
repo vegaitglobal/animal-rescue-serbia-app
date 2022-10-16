@@ -9,11 +9,9 @@ export type ViolationCategories = {
   isEnabled: boolean;
 };
 
-export type Locations = {
-  locations: string[];
-};
+export type Locations = string[];
 
-export type Violations = {
+export type Violation = {
   location: string;
   violationCategoryId: string;
   fullName: string;
@@ -27,5 +25,5 @@ export type ReportState = {
   // newReport: NewReport;
   violationCategories: ViolationCategories[];
   locations: Locations;
-  violations: Violations;
+  violations: Violation;
 };

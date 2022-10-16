@@ -6,13 +6,16 @@ import {TextInput} from 'react-native-gesture-handler';
 type MultilineTextInputProps = {
   placeholder?: string;
   style?: StyleProp<ViewStyle>;
+  onChangeText: (text: string) => void;
 };
 export const MultilineTextInput = ({
   placeholder,
   style,
+  onChangeText,
 }: MultilineTextInputProps) => {
   return (
     <TextInput
+      onChangeText={onChangeText}
       style={[styles.container, style]}
       placeholder={placeholder}
       multiline

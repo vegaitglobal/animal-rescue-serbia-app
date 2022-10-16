@@ -39,6 +39,7 @@ export const LoginScreen = () => {
     setIsSigngingIn(true);
     const result = await dispatch(logIn({email, password}));
     if (result.meta.requestStatus === 'rejected') {
+      setIsSigngingIn(false);
       return;
     }
     const unwraped = unwrapResult(result);

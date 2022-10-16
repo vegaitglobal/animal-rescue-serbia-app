@@ -4,11 +4,10 @@ import {
   ArticleCategoriesDto,
   LocationsDto,
   ViolationCategoriesDto,
-  ViolationsDto,
 } from '../../../infrastructure/apiTypes';
 import {arsApi} from '../../../infrastructure/arsApi';
 import {directUpdateAction} from '../util/helpers';
-import {Violations} from './types';
+import {Violation} from './types';
 
 export const setNameSurname = createAction(
   'reports/setNameSurname',
@@ -36,6 +35,11 @@ export const setFiles = createAction(
 
 export const setDescription = createAction(
   'reports/setDescription',
+  directUpdateAction<string>(),
+);
+
+export const setViolationCategory = createAction(
+  'reports/setViolationCategory',
   directUpdateAction<string>(),
 );
 
@@ -79,13 +83,13 @@ export const loadViolationCategories = createAsyncThunk<
 });
 
 export const setViolations = createAsyncThunk<
-  Violations,
-  Violations,
+  Violation,
+  Violation,
   AppThunkApiConfig
 >('reports/Violations', async (_, {extra}) => {
   const client = extra.apiClient;
   const api = arsApi(client);
-  const data = {} as Violations;
+  const data = {} as Violation;
   const response = await api.postViolation(data);
 
   return response;
