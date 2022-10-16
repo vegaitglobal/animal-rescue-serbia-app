@@ -11,10 +11,15 @@ const clearAccessToken = () => {
   localStorage.removeItem('accessToken');
 };
 
+const hasAccessToken = () => {
+  return !!getAccessToken();
+};
+
 const storageApi = {
   storeToken: storeAccessToken,
   getToken: getAccessToken,
   clearToken: clearAccessToken,
+  hasToken: hasAccessToken,
 };
 
 export default storageApi;
