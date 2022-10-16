@@ -13,6 +13,8 @@ import {ColorPallet} from '../resources/ColorPallet';
 import {HomeScreen} from '../screens/HomeScreen';
 import {ReportScreen} from '../screens/ReportScreen';
 import {HomeStackNavigator} from './HomeStackNavigator';
+import {DonationScreen} from '../screens/DonationScreen';
+import {InformationScreen} from '../screens/InformationScreen';
 
 export const RootTabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -68,10 +70,32 @@ export const RootTabNavigator = () => {
         component={SosScreen}
         options={{headerShown: false}}
       />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Tab.Screen
         name="Report"
         component={ReportScreen}
+        options={{
+          headerShown: false,
+          tabBarButton: () => null,
+        }}
+      />
+      <Tab.Screen
+        name="Donation"
+        component={DonationScreen}
+        options={{
+          headerShown: false,
+          tabBarButton: () => null,
+        }}
+      />
+      <Tab.Screen
+        name="Information"
+        component={InformationScreen}
         options={{
           headerShown: false,
           tabBarButton: () => null,
