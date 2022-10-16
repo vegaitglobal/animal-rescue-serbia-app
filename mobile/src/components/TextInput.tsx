@@ -11,9 +11,12 @@ type TextInputProps = TextInputPropsNative & {};
 export const TextInput = (props: TextInputProps) => {
   return (
     <TextInputNative
-      // placeholderTextColor={ColorPallet.lightGray}
-      // style={commonStyles.inputField}
-      {...props}
+      editable={props.editable}
+      placeholder={props.placeholder}
+      value={props.value}
+      onChangeText={props.onChangeText}
+      placeholderTextColor={ColorPallet.lightGray}
+      style={commonStyles.inputField}
     />
   );
 };
