@@ -143,5 +143,44 @@ public class SeedData
 
             _dbContext.SaveChanges();
         }
+
+        if (!_dbContext.Articles.Any())
+        {
+            var user = _dbContext.Users.First();
+
+            var categories = _dbContext
+                .ArticleCategories
+                .Take(5);
+
+            foreach (var category in categories)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    var article = new Article
+                    {
+                        Id = Guid.NewGuid(),
+                        User = user,
+                        Category = category,
+                        Decription = "article description",
+                        Title = "Title of article",
+                        Type = ArticleType.Article,
+                    };
+
+                    var page = new Article
+                    {
+                        Id = Guid.NewGuid(),
+                        User = user,
+                        Category = category,
+                        Decription = "page description",
+                        Title = "Title of page",
+                        Type = ArticleType.Page,
+                    };
+
+                    _dbContext.Articles.AddRange(article, page);
+                }
+            }
+
+            _dbContext.SaveChanges();
+        }
     }
 }
