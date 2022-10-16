@@ -16,6 +16,7 @@ public class SeedData
 
     public void SeedSuperUser()
     {
+        // MOVE THIS TO APP SETTINGS
         if (_dbContext.Users.FirstOrDefault(u => u.Email == "superadmin@test.com") == null)
         {
             _dbContext.Users.Add(new User
