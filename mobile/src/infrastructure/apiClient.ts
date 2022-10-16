@@ -55,7 +55,7 @@ export const apiClient = (authManager: IAuthManager): IApiClient => {
     },
     async signInRequest<TReturn>(config: RequestConfig): Promise<TReturn> {
       try {
-        return (await axios.request(config)).data as TReturn;
+        return (await axios.request({...config, baseURL})).data as TReturn;
       } catch (error) {
         console.log('Error: ', error);
 
