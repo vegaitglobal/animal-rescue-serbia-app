@@ -1,0 +1,57 @@
+.intro__title {
+  font-size: 22px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.category__input {
+  width: 320px;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin-right: 20px;
+}
+
+.category__input--modal {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.category__title {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 700;
+  margin-right: 30px;
+  margin-bottom: 30px;
+}
+
+.category__holder {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.category__container {
+  margin-bottom: 30px;
+}
+
+.category__add-btn {
+  cursor: pointer;
+  height: 40px;
+  background-color: #fce51f;
+  color: #fff;
+  border: 0;
+  padding: 10px 20px;
+  color: #363535;
+  font-weight: 600;
+  border-radius: 10px;
+  svg {
+    margin-right: 8px;
+  }
+}
+
+.category__buttons {
+  display: flex;
+  flex-wrap: wrap;
+}

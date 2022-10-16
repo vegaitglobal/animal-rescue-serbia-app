@@ -48,6 +48,16 @@ const Sidebar = () => {
               Korisnici
             </NavLink>
           </li>
+          <li className="nav__item">
+            <NavLink
+              to="/kategorije"
+              className={({ isActive }) =>
+                isActive ? 'nav__btn nav__btn--active' : 'nav__btn'
+              }
+            >
+              Kategorije i tipovi
+            </NavLink>
+          </li>
         </ul>
       </nav>
       <button type="button" className="header__logout" onClick={handleLogOut}>
