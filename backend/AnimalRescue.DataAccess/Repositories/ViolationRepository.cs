@@ -1,4 +1,6 @@
 ﻿using AnimalRescue.Contracts.Abstractions.Repositories;
+using AnimalRescue.Contracts.FilterRequests;
+using AnimalRescue.Contracts.Pagination;
 using AnimalRescue.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,6 +41,22 @@ public class ViolationRepository : IViolationRepository
             .AsNoTracking()
             .ToListAsync();
 
+    public async Task<PaginatedResponse<Violation>> GetAllPaginatedAsync(ViolationFilterRequest violationFilterRequest, PaginationParameters paginationParameters)
+    {
+        var filteredEntities = await GetAllFilteredAsync(violationFilterRequest);
+
+        var paginatedEntities = filteredEntities
+            .Skip((paginationParameters.PageNumber - 1) * paginationParameters.PageSize)
+            .Take(paginationParameters.PageSize);
+
+        return new PaginatedResponse<Violation>()
+        {
+            PageNumber = paginationParameters.PageNumber,
+            FilteredCount = filteredEntities.Count(),
+            Entities = paginatedEntities
+        };
+    }
+
     public async Task<Violation?> GetAsync(Guid id)
         => await _dbContext
             .Violations
@@ -54,4 +72,15 @@ public class ViolationRepository : IViolationRepository
 
         return updated.Entity;
     }
+
+    private async Task<IEnumerable<Violation>> GetAllFilteredAsync(ViolationFilterRequest violationFilterRequest)
+        => await _dbContext
+            .Violations
+            .Include(lv => lv.User)
+            .Include(lv => lv.ViolationCategory)
+            .Where(x => (violationFilterRequest.Location == null || violationFilterRequest.Location == x.Location) &&
+                        (violationFilterRequest.CategoryId == null || violationFilterRequest.CategoryId == x.ViolationCategory.Id) &&
+                        (violationFilterRequest.ViolationStatus == null || violationFilterRequest.ViolationStatus == x.Status))
+            .AsNoTracking()
+            .ToListAsync();
 }

@@ -12,6 +12,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="MailKit" Version="3.3.0" />
+    <PackageReference Include="MimeKit" Version="3.3.0" />
+    <PackageReference Include="Razor.Templating.Core" Version="1.7.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="5.0.10" />
@@ -21,6 +24,7 @@
     <ProjectReference Include="..\AnimalRescue.Contracts\AnimalRescue.Contracts.csproj" />
     <ProjectReference Include="..\AnimalRescue.DataAccess\AnimalRescue.DataAccess.csproj" />
     <ProjectReference Include="..\AnimalRescue.Domain\AnimalRescue.Domain.csproj" />
+    <ProjectReference Include="..\AnimalRescue.HtmlTemplates\AnimalRescue.HtmlTemplates.csproj" />
   </ItemGroup>
 
 </Project>

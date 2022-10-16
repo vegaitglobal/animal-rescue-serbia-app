@@ -14,6 +14,7 @@ COPY ["AnimalRescue.Application/AnimalRescue.Application.csproj", "AnimalRescue.
 COPY ["AnimalRescue.DataAccess/AnimalRescue.DataAccess.csproj", "AnimalRescue.DataAccess/"]
 COPY ["AnimalRescue.Domain/AnimalRescue.Domain.csproj", "AnimalRescue.Domain/"]
 COPY ["AnimalRescue.Contracts/AnimalRescue.Contracts.csproj", "AnimalRescue.Contracts/"]
+COPY ["AnimalRescue.HtmlTemplates/AnimalRescue.HtmlTemplates.csproj", "AnimalRescue.HtmlTemplates/"]
 RUN dotnet restore
 COPY . .
 

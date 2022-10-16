@@ -9,4 +9,10 @@ public interface IUserService
     Task<bool> ValidateUserCredentials(string email, string password);
 
     Task<UserDto> AddAsync(UserCreateDto dto);
+
+    Task<UserDto> UpdateAsync(Guid id, UserUpdateDto userUpdateDto);
+
+    Task<UserDto?> GetByIdAsync(Guid id);
+
+    Task<IEnumerable<UserDto>> GetAllAsync();
 }

@@ -27,8 +27,25 @@ public class UserRepository : IUserRepository
             .Users
             .FirstOrDefaultAsync(user => user.Email == email);
 
+    public Task<User?> GetByIdAsync(Guid id)
+        => _context
+            .Users
+            .FirstOrDefaultAsync<User>(user => user.Id == id);
+
+    public async Task<IEnumerable<User>> GetAllAsync()
+        => await _context.Users.ToListAsync();
+
+    public async Task<User> UpdateAsync(User user)
+    {
+        var updated = _context.Users.Update(user);
+
+        await _context.SaveChangesAsync();
+
+        return updated.Entity;
+    }
+
     public Task<bool> ValidateUserExistsAsync(string email, string passwordHash)
         => _context
             .Users
-            .AnyAsync(user => user.Email == email && user.Password == passwordHash);
+            .AnyAsync(user => user.Email == email && user.Password == passwordHash && user.IsActive);
 }
