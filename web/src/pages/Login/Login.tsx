@@ -1,9 +1,16 @@
+import jwt_decode from 'jwt-decode';
 import React, { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/logo.png';
 import { useLogin } from '../../hooks/api/login/useLogin';
 import { ILoginRequest, ILoginResponse } from '../../services/api/auth';
 import storageApi from '../../services/storage.service';
+
+interface User {
+  name: string;
+  family_name: string;
+  email: string;
+}
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,6 +27,11 @@ const Login = () => {
   }, [navigate]);
 
   const handleSuccess = (data: ILoginResponse) => {
+    const decodedToken: User = jwt_decode(data.accessToken);
+    localStorage.setItem('firstName', decodedToken.name);
+    localStorage.setItem('lastName', decodedToken.family_name);
+    localStorage.setItem('email', decodedToken.email);
+
     storageApi.storeToken(data.accessToken);
     navigate('/prijave');
   };

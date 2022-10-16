@@ -1,12 +1,17 @@
-import React from 'react';
-import Logo from '../../assets/logo.png';
 import { NavLink, useNavigate } from 'react-router-dom';
+import Logo from '../../assets/logo.png';
 import storageApi from '../../services/storage.service';
 
 const Sidebar = () => {
   const navigate = useNavigate();
+  const firstName = localStorage.getItem('firstName');
+  const lastName = localStorage.getItem('lastName');
+  const email = localStorage.getItem('email');
 
   const handleLogOut = () => {
+    localStorage.removeItem('firstName');
+    localStorage.removeItem('lastName');
+    localStorage.removeItem('email');
     storageApi.clearToken();
     navigate('/prijavljivanje');
   };
@@ -14,8 +19,8 @@ const Sidebar = () => {
   return (
     <header className="header">
       <img src={Logo} alt="Logo" className="header__logo" />
-      <span className="header__name">Petar Petrović</span>
-      <span className="header__address">petar_petrovic@gmail.com</span>
+      <span className="header__name">{`${firstName} ${lastName}`}</span>
+      <span className="header__address">{email}</span>
       <nav className="nav">
         <ul className="nav__list">
           <li className="nav__item">
