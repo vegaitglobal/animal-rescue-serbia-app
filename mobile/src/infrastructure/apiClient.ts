@@ -7,6 +7,17 @@ export const apiClient = (authManager: IAuthManager): IApiClient => {
   const tokens =
     'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIwQHRlc3QuY29tIiwicm9sZSI6IlVzZXIiLCJuYmYiOjE2NjU4NjY5MzcsImV4cCI6MTY2NTk1MzMzNywiaWF0IjoxNjY1ODY2OTM3fQ.EWB4MXKfd-cDk6q9QbomBWFr5Z6EQVvTFrdWmOHSRzSkOeEqbelIIpwJ4UAneTYv-3F3TjXMNQ7eDof4KiD46Q';
 
+  axios?.interceptors?.response?.use?.(
+    config => {
+      console.log('CONFIG: ', config);
+      return config;
+    },
+    error => {
+      console.log('Error: ', error);
+      return Promise.reject(error);
+    },
+  );
+
   const configureRequest = async (
     manager: IAuthManager,
     config: RequestConfig,
@@ -15,6 +26,7 @@ export const apiClient = (authManager: IAuthManager): IApiClient => {
 
     // const token = await manager.getAccessToken();
     const token = await AsyncStorage.getItem('accessToken');
+    console.log('asfasdasd: ', token);
 
     if (token) {
       const actualHeaders = {
@@ -41,10 +53,10 @@ export const apiClient = (authManager: IAuthManager): IApiClient => {
           ...request,
           headers: {
             ...request.headers,
-            'Content-Type': 'application/json',
+            //'Content-Type': 'application/json',
           },
         });
-        return response.data as TReturn;
+        return response?.data as TReturn;
       } catch (error) {
         console.log('error ', error);
 
@@ -55,9 +67,29 @@ export const apiClient = (authManager: IAuthManager): IApiClient => {
     },
     async signInRequest<TReturn>(config: RequestConfig): Promise<TReturn> {
       try {
-        return (await axios.request({...config, baseURL})).data as TReturn;
+        return (await axios.request({...config, baseURL}))?.data as TReturn;
       } catch (error) {
         console.log('Error: ', error);
+
+        throw new Error(
+          'Oops. Something wrong just happened and we could not identify exactly what.',
+        );
+      }
+    },
+    async formRequest<TReturn>(config: RequestConfig): Promise<TReturn> {
+      try {
+        const request = await configureRequest(authManager, config);
+        const response = await axios.request({
+          ...request,
+          headers: {
+            ...request.headers,
+            Accept: 'text/plain',
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        return response?.data as TReturn;
+      } catch (error) {
+        console.log('error ', JSON.stringify(error));
 
         throw new Error(
           'Oops. Something wrong just happened and we could not identify exactly what.',

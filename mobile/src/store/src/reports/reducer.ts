@@ -8,7 +8,8 @@ import {
   setLocation,
   setNameSurname,
   setPhoneNumber,
-  setViolations,
+  sendViolation,
+  setViolationCategory,
 } from './actions';
 import {getInitialState} from './initialState';
 
@@ -36,7 +37,10 @@ export const reportSlice = createSlice({
         state.violation.files = payload;
       })
       .addCase(setDescription, (state, {payload}) => {
-        state.violation.desctiption = payload;
+        state.violation.description = payload;
+      })
+      .addCase(setViolationCategory, (state, {payload}) => {
+        state.violation.violationCategoryId = payload;
       })
       .addCase(loadViolationCategories.fulfilled, (state, action) => {
         state.violationCategories = action.payload;
@@ -44,8 +48,8 @@ export const reportSlice = createSlice({
       .addCase(loadLocations.fulfilled, (state, action) => {
         state.locations = action.payload;
       })
-      .addCase(setViolations.fulfilled, (state, action) => {
-        state.violation = action.payload;
+      .addCase(sendViolation.fulfilled, (state, action) => {
+        //state.violation = action.payload;
       });
   },
 });

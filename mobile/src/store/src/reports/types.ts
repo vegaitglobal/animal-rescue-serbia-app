@@ -18,7 +18,7 @@ export type Violation = {
   address: string;
   phoneNumber: string;
   files: string[];
-  desctiption: string;
+  description: string;
 };
 
 export type ReportState = {

@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {CustomModal} from '../components/CustomModal';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
@@ -7,7 +7,7 @@ import Report from '../assets/icons/educationGrayBg.svg';
 import {useAppDispatch, useAppSelector} from '../hooks/storeHooks';
 import {
   getLocations,
-  getNewReport,
+  getNewViolation,
   getViolationCategories,
 } from '../store/src/reports/selectors';
 import {TextInput} from '../components/TextInput';
@@ -17,12 +17,12 @@ import {MultilineTextInput} from '../components/MulitilineTextInput';
 import {CustomModalWithButton} from '../components/CustomModalWithButton';
 import {useNavigation} from '@react-navigation/native';
 import {ImageUploadElement} from '../components/ImageUploaderElement';
-import axios from 'axios';
 import {SelectionResult} from '../components/types';
 import {batchCompress} from '../components/helpers';
 import {
   loadLocations,
   loadViolationCategories,
+  sendViolation,
   setAddress,
   setDescription,
   setLocation,
@@ -39,7 +39,7 @@ export const ReportScreen = () => {
 
   const locations = useAppSelector(getLocations);
 
-  console.log('locations ', locations);
+  //console.log('locations ', locations);
 
   const dispatch = useAppDispatch();
 
@@ -58,8 +58,20 @@ export const ReportScreen = () => {
   const [visible, setVisible] = useState(false);
   const [declineModalVisible, setDeclineModalVisible] = useState(false);
   const [sendReport, setSendReport] = useState(false);
+  const violation = useAppSelector(getNewViolation);
 
   useEffect(() => setVisible(true), []);
+
+  const handleReport = useCallback(async () => {
+    setSendReport(false);
+    console.log('HJelenea: ', violation);
+    const result = await dispatch(sendViolation(violation));
+    if (result.meta.requestStatus === 'rejected') {
+      console.log('Report failed');
+      return;
+    }
+    navigation.navigate('Home');
+  }, [dispatch, navigation, violation]);
 
   useEffect(() => {
     dispatch(loadViolationCategories());
@@ -90,9 +102,13 @@ export const ReportScreen = () => {
       <View style={style.container}>
         <View style={style.inputContainer}>
           <TextInput
+            value={violation.fullName}
             placeholder={imeIPrezime}
             placeholderTextColor={ColorPallet.lightGray}
-            onChangeText={value => dispatch(setNameSurname(value))}
+            onChangeText={value => {
+              console.log('VAlue: ', value);
+              dispatch(setNameSurname(value));
+            }}
           />
         </View>
         <View style={style.inputContainer}>
@@ -124,9 +140,10 @@ export const ReportScreen = () => {
         </View>
         <View style={style.inputContainer}>
           <SelectionInput
-            onValueSelected={item =>
-              item.id && dispatch(setViolationCategory(item.id))
-            }
+            onValueSelected={item => {
+              console.log('ID123: ', item?.id);
+              item.id && dispatch(setViolationCategory(item.id));
+            }}
             data={violationCategories?.map(
               item =>
                 ({
@@ -185,10 +202,7 @@ export const ReportScreen = () => {
         text={'Neko od nasih volontera ce te uskoro kontaktirati'}
         icon={<Report width={100} height={100} />}
         buttonPositive="U redu"
-        onPressPositiveBtn={() => {
-          setSendReport(false);
-          navigation.navigate('Home');
-        }}
+        onPressPositiveBtn={handleReport}
         visible={sendReport}
       />
     </ScreenRootContainer>

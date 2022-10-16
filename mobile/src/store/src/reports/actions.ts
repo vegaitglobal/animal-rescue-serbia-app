@@ -4,6 +4,7 @@ import {
   ArticleCategoriesDto,
   LocationsDto,
   ViolationCategoriesDto,
+  ViolationsDto,
 } from '../../../infrastructure/apiTypes';
 import {arsApi} from '../../../infrastructure/arsApi';
 import {RootState} from '../rootReducer';
@@ -83,13 +84,18 @@ export const loadViolationCategories = createAsyncThunk<
   return response;
 });
 
-export const setViolations = createAsyncThunk<
-  Violation,
+export const sendViolation = createAsyncThunk<
+  ViolationsDto,
   Violation,
   AppThunkApiConfig
->('reports/Violations', async (_, {extra, getState}) => {
+>('reports/Violations', async (data, {extra, getState}) => {
   const client = extra.apiClient;
   const api = arsApi(client);
-  const state: RootState = getState();
-  return await api.postViolation(state.report.violation);
+
+  try {
+    console.log('fadffsdafds: ', data);
+    return await api.postViolation(data);
+  } catch (error) {
+    console.log('error: ', error);
+  }
 });

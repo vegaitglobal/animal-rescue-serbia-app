@@ -9,9 +9,11 @@ import {commonStyles} from './commonStyles';
 type TextInputProps = TextInputPropsNative & {};
 
 export const TextInput = (props: TextInputProps) => {
-  const styleOverrideProps: TextInputPropsNative = {
-    placeholderTextColor: ColorPallet.lightGray,
-    style: commonStyles.inputField,
-  };
-  return <TextInputNative {...styleOverrideProps} {...props} />;
+  return (
+    <TextInputNative
+      // placeholderTextColor={ColorPallet.lightGray}
+      // style={commonStyles.inputField}
+      {...props}
+    />
+  );
 };
