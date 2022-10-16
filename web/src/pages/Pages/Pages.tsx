@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAdminArticles } from '../../hooks/api/articles/useAdminArticles';
+import { Create } from '../../shared/Icons';
 import Layout from '../../shared/Layout';
 import Loader from '../../shared/Loader';
 import Search from '../../shared/Search';
@@ -41,6 +42,7 @@ const Pages = () => {
             className="cards__create-button"
             onClick={handleCreatePageClick}
           >
+            <Create />
             Kreiraj stranicu
           </button>
         </div>
