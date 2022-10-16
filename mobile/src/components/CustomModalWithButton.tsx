@@ -141,7 +141,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     textTransform: 'uppercase',
-    fontWeight: '800',
     paddingBottom: 15,
   },
 });

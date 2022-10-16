@@ -50,7 +50,6 @@ export const LoginScreen = () => {
               onPress={() => navigation.navigate('Registration')} //TODO change
             />
           </View>
-          <Text style={style.password}>{ili}</Text>
           <SocialButtons />
         </View>
       </View>
@@ -67,7 +66,6 @@ const style = StyleSheet.create({
   },
   screenTitle: {
     fontSize: 18,
-    fontWeight: '600',
     textTransform: 'uppercase',
     alignSelf: 'center',
     paddingBottom: 30,

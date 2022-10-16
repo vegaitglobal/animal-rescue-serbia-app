@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textTransform: 'uppercase',
     alignSelf: 'center',
-    fontWeight: '800',
   },
   text: {
     paddingTop: 20,

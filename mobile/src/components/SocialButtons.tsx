@@ -1,17 +1,25 @@
 import React from 'react';
 import {Linking, Pressable, StyleSheet, View} from 'react-native';
-import Google from '../assets/icons/google.svg';
+import Viber from '../assets/icons/viber.svg';
 import Facebook from '../assets/icons/facebook.svg';
 import Instagram from '../assets/icons/instagram.svg';
+import {ColorPallet} from '../resources/ColorPallet';
 
 export const SocialButtons = () => {
+  const viberNumber = '225883';
   return (
     <View style={style.iconsContainer}>
-      <Pressable onPress={() => Linking.openURL('https://google.com')}>
-        <Google width={50} height={50} />
+      <Pressable
+        style={style.pressableContainer}
+        onPress={() =>
+          Linking.openURL(`https://viber.com/contact?number=${viberNumber}`)
+        }>
+        <Viber width={28} height={28} />
       </Pressable>
-      <Pressable onPress={() => Linking.openURL('https://facebook.com')}>
-        <Facebook width={50} height={50} />
+      <Pressable
+        style={style.pressableContainer}
+        onPress={() => Linking.openURL('https://facebook.com')}>
+        <Facebook width={40} height={40} />
       </Pressable>
       <Pressable onPress={() => Linking.openURL('https://instagram.com')}>
         <Instagram width={50} height={50} />
@@ -26,5 +34,13 @@ const style = StyleSheet.create({
     paddingHorizontal: 50,
     justifyContent: 'space-between',
     flexDirection: 'row',
+  },
+  pressableContainer: {
+    backgroundColor: ColorPallet.gray,
+    borderRadius: 50,
+    width: 52,
+    height: 52,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

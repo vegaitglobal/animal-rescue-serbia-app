@@ -57,7 +57,6 @@ const style = StyleSheet.create({
   },
   screenTitle: {
     fontSize: 18,
-    fontWeight: '600',
     textTransform: 'uppercase',
     alignSelf: 'center',
     paddingBottom: 30,
