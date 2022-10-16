@@ -1,11 +1,17 @@
 import { useGetReports } from '../../hooks/api/reports/useGetReports';
 import { SearchIcon } from '../../shared/Icons';
 import Layout from '../../shared/Layout';
+import Loader from '../../shared/Loader';
 import ReportItem from './Components/ReportItem';
 import ReportsFilter from './Components/ReportsFilter';
 
 const Reports = () => {
-  const { data: reports, hasNextPage, fetchNextPage } = useGetReports();
+  const {
+    data: reports,
+    hasNextPage,
+    fetchNextPage,
+    isLoading,
+  } = useGetReports();
 
   const renderReports = reports?.pages?.map((page) =>
     page?.entities?.map((report) => {
@@ -14,6 +20,8 @@ const Reports = () => {
   );
 
   const handleLoadMore = () => fetchNextPage();
+
+  if (isLoading) return <Loader />;
 
   return (
     <Layout>
