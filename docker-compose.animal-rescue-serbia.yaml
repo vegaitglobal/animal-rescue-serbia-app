@@ -5,7 +5,7 @@ services:
     image: codeforacause/animal-rescue-serbia-app:backend-#{TAG_NUMBER}#
     container_name: animal-rescue-api
     ports:
-      - 5113
+      - "22001:5113"
     environment:
       - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
       - ASPNETCORE_ENVIRONMENT=Production
@@ -18,7 +18,7 @@ services:
     ports:
       - "22000:3000"
     environment:
-      - REACT_APP_API_URL=backend
+      - REACT_APP_API_URL=api
 
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
