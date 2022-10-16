@@ -21,22 +21,22 @@ export const reportSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(setNameSurname, (state, {payload}) => {
-        state.violations.fullName = payload;
+        state.violation.fullName = payload;
       })
       .addCase(setLocation, (state, {payload}) => {
-        state.violations.location = payload;
+        state.violation.location = payload;
       })
       .addCase(setAddress, (state, {payload}) => {
-        state.violations.address = payload;
+        state.violation.address = payload;
       })
       .addCase(setPhoneNumber, (state, {payload}) => {
-        state.violations.phoneNumber = payload;
+        state.violation.phoneNumber = payload;
       })
       .addCase(setFiles, (state, {payload}) => {
-        state.violations.files = payload;
+        state.violation.files = payload;
       })
       .addCase(setDescription, (state, {payload}) => {
-        state.violations.desctiption = payload;
+        state.violation.desctiption = payload;
       })
       .addCase(loadViolationCategories.fulfilled, (state, action) => {
         state.violationCategories = action.payload;
@@ -45,7 +45,7 @@ export const reportSlice = createSlice({
         state.locations = action.payload;
       })
       .addCase(setViolations.fulfilled, (state, action) => {
-        state.violations = action.payload;
+        state.violation = action.payload;
       });
   },
 });

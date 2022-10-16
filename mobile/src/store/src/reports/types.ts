@@ -25,5 +25,5 @@ export type ReportState = {
   // newReport: NewReport;
   violationCategories: ViolationCategories[];
   locations: Locations;
-  violations: Violation;
+  violation: Violation;
 };

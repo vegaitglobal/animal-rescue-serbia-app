@@ -1,10 +1,7 @@
-import {NewReport, ReportState} from './types';
-
-export const getNewReportInitialState = (): NewReport => ({
-  firstName: '',
-  lastName: '',
-});
+import {ReportState, Violation} from './types';
 
 export const getInitialState = (): ReportState => ({
-  newReport: getNewReportInitialState(),
+  violationCategories: [],
+  locations: [],
+  violation: {} as Violation,
 });

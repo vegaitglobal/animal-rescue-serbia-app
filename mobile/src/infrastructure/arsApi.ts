@@ -41,11 +41,11 @@ export const arsApi = (apiClient: IApiClient) => ({
       method: 'get',
     });
   },
-  postViolation: (violations: Violation) => {
+  postViolation: (violation: Violation) => {
     return apiClient.request<ViolationsDto>({
       url: setViolations,
       method: 'post',
-      data: violations,
+      data: violation,
     });
   },
 });

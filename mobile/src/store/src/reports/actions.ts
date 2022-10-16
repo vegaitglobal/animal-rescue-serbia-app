@@ -6,6 +6,7 @@ import {
   ViolationCategoriesDto,
 } from '../../../infrastructure/apiTypes';
 import {arsApi} from '../../../infrastructure/arsApi';
+import {RootState} from '../rootReducer';
 import {directUpdateAction} from '../util/helpers';
 import {Violation} from './types';
 
@@ -86,11 +87,9 @@ export const setViolations = createAsyncThunk<
   Violation,
   Violation,
   AppThunkApiConfig
->('reports/Violations', async (_, {extra}) => {
+>('reports/Violations', async (_, {extra, getState}) => {
   const client = extra.apiClient;
   const api = arsApi(client);
-  const data = {} as Violation;
-  const response = await api.postViolation(data);
-
-  return response;
+  const state: RootState = getState();
+  return await api.postViolation(state.report.violation);
 });

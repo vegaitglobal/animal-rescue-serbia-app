@@ -7,4 +7,4 @@ export const getViolationCategories = (state: RootState) =>
 
 export const getLocations = (state: RootState) => state.report.locations;
 
-export const setViolations = (state: RootState) => state.report.violations;
+export const setViolations = (state: RootState) => state.report.violation;
