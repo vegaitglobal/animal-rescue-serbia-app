@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useGetReports } from '../../hooks/api/reports/useGetReports';
 import { IReportsResponse } from '../../services/api/reports/getReports';
 import Layout from '../../shared/Layout';
+import Loader from '../../shared/Loader';
 import Pagination from '../../shared/Pagination';
 import Search from '../../shared/Search';
 import ReportItem from './Components/ReportItem';
@@ -14,11 +15,15 @@ const Reports = () => {
 
   const [reports, setReports] = useState<IReportsResponse[]>();
 
-  const { data } = useGetReports({ onSuccess: handleSuccess });
+  const { isLoading } = useGetReports({ onSuccess: handleSuccess });
 
   const reportItemsHTML = reports?.map((item) => (
     <ReportItem singleReport={item} key={item.id} />
   ));
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <Layout>
@@ -27,7 +32,7 @@ const Reports = () => {
         <Search />
       </div>
       <ul className="panel__list">{reportItemsHTML}</ul>
-      <Pagination />
+      {/* <Pagination /> */}
     </Layout>
   );
 };

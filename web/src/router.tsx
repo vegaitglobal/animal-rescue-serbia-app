@@ -9,6 +9,7 @@ import { PageForm } from './pages/Pages/Components';
 import Reports from './pages/Reports';
 import EditUser from './pages/EditUser';
 import Users from './pages/Users';
+import Categories from './pages/Categories/Categories';
 
 const GlobalRouter: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const GlobalRouter: React.FC = () => {
           <Route path="/stranice/kreiranje" element={<PageForm />} />
           <Route path="/korisnici" element={<Users />} />
           <Route path="/korisnici/:id" element={<EditUser />} />
+          <Route path="/kategorije" element={<Categories />} />
           <Route path="/" element={<Navigate to="/prijave" replace />} />
         </Route>
       </Routes>

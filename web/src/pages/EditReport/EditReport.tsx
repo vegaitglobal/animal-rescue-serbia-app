@@ -4,6 +4,7 @@ import { useGetSingleReport } from '../../hooks/api/reports/useGetSingleReport';
 import { IReportsResponse } from '../../services/api/reports/getReports';
 import { Back } from '../../shared/Back';
 import Layout from '../../shared/Layout';
+import Loader from '../../shared/Loader';
 import { EditReportForm } from './Components/EditReportForm';
 
 const EditReport = () => {
@@ -18,13 +19,13 @@ const EditReport = () => {
     onSuccess: handleSuccess,
   });
 
-  if (isLoading) return <p>loading</p>;
+  if (isLoading) return <Loader />;
 
   return (
     <Layout>
       <div className="intro">
         <div className="intro__left">
-          <Back text="Izmena prekršaja" />
+          <Back text="Prijave" />
         </div>
       </div>
       {report && <EditReportForm report={report} />}
