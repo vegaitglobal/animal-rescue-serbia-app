@@ -54,7 +54,7 @@ export const HomeScreen = () => {
               <Text style={style.text}>{oglasavanje}</Text>
             </View>
             <View style={style.informContainer}>
-              <Pressable onPress={() => {}}>
+              <Pressable onPress={() => navigation.navigate('Information')}>
                 <Inform width={100} height={100} />
               </Pressable>
               <Text style={style.text}>{informisanje}</Text>
@@ -75,7 +75,7 @@ export const HomeScreen = () => {
           <CustomButton
             style={style.buttonContainer}
             text={doniranje}
-            onPress={() => {}}
+            onPress={() => navigation.navigate('Donation')}
           />
         </View>
       </View>
