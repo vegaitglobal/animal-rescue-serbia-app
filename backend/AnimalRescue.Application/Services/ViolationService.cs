@@ -1,11 +1,16 @@
-﻿using AnimalRescue.Application.Extensions;
+using AnimalRescue.Application.Extensions;
 using AnimalRescue.Contracts.Abstractions.Repositories;
 using AnimalRescue.Contracts.Abstractions.Services;
 using AnimalRescue.Contracts.Dto;
 using AnimalRescue.Contracts.FilterRequests;
 using AnimalRescue.Contracts.Pagination;
+using AnimalRescue.Contracts.Options;
 using AnimalRescue.Domain.Exceptions;
 using AnimalRescue.Domain.Models;
+using AnimalRescue.HtmlTemplates;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Razor.Templating.Core;
 
 namespace AnimalRescue.Application.Services;
 
@@ -16,19 +21,28 @@ public class ViolationService : IViolationService
     private readonly IUserRepository _userRepository;
     private readonly IViolationRepository _violationRepository;
     private readonly IMediaContentService _mediaContentService;
+    private readonly IMailingServiceClient _mailingServiceClient;
+    private readonly ViolationSubmittedNotificationOptions _notificationOptions;
+    private readonly ILogger<ViolationService> _logger;
 
     public ViolationService(
         IViolationCategoryRepository violationCategoryRepository,
         IUserService userService,
         IUserRepository userRepository,
         IViolationRepository violationRepository,
-        IMediaContentService mediaContentService)
+        IMediaContentService mediaContentService,
+        IMailingServiceClient mailingServiceClient,
+        IOptions<ViolationSubmittedNotificationOptions> notificationOptions,
+        ILogger<ViolationService> logger)
     {
         _violationCategoryRepository = violationCategoryRepository;
         _userService = userService;
         _userRepository = userRepository;
         _violationRepository = violationRepository;
         _mediaContentService = mediaContentService;
+        _mailingServiceClient = mailingServiceClient;
+        _notificationOptions = notificationOptions.Value;
+        _logger = logger;
     }
 
     public async Task<ViolationDto> AddAsync(ViolationCreateDto violationDto)
@@ -66,6 +80,8 @@ public class ViolationService : IViolationService
         };
 
         var created = await _violationRepository.AddAsync(violationToCreate);
+
+        await SendEmailAsync();
 
         return created.ToDto();
     }
@@ -118,5 +134,35 @@ public class ViolationService : IViolationService
         var updated = await _violationRepository.UpdateAsync(existing);
 
         return updated.ToAdminDto();
+    }
+
+    private async Task SendEmailAsync()
+    {
+        var htmlMessageBody = await GenerateHtmlMessageBody(string.Empty).ConfigureAwait(false);
+        var emailRequest = new EmailRequestDto
+        {
+            Subject = _notificationOptions.Subject,
+            Recipients = _notificationOptions.Recipients,
+            Body = htmlMessageBody,
+        };
+
+        try
+        {
+            await _mailingServiceClient.SendEmailAsync(emailRequest).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occured while sending email notification for submitted violation");
+        }
+    }
+
+    private static Task<string> GenerateHtmlMessageBody(string url)
+    {
+        var templateModel = new ViolationSubmittedTemplateModel
+        {
+            Url = url,
+        };
+
+        return RazorTemplateEngine.RenderAsync("/ViolationSubmittedTemplate.cshtml", templateModel);
     }
 }

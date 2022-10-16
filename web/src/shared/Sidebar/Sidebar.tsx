@@ -1,8 +1,16 @@
 import React from 'react';
 import Logo from '../../assets/logo.png';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import storageApi from '../../services/storage.service';
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    storageApi.clearToken();
+    navigate('/prijavljivanje');
+  };
+
   return (
     <header className="header">
       <img src={Logo} alt="Logo" className="header__logo" />
@@ -42,7 +50,7 @@ const Sidebar = () => {
           </li>
         </ul>
       </nav>
-      <button type="button" className="header__logout">
+      <button type="button" className="header__logout" onClick={handleLogOut}>
         Odjavi se
       </button>
     </header>

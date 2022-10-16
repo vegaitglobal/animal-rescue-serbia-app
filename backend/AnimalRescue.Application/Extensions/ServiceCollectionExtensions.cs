@@ -2,6 +2,7 @@
 using AnimalRescue.Application.Services;
 using AnimalRescue.Contracts.Abstractions.Repositories;
 using AnimalRescue.Contracts.Abstractions.Services;
+using AnimalRescue.Contracts.Options;
 using AnimalRescue.DataAccess;
 using AnimalRescue.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,9 @@ public static class ServiceCollectionExtensions
             },
             ServiceLifetime.Scoped);
 
+        serviceCollection.Configure<EmailOptions>(configuration.GetSection(AppSettingKeys.EmailOptions));
+        serviceCollection.Configure<ViolationSubmittedNotificationOptions>(configuration.GetSection(AppSettingKeys.ViolationSubmittedNotificationOptions));
+
         serviceCollection
             .AddScoped<SeedData>()
             .AddTransient<IViolationCategoryRepository, ViolationCategoryRepository>()
@@ -35,6 +39,7 @@ public static class ServiceCollectionExtensions
             .AddTransient<IUserService, UserService>()
             .AddTransient<IViolationRepository, ViolationRepository>()
             .AddTransient<IViolationService, ViolationService>()
+            .AddTransient<IMailingServiceClient, MailingServiceClient>()
             .AddTransient<IArticleCategoryRepository, ArticleCategoryRepository>()
             .AddTransient<IArticleCategoryService, ArticleCategoryService>()
             .AddTransient<IMediaContentRepository, MediaContentRepository>()
