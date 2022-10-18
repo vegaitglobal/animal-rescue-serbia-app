@@ -1,0 +1,21 @@
+.category__name {
+  background-color: #f4f4f4;
+  border-radius: 4px;
+  padding: 13px 16px;
+  margin-right: 20px;
+  font-size: 16px;
+  line-height: 26px;
+  margin-bottom: 20px;
+}
+
+.category__btn {
+  cursor: pointer;
+  border: 0;
+  background-color: transparent;
+  padding: 3px;
+  margin-left: 5px;
+  transition: 0.3s ease;
+  &:hover {
+    opacity: 0.7;
+  }
+}

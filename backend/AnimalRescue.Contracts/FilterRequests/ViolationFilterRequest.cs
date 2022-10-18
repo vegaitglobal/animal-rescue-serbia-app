@@ -14,5 +14,7 @@ namespace AnimalRescue.Contracts.FilterRequests
         public Guid? CategoryId { get; set; }
 
         public ViolationStatus? ViolationStatus { get; set; }
+
+        public string? SearchText { get; set; }
     }
 }

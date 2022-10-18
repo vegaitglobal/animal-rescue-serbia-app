@@ -1,5 +1,4 @@
 ﻿using AnimalRescue.Contracts.Abstractions.Repositories;
-using AnimalRescue.Contracts.Dto;
 using AnimalRescue.Contracts.FilterRequests;
 using AnimalRescue.Contracts.Pagination;
 using AnimalRescue.Domain.Models;
@@ -58,16 +57,6 @@ public class ViolationRepository : IViolationRepository
         };
     }
 
-    private async Task<IEnumerable<Violation>> GetAllFilteredAsync(ViolationFilterRequest violationFilterRequest)
-        => await _dbContext
-            .Violations
-            .Include(lv => lv.User)
-            .Include(lv => lv.ViolationCategory)
-            .Where(x => (violationFilterRequest.Location == null || violationFilterRequest.Location == x.Location) &&
-                        (violationFilterRequest.CategoryId == null || violationFilterRequest.CategoryId == x.ViolationCategory.Id) &&
-                        (violationFilterRequest.ViolationStatus == null || violationFilterRequest.ViolationStatus == x.Status))
-            .AsNoTracking()
-            .ToListAsync();
     public async Task<Violation?> GetAsync(Guid id)
         => await _dbContext
             .Violations
@@ -83,4 +72,18 @@ public class ViolationRepository : IViolationRepository
 
         return updated.Entity;
     }
+
+    private async Task<IEnumerable<Violation>> GetAllFilteredAsync(ViolationFilterRequest violationFilterRequest)
+        => await _dbContext
+            .Violations
+            .Include(lv => lv.User)
+            .Include(lv => lv.ViolationCategory)
+            .Where(x => (violationFilterRequest.Location == null || violationFilterRequest.Location == x.Location) &&
+                        (violationFilterRequest.CategoryId == null || violationFilterRequest.CategoryId == x.ViolationCategory.Id) &&
+                        (violationFilterRequest.ViolationStatus == null || violationFilterRequest.ViolationStatus == x.Status))
+            .Where(x =>
+                        violationFilterRequest.SearchText == null || x.Address.Contains(violationFilterRequest.SearchText) ||
+                        (x.Description != null &&  x.Description.Contains(violationFilterRequest.SearchText)))
+            .AsNoTracking()
+            .ToListAsync();
 }

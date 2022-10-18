@@ -18,3 +18,21 @@
     background-color: $yellow;
   }
 }
+
+.load-more__button {
+  cursor: pointer;
+  background-color: $yellow;
+  font-size: 18px;
+  line-height: 22px;
+  text-transform: uppercase;
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: 0;
+  transition: 0.3s ease;
+  margin: 50px auto 0;
+  display: block;
+  &:hover {
+    color: $white;
+    background-color: $grey-dark;
+  }
+}

@@ -15,6 +15,8 @@ public class AnimalRescueDbContext : DbContext
 
     public virtual DbSet<ArticleCategory> ArticleCategories { get; set; } = null!;
 
+    public virtual DbSet<Article> Articles { get; set; } = null!;
+
     public virtual DbSet<LiteViolation> LiteViolations { get; set; } = null!;
 
     public virtual DbSet<Violation> Violations { get; set; } = null!;

@@ -1,33 +1,45 @@
-import React, { useState } from 'react';
 import { useGetReports } from '../../hooks/api/reports/useGetReports';
-import { IReportsResponse } from '../../services/api/reports/getReports';
+import { SearchIcon } from '../../shared/Icons';
 import Layout from '../../shared/Layout';
-import Pagination from '../../shared/Pagination';
-import Search from '../../shared/Search';
+import Loader from '../../shared/Loader';
 import ReportItem from './Components/ReportItem';
 import ReportsFilter from './Components/ReportsFilter';
 
 const Reports = () => {
-  const handleSuccess = (data: IReportsResponse[]) => {
-    setReports(data);
-  };
+  const {
+    data: reports,
+    hasNextPage,
+    fetchNextPage,
+    isLoading,
+  } = useGetReports();
 
-  const [reports, setReports] = useState<IReportsResponse[]>();
+  const renderReports = reports?.pages?.map((page) =>
+    page?.entities?.map((report) => {
+      return <ReportItem singleReport={report} key={report.id} />;
+    })
+  );
 
-  const { data } = useGetReports({ onSuccess: handleSuccess });
+  const handleLoadMore = () => fetchNextPage();
 
-  const reportItemsHTML = reports?.map((item) => (
-    <ReportItem singleReport={item} key={item.id} />
-  ));
+  if (isLoading) return <Loader />;
 
   return (
     <Layout>
       <div className="intro">
         <ReportsFilter />
-        <Search />
+        <div className="intro__right">
+          <input type="text" placeholder="Pretrazi" className="search" />
+          <button className="search-btn">
+            <SearchIcon />
+          </button>
+        </div>
       </div>
-      <ul className="panel__list">{reportItemsHTML}</ul>
-      <Pagination />
+      <ul className="panel__list">{renderReports}</ul>
+      {hasNextPage && (
+        <button className="load-more__button" onClick={handleLoadMore}>
+          Učitaj još
+        </button>
+      )}
     </Layout>
   );
 };

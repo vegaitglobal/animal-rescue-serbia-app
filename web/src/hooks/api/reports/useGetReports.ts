@@ -1,14 +1,22 @@
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import {
-  getReports,
-  IReportsResponse,
-} from '../../../services/api/reports/getReports';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { getReports } from '../../../services/api/reports/getReports';
 
-type UseGetReportsOptions = Omit<
-  UseQueryOptions<IReportsResponse, Error, IReportsResponse[], Array<string>>,
-  'queryKey' | 'queryFn'
->;
+export const useGetReports = (status?: number | null, search?: string) => {
+  return useInfiniteQuery(
+    ['reports', search],
+    ({ pageParam = 1 }) => getReports(pageParam, status, search),
+    {
+      cacheTime: 0,
+      getNextPageParam: (lastPage, allPages) => {
+        let count = 0;
+        allPages.forEach((page) => {
+          count = count + page.entities.length;
+        });
 
-export const useGetReports = (queryOptions?: UseGetReportsOptions) => {
-  return useQuery(['getReports'], getReports, queryOptions);
+        return count >= lastPage.filteredCount
+          ? undefined
+          : lastPage.pageNumber + 1;
+      },
+    }
+  );
 };

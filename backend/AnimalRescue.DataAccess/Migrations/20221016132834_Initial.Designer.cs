@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AnimalRescue.DataAccess.Migrations
 {
     [DbContext(typeof(AnimalRescueDbContext))]
-    [Migration("20221015183844_Initial")]
+    [Migration("20221016132834_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,43 @@ namespace AnimalRescue.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("AnimalRescue.Domain.Models.Article", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Decription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("MediaContentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("MediaContentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Articles");
+                });
 
             modelBuilder.Entity("AnimalRescue.Domain.Models.ArticleCategory", b =>
                 {
@@ -114,6 +151,11 @@ namespace AnimalRescue.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -187,6 +229,31 @@ namespace AnimalRescue.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("Violation");
+                });
+
+            modelBuilder.Entity("AnimalRescue.Domain.Models.Article", b =>
+                {
+                    b.HasOne("AnimalRescue.Domain.Models.ArticleCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AnimalRescue.Domain.Models.MediaContent", "MediaContent")
+                        .WithMany()
+                        .HasForeignKey("MediaContentId");
+
+                    b.HasOne("AnimalRescue.Domain.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("MediaContent");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AnimalRescue.Domain.Models.LiteViolation", b =>
