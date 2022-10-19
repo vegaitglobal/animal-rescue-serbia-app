@@ -18,17 +18,19 @@ import {CustomModalWithButton} from '../components/CustomModalWithButton';
 import {useNavigation} from '@react-navigation/native';
 import {ImageUploadElement} from '../components/ImageUploaderElement';
 import {SelectionResult} from '../components/types';
-import {batchCompress} from '../components/helpers';
+import {batchCompress, extractFileNameFromPath} from '../components/helpers';
 import {
   loadLocations,
   loadViolationCategories,
   sendViolation,
   setAddress,
   setDescription,
+  setFiles,
   setLocation,
   setNameSurname,
   setPhoneNumber,
   setViolationCategory,
+  unsetViolation,
 } from '../store/src/reports/actions';
 import {ItemData} from '../components/commonTypes';
 
@@ -59,18 +61,24 @@ export const ReportScreen = () => {
   const [declineModalVisible, setDeclineModalVisible] = useState(false);
   const [sendReport, setSendReport] = useState(false);
   const violation = useAppSelector(getNewViolation);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => setVisible(true), []);
 
   const handleReport = useCallback(async () => {
     setSendReport(false);
-    console.log('HJelenea: ', violation);
+
+    setIsLoading(true);
+
     const result = await dispatch(sendViolation(violation));
     if (result.meta.requestStatus === 'rejected') {
       console.log('Report failed');
       return;
     }
     navigation.navigate('Home');
+
+    setIsLoading(false);
+    dispatch(unsetViolation());
   }, [dispatch, navigation, violation]);
 
   useEffect(() => {
@@ -83,6 +91,18 @@ export const ReportScreen = () => {
       const imagesOnly = selectedFiles.filter(file =>
         file.mime.startsWith('image'),
       );
+
+      dispatch(
+        setFiles(
+          selectedFiles.map(file => ({
+            name: extractFileNameFromPath(file.path),
+            type: file.mime,
+            uri: file.path,
+          })),
+        ),
+      );
+
+      //TODO: remove
       const videosOnly = selectedFiles.filter(file =>
         file.mime.startsWith('video'),
       );
@@ -94,7 +114,7 @@ export const ReportScreen = () => {
       console.log('Image paths: ', imagesOnly);
       console.log('Video PATHS: ', compressedVideoFilePaths);
     },
-    [],
+    [dispatch],
   );
 
   return (
@@ -172,6 +192,7 @@ export const ReportScreen = () => {
             isSmall
           />
           <CustomButton
+            isLoading={isLoading}
             onPress={() => {
               setSendReport(true);
             }}

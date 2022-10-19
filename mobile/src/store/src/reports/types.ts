@@ -11,13 +11,19 @@ export type ViolationCategories = {
 
 export type Locations = string[];
 
+export type FormFile = {
+  name: string;
+  type: string;
+  uri: string;
+};
+
 export type Violation = {
   location: string;
   violationCategoryId: string;
   fullName: string;
   address: string;
   phoneNumber: string;
-  files: string[];
+  files: FormFile[];
   description: string;
 };
 

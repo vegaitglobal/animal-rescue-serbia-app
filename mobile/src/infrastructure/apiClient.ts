@@ -3,9 +3,7 @@ import {ApiRequest, IApiClient, IAuthManager, RequestConfig} from './types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const apiClient = (authManager: IAuthManager): IApiClient => {
-  const baseURL = 'https://2556-82-117-210-2.ngrok.io/api';
-  const tokens =
-    'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIwQHRlc3QuY29tIiwicm9sZSI6IlVzZXIiLCJuYmYiOjE2NjU4NjY5MzcsImV4cCI6MTY2NTk1MzMzNywiaWF0IjoxNjY1ODY2OTM3fQ.EWB4MXKfd-cDk6q9QbomBWFr5Z6EQVvTFrdWmOHSRzSkOeEqbelIIpwJ4UAneTYv-3F3TjXMNQ7eDof4KiD46Q';
+  const baseURL = 'https://9df3-46-240-143-182.eu.ngrok.io/api';
 
   axios?.interceptors?.response?.use?.(
     config => {
@@ -80,6 +78,7 @@ export const apiClient = (authManager: IAuthManager): IApiClient => {
       try {
         const request = await configureRequest(authManager, config);
         const response = await axios.request({
+          transformRequest: something => something, // This resolves Axios form object validation issue as per: https://github.com/axios/axios/issues/4406
           ...request,
           headers: {
             ...request.headers,

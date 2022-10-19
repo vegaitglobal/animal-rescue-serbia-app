@@ -10,8 +10,9 @@ import {
   setPhoneNumber,
   sendViolation,
   setViolationCategory,
+  unsetViolation,
 } from './actions';
-import {getInitialState} from './initialState';
+import {getInitialState, getNewReportInitialState} from './initialState';
 
 const initialState = getInitialState();
 
@@ -39,6 +40,9 @@ export const reportSlice = createSlice({
       .addCase(setDescription, (state, {payload}) => {
         state.violation.description = payload;
       })
+      .addCase(unsetViolation, state => {
+        state.violation = getNewReportInitialState();
+      })
       .addCase(setViolationCategory, (state, {payload}) => {
         state.violation.violationCategoryId = payload;
       })
@@ -49,7 +53,7 @@ export const reportSlice = createSlice({
         state.locations = action.payload;
       })
       .addCase(sendViolation.fulfilled, (state, action) => {
-        //state.violation = action.payload;
+        //state.violation = action.payload; //TODO: cleanup
       });
   },
 });

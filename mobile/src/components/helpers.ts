@@ -2,14 +2,13 @@ import {Platform} from 'react-native';
 import {Video} from 'react-native-compressor';
 import {ImageOrVideo} from 'react-native-image-crop-picker';
 
-const extractFileName = (fileData: ImageOrVideo) => {
-  const imagePath = fileData?.path;
-  const segmentedPath = imagePath.split('/');
+export const extractFileNameFromPath = (filePath: string) => {
+  const segmentedPath = filePath.split('/');
   return segmentedPath?.[segmentedPath.length - 1] ?? '';
 };
 
 export const reduceFileDataIntoString = (fileData: ImageOrVideo[]) => {
-  const names = fileData.map(extractFileName);
+  const names = fileData.map(file => extractFileNameFromPath(file.path));
   return names.reduce((acc, current) => `${acc},\n${current}`);
 };
 

@@ -7,9 +7,8 @@ import {
   ViolationsDto,
 } from '../../../infrastructure/apiTypes';
 import {arsApi} from '../../../infrastructure/arsApi';
-import {RootState} from '../rootReducer';
 import {directUpdateAction} from '../util/helpers';
-import {Violation} from './types';
+import {FormFile, Violation} from './types';
 
 export const setNameSurname = createAction(
   'reports/setNameSurname',
@@ -32,7 +31,7 @@ export const setPhoneNumber = createAction(
 
 export const setFiles = createAction(
   'reports/setFiles',
-  directUpdateAction<string[]>(),
+  directUpdateAction<FormFile[]>(),
 );
 
 export const setDescription = createAction(
@@ -45,6 +44,11 @@ export const setViolationCategory = createAction(
   directUpdateAction<string>(),
 );
 
+export const unsetViolation = createAction(
+  'reports/setViolationCategory',
+  directUpdateAction<void>(),
+);
+
 export const loadArticleCategories = createAsyncThunk<
   ArticleCategoriesDto,
   void,
@@ -54,10 +58,7 @@ export const loadArticleCategories = createAsyncThunk<
 
   const client = extra.apiClient;
   const api = arsApi(client);
-  const response = await api.getArticleCategories();
-  console.log('response ', response);
-
-  return response;
+  return await api.getArticleCategories();
 });
 
 export const loadLocations = createAsyncThunk<
@@ -67,9 +68,7 @@ export const loadLocations = createAsyncThunk<
 >('reports/loadLocations', async (_, {extra}) => {
   const client = extra.apiClient;
   const api = arsApi(client);
-  const response = await api.getLocations();
-
-  return response;
+  return await api.getLocations();
 });
 
 export const loadViolationCategories = createAsyncThunk<
@@ -79,21 +78,18 @@ export const loadViolationCategories = createAsyncThunk<
 >('reports/ViolationCategories', async (_, {extra}) => {
   const client = extra.apiClient;
   const api = arsApi(client);
-  const response = await api.getViolationCategories();
-
-  return response;
+  return await api.getViolationCategories();
 });
 
 export const sendViolation = createAsyncThunk<
-  ViolationsDto,
+  ViolationsDto | undefined,
   Violation,
   AppThunkApiConfig
->('reports/Violations', async (data, {extra, getState}) => {
+>('reports/Violations', async (data, {extra}) => {
   const client = extra.apiClient;
   const api = arsApi(client);
 
   try {
-    console.log('fadffsdafds: ', data);
     return await api.postViolation(data);
   } catch (error) {
     console.log('error: ', error);

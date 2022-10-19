@@ -51,13 +51,11 @@ export const CustomButton = ({
         style,
       ]}
       onPress={onPress}>
-      <Text style={[styles.text, dynamicStyle.font, textStyle]}>{text}</Text>
       {isLoading ? (
-        <>
-          <EmptySpace width={10} />
-          <ActivityIndicator />
-        </>
-      ) : null}
+        <ActivityIndicator />
+      ) : (
+        <Text style={[styles.text, dynamicStyle.font, textStyle]}>{text}</Text>
+      )}
     </Pressable>
   );
 };
