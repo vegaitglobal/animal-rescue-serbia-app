@@ -24,7 +24,6 @@ export const apiClient = (authManager: IAuthManager): IApiClient => {
 
     // const token = await manager.getAccessToken();
     const token = await AsyncStorage.getItem('accessToken');
-    console.log('asfasdasd: ', token);
 
     if (token) {
       const actualHeaders = {
