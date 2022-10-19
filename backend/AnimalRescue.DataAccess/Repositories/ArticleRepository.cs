@@ -45,6 +45,7 @@ public class ArticleRepository : IArticleRepository
             .Articles
                 .Include(lv => lv.User)
                 .Include(lv => lv.Category)
+                .Include(lv => lv.MediaContent)
             .FirstOrDefaultAsync(entity => entity.Id == id);
 
     public async Task<Article> UpdateAsync(Article article)
@@ -61,6 +62,7 @@ public class ArticleRepository : IArticleRepository
             .Articles
                 .Include(lv => lv.User)
                 .Include(lv => lv.Category)
+                .Include(lv => lv.MediaContent)
             .Where(x => filterRequest.Type == null || x.Type == filterRequest.Type)
             .Where(x => filterRequest.SearchTerm == null || x.Title.Contains(filterRequest.SearchTerm) || x.Decription.Contains(filterRequest.SearchTerm))
             .AsNoTracking()
