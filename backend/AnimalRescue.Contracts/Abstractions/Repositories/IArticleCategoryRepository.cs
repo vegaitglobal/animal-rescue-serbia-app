@@ -11,6 +11,8 @@ namespace AnimalRescue.Contracts.Abstractions.Repositories
     {
         Task<ArticleCategory?> GetAsync(Guid id);
 
+        Task<ArticleCategory?> GetByNameAsync(string name);
+
         Task<IEnumerable<ArticleCategory>> GetAllAsync();
 
         Task<IEnumerable<ArticleCategory>> GetAllEnabledAsync();

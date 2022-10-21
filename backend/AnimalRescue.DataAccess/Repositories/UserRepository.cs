@@ -32,6 +32,11 @@ public class UserRepository : IUserRepository
             .Users
             .FirstOrDefaultAsync<User>(user => user.Id == id);
 
+    public Task<User?> GetByUsernameAsync(string username)
+    => _context
+        .Users
+        .FirstOrDefaultAsync<User>(user => user.Username == username);
+
     public async Task<IEnumerable<User>> GetAllAsync()
         => await _context.Users.ToListAsync();
 

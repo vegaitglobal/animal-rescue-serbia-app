@@ -48,4 +48,9 @@ public class ViolationCategoryRepository : IViolationCategoryRepository
 
         return updated.Entity;
     }
+
+    public async Task<ViolationCategory?> GetByNameAsync(string name)
+          => await _dbContext
+              .ViolationCategories
+              .FirstOrDefaultAsync<ViolationCategory>(category => category.Name == name);
 }
