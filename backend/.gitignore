@@ -61,3 +61,5 @@ x64/
 build/
 [Bb]in/
 [Oo]bj/
+
+AnimalRescue.Api/wwwroot/uploads/

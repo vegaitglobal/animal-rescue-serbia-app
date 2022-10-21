@@ -3,6 +3,7 @@ using AnimalRescue.Contracts.Abstractions.Services;
 using AnimalRescue.Contracts.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace AnimalRescue.Api.Controllers
 {
@@ -27,17 +28,18 @@ namespace AnimalRescue.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ViolationDto>> CreateAsync([FromForm] ViolationCreateDto dto)
+        [ProducesResponseType((int)HttpStatusCode.Created)]
+        public async Task<ActionResult> CreateAsync([FromForm] ViolationCreateDto dto)
         {
             var created = await _violationService.AddAsync(dto);
 
-            return CreatedAtRoute("GetViolationAsync", new { id = created.Id }, created);
+            return CreatedAtRoute("GetViolationAsync", new { id = created.Id }, null);
         }
 
         [HttpGet("{id}", Name = "GetViolationAsync")]
         public async Task<ActionResult<ViolationDto>> GetViolationAsync(Guid id)
         {
-            var violation = await _violationService.GetAsync(id);
+            var violation = await _violationService.GetApprovedAsync(id);
 
             return violation is null
                 ? NotFound()
