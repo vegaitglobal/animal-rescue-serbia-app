@@ -39,6 +39,11 @@ namespace AnimalRescue.DataAccess.Repositories
                 .ArticleCategories
                 .FirstOrDefaultAsync(entity => entity.Id == id);
 
+        public async Task<ArticleCategory?> GetByNameAsync(string name)
+            => await _dbContext
+                .ArticleCategories
+                .FirstOrDefaultAsync(category => category.Name == name);
+
         public async Task<ArticleCategory> UpdateAsync(ArticleCategory articleCategory)
         {
             var updated = _dbContext.ArticleCategories.Update(articleCategory);

@@ -1,5 +1,6 @@
 ﻿using AnimalRescue.Application.Constants;
 using AnimalRescue.Application.Services;
+using AnimalRescue.Application.Validators;
 using AnimalRescue.Contracts.Abstractions.Repositories;
 using AnimalRescue.Contracts.Abstractions.Services;
 using AnimalRescue.Contracts.Options;
@@ -48,7 +49,8 @@ public static class ServiceCollectionExtensions
             .AddTransient<IMediaContentService, MediaContentService>()
             .AddTransient<ILocationRepository, LocationRepository>()
             .AddTransient<ILocationService, LocationService>()
-            .AddTransient<IReportsService, ReportsService>();
+            .AddTransient<IReportsService, ReportsService>()
+            .AddTransient<UserValidator>();
 
         return serviceCollection;
     }
