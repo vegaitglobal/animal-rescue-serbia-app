@@ -16,12 +16,12 @@ public class UserService : IUserService
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly UserValidator _userValidator;
 
-    public UserService(IUserRepository userRepository, ISecurityService securityService, IHttpContextAccessor httpContextAccessor)
+    public UserService(IUserRepository userRepository, ISecurityService securityService, IHttpContextAccessor httpContextAccessor,UserValidator userValidator)
     {
         _userRepository = userRepository;
         _securityService = securityService;
         _httpContextAccessor = httpContextAccessor;
-        _userValidator = new UserValidator(_userRepository);
+        _userValidator = userValidator;
     }
 
     public async Task<UserDto> AddAsync(UserCreateDto userCreateDto)

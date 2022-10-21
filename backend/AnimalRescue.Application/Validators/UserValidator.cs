@@ -35,7 +35,7 @@ namespace AnimalRescue.Application.Validators
         }
         private async Task ValidateUserUsername(string username)
         {
-            var userByUsername = await _userRepository.GetByUserNameAsync(username);
+            var userByUsername = await _userRepository.GetByUsernameAsync(username);
 
             if (userByUsername is not null)
             {
