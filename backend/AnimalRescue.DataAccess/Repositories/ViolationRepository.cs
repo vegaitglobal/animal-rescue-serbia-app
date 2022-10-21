@@ -29,7 +29,7 @@ public class ViolationRepository : IViolationRepository
             .Violations
                 .Include(lv => lv.User)
                 .Include(lv => lv.ViolationCategory)
-                .Include(lv=>lv.MediaContent)
+                .Include(lv => lv.MediaContent)
             .AsNoTracking()
             .Where(v => v.Status == ViolationStatus.Accepted || v.Status == ViolationStatus.Processed)
             .ToListAsync();
@@ -59,6 +59,14 @@ public class ViolationRepository : IViolationRepository
         };
     }
 
+    public async Task<Violation?> GetApprovedAsync(Guid id)
+        => await _dbContext
+            .Violations
+            .Include(lv => lv.User)
+            .Include(lv => lv.ViolationCategory)
+            .Include(lv => lv.MediaContent)
+            .FirstOrDefaultAsync(v => v.Id == id && (v.Status == ViolationStatus.Accepted || v.Status == ViolationStatus.Processed));
+
     public async Task<Violation?> GetAsync(Guid id)
         => await _dbContext
             .Violations
@@ -87,7 +95,7 @@ public class ViolationRepository : IViolationRepository
                         (violationFilterRequest.ViolationStatus == null || violationFilterRequest.ViolationStatus == x.Status))
             .Where(x =>
                         violationFilterRequest.SearchText == null || x.Address.Contains(violationFilterRequest.SearchText) ||
-                        (x.Description != null &&  x.Description.Contains(violationFilterRequest.SearchText)))
+                        (x.Description != null && x.Description.Contains(violationFilterRequest.SearchText)))
             .AsNoTracking()
             .ToListAsync();
 }

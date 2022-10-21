@@ -3,8 +3,8 @@ using AnimalRescue.Contracts.Abstractions.Repositories;
 using AnimalRescue.Contracts.Abstractions.Services;
 using AnimalRescue.Contracts.Dto;
 using AnimalRescue.Contracts.FilterRequests;
-using AnimalRescue.Contracts.Pagination;
 using AnimalRescue.Contracts.Options;
+using AnimalRescue.Contracts.Pagination;
 using AnimalRescue.Domain.Exceptions;
 using AnimalRescue.Domain.Models;
 using AnimalRescue.HtmlTemplates;
@@ -118,6 +118,14 @@ public class ViolationService : IViolationService
 
         return entity?.ToDto();
     }
+
+    public async Task<ViolationDto?> GetApprovedAsync(Guid id)
+    {
+        var entity = await _violationRepository.GetApprovedAsync(id);
+
+        return entity?.ToDto();
+    }
+
 
     public async Task<AdminViolationDto?> GetForAdminAsync(Guid id)
     {
