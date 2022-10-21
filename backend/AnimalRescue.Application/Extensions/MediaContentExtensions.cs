@@ -9,7 +9,7 @@ public static class MediaContentExtensions
         => new()
         {
             FileName = mediaContent.FileName,
-            FilePath = mediaContent.FilePath,
+            RelativeFilePath = mediaContent.RelativePath,
             Id = mediaContent.Id,
         };
 }

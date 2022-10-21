@@ -59,7 +59,11 @@ public class UserService : IUserService
 
     public async Task<UserDto?> GetCurrentUserAsync()
     {
-        var userEmail = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress");
+        var userEmail = _httpContextAccessor
+            .HttpContext?
+            .User
+            .Claims.
+            FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress");
 
         if (userEmail == null)
         {
@@ -75,7 +79,7 @@ public class UserService : IUserService
     {
         var userToUpdate = await _userRepository.GetByIdAsync(id);
 
-        if(userToUpdate is null)
+        if (userToUpdate is null)
         {
             throw new EntityNotFoundException("User you are trying to update does not exist!");
         }
