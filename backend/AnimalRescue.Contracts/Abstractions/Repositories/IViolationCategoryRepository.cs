@@ -6,6 +6,8 @@ public interface IViolationCategoryRepository
 {
     Task<ViolationCategory?> GetAsync(Guid id);
 
+    Task<ViolationCategory?> GetByNameAsync(string name);
+
     Task<IEnumerable<ViolationCategory>> GetAllAsync();
 
     Task<IEnumerable<ViolationCategory>> GetAllEnabledAsync();

@@ -18,6 +18,13 @@ public class ViolationCategoryService : IViolationCategoryService
 
     public async Task<ViolationCategoryDto> AddAsync(ViolationCategoryCreateDto violationCategory)
     {
+        var existingCategory = await _violationCategoryRepository.GetByNameAsync(violationCategory.Name);
+
+        if (existingCategory is not null)
+        {
+            throw new ValidationException($"Violation category with name: {violationCategory.Name} already exists!");
+        }
+
         var violationCategoryToCreate = new ViolationCategory
         {
             Id = Guid.NewGuid(),
