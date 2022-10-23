@@ -1,47 +1,116 @@
-import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import React, {useCallback, useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {CustomButton} from '../components/CustomButton';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {TextInput} from '../components/TextInput';
+import {useAppDispatch, useAppSelector} from '../hooks/storeHooks';
 import {ColorPallet} from '../resources/ColorPallet';
+import {
+  register,
+  setEmail,
+  setFirstName,
+  setLastName,
+  setPassword,
+  setPasswordConfirmed,
+  setUsername,
+} from '../store/src/authentication/actions';
+import {getNewRegistration} from '../store/src/authentication/selectors';
 
 export const RegistrationScreen = () => {
   const headerTitle = 'Registracija';
   const ime = 'Ime';
   const prezime = 'Prezime';
-  const email = 'E-mail';
+  const emailPlaceholder = 'E-mail';
   const uredu = 'u redu';
   const lozinka = 'Lozinka';
+  const confirmPasswordPlaceholder = 'Potvrdi lozinku';
+  const usernamePlaceholder = 'Korisnicko ime';
+
+  const dispatch = useAppDispatch();
+
+  const navigation = useNavigation();
+
+  const registrationData = useAppSelector(getNewRegistration);
+
+  const {email, username, firstName, lastName, password, passwordConfirmed} =
+    registrationData;
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onRegisterPress = useCallback(async () => {
+    setIsLoading(true);
+
+    const result = await dispatch(register(registrationData));
+
+    setIsLoading(false);
+
+    if (result.meta.requestStatus === 'rejected') {
+      console.log('Registration failed');
+      return;
+    }
+
+    navigation.navigate('HomeScreen');
+  }, [dispatch, navigation, registrationData]);
 
   return (
     <ScreenRootContainer title={headerTitle} showLogo hideGoBack>
       <View style={style.container}>
-        <View style={{flex: 1}}>
+        <View style={style.rootInputContainer}>
           <View style={style.inputContainer}>
             <TextInput
+              value={firstName}
+              //Try creating bind function for this scenario
+              onChangeText={text => dispatch(setFirstName(text))}
               placeholder={ime}
               placeholderTextColor={ColorPallet.lightGray}
             />
           </View>
           <View style={style.inputContainer}>
             <TextInput
+              value={lastName}
+              onChangeText={text => dispatch(setLastName(text))}
               placeholder={prezime}
               placeholderTextColor={ColorPallet.lightGray}
             />
           </View>
           <View style={style.inputContainer}>
             <TextInput
-              placeholder={email}
+              value={email}
+              onChangeText={text => dispatch(setEmail(text))}
+              placeholder={emailPlaceholder}
+              placeholderTextColor={ColorPallet.lightGray}
+            />
+          </View>
+          <View style={style.inputContainer}>
+            <TextInput
+              value={username}
+              onChangeText={text => dispatch(setUsername(text))}
+              placeholder={usernamePlaceholder}
               placeholderTextColor={ColorPallet.lightGray}
             />
           </View>
           <TextInput
+            value={password}
+            onChangeText={text => dispatch(setPassword(text))}
+            secureTextEntry={true}
             placeholder={lozinka}
+            placeholderTextColor={ColorPallet.lightGray}
+          />
+          <TextInput
+            value={passwordConfirmed}
+            onChangeText={text => dispatch(setPasswordConfirmed(text))}
+            secureTextEntry={true}
+            placeholder={confirmPasswordPlaceholder}
             placeholderTextColor={ColorPallet.lightGray}
           />
         </View>
         <View style={style.buttonContainer}>
-          <CustomButton onPress={() => {}} text={uredu} />
+          <CustomButton
+            isLoading={isLoading}
+            onPress={onRegisterPress}
+            text={uredu}
+          />
         </View>
       </View>
     </ScreenRootContainer>
@@ -85,5 +154,8 @@ const style = StyleSheet.create({
   buttonContainer: {
     alignItems: 'flex-start',
     paddingBottom: 20,
+  },
+  rootInputContainer: {
+    flex: 1,
   },
 });

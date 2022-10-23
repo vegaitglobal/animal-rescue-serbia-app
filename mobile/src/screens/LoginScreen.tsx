@@ -9,8 +9,6 @@ import {ColorPallet} from '../resources/ColorPallet';
 import {SocialButtons} from '../components/SocialButtons';
 import {useAppDispatch} from '../hooks/storeHooks';
 import {logIn} from '../store/src/authentication/actions';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {unwrapResult} from '@reduxjs/toolkit';
 
 export const LoginScreen = () => {
   const headerTitle = 'Dobro došli';
@@ -37,14 +35,15 @@ export const LoginScreen = () => {
     }
 
     setIsSigngingIn(true);
+
     const result = await dispatch(logIn({email, password}));
+
+    setIsSigngingIn(false);
+
     if (result.meta.requestStatus === 'rejected') {
-      setIsSigngingIn(false);
       return;
     }
-    const unwraped = unwrapResult(result);
-    AsyncStorage.setItem('accessToken', unwraped.accessToken);
-    setIsSigngingIn(false);
+
     navigation.navigate('HomeScreen');
   }, [dispatch, email, navigation, password]);
 

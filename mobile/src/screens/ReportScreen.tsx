@@ -18,7 +18,7 @@ import {CustomModalWithButton} from '../components/CustomModalWithButton';
 import {useNavigation} from '@react-navigation/native';
 import {ImageUploadElement} from '../components/ImageUploaderElement';
 import {SelectionResult} from '../components/types';
-import {batchCompress, extractFileNameFromPath} from '../components/helpers';
+import {batchCompress, extractFileNameFromPath} from '../util/helpers';
 import {
   loadLocations,
   loadViolationCategories,

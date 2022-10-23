@@ -50,3 +50,8 @@ export const compressVideo = async (path: string) => {
 
 export const batchCompress = async (paths: string[]) =>
   await Promise.all(paths.map(path => compressVideo(path)));
+
+export const bind =
+  <T extends unknown>(arg: T, callback: (arg: T) => void) =>
+  () =>
+    callback(arg);

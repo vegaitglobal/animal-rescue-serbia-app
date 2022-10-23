@@ -31,3 +31,17 @@ export type ViolationCategoriesDto = {
   name: string;
   isEnabled: boolean;
 };
+
+export type RegistrationDto = {
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+};
+
+export type RegisterResponseDto = {
+  email: string;
+  accessToken: string;
+};

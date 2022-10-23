@@ -1,9 +1,12 @@
+import {NewRegistration} from '../store/src/authentication/types';
 import {Violation} from '../store/src/reports/types';
 import {
   ArticleCategoriesDto,
   LocationsDto,
   LogInRequestDto,
   LogInResponseDto,
+  RegisterResponseDto,
+  RegistrationDto,
   ViolationCategoriesDto,
   ViolationsDto,
 } from './apiTypes';
@@ -14,6 +17,7 @@ const logInUri = '/Users/login';
 const locations = '/locations';
 const violationCategories = '/ViolationCategories';
 const setViolations = '/Violations';
+const registrationUri = '/Users/register';
 
 export const arsApi = (apiClient: IApiClient) => ({
   getArticleCategories: () => {
@@ -23,7 +27,7 @@ export const arsApi = (apiClient: IApiClient) => ({
     });
   },
   postLogIn: (data: LogInRequestDto) => {
-    return apiClient.signInRequest<LogInResponseDto>({
+    return apiClient.nonAuthenticatedRequest<LogInResponseDto>({
       url: logInUri,
       method: 'post',
       data,
@@ -65,6 +69,13 @@ export const arsApi = (apiClient: IApiClient) => ({
       url: setViolations,
       method: 'post',
       data: form,
+    });
+  },
+  postRegistration: (registration: RegistrationDto) => {
+    return apiClient.nonAuthenticatedRequest<RegisterResponseDto>({
+      url: registrationUri,
+      method: 'post',
+      data: registration,
     });
   },
 });

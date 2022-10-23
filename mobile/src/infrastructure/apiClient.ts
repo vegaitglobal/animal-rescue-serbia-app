@@ -22,6 +22,7 @@ export const apiClient = (authManager: IAuthManager): IApiClient => {
   ): Promise<ApiRequest> => {
     const {url, method, data, headers} = config;
 
+    //TODO: Implement manager
     // const token = await manager.getAccessToken();
     const token = await AsyncStorage.getItem('accessToken');
 
@@ -62,7 +63,9 @@ export const apiClient = (authManager: IAuthManager): IApiClient => {
         );
       }
     },
-    async signInRequest<TReturn>(config: RequestConfig): Promise<TReturn> {
+    async nonAuthenticatedRequest<TReturn>(
+      config: RequestConfig,
+    ): Promise<TReturn> {
       try {
         return (await axios.request({...config, baseURL}))?.data as TReturn;
       } catch (error) {

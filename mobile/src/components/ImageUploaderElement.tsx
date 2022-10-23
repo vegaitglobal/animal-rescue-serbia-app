@@ -4,7 +4,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {ColorPallet} from '../resources/ColorPallet';
 import {CustomButton} from './CustomButton';
 import {EmptySpace} from './EmptySpace';
-import {reduceFileDataIntoString} from './helpers';
+import {reduceFileDataIntoString} from '../util/helpers';
 import {SelectionResult} from './types';
 
 type ImageUploadElementProps = {
