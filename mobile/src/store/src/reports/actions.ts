@@ -45,7 +45,7 @@ export const setViolationCategory = createAction(
 );
 
 export const unsetViolation = createAction(
-  'reports/setViolationCategory',
+  'reports/unsetViolationCategory',
   directUpdateAction<void>(),
 );
 
