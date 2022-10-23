@@ -14,6 +14,8 @@ public interface IViolationService
 
     Task<IEnumerable<AdminViolationDto>> GetAllAsync();
 
+    Task<ViolationDto?> GetApprovedAsync(Guid id);
+
     Task<IEnumerable<ViolationDto>> GetAllApprovedAsync();
 
     Task<ViolationDto> AddAsync(ViolationCreateDto violationDto);

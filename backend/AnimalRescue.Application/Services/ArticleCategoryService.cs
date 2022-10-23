@@ -18,6 +18,13 @@ namespace AnimalRescue.Application.Services
 
         public async Task<ArticleCategoryDto> AddAsync(ArticleCategoryCreateDto articleCategory)
         {
+            var existingCategory = await _articleCategoryRepository.GetByNameAsync(articleCategory.Name);
+
+            if (existingCategory is not null)
+            {
+                throw new ValidationException($"Article category with name: {articleCategory.Name} already exists!");
+            }
+
             var articleCategoryToCreate = new ArticleCategory
             {
                 Id = Guid.NewGuid(),

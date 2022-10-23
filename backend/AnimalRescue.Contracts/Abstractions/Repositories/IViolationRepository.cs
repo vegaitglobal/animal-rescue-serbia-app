@@ -14,6 +14,8 @@ public interface IViolationRepository
 
     Task<IEnumerable<Violation>> GetAllApprovedAsync();
 
+    Task<Violation?> GetApprovedAsync(Guid id);
+
     Task<Violation> AddAsync(Violation violation);
 
     Task<Violation> UpdateAsync(Violation existing);

@@ -1,4 +1,5 @@
 ﻿using AnimalRescue.Application.Extensions;
+using AnimalRescue.Application.Validators;
 using AnimalRescue.Contracts.Abstractions.Repositories;
 using AnimalRescue.Contracts.Abstractions.Services;
 using AnimalRescue.Contracts.Dto;
@@ -13,29 +14,28 @@ public class UserService : IUserService
     private readonly IUserRepository _userRepository;
     private readonly ISecurityService _securityService;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly UserValidator _userValidator;
 
-    public UserService(IUserRepository userRepository, ISecurityService securityService, IHttpContextAccessor httpContextAccessor)
+    public UserService(IUserRepository userRepository, ISecurityService securityService, IHttpContextAccessor httpContextAccessor,UserValidator userValidator)
     {
         _userRepository = userRepository;
         _securityService = securityService;
         _httpContextAccessor = httpContextAccessor;
+        _userValidator = userValidator;
     }
 
-    public async Task<UserDto> AddAsync(UserCreateDto dto)
+    public async Task<UserDto> AddAsync(UserCreateDto userCreateDto)
     {
-        if (dto.Password != dto.PasswordConfirm)
-        {
-            throw new ValidationException("Passwords do not match!");
-        }
+        await _userValidator.ValidateUser(userCreateDto);
 
         var user = new User
         {
             Id = Guid.NewGuid(),
-            Email = dto.Email,
-            FirstName = dto.FirstName,
-            LastName = dto.LastName,
-            Username = dto.Username,
-            Password = _securityService.HashPassword(dto.Password),
+            Email = userCreateDto.Email,
+            FirstName = userCreateDto.FirstName,
+            LastName = userCreateDto.LastName,
+            Username = userCreateDto.Username,
+            Password = _securityService.HashPassword(userCreateDto.Password),
             Role = UserRoles.User,
             IsActive = true,
         };
@@ -59,7 +59,11 @@ public class UserService : IUserService
 
     public async Task<UserDto?> GetCurrentUserAsync()
     {
-        var userEmail = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress");
+        var userEmail = _httpContextAccessor
+            .HttpContext?
+            .User
+            .Claims.
+            FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress");
 
         if (userEmail == null)
         {
@@ -75,7 +79,7 @@ public class UserService : IUserService
     {
         var userToUpdate = await _userRepository.GetByIdAsync(id);
 
-        if(userToUpdate is null)
+        if (userToUpdate is null)
         {
             throw new EntityNotFoundException("User you are trying to update does not exist!");
         }
