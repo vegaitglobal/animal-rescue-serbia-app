@@ -6,7 +6,8 @@ import Instagram from '../assets/icons/instagram.svg';
 import {ColorPallet} from '../resources/ColorPallet';
 
 export const SocialButtons = () => {
-  const viberNumber = '225883';
+  const viberNumber = '+38164 8210200';
+
   return (
     <View style={style.iconsContainer}>
       <Pressable
@@ -18,10 +19,15 @@ export const SocialButtons = () => {
       </Pressable>
       <Pressable
         style={style.pressableContainer}
-        onPress={() => Linking.openURL('https://facebook.com')}>
+        onPress={() =>
+          Linking.openURL('https://www.facebook.com/animalrescueserbia/')
+        }>
         <Facebook width={40} height={40} />
       </Pressable>
-      <Pressable onPress={() => Linking.openURL('https://instagram.com')}>
+      <Pressable
+        onPress={() =>
+          Linking.openURL('https://www.instagram.com/animal_rescue_serbia')
+        }>
         <Instagram width={50} height={50} />
       </Pressable>
     </View>

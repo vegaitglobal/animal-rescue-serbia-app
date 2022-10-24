@@ -7,7 +7,7 @@ import Logo from '../assets/icons/megaphoneLogo.svg';
 import {ColorPallet} from '../resources/ColorPallet';
 
 export const SosScreen = () => {
-  const phoneNumber = '225883';
+  const phoneNumber = '+38164 8210200';
 
   return (
     <ScreenRootContainer title={'Sos poziv'}>
