@@ -1,4 +1,5 @@
 ﻿using AnimalRescue.Application.Extensions;
+using AnimalRescue.Application.Validators;
 using AnimalRescue.Contracts.Abstractions.Repositories;
 using AnimalRescue.Contracts.Abstractions.Services;
 using AnimalRescue.Contracts.Dto;
@@ -46,6 +47,7 @@ public class ArticleService : IArticleService
         MediaContent media = null;
         if (createDto.File is not null)
         {
+            MediaValidator.ValidateImage(createDto.File);
             media = await _mediaContentService.UploadMediaContentAsync(createDto.File);
         }
 
