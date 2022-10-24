@@ -19,7 +19,6 @@ export const LoginScreen = () => {
   const prijaviteSe = 'Prijavite se';
   const nemateNalog = 'Nemate nalog?';
   const registracija = 'Registrujte se';
-  const ili = 'ili';
 
   const dispatch = useAppDispatch();
 

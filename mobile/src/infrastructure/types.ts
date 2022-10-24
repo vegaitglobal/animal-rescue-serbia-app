@@ -25,6 +25,11 @@ export interface IAuthManager {
   getAccessToken: () => Promise<string | undefined>;
 }
 
+export interface INavigationService {
+  navigate: (name: string, props?: any) => void;
+  resetToRoute: (name: string) => void;
+}
+
 export interface IApiClient {
   request: <TReturn>(config: RequestConfig) => Promise<TReturn>;
   nonAuthenticatedRequest: <TReturn>(config: RequestConfig) => Promise<TReturn>;

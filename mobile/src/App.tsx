@@ -5,13 +5,17 @@ import {NavigationContainer} from '@react-navigation/native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {HomeStackNavigator} from './navigation/HomeStackNavigator';
 import {Provider} from 'react-redux';
-import store from './store/configureStore';
+import {createStoreWithInjections} from './store/configureStore';
+import {navigationRef} from './store/src/RootNavigation';
+import {navigationService} from './infrastructure/navigationService';
+
+const store = createStoreWithInjections(navigationService()); //TODO Check the ref approach
 
 const App = () => (
   <GestureHandlerRootView style={style.rootGestureView}>
     <BottomSheetModalProvider>
       <Provider store={store}>
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           <StatusBar hidden />
           <HomeStackNavigator />
         </NavigationContainer>

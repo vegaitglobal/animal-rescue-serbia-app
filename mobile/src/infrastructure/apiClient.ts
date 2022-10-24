@@ -1,16 +1,30 @@
 import axios from 'axios';
-import {ApiRequest, IApiClient, IAuthManager, RequestConfig} from './types';
+import {
+  ApiRequest,
+  IApiClient,
+  IAuthManager,
+  INavigationService,
+  RequestConfig,
+} from './types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const apiClient = (authManager: IAuthManager): IApiClient => {
+export const apiClient = (
+  authManager: IAuthManager,
+  navigationService: INavigationService,
+): IApiClient => {
   const baseURL = 'https://9df3-46-240-143-182.eu.ngrok.io/api';
 
   axios?.interceptors?.response?.use?.(
     config => {
-      console.log('CONFIG: ', config);
+      //console.log('CONFIG: ', config);
       return config;
     },
     error => {
+      if (error.response.status === 401) {
+        // TODO: Maybe move into authentication manager
+        navigationService.resetToRoute('Login'); // Once token expires we want to request user to re-sign-in
+      }
+
       console.log('Error: ', error);
       return Promise.reject(error);
     },

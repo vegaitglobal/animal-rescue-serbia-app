@@ -8,8 +8,6 @@ import Add from '../assets/icons/add.svg';
 import Education from '../assets/icons/education.svg';
 import {CustomButton} from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
-import {useAppDispatch, useAppSelector} from '../hooks/storeHooks';
-import {getAccessToken} from '../store/src/authentication/selectors';
 
 export const HomeScreen = () => {
   const headerTitle = 'Prijavi';
@@ -22,10 +20,6 @@ export const HomeScreen = () => {
   const informisanje = 'Informisanje';
 
   const navigation = useNavigation();
-  const dispatch = useAppDispatch();
-
-  const asdasd = useAppSelector(getAccessToken);
-  console.log('asfafrasf: ', asdasd);
 
   return (
     <ScreenRootContainer title={headerTitle} showLogo hideGoBack>

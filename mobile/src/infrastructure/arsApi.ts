@@ -1,4 +1,3 @@
-import {NewRegistration} from '../store/src/authentication/types';
 import {Violation} from '../store/src/reports/types';
 import {
   ArticleCategoriesDto,
