@@ -16,7 +16,7 @@ public class UserService : IUserService
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly UserValidator _userValidator;
 
-    public UserService(IUserRepository userRepository, ISecurityService securityService, IHttpContextAccessor httpContextAccessor,UserValidator userValidator)
+    public UserService(IUserRepository userRepository, ISecurityService securityService, IHttpContextAccessor httpContextAccessor, UserValidator userValidator)
     {
         _userRepository = userRepository;
         _securityService = securityService;
@@ -26,7 +26,7 @@ public class UserService : IUserService
 
     public async Task<UserDto> AddAsync(UserCreateDto userCreateDto)
     {
-        await _userValidator.ValidateUser(userCreateDto);
+        await _userValidator.ValidateUserCreate(userCreateDto);
 
         var user = new User
         {
@@ -75,7 +75,7 @@ public class UserService : IUserService
         return user?.ToDto();
     }
 
-    public async Task<UserDto> UpdateAsync(Guid id, UserUpdateDto userUpdateDto)
+    public async Task<UserDto> AdminUpdateAsync(Guid id, UserAdminUpdateDto userUpdateDto)
     {
         var userToUpdate = await _userRepository.GetByIdAsync(id);
 
@@ -101,7 +101,38 @@ public class UserService : IUserService
 
         return updated.ToDto();
     }
+    public async Task<UserDto> UpdateAsync(Guid id, UserUpdateDto userUpdateDto)
+    {
+        var userToUpdate = await _userRepository.GetByIdAsync(id);
+
+        var currentUser = await GetCurrentUserAsync();
+
+        await _userValidator.ValidateUserUpdate(userToUpdate, userUpdateDto, currentUser);
+
+        userToUpdate.FirstName = userUpdateDto.FirstName;
+        userToUpdate.LastName = userUpdateDto.LastName;
+        userToUpdate.Username = userUpdateDto.Username;
+
+        var updated = await _userRepository.UpdateAsync(userToUpdate);
+
+        return updated.ToDto();
+    }
+    public async Task<UserDto> UpdateCredentialsAsync(Guid id, UserCredentialsUpdateDto userUpdateDto)
+    {
+        var userToUpdate = await _userRepository.GetByIdAsync(id);
+
+        var currentUser = await GetCurrentUserAsync();
+
+        await _userValidator.ValidateUserCredentialsUpdate(userToUpdate,userUpdateDto,currentUser);
+
+        userToUpdate.Password = _securityService.HashPassword(userUpdateDto.Password);
+
+        var updated = await _userRepository.UpdateAsync(userToUpdate);
+
+        return updated.ToDto();
+    }
 
     public Task<bool> ValidateUserCredentials(string email, string password)
         => _userRepository.ValidateUserExistsAsync(email, _securityService.HashPassword(password));
+
 }
