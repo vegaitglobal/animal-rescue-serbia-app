@@ -1,4 +1,5 @@
-﻿using AnimalRescue.Contracts.Abstractions.Services;
+﻿using AnimalRescue.Application.Constants;
+using AnimalRescue.Contracts.Abstractions.Services;
 using AnimalRescue.Contracts.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ namespace AnimalRescue.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = Roles.UserRole)]
     public class UsersController : ControllerBase
     {
         private readonly ISecurityService _securityService;
@@ -54,6 +56,22 @@ namespace AnimalRescue.Api.Controllers
             };
 
             return Ok(dto);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<UserDto>> UpdateAsync(Guid id,[FromBody] UserUpdateDto userUpdateDto)
+        {
+            var updated = await _userService.UpdateAsync(id, userUpdateDto);
+
+            return Ok(updated);
+        }
+
+        [HttpPut("updateCredentials/{id}")]
+        public async Task<ActionResult<UserDto>> UpdateCredentialsAsync(Guid id, [FromBody] UserCredentialsUpdateDto userUpdateDto)
+        {
+            var updated = await _userService.UpdateCredentialsAsync(id, userUpdateDto);
+
+            return Ok(updated);
         }
     }
 }
