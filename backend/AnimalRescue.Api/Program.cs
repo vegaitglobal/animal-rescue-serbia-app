@@ -58,8 +58,9 @@ public class Program
             {
                 Name = "Authorization",
                 In = ParameterLocation.Header,
-                Type = SecuritySchemeType.ApiKey,
+                Type = SecuritySchemeType.Http,
                 Scheme = "Bearer",
+                BearerFormat = "JWT",
             });
             config.AddSecurityRequirement(new OpenApiSecurityRequirement()
             {
