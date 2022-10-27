@@ -50,7 +50,7 @@ export const RegistrationScreen = () => {
       return;
     }
 
-    navigation.navigate('HomeScreen');
+    navigation.replace('HomeScreen');
   }, [dispatch, navigation, registrationData]);
 
   return (

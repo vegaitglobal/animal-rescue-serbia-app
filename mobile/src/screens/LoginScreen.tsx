@@ -24,7 +24,7 @@ export const LoginScreen = () => {
 
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
-  const [isSigningIn, setIsSigngingIn] = useState<boolean>();
+  const [isSigningIn, setIsSigningIn] = useState<boolean>();
 
   const navigation = useNavigation();
 
@@ -33,17 +33,17 @@ export const LoginScreen = () => {
       return;
     }
 
-    setIsSigngingIn(true);
+    setIsSigningIn(true);
 
     const result = await dispatch(logIn({email, password}));
 
-    setIsSigngingIn(false);
+    setIsSigningIn(false);
 
     if (result.meta.requestStatus === 'rejected') {
       return;
     }
 
-    navigation.navigate('HomeScreen');
+    navigation.replace('HomeScreen');
   }, [dispatch, email, navigation, password]);
 
   return (
