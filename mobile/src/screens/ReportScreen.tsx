@@ -126,7 +126,6 @@ export const ReportScreen = () => {
             placeholder={imeIPrezime}
             placeholderTextColor={ColorPallet.lightGray}
             onChangeText={value => {
-              console.log('VAlue: ', value);
               dispatch(setNameSurname(value));
             }}
           />
@@ -161,7 +160,6 @@ export const ReportScreen = () => {
         <View style={style.inputContainer}>
           <SelectionInput
             onValueSelected={item => {
-              console.log('ID123: ', item?.id);
               item.id && dispatch(setViolationCategory(item.id));
             }}
             data={violationCategories?.map(

@@ -1,4 +1,4 @@
-import {navigate, resetToRoute} from '../store/src/RootNavigation';
+import {navigate, resetToRoute} from '../store/src/util/navigationHelpers';
 import {INavigationService} from './types';
 
 export const navigationService = (): INavigationService => ({

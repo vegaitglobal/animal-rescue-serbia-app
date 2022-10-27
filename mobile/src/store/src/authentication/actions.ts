@@ -64,6 +64,7 @@ export const register = createAsyncThunk<
     {extra},
   ) => {
     const api = arsApi(extra.apiClient);
+
     const result = await api.postRegistration({
       email,
       firstName,

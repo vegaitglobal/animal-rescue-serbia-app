@@ -94,6 +94,9 @@ export const RegistrationScreen = () => {
             value={password}
             onChangeText={text => dispatch(setPassword(text))}
             secureTextEntry={true}
+            keyboardType={'default'}
+            textContentType={'password'}
+            autoCapitalize={'none'}
             placeholder={lozinka}
             placeholderTextColor={ColorPallet.lightGray}
           />
@@ -101,6 +104,9 @@ export const RegistrationScreen = () => {
             value={passwordConfirmed}
             onChangeText={text => dispatch(setPasswordConfirmed(text))}
             secureTextEntry={true}
+            keyboardType={'default'}
+            textContentType={'password'}
+            autoCapitalize={'none'}
             placeholder={confirmPasswordPlaceholder}
             placeholderTextColor={ColorPallet.lightGray}
           />

@@ -6,7 +6,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {HomeStackNavigator} from './navigation/HomeStackNavigator';
 import {Provider} from 'react-redux';
 import {createStoreWithInjections} from './store/configureStore';
-import {navigationRef} from './store/src/RootNavigation';
+import {navigationRef} from './store/src/util/navigationHelpers';
 import {navigationService} from './infrastructure/navigationService';
 
 const store = createStoreWithInjections(navigationService()); //TODO Check the ref approach
