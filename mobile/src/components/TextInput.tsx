@@ -18,7 +18,7 @@ export const TextInput = (props: TextInputProps) => {
       secureTextEntry={props.secureTextEntry}
       keyboardType={props.keyboardType}
       placeholderTextColor={ColorPallet.lightGray}
-      style={commonStyles.inputField}
+      style={[commonStyles.inputField, props.style]}
     />
   );
 };
