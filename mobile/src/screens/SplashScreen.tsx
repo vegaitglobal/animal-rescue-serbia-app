@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {unwrapResult} from '@reduxjs/toolkit';
 import React, {useCallback, useEffect} from 'react';
@@ -13,6 +14,11 @@ export const SplashScreen = () => {
   const navigation = useNavigation();
 
   const checkTokenAndPrefetch = useCallback(async () => {
+    const token = await AsyncStorage.getItem('accessToken'); //TODO: Try using/creating auth manager
+    if (!token) {
+      navigation.navigate('Login');
+    }
+
     // These are prefetched because they are static and because
     // we check token validity that way
     const categoryResult = await dispatch(loadViolationCategories());
