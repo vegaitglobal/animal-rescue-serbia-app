@@ -1,5 +1,5 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import React, {ReactElement, useCallback} from 'react';
+import React, {useCallback} from 'react';
 import {SosScreen} from '../screens/SosScreen';
 import HomeActive from '../assets/icons/homeActive.svg';
 import HomeInactive from '../assets/icons/homeInactive.svg';
@@ -8,33 +8,13 @@ import SosInactive from '../assets/icons/sosInactive.svg';
 import ProfileActive from '../assets/icons/profileActive.svg';
 import ProfileInactive from '../assets/icons/profileInactive.svg';
 import {ProfileScreen} from '../screens/ProfileScreen';
-import {Platform, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 import {HomeScreen} from '../screens/HomeScreen';
 import {ReportScreen} from '../screens/ReportScreen';
 import {DonationScreen} from '../screens/DonationScreen';
 import {InformationScreen} from '../screens/InformationScreen';
-
-type TabIconProps = {
-  focused: boolean;
-  color: string;
-  size: number;
-  activeIcon: ReactElement;
-  inactiveIcon: ReactElement;
-  iconContainerStyle?: StyleProp<ViewStyle>;
-};
-
-//TODO: Implement mapping icons with props
-const TabIcon = ({
-  focused,
-  activeIcon,
-  inactiveIcon,
-  iconContainerStyle,
-}: TabIconProps) => (
-  <View style={iconContainerStyle ?? styles.iconContainer}>
-    {focused ? activeIcon : inactiveIcon}
-  </View>
-);
+import {TabIcon, TabIconProps} from '../components/TabIcon';
 
 export const RootTabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -66,6 +46,7 @@ export const RootTabNavigator = () => {
           tabBarIcon: renderTabIcon({
             activeIcon: <HomeActive width={size} height={size} />,
             inactiveIcon: <HomeInactive width={size} height={size} />,
+            iconContainerStyle: styles.iconContainer,
           }),
         }}
       />
@@ -87,6 +68,7 @@ export const RootTabNavigator = () => {
           tabBarIcon: renderTabIcon({
             activeIcon: <ProfileActive width={size} height={size} />,
             inactiveIcon: <ProfileInactive width={size} height={size} />,
+            iconContainerStyle: styles.iconContainer,
           }),
         }}
       />
