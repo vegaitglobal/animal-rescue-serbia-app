@@ -26,7 +26,7 @@ export type ViolationsDto = {
   desctiption: string;
 };
 
-export type ViolationCategoriesDto = {
+export type ViolationCategoryDto = {
   id: string;
   name: string;
   isEnabled: boolean;
@@ -44,4 +44,19 @@ export type RegistrationDto = {
 export type RegisterResponseDto = {
   email: string;
   accessToken: string;
+};
+
+export type MediaContentDto = {
+  id: string;
+  fileName: string;
+  relativeFilePath: string;
+};
+
+export type ViolationResponseDto = {
+  id: string;
+  location: string;
+  violationCategory: ViolationCategoryDto;
+  address: string;
+  description: string;
+  mediaContent: MediaContentDto[];
 };

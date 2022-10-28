@@ -6,7 +6,8 @@ import {
   LogInResponseDto,
   RegisterResponseDto,
   RegistrationDto,
-  ViolationCategoriesDto,
+  ViolationCategoryDto,
+  ViolationResponseDto,
   ViolationsDto,
 } from './apiTypes';
 import {IApiClient} from './types';
@@ -15,7 +16,7 @@ const articleCategories = '/ArticleCategories';
 const logInUri = '/Users/login';
 const locations = '/locations';
 const violationCategories = '/ViolationCategories';
-const setViolations = '/Violations';
+const violationsUri = '/Violations';
 const registrationUri = '/Users/register';
 
 export const arsApi = (apiClient: IApiClient) => ({
@@ -39,7 +40,7 @@ export const arsApi = (apiClient: IApiClient) => ({
     });
   },
   getViolationCategories: () => {
-    return apiClient.request<ViolationCategoriesDto[]>({
+    return apiClient.request<ViolationCategoryDto[]>({
       url: violationCategories,
       method: 'get',
     });
@@ -65,7 +66,7 @@ export const arsApi = (apiClient: IApiClient) => ({
     });
 
     return apiClient.formRequest<ViolationsDto>({
-      url: setViolations,
+      url: violationsUri,
       method: 'post',
       data: form,
     });
@@ -75,6 +76,12 @@ export const arsApi = (apiClient: IApiClient) => ({
       url: registrationUri,
       method: 'post',
       data: registration,
+    });
+  },
+  getViolations: () => {
+    return apiClient.request<ViolationResponseDto[]>({
+      url: violationsUri,
+      method: 'get',
     });
   },
 });

@@ -1,3 +1,5 @@
+import {ViolationResponseDto} from '../../../infrastructure/apiTypes';
+
 export type NewReport = {
   firstName: string;
   lastName: string;
@@ -31,5 +33,6 @@ export type ReportState = {
   // newReport: NewReport;
   violationCategories: ViolationCategories[];
   locations: Locations;
-  violation: Violation;
+  newViolation: Violation;
+  violations: ViolationResponseDto[];
 };

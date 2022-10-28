@@ -3,7 +3,8 @@ import {AppThunkApiConfig} from '../../../hooks/storeHooks';
 import {
   ArticleCategoriesDto,
   LocationsDto,
-  ViolationCategoriesDto,
+  ViolationCategoryDto,
+  ViolationResponseDto,
   ViolationsDto,
 } from '../../../infrastructure/apiTypes';
 import {arsApi} from '../../../infrastructure/arsApi';
@@ -72,13 +73,13 @@ export const loadLocations = createAsyncThunk<
 });
 
 export const loadViolationCategories = createAsyncThunk<
-  ViolationCategoriesDto[],
+  ViolationCategoryDto[],
   void,
   AppThunkApiConfig
 >('reports/ViolationCategories', async (_, {extra}) => {
   const client = extra.apiClient;
   const api = arsApi(client);
-  return await api.getViolationCategories();
+  return await api.getViolationCategories(); //TODO: Think of error handling
 });
 
 export const sendViolation = createAsyncThunk<
@@ -88,10 +89,15 @@ export const sendViolation = createAsyncThunk<
 >('reports/Violations', async (data, {extra}) => {
   const client = extra.apiClient;
   const api = arsApi(client);
+  return await api.postViolation(data);
+});
 
-  try {
-    return await api.postViolation(data);
-  } catch (error) {
-    console.log('error: ', error);
-  }
+export const loadViolations = createAsyncThunk<
+  ViolationResponseDto[],
+  void,
+  AppThunkApiConfig
+>('reports/loadViolations', async (_, {extra}) => {
+  const api = arsApi(extra.apiClient);
+  console.log('Requesting');
+  return await api.getViolations();
 });

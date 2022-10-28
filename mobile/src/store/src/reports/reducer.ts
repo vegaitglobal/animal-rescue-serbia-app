@@ -11,8 +11,9 @@ import {
   sendViolation,
   setViolationCategory,
   unsetViolation,
+  loadViolations,
 } from './actions';
-import {getInitialState, getNewReportInitialState} from './initialState';
+import {getInitialState, getNewViolationInitialState} from './initialState';
 
 const initialState = getInitialState();
 
@@ -23,34 +24,38 @@ export const reportSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(setNameSurname, (state, {payload}) => {
-        state.violation.fullName = payload;
+        state.newViolation.fullName = payload;
       })
       .addCase(setLocation, (state, {payload}) => {
-        state.violation.location = payload;
+        state.newViolation.location = payload;
       })
       .addCase(setAddress, (state, {payload}) => {
-        state.violation.address = payload;
+        state.newViolation.address = payload;
       })
       .addCase(setPhoneNumber, (state, {payload}) => {
-        state.violation.phoneNumber = payload;
+        state.newViolation.phoneNumber = payload;
       })
       .addCase(setFiles, (state, {payload}) => {
-        state.violation.files = payload;
+        state.newViolation.files = payload;
       })
       .addCase(setDescription, (state, {payload}) => {
-        state.violation.description = payload;
+        state.newViolation.description = payload;
       })
       .addCase(unsetViolation, state => {
-        state.violation = getNewReportInitialState();
+        state.newViolation = getNewViolationInitialState();
       })
       .addCase(setViolationCategory, (state, {payload}) => {
-        state.violation.violationCategoryId = payload;
+        state.newViolation.violationCategoryId = payload;
       })
       .addCase(loadViolationCategories.fulfilled, (state, action) => {
         state.violationCategories = action.payload;
       })
       .addCase(loadLocations.fulfilled, (state, action) => {
         state.locations = action.payload;
+      })
+      .addCase(loadViolations.fulfilled, (state, {payload}) => {
+        console.log('Data: ', payload);
+        state.violations = payload;
       })
       .addCase(sendViolation.fulfilled, (state, action) => {
         //state.violation = action.payload; //TODO: cleanup
