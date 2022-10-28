@@ -31,31 +31,13 @@ export const HomeStackNavigator = () => {
 
   return (
     <Stack.Navigator initialRouteName={token ? 'Login' : 'HomeScreen'}>
-      <Stack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Registration"
-        component={RegistrationScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="HomeScreen"
-        component={RootTabNavigator}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Report"
-        component={ReportScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Donation"
-        component={DonationScreen}
-        options={{headerShown: false}}
-      />
+      <Stack.Group screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Registration" component={RegistrationScreen} />
+        <Stack.Screen name="HomeScreen" component={RootTabNavigator} />
+        <Stack.Screen name="Report" component={ReportScreen} />
+        <Stack.Screen name="Donation" component={DonationScreen} />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };
