@@ -2,10 +2,66 @@
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-  </head>
-  <body>
-  <p>@Model.Url</p>
-  </body>
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<table border="0" cellpadding="0" cellspacing="0" style="background: #fff; width: 600px; margin: 20px auto">
+    <tbody>
+    <tr>
+        <td valign="top" style="background: #3e3d3d; padding: 15px 10px">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tbody>
+                <tr>
+                    <td>
+                        <img src="@Model.LogoUrl"
+                             alt=""
+                             width="90"
+                             style="display: block; margin: 0 auto;"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td valign="top" style="padding-top: 15px">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tbody>
+                <tr>
+                    <td valign="top" style="padding: 0 15px">
+                        <h1 style="font-family: Arial, sans-serif; color: #1e1e1e; font-size: 24px; border-bottom: 1px solid #1e1e1e; margin: 0 0 40px 0; padding-bottom: 5px">
+                            <strong>Kreirana je nova prijava</strong>
+                        </h1>
+                        <p style="font-family: Arial, sans-serif; color: #1e1e1e; font-size: 18px; line-height: 25px; margin: 0 0 15px 0">
+                            Informacije o prijavi: <br/><br/>
+                            Prijavio korisnik sa email adresom: <strong>@Model.Email</strong>
+                            <br/>
+                            Link do prijave: <a href="@Model.Url">
+                                <strong>link</strong>
+                            </a>
+                        </p>
+                        <br/><br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" style="padding-top: 120px">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tbody>
+                            <tr>
+                                <td valign="top" style="padding: 10px; background: #f6f6f6">
+                                    <p style="font-family: Arial, sans-serif; color: #1e1e1e; font-size: 12px; line-height: 20px; margin: 0">© Animal Rescue Serbia</p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
 </html>

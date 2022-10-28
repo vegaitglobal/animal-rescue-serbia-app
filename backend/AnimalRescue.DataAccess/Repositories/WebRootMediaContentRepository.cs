@@ -23,9 +23,12 @@ namespace AnimalRescue.DataAccess.Repositories
             var fileName = Path.GetFileName(fileToUpload.FileName);
             var extension = Path.GetExtension(fileToUpload.FileName);
 
-            if (!Directory.Exists($"{rootFilePath}\\{UploadsFolderName}"))
+
+            var uploadDirectoryPath = $"{rootFilePath}\\{UploadsFolderName}";
+
+            if (!Directory.Exists(uploadDirectoryPath))
             {
-                Directory.CreateDirectory(rootFilePath);
+                Directory.CreateDirectory(uploadDirectoryPath);
             }
 
             var relativePath = $"{UploadsFolderName}\\{fileId}{extension}";

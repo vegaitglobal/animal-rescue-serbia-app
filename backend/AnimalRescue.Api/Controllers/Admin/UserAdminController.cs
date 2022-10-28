@@ -19,9 +19,9 @@ namespace AnimalRescue.Api.Controllers.Admin
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<UserDto>> UpdateAsync(Guid id, UserUpdateDto userUpdateDto)
+        public async Task<ActionResult<UserDto>> UpdateAsync(Guid id, UserAdminUpdateDto userUpdateDto)
         {
-            var updated = await _userService.UpdateAsync(id, userUpdateDto);
+            var updated = await _userService.AdminUpdateAsync(id, userUpdateDto);
 
             return Ok(updated);
         }

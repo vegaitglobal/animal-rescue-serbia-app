@@ -5,6 +5,7 @@ using AnimalRescue.Contracts.FilterRequests;
 using AnimalRescue.Contracts.Pagination;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace AnimalRescue.Api.Controllers.Admin;
 
@@ -30,14 +31,23 @@ public class ArticlesAdminController : ControllerBase
         return Ok(violations);
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<ArticleDto>> GetAsync(Guid id)
+    [HttpGet("{id}", Name = "GetArticleAsync")]
+    public async Task<ActionResult<ArticleDto>> GetArticleAsync(Guid id)
     {
         var article = await _articleService.GetAsync(id);
 
         return article is null
             ? NotFound()
             : Ok(article);
+    }
+
+    [HttpPost]
+    [ProducesResponseType((int)HttpStatusCode.Created)]
+    public async Task<ActionResult> CreateAsync([FromForm] ArticleCreateDto dto)
+    {
+        var created = await _articleService.AddAsync(dto);
+
+        return CreatedAtRoute("GetArticleAsync", new { id = created.Id }, null);
     }
 
     [HttpPut("{id}")]
