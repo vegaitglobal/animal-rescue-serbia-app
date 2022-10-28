@@ -1,5 +1,5 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import React from 'react';
+import React, {ReactElement, useCallback} from 'react';
 import {SosScreen} from '../screens/SosScreen';
 import HomeActive from '../assets/icons/homeActive.svg';
 import HomeInactive from '../assets/icons/homeInactive.svg';
@@ -8,79 +8,92 @@ import SosInactive from '../assets/icons/sosInactive.svg';
 import ProfileActive from '../assets/icons/profileActive.svg';
 import ProfileInactive from '../assets/icons/profileInactive.svg';
 import {ProfileScreen} from '../screens/ProfileScreen';
-import {Platform, StyleSheet, View} from 'react-native';
+import {Platform, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 import {HomeScreen} from '../screens/HomeScreen';
 import {ReportScreen} from '../screens/ReportScreen';
 import {DonationScreen} from '../screens/DonationScreen';
 import {InformationScreen} from '../screens/InformationScreen';
 
+type TabIconProps = {
+  focused: boolean;
+  color: string;
+  size: number;
+  activeIcon: ReactElement;
+  inactiveIcon: ReactElement;
+  iconContainerStyle?: StyleProp<ViewStyle>;
+};
+
+//TODO: Implement mapping icons with props
+const TabIcon = ({
+  focused,
+  activeIcon,
+  inactiveIcon,
+  iconContainerStyle,
+}: TabIconProps) => (
+  <View style={iconContainerStyle ?? styles.iconContainer}>
+    {focused ? activeIcon : inactiveIcon}
+  </View>
+);
+
 export const RootTabNavigator = () => {
   const Tab = createBottomTabNavigator();
 
+  const renderTabIcon = useCallback(
+    (
+        additional: Pick<
+          TabIconProps,
+          'activeIcon' | 'inactiveIcon' | 'iconContainerStyle'
+        >,
+      ) =>
+      (props: {focused: boolean; color: string; size: number}) =>
+        <TabIcon {...props} {...additional} />,
+    [],
+  );
+
+  const size = 40;
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused}) => {
-          let width = 40;
-          let height = 40;
-          if (route.name === 'Home') {
-            return focused ? (
-              <View style={styles.iconContainer}>
-                <HomeActive width={width} height={height} />
-              </View>
-            ) : (
-              <View style={styles.iconContainer}>
-                <HomeInactive width={width} height={height} />
-              </View>
-            );
-          } else if (route.name === 'Sos') {
-            return focused ? (
-              <View style={styles.sosIconContainer}>
-                <SosActive width={60} height={60} />
-              </View>
-            ) : (
-              <View style={styles.sosIconContainer}>
-                <SosInactive width={60} height={60} />
-              </View>
-            );
-          } else if (route.name === 'Profile') {
-            return focused ? (
-              <View style={styles.iconContainer}>
-                <ProfileActive width={width} height={height} />
-              </View>
-            ) : (
-              <View style={styles.iconContainer}>
-                <ProfileInactive width={width} height={height} />
-              </View>
-            );
-          }
-        },
+      screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: {backgroundColor: ColorPallet.gray, minHeight: 60},
-      })}>
+        headerShown: false,
+      }}>
       <Tab.Screen
         name="Home"
         component={HomeScreen}
-        options={{headerShown: false}}
+        options={{
+          tabBarIcon: renderTabIcon({
+            activeIcon: <HomeActive width={size} height={size} />,
+            inactiveIcon: <HomeInactive width={size} height={size} />,
+          }),
+        }}
       />
       <Tab.Screen
         name="Sos"
         component={SosScreen}
-        options={{headerShown: false}}
+        options={{
+          tabBarIcon: renderTabIcon({
+            activeIcon: <SosActive width={60} height={60} />,
+            inactiveIcon: <SosInactive width={60} height={60} />,
+            iconContainerStyle: styles.sosIconContainer,
+          }),
+        }}
       />
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
-          headerShown: false,
+          tabBarIcon: renderTabIcon({
+            activeIcon: <ProfileActive width={size} height={size} />,
+            inactiveIcon: <ProfileInactive width={size} height={size} />,
+          }),
         }}
       />
       <Tab.Screen
         name="Report"
         component={ReportScreen}
         options={{
-          headerShown: false,
           tabBarButton: () => null,
         }}
       />
@@ -88,7 +101,6 @@ export const RootTabNavigator = () => {
         name="Donation"
         component={DonationScreen}
         options={{
-          headerShown: false,
           tabBarButton: () => null,
         }}
       />
@@ -96,7 +108,6 @@ export const RootTabNavigator = () => {
         name="Information"
         component={InformationScreen}
         options={{
-          headerShown: false,
           tabBarButton: () => null,
         }}
       />
