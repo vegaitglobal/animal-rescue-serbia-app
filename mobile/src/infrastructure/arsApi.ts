@@ -60,7 +60,7 @@ export const arsApi = (apiClient: IApiClient) => ({
     form.append('Address', address);
     form.append('PhoneNumber', phoneNumber);
     form.append('Description', description);
-    files.forEach(file => {
+    files?.forEach(file => {
       form.append('Files', file);
     });
 

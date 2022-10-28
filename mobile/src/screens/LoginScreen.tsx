@@ -9,6 +9,10 @@ import {ColorPallet} from '../resources/ColorPallet';
 import {SocialButtons} from '../components/SocialButtons';
 import {useAppDispatch} from '../hooks/storeHooks';
 import {logIn} from '../store/src/authentication/actions';
+import {
+  loadLocations,
+  loadViolationCategories,
+} from '../store/src/reports/actions';
 
 export const LoginScreen = () => {
   const headerTitle = 'Dobro došli';
@@ -40,6 +44,18 @@ export const LoginScreen = () => {
     setIsSigningIn(false);
 
     if (result.meta.requestStatus === 'rejected') {
+      return;
+    }
+
+    const categoryResult = await dispatch(loadViolationCategories());
+
+    if (categoryResult.meta.requestStatus === 'rejected') {
+      return;
+    }
+
+    const locationResult = await dispatch(loadLocations());
+
+    if (locationResult.meta.requestStatus === 'rejected') {
       return;
     }
 
