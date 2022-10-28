@@ -39,7 +39,7 @@ export const ReportScreen = () => {
 
   const violationCategories = useAppSelector(getViolationCategories);
 
-  const locations = useAppSelector(getLocations);
+  const violationLocations = useAppSelector(getLocations);
 
   //console.log('locations ', locations);
 
@@ -80,11 +80,6 @@ export const ReportScreen = () => {
     setIsLoading(false);
     dispatch(unsetViolation());
   }, [dispatch, navigation, violation]);
-
-  useEffect(() => {
-    dispatch(loadViolationCategories());
-    dispatch(loadLocations());
-  }, [dispatch]);
 
   const onFilesSelected = useCallback(
     async (selectedFiles: SelectionResult[]) => {
@@ -133,7 +128,7 @@ export const ReportScreen = () => {
         <View style={style.inputContainer}>
           <SelectionInput
             onValueSelected={item => dispatch(setLocation(item.label))}
-            data={locations?.map(
+            data={violationLocations?.map(
               (item, index) =>
                 ({
                   label: item,
@@ -152,6 +147,8 @@ export const ReportScreen = () => {
         </View>
         <View style={style.inputContainer}>
           <TextInput
+            keyboardType="phone-pad"
+            textContentType="telephoneNumber"
             placeholder={brTelefona}
             placeholderTextColor={ColorPallet.lightGray}
             onChangeText={value => dispatch(setPhoneNumber(value))}

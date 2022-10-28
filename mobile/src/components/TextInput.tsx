@@ -15,6 +15,8 @@ export const TextInput = (props: TextInputProps) => {
       placeholder={props.placeholder}
       value={props.value}
       onChangeText={props.onChangeText}
+      secureTextEntry={props.secureTextEntry}
+      keyboardType={props.keyboardType}
       placeholderTextColor={ColorPallet.lightGray}
       style={commonStyles.inputField}
     />

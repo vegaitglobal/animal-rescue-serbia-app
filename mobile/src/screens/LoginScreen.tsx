@@ -13,7 +13,7 @@ import {logIn} from '../store/src/authentication/actions';
 export const LoginScreen = () => {
   const headerTitle = 'Dobro došli';
   const screenTitle = 'Ulogujete se na vaš nalog';
-  const korisnickoIme = 'Korisničko ime';
+  const korisnickoIme = 'Email';
   const lozinka = 'Lozinka';
   const zaboravljenaLozinka = 'Zaboravljena lozinka?';
   const prijaviteSe = 'Prijavite se';
@@ -52,14 +52,14 @@ export const LoginScreen = () => {
         <Text style={style.screenTitle}>{screenTitle}</Text>
         <View style={style.inputContainer}>
           <TextInput
-            onChangeText={setEmail}
+            onChangeText={text => setEmail(text.trim())}
             value={email}
             placeholder={korisnickoIme}
             placeholderTextColor={ColorPallet.lightGray}
           />
         </View>
         <TextInput
-          onChangeText={setPassword}
+          onChangeText={text => setPassword(text.trim())}
           value={password}
           secureTextEntry
           placeholder={lozinka}

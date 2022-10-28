@@ -12,7 +12,6 @@ import {Platform, StyleSheet, View} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 import {HomeScreen} from '../screens/HomeScreen';
 import {ReportScreen} from '../screens/ReportScreen';
-import {HomeStackNavigator} from './HomeStackNavigator';
 import {DonationScreen} from '../screens/DonationScreen';
 import {InformationScreen} from '../screens/InformationScreen';
 
