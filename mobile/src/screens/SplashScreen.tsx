@@ -16,7 +16,7 @@ export const SplashScreen = () => {
   const checkTokenAndPrefetch = useCallback(async () => {
     const token = await AsyncStorage.getItem('accessToken'); //TODO: Try using/creating auth manager
     if (!token) {
-      navigation.navigate('Login');
+      navigation.replace('Login');
     }
 
     // These are prefetched because they are static and because

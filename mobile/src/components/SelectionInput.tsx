@@ -1,6 +1,6 @@
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import React, {useCallback, useRef, useState} from 'react';
-import {Pressable, StyleSheet, View} from 'react-native';
+import {Keyboard, Pressable, StyleSheet, View} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 import {Chevron, Orientation} from './Chevron';
 import {commonStyles} from './commonStyles';
@@ -24,6 +24,7 @@ export const SelectionInput = ({
   const closeModal = useCallback(() => sheetRef.current?.close(), []);
 
   const onPress = useCallback(() => {
+    Keyboard.dismiss(); //Make sure to close soft keyboard
     sheetRef.current?.present();
   }, []);
 

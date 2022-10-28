@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {Keyboard, Platform, StyleSheet, View} from 'react-native';
 import {CustomModal} from '../components/CustomModal';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
@@ -20,8 +20,6 @@ import {ImageUploadElement} from '../components/ImageUploaderElement';
 import {SelectionResult} from '../components/types';
 import {batchCompress, extractFileNameFromPath} from '../util/helpers';
 import {
-  loadLocations,
-  loadViolationCategories,
   sendViolation,
   setAddress,
   setDescription,
