@@ -7,6 +7,7 @@ import {
   SectionListData,
   StyleSheet,
   TextStyle,
+  Image,
 } from 'react-native';
 import {EmptySpace} from '../components/EmptySpace';
 import {Separator} from '../components/Separator';
@@ -36,7 +37,13 @@ export const ViolationsScreen = () => {
     return Object.entries(groups).reduce((acc, [_, groupData]) => {
       const groupName = groupData?.[0]?.violationCategory?.name ?? '';
 
-      return [...acc, {title: groupName, data: groupData}];
+      return [
+        ...acc,
+        {
+          title: groupName,
+          data: groupData,
+        },
+      ];
     }, [] as SectionListViolationGroup[]);
   }, [violations]);
 
@@ -62,6 +69,15 @@ export const ViolationsScreen = () => {
     ({item: violation}: SectionListRenderItemInfo<ViolationResponseDto>) => {
       const {address, description, location, mediaContent} = violation;
 
+      const testSingle = mediaContent?.[0] ?? {};
+      console.log(`https://localhost:7113/${testSingle.id}.jpeg`);
+      console.log('Full relative path: ', testSingle.relativeFilePath);
+      console.log(
+        '1: ',
+        `https://localhost:7113/${encodeURIComponent(
+          testSingle.relativeFilePath,
+        )}`,
+      );
       return (
         <View style={style.itemRootContainer}>
           <View style={style.titleRowContainer}>
@@ -69,7 +85,21 @@ export const ViolationsScreen = () => {
             <Text style={style.locationText}>{location}</Text>
           </View>
           <EmptySpace height={8} />
-          {description ? <Text numberOfLines={3}>{description}</Text> : null}
+          {description ? (
+            <Text numberOfLines={3} style={style.descriptionText}>
+              {description}
+            </Text>
+          ) : null}
+          <EmptySpace height={16} />
+          <View>
+            <Image
+              style={{width: 50, height: 50, backgroundColor: 'red'}}
+              //TODO: Create Base url environment variable to avoid issues with duplicated setup of it
+              source={{
+                uri: `https://e322-178-223-242-185.eu.ngrok.io/${testSingle.relativeFilePath}`,
+              }}
+            />
+          </View>
         </View>
       );
     },
@@ -127,6 +157,9 @@ const style = StyleSheet.create({
   },
   locationText: {
     ...titleStyle,
+  },
+  descriptionText: {
+    color: ColorPallet.plainBlack,
   },
   sectionHeader: {
     backgroundColor: ColorPallet.gray,
