@@ -14,6 +14,7 @@ import {ViolationResponseDto} from '../infrastructure/apiTypes';
 import {loadViolations} from '../store/src/reports/actions';
 import {getViolations} from '../store/src/reports/selectors';
 import {groupBy} from 'lodash';
+import {ScreenRootContainer} from '../components/ScreenRootContainer';
 
 type SectionListViolationGroup = {
   title: string;
@@ -54,6 +55,7 @@ export const ViolationsScreen = () => {
     }) => <Text>{title}</Text>,
     [],
   );
+
   const renderItem = useCallback(
     ({item: violation}: SectionListRenderItemInfo<ViolationResponseDto>) => {
       const {address, description, location, mediaContent} = violation;
@@ -65,9 +67,7 @@ export const ViolationsScreen = () => {
             <Text>{location}</Text>
           </View>
           <EmptySpace height={8} />
-          <Text style={style.locationText} numberOfLines={1}>
-            {description}
-          </Text>
+          {description ? <Text numberOfLines={3}>{description}</Text> : null}
         </View>
       );
     },
@@ -75,34 +75,41 @@ export const ViolationsScreen = () => {
   );
 
   return (
-    <View style={style.rootContainer}>
-      <SectionList
-        sections={violationsByGroup}
-        renderItem={renderItem}
-        renderSectionHeader={renderSectionHeader}
-        ItemSeparatorComponent={() => <Separator />}
-      />
-    </View>
+    <ScreenRootContainer title="Prekršaji" showLogo>
+      <View style={style.rootContainer}>
+        <SectionList
+          sections={violationsByGroup}
+          renderItem={renderItem}
+          renderSectionHeader={renderSectionHeader}
+          SectionSeparatorComponent={() => <EmptySpace height={16} />}
+          ItemSeparatorComponent={() => (
+            <>
+              <EmptySpace height={8} />
+              <Separator />
+              <EmptySpace height={8} />
+            </>
+          )}
+          ListFooterComponent={() => <EmptySpace height={200} />}
+        />
+      </View>
+    </ScreenRootContainer>
   );
 };
 
 const style = StyleSheet.create({
   rootContainer: {
+    paddingTop: 16,
     flexGrow: 1,
-    backgroundColor: 'red',
+    paddingHorizontal: 16,
   },
   itemRootContainer: {
-    height: 70,
-    backgroundColor: 'gray',
     justifyContent: 'center',
+    paddingHorizontal: 16,
   },
   titleRowContainer: {
     flexDirection: 'row',
   },
   addressText: {
     flex: 1,
-  },
-  locationText: {
-    color: 'white',
   },
 });

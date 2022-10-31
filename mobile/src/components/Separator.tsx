@@ -1,25 +1,30 @@
 import React, {useMemo} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ViewStyle} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 
 type SeparatorProps = {
   vertical?: boolean;
+  color?: string;
 };
-export const Separator = ({vertical}: SeparatorProps) => {
-  const dynamicSeparatorPosition = useMemo(
-    () => (vertical ? styles.verticalSeparator : styles.horizontalSeparator),
-    [vertical],
+export const Separator = ({
+  vertical,
+  color = ColorPallet.lightGray,
+}: SeparatorProps) => {
+  const dynamicSeparatorPosition: ViewStyle = useMemo(
+    () =>
+      vertical
+        ? {...styles.verticalSeparator, borderStartColor: color}
+        : {...styles.horizontalSeparator, borderBottomColor: color},
+    [color, vertical],
   );
   return <View style={dynamicSeparatorPosition} />;
 };
 
 const styles = StyleSheet.create({
   horizontalSeparator: {
-    borderBottomColor: ColorPallet.lightGray,
     borderBottomWidth: 1,
   },
   verticalSeparator: {
-    borderStartColor: ColorPallet.lightGray,
     borderStartWidth: 1,
   },
 });

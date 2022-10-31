@@ -80,9 +80,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   safeAreaContainer: {
-    backgroundColor: ColorPallet.gray,
     height: 180,
-    flex: 1,
+    flexGrow: 1,
     marginBottom: Platform.OS === 'ios' ? -40 : 0,
   },
 });
