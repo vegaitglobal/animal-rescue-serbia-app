@@ -5,6 +5,7 @@ import {
   SectionList,
   SectionListRenderItemInfo,
   SectionListData,
+  StyleSheet,
 } from 'react-native';
 import {EmptySpace} from '../components/EmptySpace';
 import {Separator} from '../components/Separator';
@@ -58,18 +59,13 @@ export const ViolationsScreen = () => {
       const {address, description, location, mediaContent} = violation;
 
       return (
-        <View
-          style={{
-            height: 70,
-            backgroundColor: 'gray',
-            justifyContent: 'center',
-          }}>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={{flex: 1}}>{address}</Text>
+        <View style={style.itemRootContainer}>
+          <View style={style.titleRowContainer}>
+            <Text style={style.addressText}>{address}</Text>
             <Text>{location}</Text>
           </View>
           <EmptySpace height={8} />
-          <Text style={{color: 'white'}} numberOfLines={1}>
+          <Text style={style.locationText} numberOfLines={1}>
             {description}
           </Text>
         </View>
@@ -79,7 +75,7 @@ export const ViolationsScreen = () => {
   );
 
   return (
-    <View style={{flexGrow: 1, backgroundColor: 'red'}}>
+    <View style={style.rootContainer}>
       <SectionList
         sections={violationsByGroup}
         renderItem={renderItem}
@@ -89,3 +85,24 @@ export const ViolationsScreen = () => {
     </View>
   );
 };
+
+const style = StyleSheet.create({
+  rootContainer: {
+    flexGrow: 1,
+    backgroundColor: 'red',
+  },
+  itemRootContainer: {
+    height: 70,
+    backgroundColor: 'gray',
+    justifyContent: 'center',
+  },
+  titleRowContainer: {
+    flexDirection: 'row',
+  },
+  addressText: {
+    flex: 1,
+  },
+  locationText: {
+    color: 'white',
+  },
+});
