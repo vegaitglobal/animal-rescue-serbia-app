@@ -73,32 +73,15 @@ export const RootTabNavigator = () => {
           }),
         }}
       />
-      <Tab.Screen
-        name="Report"
-        component={ReportScreen}
-        options={{
+      <Tab.Group
+        screenOptions={{
           tabBarButton: () => null,
-        }}
-      />
-      <Tab.Screen
-        name="Violations"
-        component={ViolationsScreen}
-        options={{tabBarIcon: () => null}}
-      />
-      <Tab.Screen
-        name="Donation"
-        component={DonationScreen}
-        options={{
-          tabBarButton: () => null,
-        }}
-      />
-      <Tab.Screen
-        name="Information"
-        component={InformationScreen}
-        options={{
-          tabBarButton: () => null,
-        }}
-      />
+        }}>
+        <Tab.Screen name="Report" component={ReportScreen} />
+        <Tab.Screen name="Violations" component={ViolationsScreen} />
+        <Tab.Screen name="Donation" component={DonationScreen} />
+        <Tab.Screen name="Information" component={InformationScreen} />
+      </Tab.Group>
     </Tab.Navigator>
   );
 };
