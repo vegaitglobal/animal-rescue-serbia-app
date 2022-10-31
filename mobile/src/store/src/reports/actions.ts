@@ -98,6 +98,5 @@ export const loadViolations = createAsyncThunk<
   AppThunkApiConfig
 >('reports/loadViolations', async (_, {extra}) => {
   const api = arsApi(extra.apiClient);
-  console.log('Requesting');
   return await api.getViolations();
 });

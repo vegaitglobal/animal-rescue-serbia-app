@@ -54,7 +54,6 @@ export const reportSlice = createSlice({
         state.locations = action.payload;
       })
       .addCase(loadViolations.fulfilled, (state, {payload}) => {
-        console.log('Data: ', payload);
         state.violations = payload;
       })
       .addCase(sendViolation.fulfilled, (state, action) => {
