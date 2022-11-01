@@ -33,6 +33,7 @@ export const ViolationsScreen = () => {
   const violations = useAppSelector(getViolations);
   const modalRef = useRef<BottomSheetModal>(null);
   const [selectedViolationId, setSelectedViolationId] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const {mediaContent: selectedViolationMediaContent = []} = useMemo(
     () =>
       violations?.find(violation => violation.id === selectedViolationId) ??
@@ -119,7 +120,6 @@ export const ViolationsScreen = () => {
 
   const handleShouldCloseModal = () => modalRef.current?.close();
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
   useAndroidBackNavigationOverride(() => {
     if (!isModalVisible) {
       return false;
