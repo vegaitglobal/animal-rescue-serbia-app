@@ -1,5 +1,5 @@
-import React from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import React, {useCallback} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
 import Report from '../assets/icons/report.svg';
@@ -8,6 +8,9 @@ import Add from '../assets/icons/add.svg';
 import Education from '../assets/icons/education.svg';
 import {CustomButton} from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
+import {ScrollView} from 'react-native-gesture-handler';
+import {EmptySpace} from '../components/EmptySpace';
+import {SquareGrid, GridIcon} from '../components/SquareGrid';
 
 export const HomeScreen = () => {
   const headerTitle = 'Prijavi';
@@ -22,64 +25,82 @@ export const HomeScreen = () => {
 
   const navigation = useNavigation();
 
+  const onBoxIconPress = useCallback(
+    (rowIndex: number, columnIndex: number) => {
+      if (rowIndex === 0) {
+        if (columnIndex === 0) {
+          navigation.navigate('Report');
+          return;
+        }
+
+        //Do something Education related here
+        return;
+      }
+
+      if (columnIndex === 0) {
+        // Do something Ads related
+        return;
+      }
+      navigation.navigate('Information');
+      return;
+    },
+    [navigation],
+  );
+
   return (
     <ScreenRootContainer title={headerTitle} showLogo hideGoBack>
-      <View style={style.container}>
-        <View style={style.iconsContainer}>
-          <View style={style.firstContainer}>
-            <View style={style.reportContainer}>
-              <Pressable onPress={() => navigation.navigate('Report')}>
-                <Report width={100} height={100} />
-              </Pressable>
-              <Text style={style.text}>{prijava}</Text>
-            </View>
-            <View style={style.educationContainer}>
-              <Pressable onPress={() => {}}>
-                <Education width={100} height={100} />
-              </Pressable>
-              <Text style={style.text}>{edukacija}</Text>
-            </View>
+      <ScrollView>
+        <View style={style.container}>
+          <View style={{alignItems: 'center'}}>
+            <SquareGrid
+              size={310}
+              onPress={onBoxIconPress}
+              icons={[
+                [
+                  <GridIcon label={prijava}>
+                    <Report width={100} height={100} />
+                  </GridIcon>,
+                  <GridIcon label={edukacija}>
+                    <Education width={100} height={100} />
+                  </GridIcon>,
+                ],
+                [
+                  <GridIcon label={oglasavanje}>
+                    <Add width={100} height={100} />
+                  </GridIcon>,
+                  <GridIcon label={informisanje}>
+                    <Inform width={100} height={100} />
+                  </GridIcon>,
+                ],
+              ]}
+            />
           </View>
-
-          <View style={style.firstContainer}>
-            <View style={style.addContainer}>
-              <Pressable onPress={() => {}}>
-                <Add width={100} height={100} />
-              </Pressable>
-              <Text style={style.text}>{oglasavanje}</Text>
-            </View>
-            <View style={style.informContainer}>
-              <Pressable onPress={() => navigation.navigate('Information')}>
-                <Inform width={100} height={100} />
-              </Pressable>
-              <Text style={style.text}>{informisanje}</Text>
-            </View>
+          <View style={style.buttonsContainer}>
+            <CustomButton
+              style={style.buttonContainer}
+              text={ars}
+              onPress={() => {}}
+            />
+            <CustomButton
+              style={style.buttonContainer}
+              text={donatori}
+              onPress={() => {}}
+            />
+            <CustomButton
+              style={style.buttonContainer}
+              text={doniranje}
+              onPress={() => navigation.navigate('Donation')}
+            />
+            <CustomButton
+              style={style.violationListButton}
+              textStyle={style.violationListButtonLabel}
+              text={violationListButtonLabel}
+              onPress={() => navigation.navigate('Violations')}
+            />
           </View>
         </View>
-        <View style={style.buttonsContainer}>
-          <CustomButton
-            style={style.buttonContainer}
-            text={ars}
-            onPress={() => {}}
-          />
-          <CustomButton
-            style={style.buttonContainer}
-            text={donatori}
-            onPress={() => {}}
-          />
-          <CustomButton
-            style={style.buttonContainer}
-            text={doniranje}
-            onPress={() => navigation.navigate('Donation')}
-          />
-          <CustomButton
-            style={style.violationListButton}
-            textStyle={style.violationListButtonLabel}
-            text={violationListButtonLabel}
-            onPress={() => navigation.navigate('Violations')}
-          />
-        </View>
-      </View>
+        <EmptySpace height={40} />
+      </ScrollView>
     </ScreenRootContainer>
   );
 };
@@ -91,34 +112,8 @@ const style = StyleSheet.create({
     flex: 1,
     paddingLeft: 30,
   },
-  firstContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 50,
-  },
-  educationContainer: {
-    paddingLeft: 20,
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-  },
-  addContainer: {
-    borderRightColor: 'black',
-    borderRightWidth: 1,
-    paddingRight: 20,
-    paddingTop: 5,
-  },
-  reportContainer: {
-    borderRightColor: 'black',
-    borderRightWidth: 1,
-    paddingRight: 20,
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-  },
-  informContainer: {
-    paddingLeft: 20,
-  },
   buttonsContainer: {
-    paddingTop: 20,
+    paddingTop: 30,
   },
   buttonContainer: {
     marginBottom: 20,
@@ -128,15 +123,5 @@ const style = StyleSheet.create({
   },
   violationListButtonLabel: {
     color: ColorPallet.plainWhite,
-  },
-  text: {
-    textTransform: 'uppercase',
-    fontSize: 12,
-    alignSelf: 'center',
-    paddingBottom: 10,
-    paddingTop: 10,
-  },
-  iconsContainer: {
-    marginLeft: -10,
   },
 });
