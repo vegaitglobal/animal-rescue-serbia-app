@@ -13,6 +13,7 @@ export const SplashScreen = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
 
+  // TODO: 401 still redirects
   const checkTokenAndPrefetch = useCallback(async () => {
     const token = await AsyncStorage.getItem('accessToken'); //TODO: Try using/creating auth manager
     if (!token) {

@@ -7,7 +7,6 @@ import {
   SectionListData,
   StyleSheet,
   TextStyle,
-  Image,
 } from 'react-native';
 import {EmptySpace} from '../components/EmptySpace';
 import {Separator} from '../components/Separator';
@@ -18,7 +17,7 @@ import {getViolations} from '../store/src/reports/selectors';
 import {groupBy} from 'lodash';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
-import {Chevron, Orientation} from '../components/Chevron';
+import {ImageThumbnailRow} from '../components/ImageThumbnailRow';
 
 type SectionListViolationGroup = {
   title: string;
@@ -91,37 +90,7 @@ export const ViolationsScreen = () => {
             </Text>
           ) : null}
           <EmptySpace height={16} />
-          <View style={styles.imageRowContainer}>
-            <View style={styles.imageContainer}>
-              {/* //TODO: Dynamic number calculation */}
-              {mediaContent.map(({id: fileId, relativeFilePath}) => (
-                <>
-                  <Image
-                    key={fileId}
-                    style={styles.image}
-                    //TODO: Create Base url environment variable to avoid issues with duplicated setup of it
-                    source={{
-                      uri: relativeFilePath
-                        ? `https://e322-178-223-242-185.eu.ngrok.io/${relativeFilePath}`
-                        : undefined,
-                    }}
-                  />
-                  <EmptySpace width={8} />
-                </>
-              ))}
-            </View>
-            {mediaContent.length ? (
-              <View style={styles.moreButtonContainer}>
-                {/* //TODO: Separate this image segment into component */}
-                <Text style={styles.moreLabelText}>Više</Text>
-                <EmptySpace width={8} />
-                <Chevron
-                  color={ColorPallet.plainBlack}
-                  orientation={Orientation.Forward}
-                />
-              </View>
-            ) : null}
-          </View>
+          <ImageThumbnailRow mediaContent={mediaContent} />
         </View>
       );
     },
@@ -181,10 +150,6 @@ const styles = StyleSheet.create({
   locationText: {
     ...titleStyle,
   },
-  moreLabelText: {
-    ...titleStyle,
-    textTransform: 'uppercase',
-  },
   descriptionText: {
     color: ColorPallet.plainBlack,
   },
@@ -201,22 +166,5 @@ const styles = StyleSheet.create({
   topSpacer: {
     height: 24,
     backgroundColor: ColorPallet.gray,
-  },
-  imageRowContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  imageContainer: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  image: {
-    width: 60,
-    height: 60,
-    backgroundColor: ColorPallet.lightGray,
-  },
-  moreButtonContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
   },
 });
