@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -18,6 +18,9 @@ import {groupBy} from 'lodash';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
 import {ImageThumbnailRow} from '../components/ImageThumbnailRow';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import {ImageListModal} from './ImageListModal';
+import {bind} from '../util/helpers';
 
 type SectionListViolationGroup = {
   title: string;
@@ -27,6 +30,14 @@ type SectionListViolationGroup = {
 export const ViolationsScreen = () => {
   const dispatch = useAppDispatch();
   const violations = useAppSelector(getViolations);
+  const modalRef = useRef<BottomSheetModal>(null);
+  const [selectedViolationId, setSelectedViolationId] = useState('');
+  const {mediaContent: selectedViolationMediaContent = []} = useMemo(
+    () =>
+      violations.find(violation => violation.id === selectedViolationId) ??
+      ({} as ViolationResponseDto),
+    [selectedViolationId, violations],
+  );
 
   const violationsByGroup = useMemo(() => {
     const groups = groupBy(
@@ -69,6 +80,11 @@ export const ViolationsScreen = () => {
     [],
   );
 
+  const handleImageRowPress = useCallback((violationId: string) => {
+    setSelectedViolationId(violationId);
+    modalRef.current?.present();
+  }, []);
+
   const renderItem = useCallback(
     ({item: violation}: SectionListRenderItemInfo<ViolationResponseDto>) => {
       const {address, description, location, mediaContent, id} = violation;
@@ -90,11 +106,14 @@ export const ViolationsScreen = () => {
             </Text>
           ) : null}
           <EmptySpace height={16} />
-          <ImageThumbnailRow mediaContent={mediaContent} />
+          <ImageThumbnailRow
+            mediaContent={mediaContent}
+            onPress={bind(id, handleImageRowPress)}
+          />
         </View>
       );
     },
-    [],
+    [handleImageRowPress],
   );
 
   //TODO: Details screen
@@ -120,6 +139,15 @@ export const ViolationsScreen = () => {
               <Separator />
               <EmptySpace height={200} />
             </View>
+          )}
+        />
+        <ImageListModal
+          myRef={modalRef}
+          data={selectedViolationMediaContent?.map(
+            ({id: fileId, relativeFilePath}) => ({
+              id: fileId,
+              fullPath: `https://c31b-178-223-242-185.eu.ngrok.io/${relativeFilePath}`,
+            }),
           )}
         />
       </View>
