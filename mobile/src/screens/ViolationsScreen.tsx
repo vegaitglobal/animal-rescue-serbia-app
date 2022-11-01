@@ -18,6 +18,7 @@ import {getViolations} from '../store/src/reports/selectors';
 import {groupBy} from 'lodash';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
+import {Chevron, Orientation} from '../components/Chevron';
 
 type SectionListViolationGroup = {
   title: string;
@@ -58,47 +59,68 @@ export const ViolationsScreen = () => {
 
   const renderSectionHeader = useCallback(
     ({
-      section: {title},
+      section: {title, data},
     }: {
       section: SectionListData<ViolationResponseDto, SectionListViolationGroup>;
-    }) => <Text style={style.sectionHeader}>{title}</Text>,
+    }) => (
+      <Text key={data?.[0]?.id ?? ''} style={styles.sectionHeader}>
+        {title}
+      </Text>
+    ),
     [],
   );
 
   const renderItem = useCallback(
     ({item: violation}: SectionListRenderItemInfo<ViolationResponseDto>) => {
-      const {address, description, location, mediaContent} = violation;
+      const {address, description, location, mediaContent, id} = violation;
 
-      const testSingle = mediaContent?.[0] ?? {};
-      console.log(`https://localhost:7113/${testSingle.id}.jpeg`);
-      console.log('Full relative path: ', testSingle.relativeFilePath);
-      console.log(
-        '1: ',
-        `https://localhost:7113/${encodeURIComponent(
-          testSingle.relativeFilePath,
-        )}`,
-      );
       return (
-        <View style={style.itemRootContainer}>
-          <View style={style.titleRowContainer}>
-            <Text style={style.addressText}>{address}</Text>
-            <Text style={style.locationText}>{location}</Text>
+        <View key={id} style={styles.itemRootContainer}>
+          <View style={styles.titleRowContainer}>
+            <Text numberOfLines={1} style={styles.addressText}>
+              {address}
+            </Text>
+            <Text numberOfLines={1} style={styles.locationText}>
+              {location}
+            </Text>
           </View>
           <EmptySpace height={8} />
           {description ? (
-            <Text numberOfLines={3} style={style.descriptionText}>
+            <Text numberOfLines={3} style={styles.descriptionText}>
               {description}
             </Text>
           ) : null}
           <EmptySpace height={16} />
-          <View>
-            <Image
-              style={{width: 50, height: 50, backgroundColor: 'red'}}
-              //TODO: Create Base url environment variable to avoid issues with duplicated setup of it
-              source={{
-                uri: `https://e322-178-223-242-185.eu.ngrok.io/${testSingle.relativeFilePath}`,
-              }}
-            />
+          <View style={styles.imageRowContainer}>
+            <View style={styles.imageContainer}>
+              {/* //TODO: Dynamic number calculation */}
+              {mediaContent.map(({id: fileId, relativeFilePath}) => (
+                <>
+                  <Image
+                    key={fileId}
+                    style={styles.image}
+                    //TODO: Create Base url environment variable to avoid issues with duplicated setup of it
+                    source={{
+                      uri: relativeFilePath
+                        ? `https://e322-178-223-242-185.eu.ngrok.io/${relativeFilePath}`
+                        : undefined,
+                    }}
+                  />
+                  <EmptySpace width={8} />
+                </>
+              ))}
+            </View>
+            {mediaContent.length ? (
+              <View style={styles.moreButtonContainer}>
+                {/* //TODO: Separate this image segment into component */}
+                <Text style={styles.moreLabelText}>Više</Text>
+                <EmptySpace width={8} />
+                <Chevron
+                  color={ColorPallet.plainBlack}
+                  orientation={Orientation.Forward}
+                />
+              </View>
+            ) : null}
           </View>
         </View>
       );
@@ -106,10 +128,11 @@ export const ViolationsScreen = () => {
     [],
   );
 
+  //TODO: Details screen
   return (
     <ScreenRootContainer title="Prekršaji" showLogo>
-      <View style={style.rootContainer}>
-        <View style={style.topSpacer} />
+      <View style={styles.rootContainer}>
+        <View style={styles.topSpacer} />
         <SectionList
           sections={violationsByGroup}
           stickySectionHeadersEnabled
@@ -118,13 +141,13 @@ export const ViolationsScreen = () => {
           SectionSeparatorComponent={() => <EmptySpace height={16} />}
           ItemSeparatorComponent={() => (
             <>
-              <EmptySpace height={8} />
+              <EmptySpace height={16} />
               <Separator />
-              <EmptySpace height={8} />
+              <EmptySpace height={16} />
             </>
           )}
           ListFooterComponent={() => (
-            <View style={style.footerContainer}>
+            <View style={styles.footerContainer}>
               <Separator />
               <EmptySpace height={200} />
             </View>
@@ -140,7 +163,7 @@ const titleStyle: TextStyle = {
   color: ColorPallet.plainBlack,
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   rootContainer: {
     flexGrow: 1,
   },
@@ -158,6 +181,10 @@ const style = StyleSheet.create({
   locationText: {
     ...titleStyle,
   },
+  moreLabelText: {
+    ...titleStyle,
+    textTransform: 'uppercase',
+  },
   descriptionText: {
     color: ColorPallet.plainBlack,
   },
@@ -174,5 +201,22 @@ const style = StyleSheet.create({
   topSpacer: {
     height: 24,
     backgroundColor: ColorPallet.gray,
+  },
+  imageRowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  imageContainer: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  image: {
+    width: 60,
+    height: 60,
+    backgroundColor: ColorPallet.lightGray,
+  },
+  moreButtonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
