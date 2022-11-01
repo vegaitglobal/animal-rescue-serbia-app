@@ -27,7 +27,7 @@ export const ImageThumbnailRow = ({
   const onLayoutChange = useCallback(
     ({nativeEvent}: LayoutChangeEvent) => {
       const calculatedNumberOfThumbnails = Math.floor(
-        nativeEvent.layout.width / thumbnailSize,
+        nativeEvent.layout.width / (thumbnailSize + thumbnailSpacing),
       );
       setNumberOfThumbnails(calculatedNumberOfThumbnails);
     },
@@ -59,7 +59,7 @@ export const ImageThumbnailRow = ({
                     : undefined,
                 }}
               />
-              <EmptySpace width={8} />
+              <EmptySpace width={thumbnailSpacing} />
             </>
           ))}
         </View>
@@ -78,6 +78,8 @@ export const ImageThumbnailRow = ({
     </Pressable>
   );
 };
+
+const thumbnailSpacing = 8;
 
 const styles = StyleSheet.create({
   imageRowContainer: {
