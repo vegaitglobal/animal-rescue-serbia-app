@@ -7,9 +7,8 @@ export const extractFileNameFromPath = (filePath: string) => {
   return segmentedPath?.[segmentedPath.length - 1] ?? '';
 };
 
-export const reduceFileDataIntoString = (fileData: ImageOrVideo[]) => {
-  const names = fileData.map(file => extractFileNameFromPath(file.path));
-  return names.reduce((acc, current) => `${acc},\n${current}`);
+export const fileDataAsStringArray = (fileData: ImageOrVideo[]) => {
+  return fileData.map(file => extractFileNameFromPath(file.path));
 };
 
 export const cleanupPickerLibraryPathsIOS = (pickerData: ImageOrVideo[]) => {

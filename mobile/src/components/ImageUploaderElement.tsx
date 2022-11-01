@@ -2,9 +2,9 @@ import React, {useCallback, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import {ColorPallet} from '../resources/ColorPallet';
+import {fileDataAsStringArray} from '../util/helpers';
 import {CustomButton} from './CustomButton';
 import {EmptySpace} from './EmptySpace';
-import {reduceFileDataIntoString} from '../util/helpers';
 import {SelectionResult} from './types';
 
 type ImageUploadElementProps = {
@@ -18,7 +18,7 @@ export const ImageUploadElement = ({
   placeholderText,
   onFilesSelected,
 }: ImageUploadElementProps) => {
-  const [fileLog, setFileLog] = useState('');
+  const [fileLogs, setFileLogs] = useState<string[]>([placeholderText]);
 
   const onPress = useCallback(async () => {
     const pickedFiles = await ImagePicker.openPicker({
@@ -26,17 +26,24 @@ export const ImageUploadElement = ({
       mediaType: 'any',
     });
 
-    setFileLog(reduceFileDataIntoString(pickedFiles));
+    setFileLogs(fileDataAsStringArray(pickedFiles));
     onFilesSelected(pickedFiles.map(({path, mime}) => ({path, mime})));
   }, [onFilesSelected]);
 
-  const dynamicPlaceholderTextStyle = fileLog ? {} : style.textPlaceholder;
+  const dynamicPlaceholderTextStyle = fileLogs ? {} : styles.textPlaceholder;
 
   return (
-    <View style={style.rootContainer}>
-      <Text numberOfLines={3} style={[style.text, dynamicPlaceholderTextStyle]}>
-        {fileLog || placeholderText}
-      </Text>
+    <View style={styles.rootContainer}>
+      <View style={styles.fileLogContainer}>
+        {fileLogs.map(fileLog => (
+          <Text
+            numberOfLines={1}
+            style={[styles.text, dynamicPlaceholderTextStyle]}>
+            {fileLog}
+          </Text>
+        ))}
+      </View>
+
       <EmptySpace width={20} />
       <View>
         <CustomButton
@@ -49,10 +56,9 @@ export const ImageUploadElement = ({
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   text: {
     color: ColorPallet.plainBlack,
-    flex: 1,
   },
   textPlaceholder: {
     color: ColorPallet.mediumGray,
@@ -62,5 +68,9 @@ const style = StyleSheet.create({
     height: 60,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  fileLogContainer: {
+    justifyContent: 'center',
+    flex: 1,
   },
 });
