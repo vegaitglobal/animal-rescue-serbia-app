@@ -100,7 +100,7 @@ export const HomeScreen = () => {
             />
           </View>
         </View>
-        <EmptySpace height={40} />
+        <EmptySpace height={80} />
       </ScrollView>
     </ScreenRootContainer>
   );

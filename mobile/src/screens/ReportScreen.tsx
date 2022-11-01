@@ -31,6 +31,7 @@ import {
   unsetViolation,
 } from '../store/src/reports/actions';
 import {ItemData} from '../components/commonTypes';
+import {ScrollView} from 'react-native-gesture-handler';
 
 export const ReportScreen = () => {
   // const {firstName, lastName} = useAppSelector(getNewReport);
@@ -112,88 +113,90 @@ export const ReportScreen = () => {
 
   return (
     <ScreenRootContainer title={headerTitle} showLogo>
-      <View style={style.container}>
-        <View style={style.inputContainer}>
-          <TextInput
-            value={violation.fullName}
-            placeholder={imeIPrezime}
-            placeholderTextColor={ColorPallet.lightGray}
-            onChangeText={value => {
-              dispatch(setNameSurname(value));
-            }}
+      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <View style={style.container}>
+          <View style={style.inputContainer}>
+            <TextInput
+              value={violation.fullName}
+              placeholder={imeIPrezime}
+              placeholderTextColor={ColorPallet.lightGray}
+              onChangeText={value => {
+                dispatch(setNameSurname(value));
+              }}
+            />
+          </View>
+          <View style={style.inputContainer}>
+            <SelectionInput
+              onValueSelected={item => dispatch(setLocation(item.label))}
+              data={violationLocations?.map(
+                (item, index) =>
+                  ({
+                    label: item,
+                    id: index.toString(),
+                  } as ItemData),
+              )}
+              placeholderLabel={lokacija}
+            />
+          </View>
+          <View style={style.inputContainer}>
+            <TextInput
+              placeholder={adresa}
+              placeholderTextColor={ColorPallet.lightGray}
+              onChangeText={value => dispatch(setAddress(value))}
+            />
+          </View>
+          <View style={style.inputContainer}>
+            <TextInput
+              keyboardType="phone-pad"
+              textContentType="telephoneNumber"
+              placeholder={brTelefona}
+              placeholderTextColor={ColorPallet.lightGray}
+              onChangeText={value => dispatch(setPhoneNumber(value))}
+            />
+          </View>
+          <View style={style.inputContainer}>
+            <SelectionInput
+              onValueSelected={item => {
+                item.id && dispatch(setViolationCategory(item.id));
+              }}
+              data={violationCategories?.map(
+                item =>
+                  ({
+                    id: item.id,
+                    label: item.name,
+                  } ?? []),
+              )}
+              placeholderLabel={tipPrekrsaja}
+            />
+          </View>
+          <View style={style.photoContainer}>
+            <ImageUploadElement
+              placeholderText={fotoVideo}
+              onFilesSelected={onFilesSelected}
+            />
+          </View>
+          <MultilineTextInput
+            onChangeText={value => dispatch(setDescription(value))}
+            style={style.textInputContainer}
+            placeholder="Opis"
           />
+          <View style={style.buttonsContainer}>
+            <CustomButton
+              onPress={() => setDeclineModalVisible(true)}
+              text="Odustani"
+              isSmall
+            />
+            <CustomButton
+              isLoading={isLoading}
+              onPress={() => {
+                setSendReport(true);
+              }}
+              text="Prijavi"
+              isSmall
+            />
+          </View>
         </View>
-        <View style={style.inputContainer}>
-          <SelectionInput
-            onValueSelected={item => dispatch(setLocation(item.label))}
-            data={violationLocations?.map(
-              (item, index) =>
-                ({
-                  label: item,
-                  id: index.toString(),
-                } as ItemData),
-            )}
-            placeholderLabel={lokacija}
-          />
-        </View>
-        <View style={style.inputContainer}>
-          <TextInput
-            placeholder={adresa}
-            placeholderTextColor={ColorPallet.lightGray}
-            onChangeText={value => dispatch(setAddress(value))}
-          />
-        </View>
-        <View style={style.inputContainer}>
-          <TextInput
-            keyboardType="phone-pad"
-            textContentType="telephoneNumber"
-            placeholder={brTelefona}
-            placeholderTextColor={ColorPallet.lightGray}
-            onChangeText={value => dispatch(setPhoneNumber(value))}
-          />
-        </View>
-        <View style={style.inputContainer}>
-          <SelectionInput
-            onValueSelected={item => {
-              item.id && dispatch(setViolationCategory(item.id));
-            }}
-            data={violationCategories?.map(
-              item =>
-                ({
-                  id: item.id,
-                  label: item.name,
-                } ?? []),
-            )}
-            placeholderLabel={tipPrekrsaja}
-          />
-        </View>
-        <View style={style.photoContainer}>
-          <ImageUploadElement
-            placeholderText={fotoVideo}
-            onFilesSelected={onFilesSelected}
-          />
-        </View>
-        <MultilineTextInput
-          onChangeText={value => dispatch(setDescription(value))}
-          style={style.textInputContainer}
-          placeholder="Opis"
-        />
-        <View style={style.buttonsContainer}>
-          <CustomButton
-            onPress={() => setDeclineModalVisible(true)}
-            text="Odustani"
-            isSmall
-          />
-          <CustomButton
-            isLoading={isLoading}
-            onPress={() => {
-              setSendReport(true);
-            }}
-            text="Prijavi"
-            isSmall
-          />
-        </View>
-      </View>
+      </ScrollView>
       <CustomModal
         title={headerTitle}
         text={text}
