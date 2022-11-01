@@ -34,7 +34,7 @@ export const ViolationsScreen = () => {
   const [selectedViolationId, setSelectedViolationId] = useState('');
   const {mediaContent: selectedViolationMediaContent = []} = useMemo(
     () =>
-      violations.find(violation => violation.id === selectedViolationId) ??
+      violations?.find(violation => violation.id === selectedViolationId) ??
       ({} as ViolationResponseDto),
     [selectedViolationId, violations],
   );
@@ -146,7 +146,7 @@ export const ViolationsScreen = () => {
           data={selectedViolationMediaContent?.map(
             ({id: fileId, relativeFilePath}) => ({
               id: fileId,
-              fullPath: `https://c31b-178-223-242-185.eu.ngrok.io/${relativeFilePath}`,
+              fullPath: `https://4e24-212-200-247-75.eu.ngrok.io/${relativeFilePath}`,
             }),
           )}
         />
