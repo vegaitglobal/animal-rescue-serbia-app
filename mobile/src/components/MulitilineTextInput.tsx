@@ -27,11 +27,9 @@ const styles = StyleSheet.create({
   container: {
     height: 100,
     fontSize: 16,
-    width: '90%',
+    width: '100%',
     borderColor: ColorPallet.lightGray,
     borderWidth: 2,
-    paddingLeft: 5,
-    paddingRight: 5,
     borderRadius: 5,
   },
 });

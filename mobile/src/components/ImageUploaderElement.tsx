@@ -52,9 +52,7 @@ export const ImageUploadElement = ({
 const style = StyleSheet.create({
   text: {
     color: ColorPallet.plainBlack,
-    height: '100%',
     flex: 1,
-    textAlignVertical: 'center',
   },
   textPlaceholder: {
     color: ColorPallet.mediumGray,

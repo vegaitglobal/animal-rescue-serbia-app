@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Keyboard, Platform, StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {CustomModal} from '../components/CustomModal';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
@@ -32,15 +32,11 @@ import {
 } from '../store/src/reports/actions';
 import {ItemData} from '../components/commonTypes';
 import {ScrollView} from 'react-native-gesture-handler';
+import {EmptySpace} from '../components/EmptySpace';
 
 export const ReportScreen = () => {
-  // const {firstName, lastName} = useAppSelector(getNewReport);
-
   const violationCategories = useAppSelector(getViolationCategories);
-
   const violationLocations = useAppSelector(getLocations);
-
-  //console.log('locations ', locations);
 
   const dispatch = useAppDispatch();
 
@@ -184,17 +180,19 @@ export const ReportScreen = () => {
             <CustomButton
               onPress={() => setDeclineModalVisible(true)}
               text="Odustani"
-              isSmall
+              style={style.mainButton}
             />
+            <EmptySpace width={16} />
             <CustomButton
               isLoading={isLoading}
               onPress={() => {
                 setSendReport(true);
               }}
               text="Prijavi"
-              isSmall
+              style={style.mainButton}
             />
           </View>
+          <EmptySpace height={60} />
         </View>
       </ScrollView>
       <CustomModal
@@ -253,7 +251,9 @@ const style = StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 30,
-    paddingTop: 10,
+    paddingTop: 30,
+  },
+  mainButton: {
+    flex: 1,
   },
 });
