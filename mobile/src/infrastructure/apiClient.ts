@@ -37,6 +37,7 @@ export const apiClient = (
   ): Promise<ApiRequest> => {
     const {url, method, data, headers} = config;
 
+    //TODO: access token key constant
     //TODO: Implement manager
     // const token = await manager.getAccessToken();
     const token = await AsyncStorage.getItem('accessToken');

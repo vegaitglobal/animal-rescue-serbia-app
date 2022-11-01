@@ -18,6 +18,7 @@ export const HomeScreen = () => {
   const edukacija = 'Edukacija';
   const oglasavanje = 'Oglasavanje';
   const informisanje = 'Informisanje';
+  const violationListButtonLabel = 'Lista prekršaja';
 
   const navigation = useNavigation();
 
@@ -71,6 +72,12 @@ export const HomeScreen = () => {
             text={doniranje}
             onPress={() => navigation.navigate('Donation')}
           />
+          <CustomButton
+            style={style.violationListButton}
+            textStyle={style.violationListButtonLabel}
+            text={violationListButtonLabel}
+            onPress={() => navigation.navigate('Violations')}
+          />
         </View>
       </View>
     </ScreenRootContainer>
@@ -115,6 +122,12 @@ const style = StyleSheet.create({
   },
   buttonContainer: {
     marginBottom: 20,
+  },
+  violationListButton: {
+    backgroundColor: ColorPallet.red,
+  },
+  violationListButtonLabel: {
+    color: ColorPallet.plainWhite,
   },
   text: {
     textTransform: 'uppercase',

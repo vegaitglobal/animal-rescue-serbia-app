@@ -6,11 +6,9 @@ import {
   StyleSheet,
   Text,
   TextStyle,
-  View,
   ViewStyle,
 } from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
-import {EmptySpace} from './EmptySpace';
 
 type CustomButtonProps = {
   text?: string;
