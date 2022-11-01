@@ -1,24 +1,19 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 import {EmptySpace} from './EmptySpace';
 import {Separator} from './Separator';
-import Close from '../assets/icons/close.svg';
-import {IconButton} from './IconButton';
-import {
-  BottomSheetModal,
-  BottomSheetFlatList,
-  BottomSheetBackdropProps,
-} from '@gorhom/bottom-sheet';
+import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {ItemData} from './commonTypes';
-import Animated from 'react-native-reanimated';
+import {CustomBottomSheetModal} from './CustomBottomSheetModal';
 
 type SelectionModalProps = {
   data: ItemData[];
   myRef: React.Ref<BottomSheetModalMethods>;
   onShouldClose: () => void;
   onValueSelected: (selectedItem: ItemData) => void;
+  onVisibilityChange: (isShown: boolean) => void;
 };
 
 export const SelectionModal = ({
@@ -26,6 +21,7 @@ export const SelectionModal = ({
   myRef,
   onShouldClose,
   onValueSelected,
+  onVisibilityChange,
 }: SelectionModalProps) => {
   const handleItemSelected = (item: ItemData) => () => {
     onValueSelected(item);
@@ -43,34 +39,17 @@ export const SelectionModal = ({
   const dynamicModalSnappingPoint =
     data?.length * listElementHeight + verticalListPadding * 2 + 30 + iconSize;
 
-  const guarderDynamicModalSnappingPoint =
+  const guardedDynamicModalSnappingPoint =
     dynamicModalSnappingPoint < maxModalSnappingPoint
       ? dynamicModalSnappingPoint
       : maxModalSnappingPoint;
 
-  const renderBackdrop = useCallback(
-    (props: BottomSheetBackdropProps) => (
-      <Animated.View style={props.style}>
-        <Pressable style={style.pressableBackdrop} onPress={onShouldClose} />
-      </Animated.View>
-    ),
-    [onShouldClose],
-  );
-
   return (
-    <BottomSheetModal
-      containerStyle={{backgroundColor: ColorPallet.lightGray}}
-      enableDismissOnClose
-      ref={myRef}
-      enablePanDownToClose
-      backdropComponent={renderBackdrop}
-      snapPoints={[guarderDynamicModalSnappingPoint]}>
-      <IconButton
-        onPress={onShouldClose}
-        contentContainerStyle={style.closeButton}>
-        <Close width={iconSize} height={iconSize} />
-      </IconButton>
-
+    <CustomBottomSheetModal
+      myRef={myRef}
+      onShouldClose={onShouldClose}
+      onVisibilityChange={onVisibilityChange}
+      snapPoints={[guardedDynamicModalSnappingPoint]}>
       <EmptySpace height={verticalListPadding} />
 
       <BottomSheetFlatList
@@ -83,11 +62,11 @@ export const SelectionModal = ({
       />
 
       <EmptySpace height={verticalListPadding} />
-    </BottomSheetModal>
+    </CustomBottomSheetModal>
   );
 };
 
-const verticalListPadding = 60;
+const verticalListPadding = 30;
 const listElementHeight = 60;
 const maxModalSnappingPoint = 500;
 const iconSize = 30;

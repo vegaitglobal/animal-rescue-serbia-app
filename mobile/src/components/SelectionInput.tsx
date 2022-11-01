@@ -1,6 +1,7 @@
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import React, {useCallback, useRef, useState} from 'react';
 import {Keyboard, Pressable, StyleSheet, View} from 'react-native';
+import {useAndroidBackNavigationOverride} from '../hooks/useAndroidBackNavigationOverride';
 import {ColorPallet} from '../resources/ColorPallet';
 import {Chevron, Orientation} from './Chevron';
 import {commonStyles} from './commonStyles';
@@ -20,6 +21,7 @@ export const SelectionInput = ({
 }: SelectionInputProps) => {
   const sheetRef = useRef<BottomSheetModal>(null);
   const [selectedValue, setSelectedValue] = useState<string>();
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const closeModal = useCallback(() => sheetRef.current?.close(), []);
 
@@ -36,6 +38,14 @@ export const SelectionInput = ({
     [onValueSelected],
   );
 
+  useAndroidBackNavigationOverride(() => {
+    if (!isModalVisible) {
+      return false;
+    }
+    sheetRef.current?.close();
+    return true;
+  });
+
   return (
     <>
       <SelectionModal
@@ -43,6 +53,7 @@ export const SelectionInput = ({
         myRef={sheetRef}
         onShouldClose={closeModal}
         onValueSelected={onModalValueSelected}
+        onVisibilityChange={setIsModalVisible}
       />
       <Pressable onPress={onPress}>
         <View style={style.inputContainer}>

@@ -21,6 +21,7 @@ import {ImageThumbnailRow} from '../components/ImageThumbnailRow';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {ImageListModal} from './ImageListModal';
 import {bind} from '../util/helpers';
+import {useAndroidBackNavigationOverride} from '../hooks/useAndroidBackNavigationOverride';
 
 type SectionListViolationGroup = {
   title: string;
@@ -116,7 +117,17 @@ export const ViolationsScreen = () => {
     [handleImageRowPress],
   );
 
-  //TODO: Details screen
+  const handleShouldCloseModal = () => modalRef.current?.close();
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  useAndroidBackNavigationOverride(() => {
+    if (!isModalVisible) {
+      return false;
+    }
+    modalRef.current?.close();
+    return true;
+  });
+
   return (
     <ScreenRootContainer title="Prekršaji" showLogo>
       <View style={styles.rootContainer}>
@@ -143,6 +154,8 @@ export const ViolationsScreen = () => {
         />
         <ImageListModal
           myRef={modalRef}
+          onShouldClose={handleShouldCloseModal}
+          onVisibilityChange={setIsModalVisible}
           data={selectedViolationMediaContent?.map(
             ({id: fileId, relativeFilePath}) => ({
               id: fileId,
