@@ -10,7 +10,8 @@ import {CustomButton} from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {EmptySpace} from '../components/EmptySpace';
-import {SquareGrid, GridIcon} from '../components/SquareGrid';
+import {SquareGrid} from '../components/SquareGrid/SquareGrid';
+import {GridIcon} from '../components/SquareGrid/GridIcon';
 
 export const HomeScreen = () => {
   const headerTitle = 'Prijavi';

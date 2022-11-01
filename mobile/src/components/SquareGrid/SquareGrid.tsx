@@ -1,30 +1,9 @@
 import React, {ReactElement, useCallback} from 'react';
-import {
-  Pressable,
-  StyleProp,
-  StyleSheet,
-  Text,
-  View,
-  ViewStyle,
-} from 'react-native';
-import {ColorPallet} from '../resources/ColorPallet';
-import {Separator} from './Separator';
+import {Pressable, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {ColorPallet} from '../../resources/ColorPallet';
+import {Separator} from '../Separator';
 
-export const GridIcon = ({
-  label,
-  children,
-}: {
-  label: string;
-  children: ReactElement;
-}) => (
-  <View style={{alignItems: 'center', justifyContent: 'center'}}>
-    {/* //TODO: Create util to map props to children */}
-    {children}
-    <Text style={styles.text}>{label}</Text>
-  </View>
-);
-
-const Square = ({
+const SquareCell = ({
   style,
   columnIndex,
   rowIndex,
@@ -43,14 +22,8 @@ const Square = ({
   );
 
   return (
-    <Pressable style={{flex: 1}} onPress={onPressLocal}>
-      <View
-        style={[
-          {flex: 1, alignItems: 'center', justifyContent: 'center'},
-          style,
-        ]}>
-        {icon}
-      </View>
+    <Pressable style={styles.squareCellRootContainer} onPress={onPressLocal}>
+      <View style={[styles.squareCellIconContainer, style]}>{icon}</View>
     </Pressable>
   );
 };
@@ -64,15 +37,15 @@ const SquareRow = ({
   onPress: (rowIndex: number, columnIndex: number) => void;
   icons: ReactElement[];
 }) => (
-  <View style={{flex: 1, flexDirection: 'row'}}>
-    <Square
+  <View style={styles.squareRowRootContainer}>
+    <SquareCell
       columnIndex={0}
       rowIndex={rowIndex}
       onPress={onPress}
       icon={icons[0]}
     />
     <Separator vertical color={ColorPallet.plainBlack} />
-    <Square
+    <SquareCell
       columnIndex={1}
       rowIndex={rowIndex}
       onPress={onPress}
@@ -98,10 +71,16 @@ export const SquareGrid = ({
 );
 
 const styles = StyleSheet.create({
-  text: {
-    textTransform: 'uppercase',
-    fontSize: 12,
-    paddingTop: 10,
-    fontWeight: '800',
+  squareCellRootContainer: {
+    flex: 1,
+  },
+  squareCellIconContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  squareRowRootContainer: {
+    flex: 1,
+    flexDirection: 'row',
   },
 });
