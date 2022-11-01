@@ -5,12 +5,14 @@ import {ColorPallet} from '../resources/ColorPallet';
 import {BackButton} from './BackButton';
 import {StripedBar} from './StripedBar';
 import Logo from '../assets/icons/megaphoneLogo.svg';
+import {ActivityIndicator} from './ActivityIndicator';
 
 type ScreenRootContainerProps = {
   title: string;
   children: ReactNode;
   showLogo?: boolean;
   hideGoBack?: boolean;
+  isLoading?: boolean;
 };
 
 export const ScreenRootContainer = ({
@@ -18,6 +20,7 @@ export const ScreenRootContainer = ({
   title,
   showLogo,
   hideGoBack,
+  isLoading,
 }: ScreenRootContainerProps) => {
   const navigation = useNavigation();
 
@@ -25,27 +28,35 @@ export const ScreenRootContainer = ({
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
-      <View style={styles.headerContainer}>
-        {!hideGoBack && (
-          <View style={styles.backButton}>
-            <BackButton text="Nazad" onPress={onBackPress} />
+      <>
+        <View style={styles.headerContainer}>
+          {!hideGoBack && (
+            <View style={styles.backButton}>
+              <BackButton text="Nazad" onPress={onBackPress} />
+            </View>
+          )}
+          <View style={styles.header}>
+            <Text numberOfLines={2} style={styles.headerText}>
+              {title}
+            </Text>
           </View>
-        )}
-        <View style={styles.header}>
-          <Text numberOfLines={2} style={styles.headerText}>
-            {title}
-          </Text>
         </View>
-      </View>
-      <View>
-        {showLogo ? (
-          <View style={styles.headerLogoContainer}>
-            <Logo width={64} height={64} />
+        <View>
+          {showLogo ? (
+            <View style={styles.headerLogoContainer}>
+              <Logo width={64} height={64} />
+            </View>
+          ) : null}
+          <StripedBar />
+        </View>
+        {isLoading ? (
+          <View style={{flexGrow: 1}}>
+            <ActivityIndicator />
           </View>
-        ) : null}
-        <StripedBar />
-      </View>
-      {children}
+        ) : (
+          children
+        )}
+      </>
     </SafeAreaView>
   );
 };

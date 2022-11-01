@@ -34,6 +34,7 @@ export const ViolationsScreen = () => {
   const modalRef = useRef<BottomSheetModal>(null);
   const [selectedViolationId, setSelectedViolationId] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isLoadingData, setIsLoadingData] = useState(true);
   const {mediaContent: selectedViolationMediaContent = []} = useMemo(
     () =>
       violations?.find(violation => violation.id === selectedViolationId) ??
@@ -60,10 +61,11 @@ export const ViolationsScreen = () => {
     }, [] as SectionListViolationGroup[]);
   }, [violations]);
 
-  const loadViolationData = useCallback(
-    () => dispatch(loadViolations()),
-    [dispatch],
-  );
+  const loadViolationData = useCallback(() => {
+    setIsLoadingData(true);
+    dispatch(loadViolations());
+    setIsLoadingData(false);
+  }, [dispatch]);
 
   useEffect(() => {
     loadViolationData();
@@ -129,7 +131,7 @@ export const ViolationsScreen = () => {
   });
 
   return (
-    <ScreenRootContainer title="Prekršaji" showLogo>
+    <ScreenRootContainer title="Prekršaji" showLogo isLoading={isLoadingData}>
       <View style={styles.rootContainer}>
         <View style={styles.topSpacer} />
         <SectionList
