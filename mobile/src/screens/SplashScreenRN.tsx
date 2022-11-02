@@ -20,7 +20,6 @@ export const SplashScreenRN = () => {
       navigation.replace('Login');
 
       SplashScreen.hide();
-
       return;
     }
 
