@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Platform, StatusBar, StyleSheet} from 'react-native';
+import {StatusBar, StyleSheet} from 'react-native';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {NavigationContainer} from '@react-navigation/native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
@@ -8,15 +8,10 @@ import {Provider} from 'react-redux';
 import {createStoreWithInjections} from './store/configureStore';
 import {navigationRef} from './store/src/util/navigationHelpers';
 import {navigationService} from './infrastructure/navigationService';
-import SplashScreen from 'react-native-splash-screen';
 
 const store = createStoreWithInjections(navigationService()); //TODO Check the ref approach
 
 const App = () => {
-  useEffect(() => {
-    SplashScreen.hide();
-  }, []);
-
   return (
     <GestureHandlerRootView style={style.rootGestureView}>
       <BottomSheetModalProvider>

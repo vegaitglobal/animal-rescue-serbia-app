@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
-import {unwrapResult} from '@reduxjs/toolkit';
 import React, {useCallback, useEffect} from 'react';
+import SplashScreen from 'react-native-splash-screen';
 import {ActivityIndicator} from '../components/ActivityIndicator';
 import {useAppDispatch} from '../hooks/storeHooks';
 import {
@@ -9,7 +9,7 @@ import {
   loadViolationCategories,
 } from '../store/src/reports/actions';
 
-export const SplashScreen = () => {
+export const SplashScreenRN = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
 
@@ -18,6 +18,10 @@ export const SplashScreen = () => {
     const token = await AsyncStorage.getItem('accessToken'); //TODO: Try using/creating auth manager
     if (!token) {
       navigation.replace('Login');
+
+      SplashScreen.hide();
+
+      return;
     }
 
     // These are prefetched because they are static and because
@@ -25,16 +29,19 @@ export const SplashScreen = () => {
     const categoryResult = await dispatch(loadViolationCategories());
 
     if (categoryResult.meta.requestStatus === 'rejected') {
+      SplashScreen.hide();
       return;
     }
 
     const locationResult = await dispatch(loadLocations());
 
     if (locationResult.meta.requestStatus === 'rejected') {
+      SplashScreen.hide();
       return;
     }
 
     navigation.replace('HomeScreen');
+    SplashScreen.hide();
   }, [dispatch, navigation]);
 
   useEffect(() => {
