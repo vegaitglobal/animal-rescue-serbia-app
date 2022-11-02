@@ -51,3 +51,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: docker-compose -f ./Projects/animal-rescue-serbia-app/docker-compose.animal-rescue-serbia.yaml up -d
+          
