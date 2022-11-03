@@ -16,6 +16,7 @@ import {DonationScreen} from '../screens/DonationScreen';
 import {InformationScreen} from '../screens/InformationScreen';
 import {TabIcon, TabIconProps} from '../components/TabIcon';
 import {ViolationsScreen} from '../screens/ViolationsScreen';
+import {DonatorsAndFriends} from '../screens/DonatorsAndFriends';
 
 export const RootTabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -77,10 +78,12 @@ export const RootTabNavigator = () => {
         screenOptions={{
           tabBarButton: () => null,
         }}>
+        {/* //TODO: Move these into a new stack navigator */}
         <Tab.Screen name="Report" component={ReportScreen} />
         <Tab.Screen name="Violations" component={ViolationsScreen} />
         <Tab.Screen name="Donation" component={DonationScreen} />
         <Tab.Screen name="Information" component={InformationScreen} />
+        <Tab.Screen name="DonatorsAndFriends" component={DonatorsAndFriends} />
       </Tab.Group>
     </Tab.Navigator>
   );

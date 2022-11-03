@@ -85,7 +85,7 @@ export const HomeScreen = () => {
             <CustomButton
               style={style.buttonContainer}
               text={donatori}
-              onPress={() => {}}
+              onPress={() => navigation.navigate('DonatorsAndFriends')}
             />
             <CustomButton
               style={style.buttonContainer}

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
+import {AccentedTextBox} from '../components/AccentedTextBox';
 import {CustomModal} from '../components/CustomModal';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
@@ -14,21 +15,15 @@ export const DonationScreen = () => {
         <Text style={style.text}>{text}</Text>
         <View style={style.donationContainer}>
           <Text style={style.boldText}>{'Devizni racun:'}</Text>
-          <View style={style.yellowContainer}>
-            <Text>374245455400126</Text>
-          </View>
+          <AccentedTextBox>374245455400126</AccentedTextBox>
         </View>
         <View style={style.donationContainer}>
           <Text style={style.boldText}>{'Dinarski racun:'}</Text>
-          <View style={style.yellowContainer}>
-            <Text>374245455400126</Text>
-          </View>
+          <AccentedTextBox>374245455400126</AccentedTextBox>
         </View>
         <View style={style.donationContainer}>
           <Text style={style.boldText}>{'PayPal:'}</Text>
-          <View style={style.yellowContainer}>
-            <Text>374245455400126</Text>
-          </View>
+          <AccentedTextBox>374245455400126</AccentedTextBox>
         </View>
       </View>
     </ScreenRootContainer>
