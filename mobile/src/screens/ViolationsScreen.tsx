@@ -61,9 +61,11 @@ export const ViolationsScreen = () => {
     }, [] as SectionListViolationGroup[]);
   }, [violations]);
 
-  const loadViolationData = useCallback(() => {
+  const loadViolationData = useCallback(async () => {
     setIsLoadingData(true);
-    dispatch(loadViolations());
+
+    await dispatch(loadViolations());
+
     setIsLoadingData(false);
   }, [dispatch]);
 
