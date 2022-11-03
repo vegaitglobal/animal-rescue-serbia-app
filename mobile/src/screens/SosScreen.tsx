@@ -20,12 +20,12 @@ export const SosScreen = () => {
           <Text style={styles.text}>
             {'Da li ste sigurni da želite uputiti poziv?'}
           </Text>
-          <Text style={styles.commonStyle}>
+          <Text style={[styles.commonText, styles.messageText]}>
             {
               'Klikom na SOS, upućujete poziv Animal Rescue Serbia koji vam može pomoći sa problemom u kom se nalazite.'
             }
           </Text>
-          <Text style={styles.commonStyle}>
+          <Text style={styles.commonText}>
             {'*poziv se ne naplaćuje, već važe cene operatera'}
           </Text>
           <CustomButton
@@ -50,6 +50,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textTransform: 'uppercase',
     paddingTop: 20,
+    textAlign: 'center',
+    fontWeight: '600',
+    color: ColorPallet.plainBlack,
   },
   textContainer: {
     backgroundColor: ColorPallet.plainWhite,
@@ -62,9 +65,17 @@ const styles = StyleSheet.create({
     borderColor: ColorPallet.plainBlack,
     borderWidth: 1,
     marginTop: 30,
+    marginHorizontal: 40,
+    marginBottom: 20,
   },
-  commonStyle: {
+  commonText: {
     paddingTop: 30,
+    textAlign: 'center',
+    paddingHorizontal: 30,
+    color: ColorPallet.plainBlack,
+  },
+  messageText: {
+    fontSize: 16,
   },
   logoContainer: {
     alignItems: 'center',
