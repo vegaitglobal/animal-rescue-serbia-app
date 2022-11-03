@@ -12,7 +12,7 @@ export const apiClient = (
   authManager: IAuthManager,
   navigationService: INavigationService,
 ): IApiClient => {
-  const baseURL = 'https://c2e0-212-200-247-75.eu.ngrok.io/api';
+  const baseURL = 'https://3988-178-223-231-81.eu.ngrok.io/api';
   //const baseURL = 'http://10.0.2.2:5113/api';
 
   axios?.interceptors?.response?.use?.(

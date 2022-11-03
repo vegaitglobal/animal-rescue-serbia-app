@@ -161,7 +161,7 @@ export const ViolationsScreen = () => {
           data={selectedViolationMediaContent?.map(
             ({id: fileId, relativeFilePath}) => ({
               id: fileId,
-              fullPath: `https://c2e0-212-200-247-75.eu.ngrok.io/${relativeFilePath}`,
+              fullPath: `https://3988-178-223-231-81.eu.ngrok.io/${relativeFilePath}`,
             }),
           )}
         />

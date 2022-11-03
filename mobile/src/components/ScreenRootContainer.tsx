@@ -50,7 +50,7 @@ export const ScreenRootContainer = ({
           <StripedBar />
         </View>
         {isLoading ? (
-          <View style={{flexGrow: 1}}>
+          <View style={styles.loadingIndicator}>
             <ActivityIndicator />
           </View>
         ) : (
@@ -94,5 +94,8 @@ const styles = StyleSheet.create({
     height: 180,
     flexGrow: 1,
     marginBottom: Platform.OS === 'ios' ? -40 : 0,
+  },
+  loadingIndicator: {
+    flexGrow: 1,
   },
 });
