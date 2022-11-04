@@ -11,6 +11,7 @@ import {MediaContentDto} from '../infrastructure/apiTypes';
 import {ColorPallet} from '../resources/ColorPallet';
 import {Chevron, Orientation} from './Chevron';
 import {EmptySpace} from './EmptySpace';
+import VideoPlayer from 'react-native-video-player';
 
 type ImageThumbnailRowProps = {
   mediaContent: MediaContentDto[];
@@ -39,6 +40,36 @@ export const ImageThumbnailRow = ({
     [mediaContent, numberOfThumbnails],
   );
 
+  const renderItem = useCallback(
+    (id: string, relativeFilePath: string) => {
+      const pathSegments = relativeFilePath.split('.');
+      const extension = pathSegments[pathSegments.length - 1];
+      if (extension === 'mp4' || extension === 'mpeg' || extension === 'avi') {
+        return (
+          <VideoPlayer
+            video={{
+              uri: `https://76eb-212-200-247-66.eu.ngrok.io/${relativeFilePath}`,
+            }}
+            videoWidth={1600}
+            videoHeight={900}
+            thumbnail={{uri: 'https://i.picsum.photos/id/866/1600/900.jpg'}}
+          />
+        );
+      }
+
+      <Image
+        style={[styles.image, {width: thumbnailSize, height: thumbnailSize}]}
+        //TODO: Create Base url environment variable to avoid issues with duplicated setup of it
+        source={{
+          uri: relativeFilePath
+            ? `https://76eb-212-200-247-66.eu.ngrok.io/${relativeFilePath}`
+            : undefined,
+        }}
+      />;
+    },
+    [thumbnailSize],
+  );
+
   //TODO: Config/env
   //TODO: Auth manager
   //TODO: Splash screen
@@ -48,22 +79,11 @@ export const ImageThumbnailRow = ({
     () =>
       truncatedContent.map(({id: fileId, relativeFilePath}) => (
         <View key={fileId}>
-          <Image
-            style={[
-              styles.image,
-              {width: thumbnailSize, height: thumbnailSize},
-            ]}
-            //TODO: Create Base url environment variable to avoid issues with duplicated setup of it
-            source={{
-              uri: relativeFilePath
-                ? `https://76eb-212-200-247-66.eu.ngrok.io/${relativeFilePath}`
-                : undefined,
-            }}
-          />
+          {renderItem(fileId, relativeFilePath)}
           <EmptySpace width={thumbnailSpacing} />
         </View>
       )),
-    [thumbnailSize, truncatedContent],
+    [renderItem, truncatedContent],
   );
 
   return (
