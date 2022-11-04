@@ -38,7 +38,7 @@ export const ImageUploadElement = ({
     <View style={styles.rootContainer}>
       <View style={styles.fileLogContainer}>
         {fileLogs.length ? (
-          fileLogs.map(fileLog => (
+          fileLogs.slice(0, 3).map(fileLog => (
             <Text key={fileLog} numberOfLines={1} style={[styles.text]}>
               {fileLog}
             </Text>
