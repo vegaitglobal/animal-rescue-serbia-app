@@ -8,6 +8,7 @@ import {Provider} from 'react-redux';
 import {createStoreWithInjections} from './store/configureStore';
 import {navigationRef} from './store/src/util/navigationHelpers';
 import {navigationService} from './infrastructure/navigationService';
+import {ColorPallet} from './resources/ColorPallet';
 
 const store = createStoreWithInjections(navigationService()); //TODO Check the ref approach
 
@@ -17,8 +18,7 @@ const App = () => {
       <BottomSheetModalProvider>
         <Provider store={store}>
           <NavigationContainer ref={navigationRef}>
-            {/* {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />} */}
-            <StatusBar hidden />
+            <StatusBar backgroundColor={ColorPallet.gray} />
             <RootStackNavigator />
           </NavigationContainer>
         </Provider>
