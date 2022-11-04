@@ -35,6 +35,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {EmptySpace} from '../components/EmptySpace';
 import {unwrapResult} from '@reduxjs/toolkit';
 import {useAndroidBackNavigationOverride} from '../hooks/useAndroidBackNavigationOverride';
+import {ActivityIndicator} from '../components/ActivityIndicator';
 
 export const ReportScreen = () => {
   const violationCategories = useAppSelector(getViolationCategories);
@@ -233,6 +234,11 @@ export const ReportScreen = () => {
         onPressPositiveBtn={handleReport}
         visible={isSendReportModalVisible}
       />
+      {isSendingReport ? (
+        <View style={style.screenBlockingElement}>
+          <ActivityIndicator />
+        </View>
+      ) : null}
     </ScreenRootContainer>
   );
 };
@@ -271,5 +277,17 @@ const style = StyleSheet.create({
   },
   scroll: {
     flexGrow: 1,
+  },
+  screenBlockingElement: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    backgroundColor: ColorPallet.black_20,
+    zIndex: 10,
+    flex: 1,
+    bottom: 0,
+    top: 0,
+    left: 0,
+    right: 0,
   },
 });

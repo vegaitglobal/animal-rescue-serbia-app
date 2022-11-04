@@ -1,15 +1,22 @@
 import React from 'react';
 import {
   ActivityIndicator as ActivityIndicatorNative,
+  ActivityIndicatorProps as ActivityIndicatorPropsNative,
   StyleSheet,
 } from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 
-export const ActivityIndicator = () => (
+type ActivityIndicatorProps = ActivityIndicatorPropsNative;
+
+export const ActivityIndicator = ({
+  size = 'large',
+  color = ColorPallet.plainBlack,
+  style,
+}: ActivityIndicatorProps) => (
   <ActivityIndicatorNative
-    size={'large'}
-    color={ColorPallet.plainBlack}
-    style={styles.indicator}
+    size={size}
+    color={color}
+    style={[styles.indicator, style]}
   />
 );
 
