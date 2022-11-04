@@ -3,7 +3,7 @@ import {StatusBar, StyleSheet} from 'react-native';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {NavigationContainer} from '@react-navigation/native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {HomeStackNavigator} from './navigation/HomeStackNavigator';
+import {RootStackNavigator} from './navigation/RootStackNavigator';
 import {Provider} from 'react-redux';
 import {createStoreWithInjections} from './store/configureStore';
 import {navigationRef} from './store/src/util/navigationHelpers';
@@ -19,7 +19,7 @@ const App = () => {
           <NavigationContainer ref={navigationRef}>
             {/* {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />} */}
             <StatusBar hidden />
-            <HomeStackNavigator />
+            <RootStackNavigator />
           </NavigationContainer>
         </Provider>
       </BottomSheetModalProvider>

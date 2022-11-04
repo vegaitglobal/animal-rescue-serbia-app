@@ -10,16 +10,10 @@ import ProfileInactive from '../assets/icons/profileInactive.svg';
 import {ProfileScreen} from '../screens/ProfileScreen';
 import {Platform, StyleSheet} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
-import {HomeScreen} from '../screens/HomeScreen';
-import {ReportScreen} from '../screens/ReportScreen';
-import {DonationScreen} from '../screens/DonationScreen';
-import {InformationScreen} from '../screens/InformationScreen';
 import {TabIcon, TabIconProps} from '../components/TabIcon';
-import {ViolationsScreen} from '../screens/ViolationsScreen';
-import {DonatorsAndFriends} from '../screens/DonatorsAndFriends';
-import {ArsInfoScreen} from '../screens/ArsInfoScreen';
+import {HomeStackNavigator} from './HomeStackNavigator';
 
-export const RootTabNavigator = () => {
+export const TabNavigator = () => {
   const Tab = createBottomTabNavigator();
 
   const renderTabIcon = useCallback(
@@ -43,8 +37,8 @@ export const RootTabNavigator = () => {
         headerShown: false,
       }}>
       <Tab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="HomeNavigator"
+        component={HomeStackNavigator}
         options={{
           tabBarIcon: renderTabIcon({
             activeIcon: <HomeActive width={size} height={size} />,
@@ -75,18 +69,6 @@ export const RootTabNavigator = () => {
           }),
         }}
       />
-      <Tab.Group
-        screenOptions={{
-          tabBarButton: () => null,
-        }}>
-        {/* //TODO: Move these into a new stack navigator */}
-        <Tab.Screen name="Report" component={ReportScreen} />
-        <Tab.Screen name="Violations" component={ViolationsScreen} />
-        <Tab.Screen name="Donation" component={DonationScreen} />
-        <Tab.Screen name="Information" component={InformationScreen} />
-        <Tab.Screen name="DonatorsAndFriends" component={DonatorsAndFriends} />
-        <Tab.Screen name="ArsInfo" component={ArsInfoScreen} />
-      </Tab.Group>
     </Tab.Navigator>
   );
 };

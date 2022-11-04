@@ -34,6 +34,7 @@ import {ItemData} from '../components/commonTypes';
 import {ScrollView} from 'react-native-gesture-handler';
 import {EmptySpace} from '../components/EmptySpace';
 import {unwrapResult} from '@reduxjs/toolkit';
+import {useAndroidBackNavigationOverride} from '../hooks/useAndroidBackNavigationOverride';
 
 export const ReportScreen = () => {
   const violationCategories = useAppSelector(getViolationCategories);
@@ -57,30 +58,27 @@ export const ReportScreen = () => {
   const [isDeclineModalVisible, setDeclineModalVisible] = useState(false);
   const [isSendReportModalVisible, setSendReport] = useState(false);
   const violation = useAppSelector(getNewViolation);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSendingReport, setIsSendingReport] = useState(false);
 
   useEffect(() => setIsEntryModalVisible(true), []);
+
+  useAndroidBackNavigationOverride(() => {
+    return isSendingReport;
+  });
 
   const handleReport = useCallback(async () => {
     setSendReport(false);
 
-    setIsLoading(true);
+    setIsSendingReport(true);
 
     const result = await dispatch(sendViolation(violation));
     if (result.meta.requestStatus === 'rejected') {
       console.log('Report failed');
-      setIsLoading(false);
+      setIsSendingReport(false);
       return;
     }
 
-    const unwrappedResult = unwrapResult(result);
-    if (!unwrappedResult) {
-      console.log('Report failed');
-      setIsLoading(false);
-      return;
-    }
-
-    setIsLoading(false);
+    setIsSendingReport(false);
     navigation.goBack();
   }, [dispatch, navigation, violation]);
 
@@ -199,7 +197,7 @@ export const ReportScreen = () => {
             />
             <EmptySpace width={16} />
             <CustomButton
-              isLoading={isLoading}
+              isLoading={isSendingReport}
               onPress={() => {
                 setSendReport(true);
               }}

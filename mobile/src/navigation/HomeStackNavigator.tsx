@@ -1,24 +1,33 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ReportScreen} from '../screens/ReportScreen';
-import {LoginScreen} from '../screens/LoginScreen';
-import {RootTabNavigator} from './RootTabNavigator';
-import {RegistrationScreen} from '../screens/RegistrationScreen';
 import {DonationScreen} from '../screens/DonationScreen';
-import {SplashScreenRN} from '../screens/SplashScreenRN';
+import {ViolationsScreen} from '../screens/ViolationsScreen';
+import {InformationScreen} from '../screens/InformationScreen';
+import {DonatorsAndFriends} from '../screens/DonatorsAndFriends';
+import {ArsInfoScreen} from '../screens/ArsInfoScreen';
+import {HomeScreen} from '../screens/HomeScreen';
 
 export const HomeStackNavigator = () => {
   const Stack = createNativeStackNavigator();
 
   return (
-    <Stack.Navigator initialRouteName={'Splash'}>
-      <Stack.Group screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Splash" component={SplashScreenRN} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Registration" component={RegistrationScreen} />
-        <Stack.Screen name="HomeScreen" component={RootTabNavigator} />
+    <Stack.Navigator initialRouteName={'Home'}>
+      <Stack.Group
+        screenOptions={{
+          headerShown: false,
+          animation: 'none',
+        }}>
+        <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Report" component={ReportScreen} />
+        <Stack.Screen name="Violations" component={ViolationsScreen} />
         <Stack.Screen name="Donation" component={DonationScreen} />
+        <Stack.Screen name="Information" component={InformationScreen} />
+        <Stack.Screen
+          name="DonatorsAndFriends"
+          component={DonatorsAndFriends}
+        />
+        <Stack.Screen name="ArsInfo" component={ArsInfoScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );
