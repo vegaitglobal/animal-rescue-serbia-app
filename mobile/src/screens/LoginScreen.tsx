@@ -13,6 +13,7 @@ import {
   loadViolationCategories,
 } from '../store/src/reports/actions';
 import {LoginSocialButtons} from './components/LoginSocialButtons';
+import {unwrapResult} from '@reduxjs/toolkit';
 
 export const LoginScreen = () => {
   const headerTitle = 'Dobro došli';
@@ -40,24 +41,39 @@ export const LoginScreen = () => {
     setIsSigningIn(true);
 
     const result = await dispatch(logIn({email, password}));
+    const unwrappedLoginResult = unwrapResult(result);
 
-    setIsSigningIn(false);
-
-    if (result.meta.requestStatus === 'rejected') {
+    if (
+      result.meta.requestStatus === 'rejected' ||
+      !unwrappedLoginResult?.accessToken
+    ) {
+      setIsSigningIn(false);
       return;
     }
 
     const categoryResult = await dispatch(loadViolationCategories());
+    const unwrappedViolationCategoriesResult = unwrapResult(categoryResult);
 
-    if (categoryResult.meta.requestStatus === 'rejected') {
+    if (
+      categoryResult.meta.requestStatus === 'rejected' ||
+      !unwrappedViolationCategoriesResult
+    ) {
+      setIsSigningIn(false);
       return;
     }
 
     const locationResult = await dispatch(loadLocations());
+    const unwrappedLocationsResult = unwrapResult(locationResult);
 
-    if (locationResult.meta.requestStatus === 'rejected') {
+    if (
+      locationResult.meta.requestStatus === 'rejected' ||
+      !unwrappedLocationsResult
+    ) {
+      setIsSigningIn(false);
       return;
     }
+
+    setIsSigningIn(false);
 
     navigation.replace('HomeScreen');
   }, [dispatch, email, navigation, password]);
