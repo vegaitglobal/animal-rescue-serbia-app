@@ -1,13 +1,36 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Linking, StyleSheet, Text, View} from 'react-native';
 import {AccentedTextBox} from '../components/AccentedTextBox';
 import {EmptySpace} from '../components/EmptySpace';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
+import {SocialButtons} from '../components/SocialButtons';
 import {ColorPallet} from '../resources/ColorPallet';
+import Facebook from '../assets/icons/facebook.svg';
+import Instagram from '../assets/icons/instagram.svg';
+import Globe from '../assets/icons/globe.svg';
+
+type SocialIconType = 'instagram' | 'facebook' | 'website';
 
 export const ArsInfoScreen = () => {
   const aboutUs =
     'Animal Rescue Serbia (ARS) je prvo zvanično neprofitno udruženje građana koje dobrovoljno spasava životinje u Srbiji. Finansirano od strane donacija, vrši besplatno spasavanje u 5 opština: Beograd, Novi Sad, Niš, Srbobran i Vršac.';
+
+  const handleSocialIconPress = (id: SocialIconType) => {
+    switch (id) {
+      case 'instagram': {
+        Linking.openURL('https://www.instagram.com/animal_rescue_serbia');
+        return;
+      }
+      case 'facebook': {
+        Linking.openURL('https://www.facebook.com/animalrescueserbia/');
+        return;
+      }
+      case 'website':
+      default: {
+        Linking.openURL('https://www.animalrescueserbia.org/');
+      }
+    }
+  };
 
   return (
     <ScreenRootContainer title="Animal rescue serbia">
@@ -18,7 +41,20 @@ export const ArsInfoScreen = () => {
 
         <EmptySpace height={20} />
 
-        <Text style={styles.contact}>Kontakt</Text>
+        <View style={styles.contactRowContainer}>
+          <Text style={styles.contact}>Kontakt</Text>
+          <View style={styles.socialButtonContainer}>
+            <SocialButtons
+              bubbleSize={30}
+              icons={[
+                {id: 'instagram', icon: <Instagram />},
+                {id: 'facebook', icon: <Facebook />},
+                {id: 'website', icon: <Globe />},
+              ]}
+              onPress={handleSocialIconPress}
+            />
+          </View>
+        </View>
 
         <EmptySpace height={16} />
 
@@ -46,5 +82,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     paddingBottom: 5,
+  },
+  contactRowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  socialButtonContainer: {
+    width: 110,
   },
 });

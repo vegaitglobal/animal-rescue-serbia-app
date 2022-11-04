@@ -6,13 +6,13 @@ import {CustomButton} from '../components/CustomButton';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {TextInput} from '../components/TextInput';
 import {ColorPallet} from '../resources/ColorPallet';
-import {SocialButtons} from '../components/SocialButtons';
 import {useAppDispatch} from '../hooks/storeHooks';
 import {logIn} from '../store/src/authentication/actions';
 import {
   loadLocations,
   loadViolationCategories,
 } from '../store/src/reports/actions';
+import {LoginSocialButtons} from './components/LoginSocialButtons';
 
 export const LoginScreen = () => {
   const headerTitle = 'Dobro došli';
@@ -64,9 +64,9 @@ export const LoginScreen = () => {
 
   return (
     <ScreenRootContainer title={headerTitle} showLogo hideGoBack>
-      <View style={style.container}>
-        <Text style={style.screenTitle}>{screenTitle}</Text>
-        <View style={style.inputContainer}>
+      <View style={styles.container}>
+        <Text style={styles.screenTitle}>{screenTitle}</Text>
+        <View style={styles.inputContainer}>
           <TextInput
             onChangeText={text => setEmail(text.trim())}
             value={email}
@@ -81,30 +81,32 @@ export const LoginScreen = () => {
           placeholder={lozinka}
           placeholderTextColor={ColorPallet.lightGray}
         />
-        <Text style={style.password}>{zaboravljenaLozinka}</Text>
-        <View style={style.buttonContainer}>
+        <Text style={styles.password}>{zaboravljenaLozinka}</Text>
+        <View style={styles.buttonContainer}>
           <CustomButton
             text={prijaviteSe}
             onPress={handleLogin}
             isLoading={isSigningIn}
           />
         </View>
-        <View style={style.registrationContainer}>
-          <Text style={style.password}>{nemateNalog}</Text>
-          <View style={style.buttonContainer}>
+        <View style={styles.registrationContainer}>
+          <Text style={styles.password}>{nemateNalog}</Text>
+          <View style={styles.buttonContainer}>
             <CustomButton
               text={registracija}
               onPress={() => navigation.navigate('Registration')} //TODO change
             />
           </View>
-          <SocialButtons />
+          <View style={styles.socialButtonContainer}>
+            <LoginSocialButtons />
+          </View>
         </View>
       </View>
     </ScreenRootContainer>
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 30,
     paddingTop: 50,
@@ -130,5 +132,9 @@ const style = StyleSheet.create({
   },
   registrationContainer: {
     paddingTop: Platform.OS === 'ios' ? 50 : 30,
+  },
+  socialButtonContainer: {
+    paddingHorizontal: 30,
+    paddingTop: 40,
   },
 });

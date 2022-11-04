@@ -1,51 +1,52 @@
-import React from 'react';
-import {Linking, Pressable, StyleSheet, View} from 'react-native';
-import Viber from '../assets/icons/viber.svg';
-import Facebook from '../assets/icons/facebook.svg';
-import Instagram from '../assets/icons/instagram.svg';
+import React, {ReactElement} from 'react';
+import {Pressable, StyleSheet, View} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
+import {bind} from '../util/helpers';
 
-export const SocialButtons = () => {
-  const viberNumber = '+38164 8210200';
+type IconData<T extends unknown> = {
+  id: T;
+  icon: ReactElement;
+};
 
+type SocialButtonsProps<T extends unknown> = {
+  onPress: (id: T) => void;
+  icons: IconData<T>[];
+  bubbleSize?: number;
+};
+
+export const SocialButtons = <T extends unknown>({
+  icons,
+  onPress,
+  bubbleSize = 52,
+}: SocialButtonsProps<T>) => {
   return (
-    <View style={style.iconsContainer}>
-      <Pressable
-        style={style.pressableContainer}
-        onPress={() =>
-          Linking.openURL(`https://viber.com/contact?number=${viberNumber}`)
-        }>
-        <Viber width={28} height={28} />
-      </Pressable>
-      <Pressable
-        style={style.pressableContainer}
-        onPress={() =>
-          Linking.openURL('https://www.facebook.com/animalrescueserbia/')
-        }>
-        <Facebook width={40} height={40} />
-      </Pressable>
-      <Pressable
-        onPress={() =>
-          Linking.openURL('https://www.instagram.com/animal_rescue_serbia')
-        }>
-        <Instagram width={50} height={50} />
-      </Pressable>
+    <View style={styles.iconsContainer}>
+      {icons?.map(({icon, id}) => (
+        <Pressable
+          key={id?.toString() ?? ''}
+          onPress={bind(id, onPress)}
+          style={[
+            styles.pressableContainer,
+            {
+              width: bubbleSize,
+              height: bubbleSize,
+              borderRadius: bubbleSize / 2,
+            },
+          ]}>
+          {icon}
+        </Pressable>
+      ))}
     </View>
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   iconsContainer: {
-    paddingTop: 30,
-    paddingHorizontal: 50,
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
   pressableContainer: {
     backgroundColor: ColorPallet.gray,
-    borderRadius: 50,
-    width: 52,
-    height: 52,
     alignItems: 'center',
     justifyContent: 'center',
   },
