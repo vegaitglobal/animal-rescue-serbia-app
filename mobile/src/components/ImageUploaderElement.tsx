@@ -37,6 +37,7 @@ export const ImageUploadElement = ({
       <View style={styles.fileLogContainer}>
         {fileLogs.map(fileLog => (
           <Text
+            key={fileLog}
             numberOfLines={1}
             style={[styles.text, dynamicPlaceholderTextStyle]}>
             {fileLog}
