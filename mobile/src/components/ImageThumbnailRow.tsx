@@ -56,7 +56,7 @@ export const ImageThumbnailRow = ({
             //TODO: Create Base url environment variable to avoid issues with duplicated setup of it
             source={{
               uri: relativeFilePath
-                ? `https://3988-178-223-231-81.eu.ngrok.io/${relativeFilePath}`
+                ? `https://76eb-212-200-247-66.eu.ngrok.io/${relativeFilePath}`
                 : undefined,
             }}
           />
