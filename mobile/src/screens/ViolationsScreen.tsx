@@ -7,6 +7,7 @@ import {
   SectionListData,
   StyleSheet,
   TextStyle,
+  RefreshControl,
 } from 'react-native';
 import {EmptySpace} from '../components/EmptySpace';
 import {Separator} from '../components/Separator';
@@ -133,10 +134,19 @@ export const ViolationsScreen = () => {
   });
 
   return (
-    <ScreenRootContainer title="Prekršaji" showLogo isLoading={isLoadingData}>
+    <ScreenRootContainer
+      title="Prekršaji"
+      showLogo
+      isLoading={isLoadingData && !violationsByGroup.length}>
       <View style={styles.rootContainer}>
         <View style={styles.topSpacer} />
         <SectionList
+          refreshControl={
+            <RefreshControl
+              refreshing={isLoadingData}
+              onRefresh={loadViolationData}
+            />
+          }
           sections={violationsByGroup}
           stickySectionHeadersEnabled
           renderItem={renderItem}
