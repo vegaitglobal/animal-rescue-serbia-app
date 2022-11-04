@@ -17,6 +17,7 @@ import {InformationScreen} from '../screens/InformationScreen';
 import {TabIcon, TabIconProps} from '../components/TabIcon';
 import {ViolationsScreen} from '../screens/ViolationsScreen';
 import {DonatorsAndFriends} from '../screens/DonatorsAndFriends';
+import {ArsInfoScreen} from '../screens/ArsInfoScreen';
 
 export const RootTabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -84,6 +85,7 @@ export const RootTabNavigator = () => {
         <Tab.Screen name="Donation" component={DonationScreen} />
         <Tab.Screen name="Information" component={InformationScreen} />
         <Tab.Screen name="DonatorsAndFriends" component={DonatorsAndFriends} />
+        <Tab.Screen name="ArsInfo" component={ArsInfoScreen} />
       </Tab.Group>
     </Tab.Navigator>
   );

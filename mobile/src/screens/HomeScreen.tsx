@@ -80,7 +80,7 @@ export const HomeScreen = () => {
             <CustomButton
               style={style.buttonContainer}
               text={ars}
-              onPress={() => {}}
+              onPress={() => navigation.navigate('ArsInfo')}
             />
             <CustomButton
               style={style.buttonContainer}

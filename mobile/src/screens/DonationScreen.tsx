@@ -1,7 +1,6 @@
 import React from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {AccentedTextBox} from '../components/AccentedTextBox';
-import {CustomModal} from '../components/CustomModal';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
 
@@ -14,16 +13,17 @@ export const DonationScreen = () => {
       <View style={style.container}>
         <Text style={style.text}>{text}</Text>
         <View style={style.donationContainer}>
-          <Text style={style.boldText}>{'Devizni racun:'}</Text>
-          <AccentedTextBox>374245455400126</AccentedTextBox>
+          <AccentedTextBox title="Devizni racun:">
+            374245455400126
+          </AccentedTextBox>
         </View>
         <View style={style.donationContainer}>
-          <Text style={style.boldText}>{'Dinarski racun:'}</Text>
-          <AccentedTextBox>374245455400126</AccentedTextBox>
+          <AccentedTextBox title="Dinarski racun:">
+            374245455400126
+          </AccentedTextBox>
         </View>
         <View style={style.donationContainer}>
-          <Text style={style.boldText}>{'PayPal:'}</Text>
-          <AccentedTextBox>374245455400126</AccentedTextBox>
+          <AccentedTextBox title="PayPal:">374245455400126</AccentedTextBox>
         </View>
       </View>
     </ScreenRootContainer>
@@ -42,17 +42,10 @@ const style = StyleSheet.create({
     alignSelf: 'center',
     paddingBottom: 20,
   },
-  yellowContainer: {
-    height: 50,
-    backgroundColor: ColorPallet.yellow,
-    borderRadius: 10,
-    justifyContent: 'center',
-    paddingLeft: 10,
-  },
   donationContainer: {
     paddingTop: 10,
   },
-  boldText: {
+  title: {
     fontSize: 18,
     fontWeight: '600',
     paddingBottom: 5,

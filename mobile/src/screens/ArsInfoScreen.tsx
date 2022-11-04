@@ -1,0 +1,50 @@
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import {AccentedTextBox} from '../components/AccentedTextBox';
+import {EmptySpace} from '../components/EmptySpace';
+import {ScreenRootContainer} from '../components/ScreenRootContainer';
+import {ColorPallet} from '../resources/ColorPallet';
+
+export const ArsInfoScreen = () => {
+  const aboutUs =
+    'Animal Rescue Serbia (ARS) je prvo zvanično neprofitno udruženje građana koje dobrovoljno spasava životinje u Srbiji. Finansirano od strane donacija, vrši besplatno spasavanje u 5 opština: Beograd, Novi Sad, Niš, Srbobran i Vršac.';
+
+  return (
+    <ScreenRootContainer title="Animal rescue serbia">
+      <View style={styles.rootContainer}>
+        <EmptySpace height={60} />
+
+        <Text style={styles.aboutUsText}>{aboutUs}</Text>
+
+        <EmptySpace height={20} />
+
+        <Text style={styles.contact}>Kontakt</Text>
+
+        <EmptySpace height={16} />
+
+        <AccentedTextBox title="Telefon:">'+38164 8210200'</AccentedTextBox>
+
+        <EmptySpace height={textBoxSpacing} />
+
+        <AccentedTextBox title="e-Pošta">ars@ars.com</AccentedTextBox>
+      </View>
+    </ScreenRootContainer>
+  );
+};
+
+const textBoxSpacing = 4;
+
+const styles = StyleSheet.create({
+  rootContainer: {
+    paddingHorizontal: 32,
+  },
+  aboutUsText: {
+    color: ColorPallet.plainBlack,
+    fontSize: 16,
+  },
+  contact: {
+    fontSize: 18,
+    fontWeight: '600',
+    paddingBottom: 5,
+  },
+});
