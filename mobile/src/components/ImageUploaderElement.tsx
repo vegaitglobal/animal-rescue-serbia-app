@@ -18,31 +18,34 @@ export const ImageUploadElement = ({
   placeholderText,
   onFilesSelected,
 }: ImageUploadElementProps) => {
-  const [fileLogs, setFileLogs] = useState<string[]>([placeholderText]);
+  const [fileLogs, setFileLogs] = useState<string[]>([]);
 
   const onPress = useCallback(async () => {
-    const pickedFiles = await ImagePicker.openPicker({
-      multiple: true,
-      mediaType: 'any',
-    });
+    try {
+      const pickedFiles = await ImagePicker.openPicker({
+        multiple: true,
+        mediaType: 'any',
+      });
 
-    setFileLogs(fileDataAsStringArray(pickedFiles));
-    onFilesSelected(pickedFiles.map(({path, mime}) => ({path, mime})));
+      setFileLogs(fileDataAsStringArray(pickedFiles));
+      onFilesSelected(pickedFiles.map(({path, mime}) => ({path, mime})));
+    } catch (error) {
+      console.log('Media selection cancelled');
+    }
   }, [onFilesSelected]);
-
-  const dynamicPlaceholderTextStyle = fileLogs ? {} : styles.textPlaceholder;
 
   return (
     <View style={styles.rootContainer}>
       <View style={styles.fileLogContainer}>
-        {fileLogs.map(fileLog => (
-          <Text
-            key={fileLog}
-            numberOfLines={1}
-            style={[styles.text, dynamicPlaceholderTextStyle]}>
-            {fileLog}
-          </Text>
-        ))}
+        {fileLogs.length ? (
+          fileLogs.map(fileLog => (
+            <Text key={fileLog} numberOfLines={1} style={[styles.text]}>
+              {fileLog}
+            </Text>
+          ))
+        ) : (
+          <Text style={styles.textPlaceholder}>{placeholderText}</Text>
+        )}
       </View>
 
       <EmptySpace width={20} />
@@ -62,7 +65,7 @@ const styles = StyleSheet.create({
     color: ColorPallet.plainBlack,
   },
   textPlaceholder: {
-    color: ColorPallet.mediumGray,
+    color: ColorPallet.lightGray,
   },
   rootContainer: {
     flex: 1,

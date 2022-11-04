@@ -33,6 +33,7 @@ import {
 import {ItemData} from '../components/commonTypes';
 import {ScrollView} from 'react-native-gesture-handler';
 import {EmptySpace} from '../components/EmptySpace';
+import {unwrapResult} from '@reduxjs/toolkit';
 
 export const ReportScreen = () => {
   const violationCategories = useAppSelector(getViolationCategories);
@@ -49,16 +50,16 @@ export const ReportScreen = () => {
   const adresa = 'Adresa prekršaja';
   const brTelefona = 'Broj telefona';
   const tipPrekrsaja = 'Tip prekršaja';
-  const fotoVideo = 'Foto/video';
+  const fotoVideo = 'Fotografija / video';
 
   const navigation = useNavigation();
-  const [visible, setVisible] = useState(false);
-  const [declineModalVisible, setDeclineModalVisible] = useState(false);
-  const [sendReport, setSendReport] = useState(false);
+  const [isEntryModalVisible, setIsEntryModalVisible] = useState(false);
+  const [isDeclineModalVisible, setDeclineModalVisible] = useState(false);
+  const [isSendReportModalVisible, setSendReport] = useState(false);
   const violation = useAppSelector(getNewViolation);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => setVisible(true), []);
+  useEffect(() => setIsEntryModalVisible(true), []);
 
   const handleReport = useCallback(async () => {
     setSendReport(false);
@@ -68,12 +69,19 @@ export const ReportScreen = () => {
     const result = await dispatch(sendViolation(violation));
     if (result.meta.requestStatus === 'rejected') {
       console.log('Report failed');
+      setIsLoading(false);
       return;
     }
-    navigation.navigate('Home');
+
+    const unwrappedResult = unwrapResult(result);
+    if (!unwrappedResult) {
+      console.log('Report failed');
+      setIsLoading(false);
+      return;
+    }
 
     setIsLoading(false);
-    dispatch(unsetViolation());
+    navigation.goBack();
   }, [dispatch, navigation, violation]);
 
   const onFilesSelected = useCallback(
@@ -107,9 +115,16 @@ export const ReportScreen = () => {
     [dispatch],
   );
 
+  useEffect(
+    () => () => {
+      dispatch(unsetViolation());
+    },
+    [dispatch],
+  );
+
   return (
     <ScreenRootContainer title={headerTitle} showLogo>
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <ScrollView contentContainerStyle={style.scroll}>
         <View style={style.container}>
           <View style={style.inputContainer}>
             <TextInput
@@ -199,8 +214,8 @@ export const ReportScreen = () => {
         title={headerTitle}
         text={text}
         icon={<Report width={100} height={100} />}
-        onPress={() => setVisible(false)}
-        visible={visible}
+        onPress={() => setIsEntryModalVisible(false)}
+        visible={isEntryModalVisible}
       />
       <CustomModalWithButton
         text={text}
@@ -209,7 +224,7 @@ export const ReportScreen = () => {
         buttonNegative="Odustani"
         onPressPositiveBtn={() => setDeclineModalVisible(false)}
         onPressNegativeBtn={() => navigation.goBack()}
-        visible={declineModalVisible}
+        visible={isDeclineModalVisible}
       />
       <CustomModalWithButton
         isOneButtonModal
@@ -218,7 +233,7 @@ export const ReportScreen = () => {
         icon={<Report width={100} height={100} />}
         buttonPositive="U redu"
         onPressPositiveBtn={handleReport}
-        visible={sendReport}
+        visible={isSendReportModalVisible}
       />
     </ScreenRootContainer>
   );
@@ -255,5 +270,8 @@ const style = StyleSheet.create({
   },
   mainButton: {
     flex: 1,
+  },
+  scroll: {
+    flexGrow: 1,
   },
 });
