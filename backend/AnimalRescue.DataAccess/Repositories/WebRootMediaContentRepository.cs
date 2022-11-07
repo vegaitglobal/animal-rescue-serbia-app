@@ -23,7 +23,6 @@ namespace AnimalRescue.DataAccess.Repositories
             var fileName = Path.GetFileName(fileToUpload.FileName);
             var extension = Path.GetExtension(fileToUpload.FileName);
 
-
             var uploadDirectoryPath = $"{rootFilePath}\\{UploadsFolderName}";
 
             if (!Directory.Exists(uploadDirectoryPath))
@@ -45,6 +44,7 @@ namespace AnimalRescue.DataAccess.Repositories
                 FileName = fileName,
                 FilePath = fullPath,
                 RelativePath = relativePath,
+                ContentType = fileToUpload.ContentType,
             };
         }
     }
