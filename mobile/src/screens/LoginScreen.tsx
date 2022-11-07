@@ -75,7 +75,7 @@ export const LoginScreen = () => {
 
     setIsSigningIn(false);
 
-    navigation.replace('HomeScreen');
+    navigation.replace('TabNavigator');
   }, [dispatch, email, navigation, password]);
 
   return (

@@ -12,9 +12,10 @@ import {Platform, StyleSheet} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 import {TabIcon, TabIconProps} from '../components/TabIcon';
 import {HomeStackNavigator} from './HomeStackNavigator';
+import {RootStackNavigatorParams} from './types';
 
 export const TabNavigator = () => {
-  const Tab = createBottomTabNavigator();
+  const Tab = createBottomTabNavigator<RootStackNavigatorParams>();
 
   const renderTabIcon = useCallback(
     (

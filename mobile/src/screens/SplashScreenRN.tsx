@@ -42,7 +42,7 @@ export const SplashScreenRN = () => {
       return;
     }
 
-    navigation.replace('HomeScreen');
+    navigation.replace('TabNavigator');
   }, [dispatch, navigation]);
 
   useEffect(() => {

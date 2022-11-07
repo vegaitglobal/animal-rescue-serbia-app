@@ -50,7 +50,7 @@ export const RegistrationScreen = () => {
       return;
     }
 
-    navigation.replace('HomeScreen');
+    navigation.replace('TabNavigator');
   }, [dispatch, navigation, registrationData]);
 
   return (
