@@ -13,7 +13,7 @@ export const apiClient = (
   authManager: IAuthManager,
   navigationService: INavigationService,
 ): IApiClient => {
-  const baseURL = 'https://76eb-212-200-247-66.eu.ngrok.io/api';
+  const baseURL = 'https://08fd-82-117-210-2.eu.ngrok.io/api';
   //const baseURL = 'http://10.0.2.2:5113/api';
 
   axios?.interceptors?.response?.use?.(
@@ -28,7 +28,9 @@ export const apiClient = (
           type: 'info',
           text1: 'Sesija je istekla, molimo prijavite se ponovo.',
         });
+
         AsyncStorage.setItem('accessToken', '');
+
         navigationService.resetToRoute('Login'); // Once token expires we want to request user to re-sign-in
       }
 

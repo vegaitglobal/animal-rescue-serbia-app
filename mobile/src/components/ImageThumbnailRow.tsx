@@ -51,7 +51,7 @@ export const ImageThumbnailRow = ({
 
       videoOnly.forEach(async ({id, relativeFilePath}) => {
         const res = await createThumbnail({
-          url: `https://76eb-212-200-247-66.eu.ngrok.io/${relativeFilePath}`,
+          url: `https://08fd-82-117-210-2.eu.ngrok.io/${relativeFilePath}`,
         });
         setVideoThumbnails(current => [...current, {id, fullPath: res.path}]);
       });
@@ -73,7 +73,7 @@ export const ImageThumbnailRow = ({
 
   const renderItem = useCallback(
     (id: string, relativeFilePath: string) => {
-      const fullPath = `https://76eb-212-200-247-66.eu.ngrok.io/${relativeFilePath}`;
+      const fullPath = `https://08fd-82-117-210-2.eu.ngrok.io/${relativeFilePath}`;
 
       const processedPath = isPathVideo(relativeFilePath)
         ? videoThumbnails.find(thumbnailData => thumbnailData.id === id)
@@ -82,7 +82,10 @@ export const ImageThumbnailRow = ({
 
       return processedPath ? (
         <Image
-          style={[styles.image, {width: thumbnailSize, height: thumbnailSize}]}
+          style={[
+            styles.thumbnail,
+            {width: thumbnailSize, height: thumbnailSize},
+          ]}
           //TODO: Create Base url environment variable to avoid issues with duplicated setup of it
           source={{
             uri: relativeFilePath ? processedPath : undefined,
@@ -101,7 +104,7 @@ export const ImageThumbnailRow = ({
   const thumbnails = useMemo(
     () =>
       truncatedContent.map(({id: fileId, relativeFilePath}) => (
-        <View key={fileId}>
+        <View style={styles.thumbnailWithSpacing} key={fileId}>
           <>{renderItem(fileId, relativeFilePath)}</>
           <EmptySpace width={thumbnailSpacing} />
         </View>
@@ -111,8 +114,8 @@ export const ImageThumbnailRow = ({
 
   return (
     <Pressable onPress={onPress}>
-      <View style={styles.imageRowContainer}>
-        <View onLayout={onLayoutChange} style={styles.imageContainer}>
+      <View style={styles.thumbnailRowContainer}>
+        <View onLayout={onLayoutChange} style={styles.thumbnailContainer}>
           {thumbnails}
         </View>
         {truncatedContent.length ? (
@@ -133,15 +136,15 @@ export const ImageThumbnailRow = ({
 const thumbnailSpacing = 8;
 
 const styles = StyleSheet.create({
-  imageRowContainer: {
+  thumbnailRowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  imageContainer: {
+  thumbnailContainer: {
     flex: 1,
     flexDirection: 'row',
   },
-  image: {
+  thumbnail: {
     backgroundColor: ColorPallet.lightGray,
   },
   moreButtonContainer: {
@@ -152,5 +155,8 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     color: ColorPallet.plainBlack,
     textTransform: 'uppercase',
+  },
+  thumbnailWithSpacing: {
+    flexDirection: 'row',
   },
 });
