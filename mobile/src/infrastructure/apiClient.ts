@@ -7,6 +7,7 @@ import {
   RequestConfig,
 } from './types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 
 export const apiClient = (
   authManager: IAuthManager,
@@ -23,6 +24,11 @@ export const apiClient = (
     error => {
       if (error.response.status === 401) {
         // TODO: Maybe move into authentication manager
+        Toast.show({
+          type: 'info',
+          text1: 'Sesija je istekla, molimo prijavite se ponovo.',
+        });
+        AsyncStorage.setItem('accessToken', '');
         navigationService.resetToRoute('Login'); // Once token expires we want to request user to re-sign-in
       }
 

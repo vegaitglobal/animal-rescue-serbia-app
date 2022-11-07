@@ -9,6 +9,7 @@ import {createStoreWithInjections} from './store/configureStore';
 import {navigationRef} from './store/src/util/navigationHelpers';
 import {navigationService} from './infrastructure/navigationService';
 import {ColorPallet} from './resources/ColorPallet';
+import Toast from 'react-native-toast-message';
 
 const store = createStoreWithInjections(navigationService()); //TODO Check the ref approach
 
@@ -21,6 +22,7 @@ const App = () => {
             <StatusBar backgroundColor={ColorPallet.gray} />
             <RootStackNavigator />
           </NavigationContainer>
+          <Toast />
         </Provider>
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
