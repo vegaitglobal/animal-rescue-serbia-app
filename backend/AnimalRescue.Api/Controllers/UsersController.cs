@@ -59,7 +59,7 @@ namespace AnimalRescue.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<UserDto>> UpdateAsync(Guid id,[FromBody] UserUpdateDto userUpdateDto)
+        public async Task<ActionResult<UserDto>> UpdateAsync(Guid id, [FromBody] UserUpdateDto userUpdateDto)
         {
             var updated = await _userService.UpdateAsync(id, userUpdateDto);
 
@@ -72,6 +72,14 @@ namespace AnimalRescue.Api.Controllers
             var updated = await _userService.UpdateCredentialsAsync(id, userUpdateDto);
 
             return Ok(updated);
+        }
+
+        [HttpGet("me")]
+        public async Task<ActionResult<UserDto>> GetCurrentUserAsync()
+        {
+            var user = await _userService.GetCurrentUserAsync();
+
+            return Ok(user);
         }
     }
 }
