@@ -26,8 +26,6 @@ export const HomeStackNavigator = () => {
       <Stack.Screen name="Information" component={InformationScreen} />
       <Stack.Screen name="DonatorsAndFriends" component={DonatorsAndFriends} />
       <Stack.Screen name="ArsInfo" component={ArsInfoScreen} />
-      <Stack.Screen name="Report" component={ReportScreen} />
-      <Stack.Screen name="Donation" component={DonationScreen} />
     </Stack.Navigator>
   );
 };

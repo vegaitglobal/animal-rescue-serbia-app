@@ -4,17 +4,17 @@ type DefaultScreenParams = NativeStackNavigationOptions;
 
 export type RootStackNavigatorParams = {
   Home?: DefaultScreenParams;
-  Information?: DefaultScreenParams;
-  ArsInfo?: DefaultScreenParams;
-  DonatorsAndFriends?: DefaultScreenParams;
+  Report?: DefaultScreenParams;
   Violations?: DefaultScreenParams;
+  Donation?: DefaultScreenParams;
+  Information?: DefaultScreenParams;
+  DonatorsAndFriends?: DefaultScreenParams;
+  ArsInfo?: DefaultScreenParams;
 
   Splash?: DefaultScreenParams;
   Login?: DefaultScreenParams;
   Registration?: DefaultScreenParams;
   TabNavigator?: DefaultScreenParams;
-  Report?: DefaultScreenParams;
-  Donation?: DefaultScreenParams;
 
   HomeNavigator?: DefaultScreenParams;
   Sos?: DefaultScreenParams;
