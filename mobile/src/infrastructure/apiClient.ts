@@ -8,25 +8,34 @@ import {
 } from './types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
+import Config from 'react-native-config';
 
 export const apiClient = (
   authManager: IAuthManager,
   navigationService: INavigationService,
 ): IApiClient => {
-  const baseURL = 'https://08fd-82-117-210-2.eu.ngrok.io/api';
-  //const baseURL = 'http://10.0.2.2:5113/api';
+  const baseURL = `${Config.BASE_URL}/api`;
 
   axios?.interceptors?.response?.use?.(
     config => {
-      //console.log('CONFIG: ', config);
       return config;
     },
     error => {
-      if (error.response.status === 401) {
+      if (!error?.response?.status) {
+        Toast.show({
+          type: 'error',
+          text2:
+            'Povezivanje nije uspelo, molimo, proverite internet konekciju',
+          position: 'bottom',
+        });
+      }
+
+      if (error?.response?.status === 401) {
         // TODO: Maybe move into authentication manager
         Toast.show({
           type: 'info',
           text1: 'Sesija je istekla, molimo prijavite se ponovo.',
+          position: 'bottom',
         });
 
         AsyncStorage.setItem('accessToken', '');
@@ -75,7 +84,6 @@ export const apiClient = (
           ...request,
           headers: {
             ...request.headers,
-            //'Content-Type': 'application/json',
           },
         });
         return response?.data as TReturn;

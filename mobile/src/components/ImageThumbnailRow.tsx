@@ -13,6 +13,7 @@ import {Chevron, Orientation} from './Chevron';
 import {EmptySpace} from './EmptySpace';
 import {createThumbnail} from 'react-native-create-thumbnail';
 import {isPathVideo} from '../util/helpers';
+import Config from 'react-native-config';
 
 type ImageThumbnailRowProps = {
   mediaContent: MediaContentDto[];
@@ -51,7 +52,7 @@ export const ImageThumbnailRow = ({
 
       videoOnly.forEach(async ({id, relativeFilePath}) => {
         const res = await createThumbnail({
-          url: `https://08fd-82-117-210-2.eu.ngrok.io/${relativeFilePath}`,
+          url: `${Config.BASE_URL}/${relativeFilePath}`,
         });
         setVideoThumbnails(current => [...current, {id, fullPath: res.path}]);
       });
@@ -73,7 +74,7 @@ export const ImageThumbnailRow = ({
 
   const renderItem = useCallback(
     (id: string, relativeFilePath: string) => {
-      const fullPath = `https://08fd-82-117-210-2.eu.ngrok.io/${relativeFilePath}`;
+      const fullPath = `${Config.BASE_URL}/${relativeFilePath}`;
 
       const processedPath = isPathVideo(relativeFilePath)
         ? videoThumbnails.find(thumbnailData => thumbnailData.id === id)
