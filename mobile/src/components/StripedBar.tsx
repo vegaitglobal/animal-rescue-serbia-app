@@ -6,7 +6,7 @@ const boxHeight = 18;
 const boxWidth = 20;
 
 const Box = ({color}: {color: string}) => (
-  <View style={[style2.box, {backgroundColor: color}]} />
+  <View style={[style2.box, {backgroundColor: color, marginEnd: boxWidth}]} />
 );
 
 export const StripedBar = ({
@@ -23,17 +23,11 @@ export const StripedBar = ({
 
   const numberOfSegments = useMemo(() => Math.round(width / boxWidth), [width]);
 
-  //TODO: Make sure to use padding instead of transparent element
   return (
     <View onLayout={onLayout}>
       <View style={[style.itemListContainer, {backgroundColor}]}>
         {[...Array(numberOfSegments).keys()].map((_, index) => (
-          <Box
-            key={index}
-            color={
-              index % 2 === 0 ? ColorPallet.yellow : ColorPallet.transparent
-            }
-          />
+          <Box key={index} color={ColorPallet.yellow} />
         ))}
       </View>
     </View>
@@ -51,7 +45,7 @@ const style = StyleSheet.create({
 
 const style2 = StyleSheet.create({
   box: {
-    width: 20,
+    width: boxWidth,
     height: boxHeight + 30,
     transform: [{rotate: '30deg'}],
   },

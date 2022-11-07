@@ -10,6 +10,7 @@ import {
   loadViolationCategories,
 } from '../store/src/reports/actions';
 import AnimatedEllipsis from '../../libs/react-native-animated-ellipsis/src/AnimatedEllipsis';
+import {Constants} from '../Constants';
 
 export const SplashScreenRN = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +18,7 @@ export const SplashScreenRN = () => {
   const [dynamicMessage, setDynamicMessage] = useState('');
 
   const checkTokenAndPrefetch = useCallback(async () => {
-    const token = await AsyncStorage.getItem('accessToken'); //TODO: Try using/creating auth manager
+    const token = await AsyncStorage.getItem(Constants.tokenPersistanceKey); //TODO: Try using/creating auth manager
     SplashScreen.hide();
     if (!token) {
       navigation.replace('Login');

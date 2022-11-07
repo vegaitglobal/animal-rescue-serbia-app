@@ -87,7 +87,6 @@ export const ImageThumbnailRow = ({
             styles.thumbnail,
             {width: thumbnailSize, height: thumbnailSize},
           ]}
-          //TODO: Create Base url environment variable to avoid issues with duplicated setup of it
           source={{
             uri: relativeFilePath ? processedPath : undefined,
           }}
@@ -97,9 +96,7 @@ export const ImageThumbnailRow = ({
     [thumbnailSize, videoThumbnails],
   );
 
-  //TODO: Config/env
   //TODO: Auth manager
-  //TODO: Splash screen
   //TODO: iOS layout (logo on header zIndex)
   //TODO: Static screens
   const thumbnails = useMemo(

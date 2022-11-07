@@ -8,7 +8,6 @@ import {
   setLocation,
   setNameSurname,
   setPhoneNumber,
-  sendViolation,
   setViolationCategory,
   unsetViolation,
   loadViolations,
@@ -55,9 +54,6 @@ export const reportSlice = createSlice({
       })
       .addCase(loadViolations.fulfilled, (state, {payload}) => {
         state.violations = payload;
-      })
-      .addCase(sendViolation.fulfilled, (state, action) => {
-        //state.violation = action.payload; //TODO: cleanup
       });
   },
 });

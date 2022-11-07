@@ -11,7 +11,7 @@ import {navigationService} from './infrastructure/navigationService';
 import {ColorPallet} from './resources/ColorPallet';
 import Toast from 'react-native-toast-message';
 
-const store = createStoreWithInjections(navigationService()); //TODO Check the ref approach
+const store = createStoreWithInjections(navigationService());
 
 const App = () => {
   return (

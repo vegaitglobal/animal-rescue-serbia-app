@@ -1,7 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {
-  logIn,
-  register,
   setEmail,
   setFirstName,
   setLastName,
@@ -19,12 +17,6 @@ export const reportSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(logIn.fulfilled, (state, {payload}) => {
-        state.accessToken = payload.accessToken; //TODO: Remove
-      })
-      .addCase(register.fulfilled, (_, {}) => {
-        //TODO:
-      })
       .addCase(setFirstName, (state, {payload}) => {
         state.newRegistration.firstName = payload;
       })
@@ -46,8 +38,4 @@ export const reportSlice = createSlice({
   },
 });
 
-//TODO:
-// .addCase(logIn.rejected, (state, {payload}) => {
-//   state. = payload;
-// });
 export const authenticationReducer = reportSlice.reducer;

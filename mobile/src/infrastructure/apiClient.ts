@@ -9,6 +9,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import Config from 'react-native-config';
+import {Constants} from '../Constants';
 
 export const apiClient = (
   authManager: IAuthManager,
@@ -38,7 +39,7 @@ export const apiClient = (
           position: 'bottom',
         });
 
-        AsyncStorage.setItem('accessToken', '');
+        AsyncStorage.setItem(Constants.tokenPersistanceKey, '');
 
         navigationService.resetToRoute('Login'); // Once token expires we want to request user to re-sign-in
       }
@@ -54,10 +55,8 @@ export const apiClient = (
   ): Promise<ApiRequest> => {
     const {url, method, data, headers} = config;
 
-    //TODO: access token key constant
-    //TODO: Implement manager
-    // const token = await manager.getAccessToken();
-    const token = await AsyncStorage.getItem('accessToken');
+    //TODO: Implement authentication manager
+    const token = await AsyncStorage.getItem(Constants.tokenPersistanceKey);
 
     if (token) {
       const actualHeaders = {

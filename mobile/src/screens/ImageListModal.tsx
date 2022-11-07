@@ -20,7 +20,6 @@ type ImageListModalProps = {
   onVisibilityChange: (isShown: boolean) => void;
 };
 
-// TODO: Dynamic modal height based on content
 export const ImageListModal = ({
   myRef,
   data,

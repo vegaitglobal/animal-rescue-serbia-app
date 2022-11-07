@@ -8,6 +8,7 @@ import {arsApi} from '../../../infrastructure/arsApi';
 import {directUpdateAction} from '../util/helpers';
 import {LogInData, NewRegistration} from './types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Constants} from '../../../Constants';
 
 export const setFirstName = createAction(
   'authentication/setFirstName',
@@ -49,7 +50,7 @@ export const logIn = createAsyncThunk<
 
   //TODO: Check why type inference doesn't work here
   const result: LogInResponseDto = await api.postLogIn(data);
-  AsyncStorage.setItem('accessToken', result.accessToken);
+  AsyncStorage.setItem(Constants.tokenPersistanceKey, result.accessToken);
   return result;
 });
 
@@ -74,7 +75,7 @@ export const register = createAsyncThunk<
       passwordConfirm: passwordConfirmed,
     });
 
-    AsyncStorage.setItem('accessToken', result.accessToken);
+    AsyncStorage.setItem(Constants.tokenPersistanceKey, result.accessToken);
 
     return result;
   },

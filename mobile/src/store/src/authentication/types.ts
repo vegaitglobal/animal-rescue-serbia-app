@@ -4,7 +4,6 @@ export type LogInData = {
 };
 
 export type AuthenticationState = {
-  accessToken: string;
   newRegistration: NewRegistration;
 };
 

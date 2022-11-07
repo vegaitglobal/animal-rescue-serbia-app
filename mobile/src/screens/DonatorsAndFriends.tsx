@@ -5,7 +5,6 @@ import {EmptySpace} from '../components/EmptySpace';
 import {PersonBio} from '../components/PersonBio';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 
-//TODO: Unrelated to this screen, try moving all home stack navigation into appropriate new navigator
 export const DonatorsAndFriends = () => {
   const firstBio =
     'Osnivač ARS-a, istovremeno i naš najveći donator, bez čijeg doprinosa ne bi bilo moguće da naša ideja zaživi i razvija se. Zahvaljujemo se na tvojoj velikoj posvećenosti i pomoći.';
