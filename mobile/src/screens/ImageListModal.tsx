@@ -2,9 +2,11 @@ import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, {useCallback} from 'react';
 import {Dimensions, Image, ListRenderItemInfo, StyleSheet} from 'react-native';
+import VideoPlayer from 'react-native-video-player';
 import {CustomBottomSheetModal} from '../components/CustomBottomSheetModal';
 import {EmptySpace} from '../components/EmptySpace';
 import {ColorPallet} from '../resources/ColorPallet';
+import {isPathVideo} from '../util/helpers';
 
 type DataItem = {
   id: string;
@@ -26,15 +28,30 @@ export const ImageListModal = ({
   onVisibilityChange,
 }: ImageListModalProps) => {
   const renderItem = useCallback(
-    ({item: {id, fullPath}}: ListRenderItemInfo<DataItem>) => (
-      <Image
-        key={id}
-        style={styles.image}
-        source={{
-          uri: fullPath,
-        }}
-      />
-    ),
+    ({item: {id, fullPath}}: ListRenderItemInfo<DataItem>) =>
+      isPathVideo(fullPath) ? (
+        <VideoPlayer
+          video={{
+            uri: fullPath,
+          }}
+          onLoad={e => e.naturalSize}
+          customStyles={{
+            video: {backgroundColor: ColorPallet.plainBlack},
+          }}
+          // TODO: use getVideoMetaData from compressor lib
+          // videoWidth={1600}
+          // videoHeight={900}
+          //thumbnail={{uri: 'https://i.picsum.photos/id/866/1600/900.jpg'}}
+        />
+      ) : (
+        <Image
+          key={id}
+          style={styles.image}
+          source={{
+            uri: fullPath,
+          }}
+        />
+      ),
     [],
   );
 
@@ -51,7 +68,6 @@ export const ImageListModal = ({
       ? dynamicModalSnappingPoint
       : maxModalSnappingPoint;
 
-  //TODO: Block back navigation
   return (
     <CustomBottomSheetModal
       myRef={myRef}

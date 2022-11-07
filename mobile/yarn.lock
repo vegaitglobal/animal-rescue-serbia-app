@@ -6171,6 +6171,11 @@ react-native-compressor@^1.6.1:
   resolved "https://registry.yarnpkg.com/react-native-compressor/-/react-native-compressor-1.6.1.tgz#f1e4b765f172c649a453f39b3b7478554f825596"
   integrity sha512-SmyRPWIQY7RPz50bXkkhLcIjoMMIB62rJJls9cG7XCeMIN/I8TFijmXZjEWrgzRlUMBa0JMr7AIXSLvcMp9hfA==
 
+react-native-create-thumbnail@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/react-native-create-thumbnail/-/react-native-create-thumbnail-1.6.3.tgz#3032bb7f5c07a44f578c362c3cc1c671baa0d445"
+  integrity sha512-QsIhUBAefXBYq808KUMe0MnvgIokO4ULM43X1jJ2N9xzQX6Zyu/D1VhlE0LjGL0jHoiULmIRa05QdJgnq/2zBA==
+
 react-native-file-access@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/react-native-file-access/-/react-native-file-access-2.5.0.tgz#df6916e5edacaaed73a1ea20bea79d4be13b3faf"

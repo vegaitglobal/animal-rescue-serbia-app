@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   Image,
   LayoutChangeEvent,
@@ -11,19 +11,27 @@ import {MediaContentDto} from '../infrastructure/apiTypes';
 import {ColorPallet} from '../resources/ColorPallet';
 import {Chevron, Orientation} from './Chevron';
 import {EmptySpace} from './EmptySpace';
-import VideoPlayer from 'react-native-video-player';
+import {createThumbnail} from 'react-native-create-thumbnail';
+import {isPathVideo} from '../util/helpers';
 
 type ImageThumbnailRowProps = {
   mediaContent: MediaContentDto[];
   thumbnailSize?: number;
   onPress?: () => void;
 };
+
+type ThumbnailData = {
+  id: string;
+  fullPath: string;
+};
+
 export const ImageThumbnailRow = ({
   mediaContent,
   thumbnailSize = 60,
   onPress,
 }: ImageThumbnailRowProps) => {
   const [numberOfThumbnails, setNumberOfThumbnails] = useState(0);
+  const [videoThumbnails, setVideoThumbnails] = useState<ThumbnailData[]>([]);
 
   const onLayoutChange = useCallback(
     ({nativeEvent}: LayoutChangeEvent) => {
@@ -35,6 +43,29 @@ export const ImageThumbnailRow = ({
     [thumbnailSize],
   );
 
+  const createVideoThumbnailsAsync = useCallback(
+    async (mediaContentParam: MediaContentDto[]) => {
+      const videoOnly = mediaContentParam.filter(file =>
+        isPathVideo(file.relativeFilePath),
+      );
+
+      videoOnly.forEach(async ({id, relativeFilePath}) => {
+        const res = await createThumbnail({
+          url: `https://76eb-212-200-247-66.eu.ngrok.io/${relativeFilePath}`,
+        });
+        setVideoThumbnails(current => [...current, {id, fullPath: res.path}]);
+      });
+    },
+    [],
+  );
+
+  useEffect(() => {
+    if (!mediaContent.length) {
+      return;
+    }
+    createVideoThumbnailsAsync(mediaContent);
+  }, [mediaContent, createVideoThumbnailsAsync]);
+
   const truncatedContent = useMemo(
     () => mediaContent.slice(0, numberOfThumbnails),
     [mediaContent, numberOfThumbnails],
@@ -42,32 +73,24 @@ export const ImageThumbnailRow = ({
 
   const renderItem = useCallback(
     (id: string, relativeFilePath: string) => {
-      const pathSegments = relativeFilePath.split('.');
-      const extension = pathSegments[pathSegments.length - 1];
-      if (extension === 'mp4' || extension === 'mpeg' || extension === 'avi') {
-        return (
-          <VideoPlayer
-            video={{
-              uri: `https://76eb-212-200-247-66.eu.ngrok.io/${relativeFilePath}`,
-            }}
-            videoWidth={1600}
-            videoHeight={900}
-            thumbnail={{uri: 'https://i.picsum.photos/id/866/1600/900.jpg'}}
-          />
-        );
-      }
+      const fullPath = `https://76eb-212-200-247-66.eu.ngrok.io/${relativeFilePath}`;
 
-      <Image
-        style={[styles.image, {width: thumbnailSize, height: thumbnailSize}]}
-        //TODO: Create Base url environment variable to avoid issues with duplicated setup of it
-        source={{
-          uri: relativeFilePath
-            ? `https://76eb-212-200-247-66.eu.ngrok.io/${relativeFilePath}`
-            : undefined,
-        }}
-      />;
+      const processedPath = isPathVideo(relativeFilePath)
+        ? videoThumbnails.find(thumbnailData => thumbnailData.id === id)
+            ?.fullPath ?? undefined
+        : fullPath;
+
+      return processedPath ? (
+        <Image
+          style={[styles.image, {width: thumbnailSize, height: thumbnailSize}]}
+          //TODO: Create Base url environment variable to avoid issues with duplicated setup of it
+          source={{
+            uri: relativeFilePath ? processedPath : undefined,
+          }}
+        />
+      ) : null;
     },
-    [thumbnailSize],
+    [thumbnailSize, videoThumbnails],
   );
 
   //TODO: Config/env
@@ -79,7 +102,7 @@ export const ImageThumbnailRow = ({
     () =>
       truncatedContent.map(({id: fileId, relativeFilePath}) => (
         <View key={fileId}>
-          {renderItem(fileId, relativeFilePath)}
+          <>{renderItem(fileId, relativeFilePath)}</>
           <EmptySpace width={thumbnailSpacing} />
         </View>
       )),

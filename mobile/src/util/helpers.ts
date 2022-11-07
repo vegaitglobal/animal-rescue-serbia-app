@@ -54,3 +54,9 @@ export const bind =
   <T extends unknown>(arg: T, callback: (arg: T) => void) =>
   () =>
     callback(arg);
+
+export const isPathVideo = (relativeFilePath: string) => {
+  const pathSegments = relativeFilePath.split('.');
+  const extension = pathSegments[pathSegments.length - 1];
+  return extension === 'mp4' || extension === 'mpeg' || extension === 'avi';
+};

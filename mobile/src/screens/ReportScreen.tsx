@@ -33,9 +33,9 @@ import {
 import {ItemData} from '../components/commonTypes';
 import {ScrollView} from 'react-native-gesture-handler';
 import {EmptySpace} from '../components/EmptySpace';
-import {unwrapResult} from '@reduxjs/toolkit';
 import {useAndroidBackNavigationOverride} from '../hooks/useAndroidBackNavigationOverride';
 import {ActivityIndicator} from '../components/ActivityIndicator';
+import {FormFile} from '../store/src/reports/types';
 
 export const ReportScreen = () => {
   const violationCategories = useAppSelector(getViolationCategories);
@@ -89,17 +89,6 @@ export const ReportScreen = () => {
         file.mime.startsWith('image'),
       );
 
-      dispatch(
-        setFiles(
-          selectedFiles.map(file => ({
-            name: extractFileNameFromPath(file.path),
-            type: file.mime,
-            uri: file.path,
-          })),
-        ),
-      );
-
-      //TODO: remove
       const videosOnly = selectedFiles.filter(file =>
         file.mime.startsWith('video'),
       );
@@ -108,8 +97,34 @@ export const ReportScreen = () => {
         videosOnly.map(file => file.path),
       );
 
-      console.log('Image paths: ', imagesOnly);
-      console.log('Video PATHS: ', compressedVideoFilePaths);
+      console.log('COMPRESSSED ONES: ', compressedVideoFilePaths);
+
+      const compressedVideoFilePathsFiltered = compressedVideoFilePaths.filter(
+        path => !!path,
+      ) as string[];
+
+      console.log('COMPRESSSED Filtered: ', compressedVideoFilePathsFiltered);
+
+      const videosToSend: FormFile[] = compressedVideoFilePathsFiltered.map(
+        (path, index) => {
+          const video: SelectionResult = videosOnly[index];
+          return {
+            uri: path,
+            name: extractFileNameFromPath(video.path),
+            type: video.mime,
+          };
+        },
+      );
+
+      console.log('COMPRESSSED TO SEND: ', videosToSend);
+
+      const imagesToSend = imagesOnly.map(file => ({
+        name: extractFileNameFromPath(file.path),
+        type: file.mime,
+        uri: file.path,
+      }));
+
+      dispatch(setFiles([...videosToSend, ...imagesToSend]));
     },
     [dispatch],
   );
