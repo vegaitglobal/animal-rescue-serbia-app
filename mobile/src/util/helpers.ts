@@ -56,6 +56,9 @@ export const bind =
     callback(arg);
 
 export const isPathVideo = (relativeFilePath: string) => {
+  if (!relativeFilePath) {
+    return false;
+  }
   const pathSegments = relativeFilePath.split('.');
   const extension = pathSegments[pathSegments.length - 1];
   return extension === 'mp4' || extension === 'mpeg' || extension === 'avi';

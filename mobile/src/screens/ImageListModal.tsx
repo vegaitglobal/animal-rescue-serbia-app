@@ -2,20 +2,18 @@ import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, {useCallback} from 'react';
 import {Dimensions, Image, ListRenderItemInfo, StyleSheet} from 'react-native';
+import Config from 'react-native-config';
 import VideoPlayer from 'react-native-video-player';
 import {CustomBottomSheetModal} from '../components/CustomBottomSheetModal';
 import {EmptySpace} from '../components/EmptySpace';
+import {useVideoThumbnailsCreator} from '../hooks/useVideoThumbnails';
+import {MediaContentDto} from '../infrastructure/apiTypes';
 import {ColorPallet} from '../resources/ColorPallet';
 import {isPathVideo} from '../util/helpers';
 
-type DataItem = {
-  id: string;
-  fullPath: string;
-};
-
 type ImageListModalProps = {
   myRef: React.Ref<BottomSheetModalMethods>;
-  data: DataItem[];
+  data: MediaContentDto[];
   onShouldClose: () => void;
   onVisibilityChange: (isShown: boolean) => void;
 };
@@ -26,13 +24,17 @@ export const ImageListModal = ({
   onShouldClose,
   onVisibilityChange,
 }: ImageListModalProps) => {
+  const videoThumbnails = useVideoThumbnailsCreator(data);
+
   const renderItem = useCallback(
-    ({item: {id, fullPath}}: ListRenderItemInfo<DataItem>) =>
-      isPathVideo(fullPath) ? (
+    ({item: {id, relativeFilePath}}: ListRenderItemInfo<MediaContentDto>) => {
+      const fullPath = `${Config.BASE_URL}/${relativeFilePath}`;
+      return isPathVideo(relativeFilePath) ? (
         <VideoPlayer
           video={{
             uri: fullPath,
           }}
+          // TODO:
           onLoad={e => e.naturalSize}
           customStyles={{
             video: {backgroundColor: ColorPallet.plainBlack},
@@ -40,7 +42,10 @@ export const ImageListModal = ({
           // TODO: use getVideoMetaData from compressor lib
           // videoWidth={1600}
           // videoHeight={900}
-          //thumbnail={{uri: 'https://i.picsum.photos/id/866/1600/900.jpg'}}
+          thumbnail={{
+            uri: videoThumbnails.find(thumbnail => thumbnail.id === id)
+              ?.fullPath,
+          }}
         />
       ) : (
         <Image
@@ -50,8 +55,9 @@ export const ImageListModal = ({
             uri: fullPath,
           }}
         />
-      ),
-    [],
+      );
+    },
+    [videoThumbnails],
   );
 
   const dynamicModalSnappingPoint =

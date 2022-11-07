@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {
   Image,
   LayoutChangeEvent,
@@ -11,19 +11,14 @@ import {MediaContentDto} from '../infrastructure/apiTypes';
 import {ColorPallet} from '../resources/ColorPallet';
 import {Chevron, Orientation} from './Chevron';
 import {EmptySpace} from './EmptySpace';
-import {createThumbnail} from 'react-native-create-thumbnail';
 import {isPathVideo} from '../util/helpers';
 import Config from 'react-native-config';
+import {useVideoThumbnailsCreator} from '../hooks/useVideoThumbnails';
 
 type ImageThumbnailRowProps = {
   mediaContent: MediaContentDto[];
   thumbnailSize?: number;
   onPress?: () => void;
-};
-
-type ThumbnailData = {
-  id: string;
-  fullPath: string;
 };
 
 export const ImageThumbnailRow = ({
@@ -32,7 +27,8 @@ export const ImageThumbnailRow = ({
   onPress,
 }: ImageThumbnailRowProps) => {
   const [numberOfThumbnails, setNumberOfThumbnails] = useState(0);
-  const [videoThumbnails, setVideoThumbnails] = useState<ThumbnailData[]>([]);
+
+  const videoThumbnails = useVideoThumbnailsCreator(mediaContent);
 
   const onLayoutChange = useCallback(
     ({nativeEvent}: LayoutChangeEvent) => {
@@ -43,29 +39,6 @@ export const ImageThumbnailRow = ({
     },
     [thumbnailSize],
   );
-
-  const createVideoThumbnailsAsync = useCallback(
-    async (mediaContentParam: MediaContentDto[]) => {
-      const videoOnly = mediaContentParam.filter(file =>
-        isPathVideo(file.relativeFilePath),
-      );
-
-      videoOnly.forEach(async ({id, relativeFilePath}) => {
-        const res = await createThumbnail({
-          url: `${Config.BASE_URL}/${relativeFilePath}`,
-        });
-        setVideoThumbnails(current => [...current, {id, fullPath: res.path}]);
-      });
-    },
-    [],
-  );
-
-  useEffect(() => {
-    if (!mediaContent.length) {
-      return;
-    }
-    createVideoThumbnailsAsync(mediaContent);
-  }, [mediaContent, createVideoThumbnailsAsync]);
 
   const truncatedContent = useMemo(
     () => mediaContent.slice(0, numberOfThumbnails),

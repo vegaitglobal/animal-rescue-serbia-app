@@ -23,7 +23,6 @@ import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {ImageListModal} from './ImageListModal';
 import {bind} from '../util/helpers';
 import {useAndroidBackNavigationOverride} from '../hooks/useAndroidBackNavigationOverride';
-import Config from 'react-native-config';
 
 type SectionListViolationGroup = {
   title: string;
@@ -171,12 +170,7 @@ export const ViolationsScreen = () => {
           myRef={modalRef}
           onShouldClose={handleShouldCloseModal}
           onVisibilityChange={setIsModalVisible}
-          data={selectedViolationMediaContent?.map(
-            ({id: fileId, relativeFilePath}) => ({
-              id: fileId,
-              fullPath: `${Config.BASE_URL}/${relativeFilePath}`,
-            }),
-          )}
+          data={selectedViolationMediaContent}
         />
       </View>
     </ScreenRootContainer>
