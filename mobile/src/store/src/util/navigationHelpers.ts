@@ -10,7 +10,7 @@ export function navigate(name: string, params: any) {
     return;
   }
 
-  navigationRef.navigate(name, params);
+  navigationRef.navigate(name as any, params);
 }
 
 export const resetToRoute = (name: string) => {

@@ -110,7 +110,7 @@ export const LoginScreen = () => {
           <View style={styles.buttonContainer}>
             <CustomButton
               text={registracija}
-              onPress={() => navigation.navigate('Registration')} //TODO change
+              onPress={() => navigation.navigate('Registration')}
             />
           </View>
           <View style={styles.socialButtonContainer}>
