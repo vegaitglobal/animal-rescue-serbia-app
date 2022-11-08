@@ -76,7 +76,6 @@ PODS:
   - hermes-engine (0.70.3)
   - libevent (2.1.12)
   - mobile-ffmpeg-https (4.4)
-  - NextLevelSessionExporter (0.4.6)
   - OpenSSL-Universal (1.1.1100)
   - RCT-Folly (2021.07.22.00):
     - boost
@@ -304,9 +303,6 @@ PODS:
   - React-jsinspector (0.70.3)
   - React-logger (0.70.3):
     - glog
-  - react-native-compressor (1.6.1):
-    - NextLevelSessionExporter
-    - React-Core
   - react-native-config (1.4.11):
     - react-native-config/App (= 1.4.11)
   - react-native-config/App (1.4.11):
@@ -502,7 +498,6 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
-  - react-native-compressor (from `../node_modules/react-native-compressor`)
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-create-thumbnail (from `../node_modules/react-native-create-thumbnail`)
   - react-native-ffmpeg (from `../node_modules/react-native-ffmpeg`)
@@ -546,7 +541,6 @@ SPEC REPOS:
     - fmt
     - libevent
     - mobile-ffmpeg-https
-    - NextLevelSessionExporter
     - OpenSSL-Universal
     - SocketRocket
     - TOCropViewController
@@ -596,8 +590,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
-  react-native-compressor:
-    :path: "../node_modules/react-native-compressor"
   react-native-config:
     :path: "../node_modules/react-native-config"
   react-native-create-thumbnail:
@@ -673,7 +665,6 @@ SPEC CHECKSUMS:
   hermes-engine: bb344d89a0d14c2c91ad357480a79698bb80e186
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   mobile-ffmpeg-https: 311fc4a8f671cf36d1d6b8f421e8246b790978d9
-  NextLevelSessionExporter: 4d8aa5e617f1c709724f2453efe5d4628480f65a
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
   RCTRequired: 5cf7e7d2f12699724b59f90350257a422eaa9492
@@ -690,7 +681,6 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 7e2e1772ef7b97168c880eeaf3749d8c145ffd6e
   React-jsinspector: 0553c9fe7218e1f127be070bd5a4d2fc19fb8190
   React-logger: cffcc09e8aba8a3014be8d18da7f922802e9f19e
-  react-native-compressor: ebcf8bc36f8e44581a8f831583caee8a27e55a01
   react-native-config: bcafda5b4c51491ee1b0e1d0c4e3905bc7b56c1b
   react-native-create-thumbnail: 94e68f6cc050a870f830352d1a924c1e8d38b52f
   react-native-ffmpeg: 587fa045f985d775107f4b8cbb6c79df0ad68e63
