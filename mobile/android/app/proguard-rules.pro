@@ -12,3 +12,8 @@
 -keep class com.swmansion.reanimated.** { *; }
 -keep class com.facebook.react.turbomodule.** { *; }
 -keep class com.myapp.BuildConfig { *; }
+-keep class com.arthenica.mobileffmpeg.Config {
+    native <methods>;
+    void log(int, byte[]);
+    void statistics(int, float, float, long , int, double, double);
+}
