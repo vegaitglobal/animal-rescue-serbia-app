@@ -1,11 +1,12 @@
 import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, {useCallback} from 'react';
-import {Dimensions, Image, ListRenderItemInfo, StyleSheet} from 'react-native';
+import {Dimensions, ListRenderItemInfo, StyleSheet} from 'react-native';
 import Config from 'react-native-config';
 import VideoPlayer from 'react-native-video-player';
 import {CustomBottomSheetModal} from '../components/CustomBottomSheetModal';
 import {EmptySpace} from '../components/EmptySpace';
+import {ImageWithLoadingAnimation} from '../components/ImageWithLoadingAnimation';
 import {useVideoThumbnailsCreator} from '../hooks/useVideoThumbnails';
 import {MediaContentDto} from '../infrastructure/apiTypes';
 import {ColorPallet} from '../resources/ColorPallet';
@@ -34,8 +35,6 @@ export const ImageListModal = ({
           video={{
             uri: fullPath,
           }}
-          // TODO:
-          onLoad={e => e.naturalSize}
           customStyles={{
             video: {backgroundColor: ColorPallet.plainBlack},
           }}
@@ -48,7 +47,9 @@ export const ImageListModal = ({
           }}
         />
       ) : (
-        <Image
+        <ImageWithLoadingAnimation
+          width={imageWidth}
+          height={imageHeightWithAspectRation}
           key={id}
           style={styles.image}
           source={{
@@ -98,13 +99,14 @@ const iconSize = 30;
 const maxModalSnappingPoint = 800;
 const itemSeparatorSize = 8;
 const footerHeight = 20;
-const imageHeightWithAspectRation = Dimensions.get('screen').width / (16 / 9);
+const imageWidth = Dimensions.get('screen').width;
+const imageHeightWithAspectRation = imageWidth / (16 / 9);
 
 const styles = StyleSheet.create({
   image: {
     borderWidth: 1,
     borderColor: ColorPallet.gray,
-    width: '100%',
+    width: imageWidth,
     height: imageHeightWithAspectRation,
   },
 });

@@ -1,6 +1,5 @@
 import React, {useCallback, useMemo, useState} from 'react';
 import {
-  Image,
   LayoutChangeEvent,
   Pressable,
   StyleSheet,
@@ -14,6 +13,7 @@ import {EmptySpace} from './EmptySpace';
 import {isPathVideo} from '../util/helpers';
 import Config from 'react-native-config';
 import {useVideoThumbnailsCreator} from '../hooks/useVideoThumbnails';
+import {ImageWithLoadingAnimation} from './ImageWithLoadingAnimation';
 
 type ImageThumbnailRowProps = {
   mediaContent: MediaContentDto[];
@@ -55,7 +55,9 @@ export const ImageThumbnailRow = ({
         : fullPath;
 
       return processedPath ? (
-        <Image
+        <ImageWithLoadingAnimation
+          width={thumbnailSize}
+          height={thumbnailSize}
           style={[
             styles.thumbnail,
             {width: thumbnailSize, height: thumbnailSize},
@@ -76,7 +78,9 @@ export const ImageThumbnailRow = ({
     () =>
       truncatedContent.map(({id: fileId, relativeFilePath}) => (
         <View style={styles.thumbnailWithSpacing} key={fileId}>
-          <>{renderItem(fileId, relativeFilePath)}</>
+          <View style={styles.thumbnailContainer}>
+            {renderItem(fileId, relativeFilePath)}
+          </View>
           <EmptySpace width={thumbnailSpacing} />
         </View>
       )),
@@ -86,7 +90,7 @@ export const ImageThumbnailRow = ({
   return (
     <Pressable onPress={onPress}>
       <View style={styles.thumbnailRowContainer}>
-        <View onLayout={onLayoutChange} style={styles.thumbnailContainer}>
+        <View onLayout={onLayoutChange} style={styles.thumbnailsContainer}>
           {thumbnails}
         </View>
         {truncatedContent.length ? (
@@ -111,7 +115,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  thumbnailContainer: {
+  thumbnailsContainer: {
     flex: 1,
     flexDirection: 'row',
   },
@@ -129,5 +133,9 @@ const styles = StyleSheet.create({
   },
   thumbnailWithSpacing: {
     flexDirection: 'row',
+  },
+  thumbnailContainer: {
+    borderRadius: 5,
+    overflow: 'hidden',
   },
 });

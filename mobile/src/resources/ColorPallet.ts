@@ -9,4 +9,6 @@ export const ColorPallet = {
   yellow_20: 'rgba(253, 232, 43, 0.79)',
   plainBlack: 'black',
   black_20: 'rgba(0, 0, 0, 0.5)',
+  loadingBackground: '#E3E2E2',
+  loadingForeground: '#BAB9B9',
 };
