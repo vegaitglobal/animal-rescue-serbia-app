@@ -71,16 +71,19 @@ export const isPathVideo = (relativeFilePath: string) => {
 // TODONF:
 const BASE_DIR = 'file:///data/user/0/com.myapp/cache/'; //`${FileSystem.cacheDirectory}expo-cache/`;
 
-const compressVideoFFMPEG = async (fullPath: string) => {
+const compressVideoFFMPEG = async (fullEntryPath: string) => {
   const uniqueVideoName = UUID.v4();
   const videoFileName = `${uniqueVideoName}.mp4`;
   const fullVideoPath = BASE_DIR + videoFileName;
 
   const result = await RNFFmpeg.execute(
-    `-i ${fullPath} -c:v mpeg4 ${fullVideoPath}`,
+    `-i ${fullEntryPath} -c:v mpeg4 -vf scale=1280:720 ${fullVideoPath}`,
   );
 
+  //`-i ${fullEntryPath} -vcodec libx264 -crf 28 ${fullVideoPath}`,
+  // `-i ${fullEntryPath} -c:v mpeg4 -crf 31 ${fullVideoPath}`,
   console.log('RESULT: ', result);
+  // TODONF: Check result 0 - ok, 1 - error
 
   return fullVideoPath;
 };
