@@ -1,5 +1,6 @@
 import {Platform} from 'react-native';
 import {RNFFmpeg} from 'react-native-ffmpeg';
+import {Dirs} from 'react-native-file-access';
 import {ImageOrVideo} from 'react-native-image-crop-picker';
 import UUID from 'react-native-uuid';
 
@@ -72,14 +73,22 @@ export const isPathVideo = (relativeFilePath: string) => {
 // TODO: Make the screen blocking element invisible and/or cover whole screen
 // TODO: HTTP part progress bar
 // TODO: Block before opening media picking library as well
-// TODONF:
-const BASE_DIR = 'file:///data/user/0/com.myapp/cache/'; //`${FileSystem.cacheDirectory}expo-cache/`;
+
+const PLATFORM_CACHE_DIR = Dirs.CacheDir;
 
 const compressVideoFFMPEG = async (fullEntryPath: string) => {
+  if (PLATFORM_CACHE_DIR === '') {
+    return undefined;
+  }
+
   const uniqueVideoName = UUID.v4();
   const videoFileName = `${uniqueVideoName}.mp4`;
-  const fullVideoPath = BASE_DIR + videoFileName;
+  const PATH_PLATFORM_PREFIX = Platform.OS === 'android' ? 'file://' : '';
+  const fullVideoPath = `${PATH_PLATFORM_PREFIX}${PLATFORM_CACHE_DIR}/${videoFileName}`;
 
+  console.log('FULL PATH: ', fullVideoPath);
+
+  // TODO: These are setup constants and can be extracted into separate file
   const framerate = 24;
   const resolutionWidth = 1280;
   const resolutionHeight = 720;
@@ -89,7 +98,8 @@ const compressVideoFFMPEG = async (fullEntryPath: string) => {
     `-i ${fullEntryPath} -c:v mpeg4 -vf scale=${resolutionWidth}:${resolutionHeight} -r ${framerate} ${fullVideoPath}`,
   );
 
-  console.log('RESULT: ', compressionResult);
+  console.log('Video compression result: ', compressionResult);
 
-  return compressionResult === 0 ? fullVideoPath : undefined;
+  // result===1 means that compression failed
+  return compressionResult === 1 ? undefined : fullVideoPath;
 };
