@@ -69,7 +69,7 @@ export const isPathVideo = (relativeFilePath: string) => {
 };
 
 // TODO: Async video processing, will it wait for completion (maybe block button and show progress bar)
-// TODO: Make the screen blocking element invisible or cover whole screen
+// TODO: Make the screen blocking element invisible and/or cover whole screen
 // TODO: HTTP part progress bar
 // TODO: Block before opening media picking library as well
 // TODONF:
@@ -80,16 +80,16 @@ const compressVideoFFMPEG = async (fullEntryPath: string) => {
   const videoFileName = `${uniqueVideoName}.mp4`;
   const fullVideoPath = BASE_DIR + videoFileName;
 
+  const framerate = 24;
+  const resolutionWidth = 1280;
+  const resolutionHeight = 720;
+
   //TODO: File size warning to user (ask backend to increase value)
-  const result = await RNFFmpeg.execute(
-    `-i ${fullEntryPath} -c:v mpeg4 -vf scale=1280:720 -r 24 ${fullVideoPath}`,
+  const compressionResult = await RNFFmpeg.execute(
+    `-i ${fullEntryPath} -c:v mpeg4 -vf scale=${resolutionWidth}:${resolutionHeight} -r ${framerate} ${fullVideoPath}`,
   );
 
-  // `-i ${fullEntryPath} -c:v mpeg4 -vf scale=1280:720 -r 24 -qmin 35 -qmax 36 ${fullVideoPath}`, Works without quality
-  //`-i ${fullEntryPath} -vcodec libx264 -crf 28 ${fullVideoPath}`,
-  // `-i ${fullEntryPath} -c:v mpeg4 -crf 31 ${fullVideoPath}`,
-  console.log('RESULT: ', result);
-  // TODONF: Check result 0 - ok, 1 - error
+  console.log('RESULT: ', compressionResult);
 
-  return fullVideoPath;
+  return compressionResult === 0 ? fullVideoPath : undefined;
 };
