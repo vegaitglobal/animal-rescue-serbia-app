@@ -37,7 +37,8 @@ export const compressVideoByPlatform = async (path: string) => {
       return;
     }
 
-    //TODONF: consider ios path + dynamic Android (lib)
+    // TODO: These are possibly unnecessary with new library
+    // TODONF: consider ios path + dynamic Android (lib)
     if (Platform.OS === 'ios') {
       return pathAfterCompress; // TODO check wether library handles this properly, if not, remove file:// prefix
     }
