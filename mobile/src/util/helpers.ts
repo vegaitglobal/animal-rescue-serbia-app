@@ -74,6 +74,7 @@ export const isPathVideo = (relativeFilePath: string) => {
   return extension === 'mp4' || extension === 'mpeg' || extension === 'avi';
 };
 
+// TODO: Check l
 // TODO: Async video processing, will it wait for completion (maybe block button and show progress bar)
 // TODO: Make the screen blocking element invisible and/or cover whole screen
 // TODO: HTTP part progress bar
