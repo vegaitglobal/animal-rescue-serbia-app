@@ -28,11 +28,15 @@ export const cleanupPickerLibraryPathsIOS = (pickerData: ImageOrVideo[]) => {
   });
 };
 
-export const compressVideo = async (path: string) => {
+export const compressVideoByPlatform = async (path: string) => {
   try {
     const invalidPathPrefix = 'file://';
 
-    const pathAfterCompress = await compressVideoFFMPEG(path); //await Video.compress(path);
+    const pathAfterCompress = await compressVideoFFMPEG(path);
+    if (!pathAfterCompress) {
+      return;
+    }
+
     //TODONF: consider ios path + dynamic Android (lib)
     if (Platform.OS === 'ios') {
       return pathAfterCompress; // TODO check wether library handles this properly, if not, remove file:// prefix
@@ -52,8 +56,9 @@ export const compressVideo = async (path: string) => {
   }
 };
 
+// TODO: Make separate video helpers file
 export const batchCompress = async (paths: string[]) =>
-  await Promise.all(paths.map(path => compressVideo(path)));
+  await Promise.all(paths.map(path => compressVideoByPlatform(path)));
 
 export const bind =
   <T extends unknown>(arg: T, callback: (arg: T) => void) =>
@@ -77,10 +82,6 @@ export const isPathVideo = (relativeFilePath: string) => {
 const PLATFORM_CACHE_DIR = Dirs.CacheDir;
 
 const compressVideoFFMPEG = async (fullEntryPath: string) => {
-  if (PLATFORM_CACHE_DIR === '') {
-    return undefined;
-  }
-
   const uniqueVideoName = UUID.v4();
   const videoFileName = `${uniqueVideoName}.mp4`;
   const PATH_PLATFORM_PREFIX = Platform.OS === 'android' ? 'file://' : '';
