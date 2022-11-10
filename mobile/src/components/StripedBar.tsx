@@ -1,5 +1,11 @@
-import React, {useCallback, useMemo, useState} from 'react';
-import {LayoutChangeEvent, StyleSheet, View} from 'react-native';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {
+  Animated,
+  Easing,
+  LayoutChangeEvent,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 
 const boxHeight = 18;
@@ -21,15 +27,43 @@ export const StripedBar = ({
     [],
   );
 
-  const numberOfSegments = useMemo(() => Math.round(width / boxWidth), [width]);
+  const numberOfSegments = useMemo(
+    () => Math.round(width / boxWidth) + 20,
+    [width],
+  );
+
+  console.log('NUMBER OF SEGMENTS: ', numberOfSegments);
+  const spacingLeft = useMemo(() => new Animated.Value(0), []);
+
+  const runLoadingAnimationRecursively = useCallback(() => {
+    spacingLeft.setValue(0);
+
+    Animated.timing(spacingLeft, {
+      toValue: 1,
+      duration: 1200,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start(runLoadingAnimationRecursively);
+  }, [spacingLeft]);
+
+  useEffect(() => {
+    runLoadingAnimationRecursively();
+  }, [runLoadingAnimationRecursively, spacingLeft]);
+
+  const currentPaddingLeft = spacingLeft.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 40],
+  });
 
   return (
     <View onLayout={onLayout}>
-      <View style={[style.itemListContainer, {backgroundColor}]}>
-        {[...Array(numberOfSegments).keys()].map((_, index) => (
-          <Box key={index} color={ColorPallet.yellow} />
-        ))}
-      </View>
+      <Animated.View style={{transform: [{translateX: currentPaddingLeft}]}}>
+        <View style={[style.itemListContainer, {backgroundColor}]}>
+          {[...Array(numberOfSegments).keys()].map((_, index) => (
+            <Box key={index} color={ColorPallet.yellow} />
+          ))}
+        </View>
+      </Animated.View>
     </View>
   );
 };
@@ -40,6 +74,8 @@ const style = StyleSheet.create({
     overflow: 'hidden',
     height: boxHeight,
     alignItems: 'center',
+    justifyContent: 'center',
+    marginStart: -50,
   },
 });
 
