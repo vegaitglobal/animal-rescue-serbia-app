@@ -1,12 +1,13 @@
 import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {Dimensions, ListRenderItemInfo, StyleSheet} from 'react-native';
 import Config from 'react-native-config';
 import VideoPlayer from 'react-native-video-player';
 import {CustomBottomSheetModal} from '../components/CustomBottomSheetModal';
 import {EmptySpace} from '../components/EmptySpace';
 import {ImageWithLoadingAnimation} from '../components/ImageWithLoadingAnimation';
+import {StripedBar} from '../components/StripedBar';
 import {useVideoThumbnailsCreator} from '../hooks/useVideoThumbnails';
 import {MediaContentDto} from '../infrastructure/apiTypes';
 import {ColorPallet} from '../resources/ColorPallet';
@@ -74,6 +75,11 @@ export const ImageListModal = ({
       ? dynamicModalSnappingPoint
       : maxModalSnappingPoint;
 
+  const strippedBarSeparator = useMemo(() => {
+    const screenWidth = Dimensions.get('screen').width;
+    return <StripedBar width={screenWidth} />;
+  }, []);
+
   return (
     <CustomBottomSheetModal
       myRef={myRef}
@@ -85,8 +91,9 @@ export const ImageListModal = ({
       <BottomSheetFlatList
         data={data}
         renderItem={renderItem}
-        ItemSeparatorComponent={() => <EmptySpace height={itemSeparatorSize} />}
-        ListFooterComponent={() => <EmptySpace height={footerHeight} />}
+        ListHeaderComponent={strippedBarSeparator}
+        ItemSeparatorComponent={() => strippedBarSeparator}
+        ListFooterComponent={strippedBarSeparator}
       />
 
       <EmptySpace height={verticalListPadding} />

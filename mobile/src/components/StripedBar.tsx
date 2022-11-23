@@ -11,20 +11,25 @@ const Box = ({color}: {color: string}) => (
 
 export const StripedBar = ({
   backgroundColor = ColorPallet.gray,
+  width,
 }: {
   backgroundColor?: string;
+  width?: number;
 }) => {
-  const [width, setWidth] = useState(0);
+  const [dynamicWidth, setDynamicWidth] = useState(width ?? 0);
 
   const onLayout = useCallback(
-    (e: LayoutChangeEvent) => setWidth(e.nativeEvent.layout.width),
+    (e: LayoutChangeEvent) => setDynamicWidth(e.nativeEvent.layout.width),
     [],
   );
 
-  const numberOfSegments = useMemo(() => Math.round(width / boxWidth), [width]);
+  const numberOfSegments = useMemo(
+    () => Math.round(dynamicWidth / boxWidth),
+    [dynamicWidth],
+  );
 
   return (
-    <View onLayout={onLayout}>
+    <View onLayout={width ? undefined : onLayout}>
       <View style={[style.itemListContainer, {backgroundColor}]}>
         {[...Array(numberOfSegments).keys()].map((_, index) => (
           <Box key={index} color={ColorPallet.yellow} />
