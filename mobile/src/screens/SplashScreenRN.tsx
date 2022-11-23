@@ -9,7 +9,7 @@ import {
   loadLocations,
   loadViolationCategories,
 } from '../store/src/reports/actions';
-import AnimatedEllipsis from '../../libs/react-native-animated-ellipsis/src/AnimatedEllipsis';
+import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import {Constants} from '../Constants';
 
 export const SplashScreenRN = () => {

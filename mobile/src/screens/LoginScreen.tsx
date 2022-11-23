@@ -40,40 +40,42 @@ export const LoginScreen = () => {
 
     setIsSigningIn(true);
 
-    const result = await dispatch(logIn({email, password}));
-    const unwrappedLoginResult = unwrapResult(result);
+    try {
+      const result = await dispatch(logIn({email, password}));
+      const unwrappedLoginResult = unwrapResult(result);
 
-    if (
-      result.meta.requestStatus === 'rejected' ||
-      !unwrappedLoginResult?.accessToken
-    ) {
-      setIsSigningIn(false);
+      if (
+        result.meta.requestStatus === 'rejected' ||
+        !unwrappedLoginResult?.accessToken
+      ) {
+        return;
+      }
+
+      const categoryResult = await dispatch(loadViolationCategories());
+      const unwrappedViolationCategoriesResult = unwrapResult(categoryResult);
+
+      if (
+        categoryResult.meta.requestStatus === 'rejected' ||
+        !unwrappedViolationCategoriesResult
+      ) {
+        return;
+      }
+
+      const locationResult = await dispatch(loadLocations());
+      const unwrappedLocationsResult = unwrapResult(locationResult);
+
+      if (
+        locationResult.meta.requestStatus === 'rejected' ||
+        !unwrappedLocationsResult
+      ) {
+        return;
+      }
+    } catch (error) {
+      console.log('Loging unsuccessful: ', error);
       return;
-    }
-
-    const categoryResult = await dispatch(loadViolationCategories());
-    const unwrappedViolationCategoriesResult = unwrapResult(categoryResult);
-
-    if (
-      categoryResult.meta.requestStatus === 'rejected' ||
-      !unwrappedViolationCategoriesResult
-    ) {
+    } finally {
       setIsSigningIn(false);
-      return;
     }
-
-    const locationResult = await dispatch(loadLocations());
-    const unwrappedLocationsResult = unwrapResult(locationResult);
-
-    if (
-      locationResult.meta.requestStatus === 'rejected' ||
-      !unwrappedLocationsResult
-    ) {
-      setIsSigningIn(false);
-      return;
-    }
-
-    setIsSigningIn(false);
 
     navigation.replace('TabNavigator');
   }, [dispatch, email, navigation, password]);
