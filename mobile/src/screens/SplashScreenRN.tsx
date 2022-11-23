@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
-    backgroundColor: ColorPallet.plainWhite,
+    backgroundColor: ColorPallet.plainWhite, // TODO: Make sure to update backgroundColor to yellow
   },
   innerCenteredContainer: {
     alignItems: 'center',
