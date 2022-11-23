@@ -16,7 +16,7 @@ export enum ReportsStatus {
 export interface IMediaContent {
   id: string;
   fileName: string;
-  filePath: string;
+  relativeFilePath: string;
 }
 
 export interface IReportsResponse {
@@ -29,7 +29,7 @@ export interface IReportsResponse {
   description: string;
   adminNotes: string;
   status: ReportsStatus;
-  mediaContent: IMediaContent;
+  mediaContent: IMediaContent[];
 }
 
 export interface IReportsPageResponse {
