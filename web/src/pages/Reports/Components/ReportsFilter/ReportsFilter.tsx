@@ -1,16 +1,41 @@
 import Select, { CSSObjectWithLabel } from 'react-select';
+import { useGetLocations } from '../../../../hooks/api/reports/useGetLocations';
+import { useGetReportCategories } from '../../../../hooks/api/reports/useGetReportCategories';
+import { ReportsStatus } from '../../../../services/api/reports/getReports';
+import Reports from '../../Reports';
 
-const ReportsFilter = () => {
-  const locationOptions = [{ value: '', label: '' }];
+type IProps = {
+  onLocationChange: (event: any) => void;
+  onCategoryIdChange: (event: any) => void;
+  onStatusChange: (event: any) => void;
+};
 
-  const categoryOptions = [{ value: '', label: '' }];
+const ReportsFilter: React.FC<IProps> = ({
+  onLocationChange,
+  onCategoryIdChange,
+  onStatusChange,
+}) => {
+  const { data: locationOptions } = useGetLocations();
+
+  const { data: categoryOptions } = useGetReportCategories();
 
   const statusOptions = [
-    { value: '0', label: 'Na čekanju' },
-    { value: '1', label: 'Odbijen' },
-    { value: '2', label: 'Prihvaćen' },
-    { value: '3', label: 'Procesuiran' },
+    { value: ReportsStatus.Pending, label: 'Na čekanju' },
+    { value: ReportsStatus.Rejected, label: 'Odbijen' },
+    { value: ReportsStatus.Accepted, label: 'Prihvaćen' },
+    { value: ReportsStatus.Processed, label: 'Procesuiran' },
   ];
+
+  const locationsOptionsMapped = locationOptions
+    ? locationOptions.map((value, index) => ({ value: index, label: value }))
+    : [{}];
+
+  const categoryOptionsMapped = categoryOptions
+    ? categoryOptions.map((category) => ({
+        value: category.id,
+        label: category.name,
+      }))
+    : [{}];
 
   const filterStyles = {
     control: (provided: CSSObjectWithLabel, state: { isFocused: boolean }) => ({
@@ -38,47 +63,25 @@ const ReportsFilter = () => {
   return (
     <div className="intro__left">
       <Select
-        options={locationOptions}
+        options={locationsOptionsMapped}
         placeholder="Lokacija"
         styles={filterStyles}
+        onChange={onLocationChange}
       />
       <Select
-        options={categoryOptions}
+        options={categoryOptionsMapped}
         placeholder="Kategorija"
         styles={filterStyles}
+        onChange={onCategoryIdChange}
       />
       <Select
         options={statusOptions}
         placeholder="Status"
         styles={filterStyles}
+        onChange={onStatusChange}
       />
     </div>
   );
-
-  // return (
-  //   <div className="intro__left">
-  //     <select name="location" id="location" className="filter">
-  //       <option className="filter__option" value="">
-  //         Lokacija
-  //       </option>
-  //       <option value="">Novi Sad</option>
-  //       <option value="">Beograd</option>
-  //       <option value="">Nis</option>
-  //     </select>
-  //     <select name="category" id="category" className="filter">
-  //       <option value="">Kategorija</option>
-  //       <option value="">Kategorija 1</option>
-  //       <option value="">Kategorija 2</option>
-  //       <option value="">Kategorija 3</option>
-  //     </select>
-  //     <select name="status" id="status" className="filter">
-  //       <option value="">Status</option>
-  //       <option value="">Status 1</option>
-  //       <option value="">Status 2</option>
-  //       <option value="">Status 3</option>
-  //     </select>
-  //   </div>
-  // );
 };
 
 export default ReportsFilter;
