@@ -1,10 +1,18 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { IReportsFilters } from '../../../pages/Reports/ReportsContainer';
 import { getReports } from '../../../services/api/reports/getReports';
 
-export const useGetReports = (status?: number | null, search?: string) => {
+export const useGetReports = (filters: IReportsFilters) => {
   return useInfiniteQuery(
-    ['reports', search],
-    ({ pageParam = 1 }) => getReports(pageParam, status, search),
+    ['reports', filters],
+    ({ pageParam = 1 }) =>
+      getReports(
+        pageParam,
+        filters.status,
+        filters.search,
+        filters.location,
+        filters.categoryId
+      ),
     {
       cacheTime: 0,
       getNextPageParam: (lastPage, allPages) => {

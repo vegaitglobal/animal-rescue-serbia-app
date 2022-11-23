@@ -40,13 +40,20 @@ export interface IReportsPageResponse {
 
 export const getReports = async (
   pageParam: number,
-  status?: number | null,
-  search?: string
+  status?: ReportsStatus | null,
+  search?: string,
+  location?: string,
+  categoryId?: string
 ): Promise<IReportsPageResponse> => {
   const url = `/api/admin/violations/PaginatedViolations?PageNumber=${pageParam}`;
-  const statusParam = status ? `/ViolationStatus=${status}` : '';
-  const searchParam = search ? `/Search=${search}` : '';
-  const { data } = await axiosRequest('GET', url + statusParam + searchParam);
+  const statusParam = status ? `&ViolationStatus=${status}` : '';
+  const searchParam = search ? `&SearchText=${search}` : '';
+  const locationParam = location ? `&Location=${location}` : '';
+  const categoryIdParam = categoryId ? `&CategoryId=${categoryId}` : '';
+  const { data } = await axiosRequest(
+    'GET',
+    url + statusParam + searchParam + locationParam + categoryIdParam
+  );
 
   return data;
 };
