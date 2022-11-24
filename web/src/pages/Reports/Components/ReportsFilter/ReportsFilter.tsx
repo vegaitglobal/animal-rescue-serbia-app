@@ -2,7 +2,6 @@ import Select, { CSSObjectWithLabel } from 'react-select';
 import { useGetLocations } from '../../../../hooks/api/reports/useGetLocations';
 import { useGetReportCategories } from '../../../../hooks/api/reports/useGetReportCategories';
 import { ReportsStatus } from '../../../../services/api/reports/getReports';
-import Reports from '../../Reports';
 
 type IProps = {
   onLocationChange: (event: any) => void;
