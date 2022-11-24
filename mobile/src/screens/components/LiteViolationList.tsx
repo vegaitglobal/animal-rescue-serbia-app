@@ -6,7 +6,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import {ActivityIndicator} from '../../components/ActivityIndicator';
 import {EmptySpace} from '../../components/EmptySpace';
 import {useAppDispatch, useAppSelector} from '../../hooks/storeHooks';
 import {LiteViolationResponseDto} from '../../infrastructure/apiTypes';

@@ -16,5 +16,7 @@ export const getLiteViolations = (state: RootState) =>
 export const getSortedLiteViolations = createSelector(
   getLiteViolations,
   violations =>
-    [...violations].sort((a, b) => a.location.localeCompare(b.location)),
+    violations
+      ? [...violations].sort((a, b) => a.location.localeCompare(b.location))
+      : [],
 );

@@ -27,7 +27,7 @@ export const SegmentedControl = ({
     <View style={styles.buttonContainer}>
       <Pressable onPress={bind('left', onSegmentChange)}>
         <Text style={[styles.tabButtons, leftButtonDynamicStyle]}>
-          {segmentNames.right}
+          {segmentNames.left}
         </Text>
       </Pressable>
 
