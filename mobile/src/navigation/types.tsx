@@ -19,6 +19,7 @@ export type RootStackNavigatorParams = {
   HomeNavigator?: DefaultScreenParams;
   Sos?: DefaultScreenParams;
   Profile?: DefaultScreenParams;
+  Education?: DefaultScreenParams;
 };
 
 declare global {

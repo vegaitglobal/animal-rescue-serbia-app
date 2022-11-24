@@ -34,7 +34,7 @@ export const HomeScreen = () => {
           return;
         }
 
-        //Do something Education related here
+        navigation.navigate('Education');
         return;
       }
 

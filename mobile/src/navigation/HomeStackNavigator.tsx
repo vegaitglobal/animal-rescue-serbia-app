@@ -8,6 +8,7 @@ import {DonatorsAndFriends} from '../screens/DonatorsAndFriends';
 import {ArsInfoScreen} from '../screens/ArsInfoScreen';
 import {HomeScreen} from '../screens/HomeScreen';
 import {RootStackNavigatorParams} from './types';
+import {EducationScreen} from '../screens/EducationScreen';
 
 export const HomeStackNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackNavigatorParams>();
@@ -26,6 +27,7 @@ export const HomeStackNavigator = () => {
       <Stack.Screen name="Information" component={InformationScreen} />
       <Stack.Screen name="DonatorsAndFriends" component={DonatorsAndFriends} />
       <Stack.Screen name="ArsInfo" component={ArsInfoScreen} />
+      <Stack.Screen name="Education" component={EducationScreen} />
     </Stack.Navigator>
   );
 };
