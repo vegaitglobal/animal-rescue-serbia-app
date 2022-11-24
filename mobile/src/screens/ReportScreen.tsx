@@ -221,17 +221,21 @@ export const ReportScreen = () => {
               placeholderLabel={tipPrekrsaja}
             />
           </View>
-          <View style={style.photoContainer}>
-            <ImageUploadElement
-              placeholderText={fotoVideo}
-              onFilesSelected={onFilesSelected}
-            />
-          </View>
-          <MultilineTextInput
-            onChangeText={value => dispatch(setDescription(value))}
-            style={style.textInputContainer}
-            placeholder="Opis"
-          />
+          {!isLiteReport ? (
+            <>
+              <View style={style.photoContainer}>
+                <ImageUploadElement
+                  placeholderText={fotoVideo}
+                  onFilesSelected={onFilesSelected}
+                />
+              </View>
+              <MultilineTextInput
+                onChangeText={value => dispatch(setDescription(value))}
+                style={style.textInputContainer}
+                placeholder="Opis"
+              />
+            </>
+          ) : null}
           <View style={style.buttonsContainer}>
             <CustomButton
               onPress={() => setDeclineModalVisible(true)}
