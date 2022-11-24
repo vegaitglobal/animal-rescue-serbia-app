@@ -1,22 +1,19 @@
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import { useAdminArticles } from '../../hooks/api/articles/useAdminArticles';
-import { Create } from '../../shared/Icons';
-import Layout from '../../shared/Layout';
 import Loader from '../../shared/Loader';
-import Search from '../../shared/Search';
 import { PagesCard } from './Components';
 
-const Pages = () => {
-  const navigate = useNavigate();
+interface IProps {
+  searchQuery: string;
+}
 
-  const handleCreatePageClick = () => navigate('/stranice/kreiranje');
-
+const Pages: React.FC<IProps> = ({ searchQuery }) => {
   const {
     data: adminArticles,
     isLoading,
     hasNextPage,
     fetchNextPage,
-  } = useAdminArticles();
+  } = useAdminArticles(searchQuery);
 
   const renderAdminArticles = adminArticles?.pages?.map((page) =>
     page?.entities?.map((article) => (
@@ -35,26 +32,14 @@ const Pages = () => {
   if (isLoading) return <Loader />;
 
   return (
-    <Layout>
-      <div className="intro">
-        <div className="intro__left">
-          <button
-            className="cards__create-button"
-            onClick={handleCreatePageClick}
-          >
-            <Create />
-            Kreiraj stranicu
-          </button>
-        </div>
-        <Search />
-      </div>
+    <>
       <div className="cards">{renderAdminArticles}</div>
       {hasNextPage && (
         <button className="load-more__button" onClick={handleLoadMore}>
           Učitaj još
         </button>
       )}
-    </Layout>
+    </>
   );
 };
 
