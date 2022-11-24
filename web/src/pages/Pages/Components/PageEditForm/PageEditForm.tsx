@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import Select, { SingleValue } from 'react-select';
 import { useGetArticleCategories } from '../../../../hooks/api/ArticleCategories/useGetArticleCategories';
-import { usePostArticle } from '../../../../hooks/api/articles/usePostArticle';
 import { IArticleCategory } from '../../../../services/api/articleCategories/getArticleCategories';
 import { Back } from '../../../../shared/Back';
 import Layout from '../../../../shared/Layout';
@@ -36,14 +34,10 @@ const initialData: IPage = {
   description: '',
 };
 
-const PageForm = () => {
+const PageEditForm = () => {
   const { data: categories, isLoading: categoriesLoading } =
     useGetArticleCategories();
   const [data, setData] = useState<IPage>(initialData);
-  const navigate = useNavigate();
-  const { mutate: postArticle } = usePostArticle({
-    onSuccess: () => navigate('/stranice'),
-  });
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -102,7 +96,7 @@ const PageForm = () => {
     article.append('CategoryId', data.category);
     article.append('File', data.file);
 
-    postArticle({ article });
+    // postArticle({ article });
   };
 
   return (
@@ -188,4 +182,4 @@ const PageForm = () => {
   );
 };
 
-export default PageForm;
+export default PageEditForm;
