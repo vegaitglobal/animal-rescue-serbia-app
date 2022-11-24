@@ -28,10 +28,14 @@ export interface IAdminArticlesPageResponse {
 }
 
 export const getAdminArticles = async (
-  pageParam: number
+  pageParam: number,
+  search: string
 ): Promise<IAdminArticlesPageResponse> => {
-  console.log('usao');
-  const baseUrl = `/api/admin/articles/PaginatedArticles?PageSize=9&PageNumber=${pageParam}`;
+  const searchParam = search ? `&SearchTerm=${search}` : '';
+  const baseUrl =
+    `/api/admin/articles/PaginatedArticles?PageSize=9&PageNumber=${pageParam}` +
+    searchParam;
+
   const { data } = await axiosRequest('GET', baseUrl);
 
   return data;
