@@ -14,5 +14,6 @@ public static class UserExtensions
             FirstName = user.FirstName,
             LastName = user.LastName,
             IsActive = user.IsActive,
+            Role = user.Role
         };
 }
