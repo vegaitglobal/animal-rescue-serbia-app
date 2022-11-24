@@ -37,7 +37,6 @@ export const LiteViolationList = ({
   }, [loadViolations]);
 
   //TODO: vvvvvvvvvvvvvvvvvvvvvvvv
-  //Licenca
   //SplashScreen
   //LiteViolationsFormat
   //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -59,9 +58,8 @@ export const LiteViolationList = ({
     },
     [],
   );
-  return isLoading ? (
-    <ActivityIndicator style={{flex: 1}} />
-  ) : (
+
+  return (
     <FlatList
       data={violations}
       renderItem={renderItem}
@@ -73,7 +71,11 @@ export const LiteViolationList = ({
         </>
       }
       refreshControl={
-        <RefreshControl refreshing={isLoading} onRefresh={loadViolations} />
+        <RefreshControl
+          refreshing={isLoading}
+          onRefresh={loadViolations}
+          progressViewOffset={150}
+        />
       }
     />
   );
