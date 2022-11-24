@@ -60,3 +60,14 @@ export type ViolationResponseDto = {
   description: string;
   mediaContent: MediaContentDto[];
 };
+
+export type LiteViolationResponseDto = {
+  id: string;
+  location: string;
+  violationCategory: ViolationCategoryDto;
+};
+
+export type LiteViolationRequestDto = {
+  location: string;
+  violationCategoryId: string;
+};

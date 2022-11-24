@@ -56,6 +56,8 @@ export const ImageThumbnailRow = ({
             ?.fullPath ?? undefined
         : fullPath;
 
+      // What's isEnabled on violation category (Lite)
+      //TODO: Use backend file mime type instead
       return processedPath ? (
         <ImageWithLoadingAnimation
           width={thumbnailSize}

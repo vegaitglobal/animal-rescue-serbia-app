@@ -2,6 +2,7 @@ import {createAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {AppThunkApiConfig} from '../../../hooks/storeHooks';
 import {
   ArticleCategoriesDto,
+  LiteViolationResponseDto,
   LocationsDto,
   ViolationCategoryDto,
   ViolationResponseDto,
@@ -99,4 +100,22 @@ export const loadViolations = createAsyncThunk<
 >('reports/loadViolations', async (_, {extra}) => {
   const api = arsApi(extra.apiClient);
   return await api.getViolations();
+});
+
+export const loadLiteViolations = createAsyncThunk<
+  LiteViolationResponseDto[],
+  void,
+  AppThunkApiConfig
+>('reports/loadLiteViolations', async (_, {extra}) => {
+  const api = arsApi(extra.apiClient);
+  return await api.getLiteViolations();
+});
+
+export const sendLiteViolation = createAsyncThunk<
+  LiteViolationResponseDto,
+  {location: string; violationCategoryId: string},
+  AppThunkApiConfig
+>('reports/sendLiteViolation', async (data, {extra}) => {
+  const api = arsApi(extra.apiClient);
+  return await api.postLiteViolation(data);
 });

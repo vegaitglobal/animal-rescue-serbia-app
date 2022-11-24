@@ -1,6 +1,8 @@
 import {Violation} from '../store/src/reports/types';
 import {
   ArticleCategoriesDto,
+  LiteViolationRequestDto,
+  LiteViolationResponseDto,
   LocationsDto,
   LogInRequestDto,
   LogInResponseDto,
@@ -17,6 +19,7 @@ const logInUri = '/Users/login';
 const locations = '/locations';
 const violationCategories = '/ViolationCategories';
 const violationsUri = '/Violations';
+const liteViolationsUri = '/LiteViolations';
 const registrationUri = '/Users/register';
 
 export const arsApi = (apiClient: IApiClient) => ({
@@ -71,6 +74,13 @@ export const arsApi = (apiClient: IApiClient) => ({
       data: form,
     });
   },
+  postLiteViolation: (data: LiteViolationRequestDto) => {
+    return apiClient.request<LiteViolationResponseDto>({
+      url: liteViolationsUri,
+      method: 'post',
+      data,
+    });
+  },
   postRegistration: (registration: RegistrationDto) => {
     return apiClient.nonAuthenticatedRequest<RegisterResponseDto>({
       url: registrationUri,
@@ -81,6 +91,12 @@ export const arsApi = (apiClient: IApiClient) => ({
   getViolations: () => {
     return apiClient.request<ViolationResponseDto[]>({
       url: violationsUri,
+      method: 'get',
+    });
+  },
+  getLiteViolations: () => {
+    return apiClient.request<LiteViolationResponseDto[]>({
+      url: liteViolationsUri,
       method: 'get',
     });
   },

@@ -11,6 +11,7 @@ import {
   setViolationCategory,
   unsetViolation,
   loadViolations,
+  loadLiteViolations,
 } from './actions';
 import {getInitialState, getNewViolationInitialState} from './initialState';
 
@@ -54,6 +55,9 @@ export const reportSlice = createSlice({
       })
       .addCase(loadViolations.fulfilled, (state, {payload}) => {
         state.violations = payload;
+      })
+      .addCase(loadLiteViolations.fulfilled, (state, {payload}) => {
+        state.liteViolations = payload;
       });
   },
 });

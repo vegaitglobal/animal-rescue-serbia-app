@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, Text, View} from 'react-native';
 import {CustomModal} from '../components/CustomModal';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
@@ -20,6 +20,7 @@ import {ImageUploadElement} from '../components/ImageUploaderElement';
 import {SelectionResult} from '../components/types';
 import {batchCompress, extractFileNameFromPath} from '../util/helpers';
 import {
+  sendLiteViolation,
   sendViolation,
   setAddress,
   setDescription,
@@ -36,6 +37,7 @@ import {EmptySpace} from '../components/EmptySpace';
 import {useAndroidBackNavigationOverride} from '../hooks/useAndroidBackNavigationOverride';
 import {ActivityIndicator} from '../components/ActivityIndicator';
 import {FormFile} from '../store/src/reports/types';
+import {Switch} from '../components/Switch';
 
 export const ReportScreen = () => {
   const violationCategories = useAppSelector(getViolationCategories);
@@ -67,12 +69,20 @@ export const ReportScreen = () => {
     return isSendingReport;
   });
 
+  const [isLiteReport, setIsLiteReport] = useState(false);
+
   const handleReport = useCallback(async () => {
     setSendReport(false);
 
     setIsSendingReport(true);
 
-    const result = await dispatch(sendViolation(violation));
+    const actionToDispatch = isLiteReport
+      ? sendLiteViolation({
+          location: violation.location,
+          violationCategoryId: violation.violationCategoryId,
+        })
+      : sendViolation(violation);
+    const result = await dispatch(actionToDispatch as any);
     if (result.meta.requestStatus === 'rejected') {
       console.log('Report failed');
       setIsSendingReport(false);
@@ -81,7 +91,7 @@ export const ReportScreen = () => {
 
     setIsSendingReport(false);
     navigation.goBack();
-  }, [dispatch, navigation, violation]);
+  }, [dispatch, isLiteReport, navigation, violation]);
 
   const onFilesSelected = useCallback(
     async (selectedFiles: SelectionResult[]) => {
@@ -136,20 +146,33 @@ export const ReportScreen = () => {
     [dispatch],
   );
 
+  const handleReportTypeChange = () => {
+    setIsLiteReport(currentValue => !currentValue);
+  };
+
   return (
     <ScreenRootContainer title={headerTitle} showLogo>
       <ScrollView contentContainerStyle={style.scroll}>
         <View style={style.container}>
-          <View style={style.inputContainer}>
-            <TextInput
-              value={violation.fullName}
-              placeholder={imeIPrezime}
-              placeholderTextColor={ColorPallet.lightGray}
-              onChangeText={value => {
-                dispatch(setNameSurname(value));
-              }}
+          <View style={style.toggleContainer}>
+            <Text>Brza prijava</Text>
+            <Switch
+              value={isLiteReport}
+              onValueChange={handleReportTypeChange}
             />
           </View>
+          {!isLiteReport ? (
+            <View style={style.inputContainer}>
+              <TextInput
+                value={violation.fullName}
+                placeholder={imeIPrezime}
+                placeholderTextColor={ColorPallet.lightGray}
+                onChangeText={value => {
+                  dispatch(setNameSurname(value));
+                }}
+              />
+            </View>
+          ) : null}
           <View style={style.inputContainer}>
             <SelectionInput
               onValueSelected={item => dispatch(setLocation(item.label))}
@@ -163,22 +186,26 @@ export const ReportScreen = () => {
               placeholderLabel={lokacija}
             />
           </View>
-          <View style={style.inputContainer}>
-            <TextInput
-              placeholder={adresa}
-              placeholderTextColor={ColorPallet.lightGray}
-              onChangeText={value => dispatch(setAddress(value))}
-            />
-          </View>
-          <View style={style.inputContainer}>
-            <TextInput
-              keyboardType="phone-pad"
-              textContentType="telephoneNumber"
-              placeholder={brTelefona}
-              placeholderTextColor={ColorPallet.lightGray}
-              onChangeText={value => dispatch(setPhoneNumber(value))}
-            />
-          </View>
+          {!isLiteReport ? (
+            <>
+              <View style={style.inputContainer}>
+                <TextInput
+                  placeholder={adresa}
+                  placeholderTextColor={ColorPallet.lightGray}
+                  onChangeText={value => dispatch(setAddress(value))}
+                />
+              </View>
+              <View style={style.inputContainer}>
+                <TextInput
+                  keyboardType="phone-pad"
+                  textContentType="telephoneNumber"
+                  placeholder={brTelefona}
+                  placeholderTextColor={ColorPallet.lightGray}
+                  onChangeText={value => dispatch(setPhoneNumber(value))}
+                />
+              </View>
+            </>
+          ) : null}
           <View style={style.inputContainer}>
             <SelectionInput
               onValueSelected={item => {
@@ -304,5 +331,10 @@ const style = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
+  },
+  toggleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
