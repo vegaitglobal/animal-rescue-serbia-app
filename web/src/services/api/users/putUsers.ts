@@ -1,11 +1,12 @@
 import { axiosRequest } from '../../axiosConfig';
-import { IUserResponse } from './getUsers';
+import { IUserResponse, UserRole } from './getUsers';
 
 export interface IPutUsersRequest {
   firstName: string;
   lastName: string;
   username: string;
   isActive: boolean;
+  role: UserRole;
 }
 
 export interface IPutUsersWithId {
