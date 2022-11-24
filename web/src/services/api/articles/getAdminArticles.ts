@@ -10,6 +10,7 @@ export interface IAdminArticleMediaContent {
   id: string;
   fileName: string;
   filePath: string;
+  relativeFilePath: string;
 }
 
 export interface IAdminArticle {

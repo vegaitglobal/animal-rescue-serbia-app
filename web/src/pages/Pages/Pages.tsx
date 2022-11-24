@@ -19,7 +19,7 @@ const Pages: React.FC<IProps> = ({ searchQuery }) => {
     page?.entities?.map((article) => (
       <PagesCard
         key={article.id}
-        photoUrl={article.mediaContent?.filePath}
+        photoUrl={article.mediaContent?.relativeFilePath}
         title={article.title}
         description={article.description}
         type={article.type}
