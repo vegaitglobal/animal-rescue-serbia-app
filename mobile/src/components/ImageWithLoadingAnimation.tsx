@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ReactElement, useState} from 'react';
 import ContentLoader, {Rect} from 'react-content-loader/native';
 import {Image, ImageProps, StyleSheet, View} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
@@ -7,11 +7,13 @@ import {bind} from '../util/helpers';
 type ImageWithLoadingAnimationProps = {
   width: number;
   height: number;
+  overlayIcon?: ReactElement;
 } & ImageProps;
 
 export const ImageWithLoadingAnimation = ({
   width = 50,
   height = 50,
+  overlayIcon,
   ...imageProps
 }: ImageWithLoadingAnimationProps) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,6 +31,7 @@ export const ImageWithLoadingAnimation = ({
           </ContentLoader>
         </View>
       ) : null}
+      <View style={styles.overlayIconContainer}>{overlayIcon}</View>
       <Image
         {...imageProps}
         source={imageProps.source}
@@ -50,5 +53,15 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     end: 0,
+  },
+  overlayIconContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1,
   },
 });

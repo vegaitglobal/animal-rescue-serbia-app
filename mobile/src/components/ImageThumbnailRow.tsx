@@ -14,6 +14,7 @@ import {isPathVideo} from '../util/helpers';
 import Config from 'react-native-config';
 import {useVideoThumbnailsCreator} from '../hooks/useVideoThumbnails';
 import {ImageWithLoadingAnimation} from './ImageWithLoadingAnimation';
+import PlayIcon from '../assets/icons/play.svg';
 
 type ImageThumbnailRowProps = {
   mediaContent: MediaContentDto[];
@@ -49,7 +50,8 @@ export const ImageThumbnailRow = ({
     (id: string, relativeFilePath: string) => {
       const fullPath = `${Config.BASE_URL}/${relativeFilePath}`;
 
-      const processedPath = isPathVideo(relativeFilePath)
+      const isVideo = isPathVideo(relativeFilePath);
+      const processedPath = isVideo
         ? videoThumbnails.find(thumbnailData => thumbnailData.id === id)
             ?.fullPath ?? undefined
         : fullPath;
@@ -58,6 +60,11 @@ export const ImageThumbnailRow = ({
         <ImageWithLoadingAnimation
           width={thumbnailSize}
           height={thumbnailSize}
+          overlayIcon={
+            isVideo ? (
+              <PlayIcon color={ColorPallet.plainWhite} width={15} height={15} />
+            ) : undefined
+          }
           style={[
             styles.thumbnail,
             {width: thumbnailSize, height: thumbnailSize},
