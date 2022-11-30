@@ -8,7 +8,7 @@ namespace AnimalRescue.Api.Controllers.Admin
 {
     [Route("api/admin/ViolationCategories")]
     [ApiController]
-    [Authorize(Roles = Roles.AdminRole)]
+    [Authorize(Roles = Roles.ModeratorRole)]
     public class ViolationCategoriesAdminController : ControllerBase
     {
         private readonly IViolationCategoryService _violationCategoryService;
