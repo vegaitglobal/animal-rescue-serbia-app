@@ -127,11 +127,10 @@ public class Program
                 using var scope = applicationBuilder.ApplicationServices.CreateScope();
                 var dataSeeder = scope.ServiceProvider.GetRequiredService<SeedData>();
                 dataSeeder.SeedTestData();
+                SeedSuperUser(applicationBuilder);
             }
             catch (Exception ex) { }
         }
-
-        SeedSuperUser(applicationBuilder);
 
         applicationBuilder
             .UseProblemDetails()

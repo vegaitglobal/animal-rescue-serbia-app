@@ -11,7 +11,7 @@ namespace AnimalRescue.Api.Controllers.Admin;
 
 [Route("api/admin/articles")]
 [ApiController]
-[Authorize(Roles = Roles.AdminRole)]
+[Authorize(Roles = Roles.ModeratorRole)]
 public class ArticlesAdminController : ControllerBase
 {
     private readonly IArticleService _articleService;
