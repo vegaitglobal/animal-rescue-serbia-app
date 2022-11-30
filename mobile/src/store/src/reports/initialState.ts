@@ -6,4 +6,5 @@ export const getInitialState = (): ReportState => ({
   violationCategories: [],
   locations: [],
   newViolation: getNewViolationInitialState(),
+  violationsFilter: {location: '', violationCategoryId: ''},
 });

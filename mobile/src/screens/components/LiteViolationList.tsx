@@ -3,6 +3,7 @@ import {
   FlatList,
   ListRenderItemInfo,
   RefreshControl,
+  StyleSheet,
   Text,
   View,
 } from 'react-native';
@@ -10,7 +11,11 @@ import {EmptySpace} from '../../components/EmptySpace';
 import {useAppDispatch, useAppSelector} from '../../hooks/storeHooks';
 import {LiteViolationResponseDto} from '../../infrastructure/apiTypes';
 import {loadLiteViolations} from '../../store/src/reports/actions';
-import {getSortedLiteViolations} from '../../store/src/reports/selectors';
+import {
+  getFilterCategory,
+  getFilterLocation,
+  getSortedLiteViolations,
+} from '../../store/src/reports/selectors';
 
 type LiteViolationListProps = {
   renderHeaderComponent: () => ReactElement;
@@ -22,6 +27,9 @@ export const LiteViolationList = ({
   const dispatch = useAppDispatch();
   const violations = useAppSelector(getSortedLiteViolations);
   const [isLoading, setIsLoading] = useState(false);
+
+  const filterCategory = useAppSelector(getFilterCategory);
+  const filterLocation = useAppSelector(getFilterLocation);
 
   const loadViolations = useCallback(async () => {
     setIsLoading(true);
@@ -58,9 +66,28 @@ export const LiteViolationList = ({
     [],
   );
 
+  const getFilteredData = (vCategory: string, fLocation: string) => {
+    return vCategory && !fLocation
+      ? violations.filter(
+          violation => violation.violationCategory.name === vCategory,
+        )
+      : fLocation && !vCategory
+      ? violations.filter(violation => violation.location === fLocation)
+      : vCategory && fLocation
+      ? violations.filter(
+          violation =>
+            violation.location === fLocation &&
+            violation.violationCategory.name === vCategory,
+        )
+      : violations;
+  };
+
   return (
     <FlatList
-      data={violations}
+      ListEmptyComponent={() => (
+        <Text style={styles.container}>Ne postoje filtrirane kategorije</Text>
+      )}
+      data={getFilteredData(filterCategory, filterLocation)}
       renderItem={renderItem}
       contentContainerStyle={{paddingBottom: 20}}
       ListHeaderComponent={
@@ -79,5 +106,12 @@ export const LiteViolationList = ({
     />
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    alignSelf: 'center',
+    fontSize: 18,
+  },
+});
 
 //TODONF: Consider moving these from components folder which indicates reusability

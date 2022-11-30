@@ -32,10 +32,16 @@ export type Violation = {
   description: string;
 };
 
+export type ViolationFilter = {
+  location: string;
+  violationCategoryId: string;
+};
+
 export type ReportState = {
   violationCategories: ViolationCategories[];
   locations: Locations;
   newViolation: Violation;
   violations: ViolationResponseDto[];
   liteViolations: LiteViolationResponseDto[];
+  violationsFilter: ViolationFilter;
 };

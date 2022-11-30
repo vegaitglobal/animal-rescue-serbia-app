@@ -12,6 +12,8 @@ import {
   unsetViolation,
   loadViolations,
   loadLiteViolations,
+  setFilterLocation,
+  setFilterCategory,
 } from './actions';
 import {getInitialState, getNewViolationInitialState} from './initialState';
 
@@ -58,6 +60,12 @@ export const reportSlice = createSlice({
       })
       .addCase(loadLiteViolations.fulfilled, (state, {payload}) => {
         state.liteViolations = payload;
+      })
+      .addCase(setFilterLocation, (state, {payload}) => {
+        state.violationsFilter.location = payload;
+      })
+      .addCase(setFilterCategory, (state, {payload}) => {
+        state.violationsFilter.violationCategoryId = payload;
       });
   },
 });

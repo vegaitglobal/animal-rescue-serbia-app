@@ -51,6 +51,16 @@ export const unsetViolation = createAction(
   directUpdateAction<void>(),
 );
 
+export const setFilterLocation = createAction(
+  'reports/setFilterLocation',
+  directUpdateAction<string>(),
+);
+
+export const setFilterCategory = createAction(
+  'reports/setFilterCategory',
+  directUpdateAction<string>(),
+);
+
 export const loadArticleCategories = createAsyncThunk<
   ArticleCategoriesDto,
   void,

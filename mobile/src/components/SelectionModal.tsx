@@ -14,6 +14,7 @@ type SelectionModalProps = {
   onShouldClose: () => void;
   onValueSelected: (selectedItem: ItemData) => void;
   onVisibilityChange: (isShown: boolean) => void;
+  handleClearState?: () => void;
 };
 
 export const SelectionModal = ({
@@ -22,6 +23,7 @@ export const SelectionModal = ({
   onShouldClose,
   onValueSelected,
   onVisibilityChange,
+  handleClearState,
 }: SelectionModalProps) => {
   const handleItemSelected = (item: ItemData) => () => {
     onValueSelected(item);
@@ -44,6 +46,7 @@ export const SelectionModal = ({
       ? dynamicModalSnappingPoint
       : maxModalSnappingPoint;
 
+  //TODOJM add clear btn for filter
   return (
     <CustomBottomSheetModal
       myRef={myRef}
@@ -51,7 +54,9 @@ export const SelectionModal = ({
       onVisibilityChange={onVisibilityChange}
       snapPoints={[guardedDynamicModalSnappingPoint]}>
       <EmptySpace height={verticalListPadding} />
-
+      <Pressable style={style.clearContainer}>
+        <Text>clear</Text>
+      </Pressable>
       <BottomSheetFlatList
         data={data}
         keyExtractor={i => i.id ?? ''}
@@ -86,5 +91,11 @@ const style = StyleSheet.create({
   },
   pressableBackdrop: {
     flex: 1,
+  },
+  clearContainer: {
+    height: 25,
+    borderRadius: 10,
+    backgroundColor: ColorPallet.lightGray,
+    width: 40,
   },
 });

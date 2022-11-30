@@ -15,7 +15,7 @@ import {GridIcon} from '../components/SquareGrid/GridIcon';
 
 export const HomeScreen = () => {
   const headerTitle = 'Prijavi';
-  const ars = 'Animal Rescue Srbija';
+  const ars = 'Animal Rescue Serbia';
   const donatori = 'Donatori i prijatelji';
   const doniranje = 'Doniranje';
   const prijava = 'Prijava ';
