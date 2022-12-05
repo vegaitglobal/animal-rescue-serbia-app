@@ -58,7 +58,7 @@ export const ArsInfoScreen = () => {
 
         <EmptySpace height={16} />
 
-        <AccentedTextBox title="Telefon:">'+38164 8210200'</AccentedTextBox>
+        <AccentedTextBox title="Telefon:">+38164 8210200</AccentedTextBox>
 
         <EmptySpace height={textBoxSpacing} />
 
