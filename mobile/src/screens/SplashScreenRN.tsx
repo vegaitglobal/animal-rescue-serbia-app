@@ -11,7 +11,6 @@ import {
 } from '../store/src/reports/actions';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import {Constants} from '../Constants';
-import {useHeaderHeight} from '../navigation/useHeaderHeight';
 
 export const SplashScreenRN = () => {
   const dispatch = useAppDispatch();
@@ -51,11 +50,9 @@ export const SplashScreenRN = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const headerHeight = useHeaderHeight();
-
   return (
     <View style={styles.rootContainer}>
-      <View style={[styles.innerCenteredContainer, {marginTop: -headerHeight}]}>
+      <View style={styles.innerCenteredContainer}>
         <Image
           style={styles.logo}
           source={require('../assets/icons/megaphoneLogo.png')}
