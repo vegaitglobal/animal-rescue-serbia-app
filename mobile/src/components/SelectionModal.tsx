@@ -14,7 +14,8 @@ type SelectionModalProps = {
   onShouldClose: () => void;
   onValueSelected: (selectedItem: ItemData) => void;
   onVisibilityChange: (isShown: boolean) => void;
-  handleClearState?: () => void;
+  handleClearFilter?: () => void;
+  hasFilter?: boolean;
 };
 
 export const SelectionModal = ({
@@ -23,7 +24,8 @@ export const SelectionModal = ({
   onShouldClose,
   onValueSelected,
   onVisibilityChange,
-  handleClearState,
+  handleClearFilter,
+  hasFilter,
 }: SelectionModalProps) => {
   const handleItemSelected = (item: ItemData) => () => {
     onValueSelected(item);
@@ -52,11 +54,10 @@ export const SelectionModal = ({
       myRef={myRef}
       onShouldClose={onShouldClose}
       onVisibilityChange={onVisibilityChange}
-      snapPoints={[guardedDynamicModalSnappingPoint]}>
+      snapPoints={[guardedDynamicModalSnappingPoint]}
+      handleClearFilter={handleClearFilter}
+      hasFilter={hasFilter}>
       <EmptySpace height={verticalListPadding} />
-      <Pressable style={style.clearContainer}>
-        <Text>clear</Text>
-      </Pressable>
       <BottomSheetFlatList
         data={data}
         keyExtractor={i => i.id ?? ''}

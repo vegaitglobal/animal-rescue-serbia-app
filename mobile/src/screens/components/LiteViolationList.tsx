@@ -85,7 +85,7 @@ export const LiteViolationList = ({
   return (
     <FlatList
       ListEmptyComponent={() => (
-        <Text style={styles.container}>Ne postoje filtrirane kategorije</Text>
+        <Text style={styles.container}>Ne postoje filtrirane opcije</Text>
       )}
       data={getFilteredData(filterCategory, filterLocation)}
       renderItem={renderItem}

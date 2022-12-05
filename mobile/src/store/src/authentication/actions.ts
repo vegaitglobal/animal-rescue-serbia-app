@@ -54,6 +54,10 @@ export const logIn = createAsyncThunk<
   return result;
 });
 
+export const signOut = createAsyncThunk('authentication/logIn', () => {
+  return AsyncStorage.setItem(Constants.tokenPersistanceKey, '');
+});
+
 export const register = createAsyncThunk<
   RegisterResponseDto,
   NewRegistration,

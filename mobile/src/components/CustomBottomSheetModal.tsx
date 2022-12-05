@@ -9,7 +9,7 @@ import {IconButton} from './IconButton';
 import Close from '../assets/icons/close.svg';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import Animated from 'react-native-reanimated';
-import {Pressable, StyleSheet} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 
 type CustomBottomSheetModalProps = Omit<
   BottomSheetModalProps,
@@ -19,6 +19,8 @@ type CustomBottomSheetModalProps = Omit<
   onShouldClose: () => void;
   children: ReactNode;
   onVisibilityChange: (isShown: boolean) => void;
+  handleClearFilter?: () => void;
+  hasFilter?: boolean;
 };
 
 export const CustomBottomSheetModal = ({
@@ -27,6 +29,8 @@ export const CustomBottomSheetModal = ({
   onShouldClose,
   snapPoints,
   onVisibilityChange,
+  handleClearFilter,
+  hasFilter,
 }: CustomBottomSheetModalProps) => {
   const renderBackdrop = useCallback(
     (props: BottomSheetBackdropProps) => (
@@ -51,11 +55,20 @@ export const CustomBottomSheetModal = ({
       enablePanDownToClose
       backdropComponent={renderBackdrop}
       snapPoints={snapPoints}>
-      <IconButton
-        onPress={onShouldClose}
-        contentContainerStyle={style.closeButton}>
-        <Close width={iconSize} height={iconSize} />
-      </IconButton>
+      <View style={style.buttonsContainer}>
+        <IconButton
+          onPress={onShouldClose}
+          contentContainerStyle={style.closeButton}>
+          <Close width={iconSize} height={iconSize} />
+        </IconButton>
+        {hasFilter ? (
+          <IconButton
+            onPress={handleClearFilter!}
+            contentContainerStyle={style.clearContainer}>
+            <Text style={{color: ColorPallet.plainWhite}}>Obrisi filter</Text>
+          </IconButton>
+        ) : null}
+      </View>
       {children}
     </BottomSheetModal>
   );
@@ -69,5 +82,17 @@ const style = StyleSheet.create({
   closeButton: {
     paddingLeft: 10,
     width: 50,
+    flex: 1,
+  },
+  clearContainer: {
+    borderRadius: 10,
+    backgroundColor: ColorPallet.gray,
+    marginRight: 10,
+    paddingHorizontal: 10,
+    justifyContent: 'center',
+    paddingBottom: 2,
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
   },
 });

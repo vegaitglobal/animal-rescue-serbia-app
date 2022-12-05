@@ -29,11 +29,40 @@ export const ViolationsScreen = () => {
   };
 
   const renderListHeader = () => (
-    <SegmentedControl
-      activeSegment={isFullViolationList ? 'left' : 'right'}
-      onSegmentChange={onSegmentChange}
-      segmentNames={{left: 'Potpuni prekršaji', right: 'Brzi prekršaji'}}
-    />
+    <>
+      <View style={styles.container} />
+      <SelectionInput
+        hasFilter={true}
+        handleClearFilter={() => dispatch(setFilterCategory(''))}
+        onValueSelected={item => dispatch(setFilterCategory(item.label))}
+        data={violationCategories?.map(
+          item =>
+            ({
+              id: item.id,
+              label: item.name,
+            } ?? []),
+        )}
+        placeholderLabel={'Filtriranje po kategoriji'}
+      />
+      <SelectionInput
+        hasFilter={true}
+        handleClearFilter={() => dispatch(setFilterLocation(''))}
+        onValueSelected={item => dispatch(setFilterLocation(item.label))}
+        data={violationLocations?.map(
+          (item, index) =>
+            ({
+              label: item,
+              id: index.toString(),
+            } as ItemData),
+        )}
+        placeholderLabel={'Filtriranje po lokaciji'}
+      />
+      <SegmentedControl
+        activeSegment={isFullViolationList ? 'left' : 'right'}
+        onSegmentChange={onSegmentChange}
+        segmentNames={{left: 'Potpuni prekršaji', right: 'Brzi prekršaji'}}
+      />
+    </>
   );
 
   return (
@@ -41,32 +70,7 @@ export const ViolationsScreen = () => {
       {isFullViolationList ? (
         <FullViolationList renderListHeader={renderListHeader} />
       ) : (
-        <>
-          <View style={styles.container} />
-          <SelectionInput
-            onValueSelected={item => dispatch(setFilterCategory(item.label))}
-            data={violationCategories?.map(
-              item =>
-                ({
-                  id: item.id,
-                  label: item.name,
-                } ?? []),
-            )}
-            placeholderLabel={'Filtriranje po kategoriji'}
-          />
-          <SelectionInput
-            onValueSelected={item => dispatch(setFilterLocation(item.label))}
-            data={violationLocations?.map(
-              (item, index) =>
-                ({
-                  label: item,
-                  id: index.toString(),
-                } as ItemData),
-            )}
-            placeholderLabel={'Filtriranje po lokaciji'}
-          />
-          <LiteViolationList renderHeaderComponent={renderListHeader} />
-        </>
+        <LiteViolationList renderHeaderComponent={renderListHeader} />
       )}
     </ScreenRootContainer>
   );

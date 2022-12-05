@@ -273,8 +273,10 @@ export const ReportScreen = () => {
       />
       <CustomModalWithButton
         isOneButtonModal
-        title="Tvoja prijava je prosledjena"
-        text={'Neko od nasih volontera ce te uskoro kontaktirati'}
+        title="Saglasnost"
+        text={
+          'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae dignissimos quasi aliquid '
+        }
         icon={<Report width={100} height={100} />}
         buttonPositive="U redu"
         onPressPositiveBtn={handleReport}

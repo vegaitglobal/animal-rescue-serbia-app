@@ -13,11 +13,15 @@ type SelectionInputProps = {
   data: ItemData[];
   placeholderLabel: string;
   onValueSelected: (selectedItem: ItemData) => void;
+  handleClearFilter?: () => void;
+  hasFilter?: boolean;
 };
 export const SelectionInput = ({
   data,
   placeholderLabel,
   onValueSelected,
+  handleClearFilter,
+  hasFilter,
 }: SelectionInputProps) => {
   const sheetRef = useRef<BottomSheetModal>(null);
   const [selectedValue, setSelectedValue] = useState<string>();
@@ -46,6 +50,12 @@ export const SelectionInput = ({
     return true;
   });
 
+  const onClearFilter = () => {
+    handleClearFilter && handleClearFilter();
+    setSelectedValue('');
+    closeModal();
+  };
+
   return (
     <>
       <SelectionModal
@@ -54,6 +64,8 @@ export const SelectionInput = ({
         onShouldClose={closeModal}
         onValueSelected={onModalValueSelected}
         onVisibilityChange={setIsModalVisible}
+        handleClearFilter={onClearFilter}
+        hasFilter={hasFilter}
       />
       <Pressable onPress={onPress}>
         <View style={style.inputContainer}>

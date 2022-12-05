@@ -55,7 +55,7 @@ export const SplashScreenRN = () => {
       <View style={styles.innerCenteredContainer}>
         <Image
           style={styles.logo}
-          source={require('../assets/icons/splashLogo.png')}
+          source={require('../assets/icons/splashScreenLogo.jpg')}
         />
         <View style={styles.dynamicMessageContainer}>
           <Text style={styles.dynamicMessageText}>{dynamicMessage}</Text>

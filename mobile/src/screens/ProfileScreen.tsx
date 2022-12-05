@@ -5,8 +5,18 @@ import {EmptySpace} from '../components/EmptySpace';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
 import UserAvatar from '../assets/icons/userAvatar.svg';
+import {useAppDispatch} from '../hooks/storeHooks';
+import {signOut} from '../store/src/authentication/actions';
+import {useNavigation} from '@react-navigation/native';
 
 export const ProfileScreen = () => {
+  const dispatch = useAppDispatch();
+  const navigation = useNavigation();
+
+  const handleSignOut = () => {
+    dispatch(signOut());
+    navigation.navigate('Login');
+  };
   return (
     <ScreenRootContainer title="Profil" showLogo>
       <View style={styles.container}>
@@ -43,6 +53,10 @@ export const ProfileScreen = () => {
         <EmptySpace height={buttonSpacing} />
 
         <CustomButton text="Moji oglasi" onPress={() => {}} />
+
+        <EmptySpace height={buttonSpacing} />
+
+        <CustomButton text="Odjavi se" onPress={handleSignOut} />
       </View>
     </ScreenRootContainer>
   );
