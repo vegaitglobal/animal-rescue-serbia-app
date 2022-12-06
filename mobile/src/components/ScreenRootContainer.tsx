@@ -54,7 +54,7 @@ export const ScreenRootContainer = ({
             <ActivityIndicator />
           </View>
         ) : (
-          children
+          <View style={styles.contentContainer}>{children}</View>
         )}
       </>
     </SafeAreaView>
@@ -101,5 +101,9 @@ const styles = StyleSheet.create({
   },
   rootHeaderContainer: {
     zIndex: 2,
+  },
+  contentContainer: {
+    backgroundColor: ColorPallet.plainWhite,
+    flex: 1,
   },
 });
