@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import Toast from 'react-native-toast-message';
@@ -13,6 +14,7 @@ import {
 
 export const ProfileUpdateScreen = () => {
   const dispatch = useAppDispatch();
+  const navigation = useNavigation();
 
   const handleUpdateUserInfo = async () => {
     const result = await dispatch(updateProfile());
@@ -30,6 +32,8 @@ export const ProfileUpdateScreen = () => {
       text1: 'Azuriranje uspesno',
       position: 'bottom',
     });
+
+    navigation.goBack();
   };
 
   return (

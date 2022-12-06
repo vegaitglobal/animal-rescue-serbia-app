@@ -75,7 +75,7 @@ export const ProfileScreen = () => {
 
         <CustomButton text="Promeni lozinku" onPress={handleSignOut} />
 
-        <EmptySpace height={40} />
+        <EmptySpace height={20} />
 
         <CustomButton text="Odjavi se" onPress={handleSignOut} />
       </View>

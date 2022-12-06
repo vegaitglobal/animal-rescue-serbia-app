@@ -7,12 +7,12 @@ import SosActive from '../assets/icons/sosActive.svg';
 import SosInactive from '../assets/icons/sosInactive.svg';
 import ProfileActive from '../assets/icons/profileActive.svg';
 import ProfileInactive from '../assets/icons/profileInactive.svg';
-import {ProfileScreen} from '../screens/ProfileScreen';
 import {Platform, StyleSheet} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 import {TabIcon, TabIconProps} from '../components/TabIcon';
 import {HomeStackNavigator} from './HomeStackNavigator';
 import {RootStackNavigatorParams} from './types';
+import {ProfileStackNavigator} from './ProfileStackNavigator';
 
 export const TabNavigator = () => {
   const Tab = createBottomTabNavigator<RootStackNavigatorParams>();
@@ -61,7 +61,7 @@ export const TabNavigator = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={ProfileStackNavigator}
         options={{
           tabBarIcon: renderTabIcon({
             activeIcon: <ProfileActive width={size} height={size} />,
