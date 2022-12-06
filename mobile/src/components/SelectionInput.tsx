@@ -13,6 +13,9 @@ type SelectionInputProps = {
   onValueSelected: (selectedItem: ItemData) => void;
   handleClearFilter?: () => void;
   hasFilter?: boolean;
+  inputBackgroundColor?: string;
+  inputAccentColor?: string;
+  placeholderTextColor?: string;
 };
 export const SelectionInput = ({
   data,
@@ -20,6 +23,9 @@ export const SelectionInput = ({
   onValueSelected,
   handleClearFilter,
   hasFilter,
+  inputBackgroundColor,
+  inputAccentColor,
+  placeholderTextColor,
 }: SelectionInputProps) => {
   const sheetRef = useRef<BottomSheetModal>(null);
   const [selectedValue, setSelectedValue] = useState<string>('');
@@ -54,6 +60,10 @@ export const SelectionInput = ({
     closeModal();
   };
 
+  const activeTextColor = inputAccentColor ?? ColorPallet.plainBlack;
+  const activePlaceholderTextColor =
+    placeholderTextColor ?? ColorPallet.lightGray;
+
   return (
     <>
       <SelectionModal
@@ -66,14 +76,21 @@ export const SelectionInput = ({
         hasFilter={hasFilter}
       />
       <Pressable onPress={onPress}>
-        <View style={style.inputContainer}>
+        <View
+          style={[
+            style.inputContainer,
+            {
+              borderBottomColor: inputAccentColor ?? ColorPallet.mediumGray,
+              backgroundColor: inputBackgroundColor ?? ColorPallet.plainWhite,
+            },
+          ]}>
           <Text
             style={[
               style.input,
               {
                 color: selectedValue
-                  ? ColorPallet.plainBlack
-                  : ColorPallet.lightGray,
+                  ? activeTextColor
+                  : activePlaceholderTextColor,
               },
             ]}>
             {selectedValue ? selectedValue : placeholderLabel}
@@ -81,7 +98,7 @@ export const SelectionInput = ({
           <View style={style.chevronContainer}>
             <Chevron
               orientation={Orientation.Forward}
-              color={ColorPallet.mediumGray}
+              color={inputAccentColor ?? ColorPallet.mediumGray}
             />
           </View>
         </View>
@@ -97,7 +114,6 @@ const style = StyleSheet.create({
     flex: 1,
     height: 50,
     borderBottomWidth: 3,
-    borderBottomColor: ColorPallet.mediumGray,
   },
   chevronContainer: {
     position: 'absolute',
@@ -110,6 +126,5 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    color: ColorPallet.plainBlack,
   },
 });

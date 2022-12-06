@@ -32,6 +32,9 @@ export const ViolationsScreen = () => {
     <>
       <View style={styles.container} />
       <SelectionInput
+        inputAccentColor={ColorPallet.plainWhite}
+        inputBackgroundColor={ColorPallet.gray}
+        placeholderTextColor={ColorPallet.plainWhite}
         hasFilter={true}
         handleClearFilter={() => dispatch(setFilterCategory(''))}
         onValueSelected={item => dispatch(setFilterCategory(item.label))}
@@ -45,6 +48,9 @@ export const ViolationsScreen = () => {
         placeholderLabel={'Filtriranje po kategoriji'}
       />
       <SelectionInput
+        inputAccentColor={ColorPallet.plainWhite}
+        inputBackgroundColor={ColorPallet.gray}
+        placeholderTextColor={ColorPallet.plainWhite}
         hasFilter={true}
         handleClearFilter={() => dispatch(setFilterLocation(''))}
         onValueSelected={item => dispatch(setFilterLocation(item.label))}
