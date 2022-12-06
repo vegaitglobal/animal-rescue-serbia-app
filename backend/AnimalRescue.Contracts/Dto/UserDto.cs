@@ -1,4 +1,6 @@
-﻿namespace AnimalRescue.Contracts.Dto;
+﻿using AnimalRescue.Domain.Models;
+
+namespace AnimalRescue.Contracts.Dto;
 
 public class UserDto
 {
@@ -13,4 +15,7 @@ public class UserDto
     public string Email { get; set; }
 
     public bool IsActive{ get; set; }
+
+    public UserRoles Role { get; set; } 
+
 }

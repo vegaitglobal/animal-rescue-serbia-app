@@ -17,16 +17,16 @@ public class SeedData
     public void SeedSuperUser()
     {
         // MOVE THIS TO APP SETTINGS
-        if (_dbContext.Users.FirstOrDefault(u => u.Email == "superadmin@test.com") == null)
+        if (_dbContext.Users.All(u => u.Role != UserRoles.Admin))
         {
             _dbContext.Users.Add(new User
             {
-                Username = "superadmin",
-                FirstName = "super",
-                LastName = "admin",
-                Email = "superadmin@test.com",
+                Username = "admin",
+                FirstName = "Admin first name",
+                LastName = "Admin lastname",
+                Email = "admin@ars.com",
                 Id = Guid.NewGuid(),
-                Password = _securityService.HashPassword("superadmin"),
+                Password = _securityService.HashPassword("admin@ars.com"),
                 Role = UserRoles.Admin,
             });
             _dbContext.SaveChanges();
@@ -35,7 +35,7 @@ public class SeedData
 
     public void SeedTestData()
     {
-        if (!_dbContext.Users.Any())
+        if (_dbContext.Users.All(u => u.Role != UserRoles.User))
         {
             var entries = Enumerable
                 .Range(0, 5)
@@ -43,12 +43,32 @@ public class SeedData
                     new User
                     {
                         Username = $"user{nr}",
-                        FirstName = "user",
-                        LastName = $"{nr}",
-                        Email = $"user{nr}@test.com",
+                        FirstName = $"User name {nr}",
+                        LastName = $"User lastname {nr}",
+                        Email = $"user{nr}@ars.com",
                         Id = Guid.NewGuid(),
-                        Password = _securityService.HashPassword($"user{nr}"),
+                        Password = _securityService.HashPassword($"user{nr}@ars.com"),
                         Role = UserRoles.User,
+                    });
+
+            _dbContext.Users.AddRange(entries);
+            _dbContext.SaveChanges();
+        }
+
+        if (_dbContext.Users.All(u => u.Role != UserRoles.Moderator))
+        {
+            var entries = Enumerable
+                .Range(0, 5)
+                .Select(nr =>
+                    new User
+                    {
+                        Username = $"moderator{nr}",
+                        FirstName = $"Moderator name {nr}",
+                        LastName = $"Moderator lastname {nr}",
+                        Email = $"moderator{nr}@ars.com",
+                        Id = Guid.NewGuid(),
+                        Password = _securityService.HashPassword($"moderator{nr}@ars.com"),
+                        Role = UserRoles.Moderator,
                     });
 
             _dbContext.Users.AddRange(entries);
@@ -89,7 +109,7 @@ public class SeedData
 
         if (!_dbContext.Violations.Any())
         {
-            var user = _dbContext.Users.First();
+            var user = _dbContext.Users.First(u => u.Role == UserRoles.User);
 
             var categories = _dbContext
                 .ViolationCategories

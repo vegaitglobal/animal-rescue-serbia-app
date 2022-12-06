@@ -17,7 +17,7 @@ namespace AnimalRescue.Api.Controllers.Admin
         }
 
         [HttpGet("/api/admin/LocationsWithViolations")]
-        [Authorize(Roles = Roles.AdminRole)]
+        [Authorize(Roles = Roles.ModeratorRole)]
         public async Task<ActionResult<IEnumerable<string>>> GetLocationsWithViolationsAsync()
         {
             var locations = await _locationsService.GetLocationsWithViolationsAsyncTask();

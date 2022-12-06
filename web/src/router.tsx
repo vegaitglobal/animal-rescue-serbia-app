@@ -4,12 +4,12 @@ import App from './App';
 import { EditReport } from './pages/EditReport';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
-import Pages from './pages/Pages';
 import { PageForm } from './pages/Pages/Components';
-import Reports from './pages/Reports';
 import EditUser from './pages/EditUser';
 import Users from './pages/Users';
 import Categories from './pages/Categories/Categories';
+import ReportsContainer from './pages/Reports/ReportsContainer';
+import PagesContainer from './pages/Pages/PagesContainer';
 
 const GlobalRouter: React.FC = () => {
   return (
@@ -18,9 +18,9 @@ const GlobalRouter: React.FC = () => {
         <Route path="/prijavljivanje" element={<Login />} />
         <Route path="/*" element={<NotFound />} />
         <Route path="/" element={<App />}>
-          <Route path="/prijave" element={<Reports />} />
+          <Route path="/prijave" element={<ReportsContainer />} />
           <Route path="/prijave/:id" element={<EditReport />} />
-          <Route path="/stranice" element={<Pages />} />
+          <Route path="/stranice" element={<PagesContainer />} />
           <Route path="/stranice/kreiranje" element={<PageForm />} />
           <Route path="/korisnici" element={<Users />} />
           <Route path="/korisnici/:id" element={<EditUser />} />

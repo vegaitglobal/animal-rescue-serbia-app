@@ -11,5 +11,6 @@ public static class MediaContentExtensions
             FileName = mediaContent.FileName,
             RelativeFilePath = mediaContent.RelativePath,
             Id = mediaContent.Id,
+            ContentType = mediaContent.ContentType,
         };
 }

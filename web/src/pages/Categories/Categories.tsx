@@ -24,8 +24,12 @@ const Categories = () => {
     onSuccess: handlePostSuccess,
   });
 
-  const reportItemsHTML = categories
+  const categoryEnabledItemsHTML = categories
     ?.filter((category) => category.isEnabled)
+    .map((item) => <CategoryItem category={item} key={item.id} />);
+
+  const categoryDisabledItemsHTML = categories
+    ?.filter((category) => !category.isEnabled)
     .map((item) => <CategoryItem category={item} key={item.id} />);
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +68,14 @@ const Categories = () => {
               Dodaj kategoriju
             </button>
           </div>
-          <div className="category__buttons">{reportItemsHTML}</div>
+          <div className="category__container">
+            <h3>Aktivne Kategorije</h3>
+            <div className="category__buttons">{categoryEnabledItemsHTML}</div>
+          </div>
+          <div className="category__container">
+            <h3>Arhivirane Kategorije</h3>
+            <div className="category__buttons">{categoryDisabledItemsHTML}</div>
+          </div>
         </div>
       </div>
     </Layout>

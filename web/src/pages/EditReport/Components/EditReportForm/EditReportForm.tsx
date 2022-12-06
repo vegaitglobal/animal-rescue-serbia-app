@@ -5,10 +5,13 @@ import {
   IReportsResponse,
   ReportsStatus,
 } from '../../../../services/api/reports/getReports';
+import './style.scss';
 
 type Props = {
   report: IReportsResponse;
 };
+
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 
 const EditReportForm: React.FC<Props> = ({ report }) => {
   const navigate = useNavigate();
@@ -40,6 +43,19 @@ const EditReportForm: React.FC<Props> = ({ report }) => {
       },
     });
   };
+
+  const mediaContentHTML = report.mediaContent.map((item) => {
+    return (
+      <a
+        href={API_BASE_URL + '/' + item.relativeFilePath}
+        target="_blank"
+        rel="noreferrer"
+        className="media"
+      >
+        {item.fileName}
+      </a>
+    );
+  });
 
   return (
     <div className="edit">
@@ -91,7 +107,7 @@ const EditReportForm: React.FC<Props> = ({ report }) => {
         </div>
         <div className="edit__item">
           <label className="edit__label">Fotografija / video</label>
-          <input type="text" className="edit__input" value="" readOnly />
+          <span>{mediaContentHTML}</span>
         </div>
         <div className="edit__item edit__item--full">
           <label className="edit__label">Opis prekrsaja</label>
