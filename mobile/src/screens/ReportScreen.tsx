@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {CustomModal} from '../components/CustomModal';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
@@ -162,51 +162,46 @@ export const ReportScreen = () => {
             />
           </View>
           {!isLiteReport ? (
-            <View style={style.inputContainer}>
-              <TextInput
-                value={violation.fullName}
-                placeholder={imeIPrezime}
-                placeholderTextColor={ColorPallet.lightGray}
-                onChangeText={value => {
-                  dispatch(setNameSurname(value));
-                }}
-              />
-            </View>
-          ) : null}
-          <View style={style.inputContainer}>
-            <SelectionInput
-              onValueSelected={item => dispatch(setLocation(item.label))}
-              data={violationLocations?.map(
-                (item, index) =>
-                  ({
-                    label: item,
-                    id: index.toString(),
-                  } as ItemData),
-              )}
-              placeholderLabel={lokacija}
+            <TextInput
+              value={violation.fullName}
+              placeholder={imeIPrezime}
+              placeholderTextColor={ColorPallet.lightGray}
+              onChangeText={value => {
+                dispatch(setNameSurname(value));
+              }}
             />
-          </View>
+          ) : null}
+
+          <SelectionInput
+            onValueSelected={item => dispatch(setLocation(item.label))}
+            data={violationLocations?.map(
+              (item, index) =>
+                ({
+                  label: item,
+                  id: index.toString(),
+                } as ItemData),
+            )}
+            placeholderLabel={lokacija}
+          />
+
           {!isLiteReport ? (
             <>
-              <View style={style.inputContainer}>
-                <TextInput
-                  placeholder={adresa}
-                  placeholderTextColor={ColorPallet.lightGray}
-                  onChangeText={value => dispatch(setAddress(value))}
-                />
-              </View>
-              <View style={style.inputContainer}>
-                <TextInput
-                  keyboardType="phone-pad"
-                  textContentType="telephoneNumber"
-                  placeholder={brTelefona}
-                  placeholderTextColor={ColorPallet.lightGray}
-                  onChangeText={value => dispatch(setPhoneNumber(value))}
-                />
-              </View>
+              <TextInput
+                placeholder={adresa}
+                placeholderTextColor={ColorPallet.lightGray}
+                onChangeText={value => dispatch(setAddress(value))}
+              />
+
+              <TextInput
+                keyboardType="phone-pad"
+                textContentType="telephoneNumber"
+                placeholder={brTelefona}
+                placeholderTextColor={ColorPallet.lightGray}
+                onChangeText={value => dispatch(setPhoneNumber(value))}
+              />
             </>
           ) : null}
-          <View style={style.inputContainer}>
+          <View>
             <SelectionInput
               onValueSelected={item => {
                 item.id && dispatch(setViolationCategory(item.id));
@@ -298,9 +293,6 @@ const style = StyleSheet.create({
     backgroundColor: ColorPallet.plainWhite,
     flex: 1,
   },
-  inputContainer: {
-    marginBottom: Platform.OS === 'ios' ? 30 : 0,
-  },
   text: {
     color: ColorPallet.lightGray,
     fontSize: 18,
@@ -308,7 +300,7 @@ const style = StyleSheet.create({
   photoContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingTop: Platform.OS === 'ios' ? 0 : 20,
+    paddingTop: 20,
   },
   textInputContainer: {
     alignSelf: 'center',

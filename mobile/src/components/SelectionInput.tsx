@@ -1,13 +1,11 @@
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import React, {useCallback, useRef, useState} from 'react';
-import {Keyboard, Pressable, StyleSheet, View} from 'react-native';
+import {Keyboard, Pressable, StyleSheet, Text, View} from 'react-native';
 import {useAndroidBackNavigationOverride} from '../hooks/useAndroidBackNavigationOverride';
 import {ColorPallet} from '../resources/ColorPallet';
 import {Chevron, Orientation} from './Chevron';
-import {commonStyles} from './commonStyles';
 import {ItemData} from './commonTypes';
 import {SelectionModal} from './SelectionModal';
-import {TextInput} from './TextInput';
 
 type SelectionInputProps = {
   data: ItemData[];
@@ -24,7 +22,7 @@ export const SelectionInput = ({
   hasFilter,
 }: SelectionInputProps) => {
   const sheetRef = useRef<BottomSheetModal>(null);
-  const [selectedValue, setSelectedValue] = useState<string>();
+  const [selectedValue, setSelectedValue] = useState<string>('');
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const closeModal = useCallback(() => sheetRef.current?.close(), []);
@@ -69,13 +67,17 @@ export const SelectionInput = ({
       />
       <Pressable onPress={onPress}>
         <View style={style.inputContainer}>
-          <TextInput
-            value={selectedValue}
-            placeholder={placeholderLabel}
-            editable={false}
-            selectTextOnFocus={false}
-            style={[commonStyles.inputField, style.input]}
-          />
+          <Text
+            style={[
+              style.input,
+              {
+                color: selectedValue
+                  ? ColorPallet.plainBlack
+                  : ColorPallet.lightGray,
+              },
+            ]}>
+            {selectedValue ? selectedValue : placeholderLabel}
+          </Text>
           <View style={style.chevronContainer}>
             <Chevron
               orientation={Orientation.Forward}
@@ -92,15 +94,22 @@ const style = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    flex: 1,
+    height: 50,
+    borderBottomWidth: 3,
+    borderBottomColor: ColorPallet.mediumGray,
   },
   chevronContainer: {
     position: 'absolute',
     right: 5,
-    bottom: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
   input: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    color: ColorPallet.plainBlack,
   },
 });

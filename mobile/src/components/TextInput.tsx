@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  StyleSheet,
   TextInput as TextInputNative,
   TextInputProps as TextInputPropsNative,
 } from 'react-native';
@@ -18,7 +19,13 @@ export const TextInput = (props: TextInputProps) => {
       secureTextEntry={props.secureTextEntry}
       keyboardType={props.keyboardType}
       placeholderTextColor={ColorPallet.lightGray}
-      style={[commonStyles.inputField, props.style]}
+      style={[commonStyles.inputField, style.text, props.style]}
     />
   );
 };
+
+const style = StyleSheet.create({
+  text: {
+    height: 50,
+  },
+});
