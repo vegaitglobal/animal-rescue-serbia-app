@@ -4,7 +4,7 @@ export type ArticleCategoriesDto = {
   isEnabled: boolean;
 };
 
-export type UsersDto = {
+export type UserDto = {
   id: string;
   firstName: string;
   lastName: string;
@@ -46,6 +46,18 @@ export type RegistrationDto = {
   lastName: string;
   username: string;
   email: string;
+  password: string;
+  passwordConfirm: string;
+};
+
+export type ProfileRequestDto = {
+  firstName: string;
+  lastName: string;
+  username: string;
+};
+
+export type PasswordRequestDto = {
+  oldPassword: string;
   password: string;
   passwordConfirm: string;
 };

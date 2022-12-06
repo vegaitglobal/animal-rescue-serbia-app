@@ -1,10 +1,14 @@
+import {ProfileRequestDto, UserDto} from '../../../infrastructure/apiTypes';
+
 export type LogInData = {
   email: string;
   password: string;
 };
 
-export type AuthenticationState = {
+export type ProfileState = {
+  newUpdateData: ProfileUpdateData;
   newRegistration: NewRegistration;
+  user: UserDto;
 };
 
 export type NewRegistration = {
@@ -15,3 +19,5 @@ export type NewRegistration = {
   password: string;
   passwordConfirmed: string;
 };
+
+export type ProfileUpdateData = ProfileRequestDto;

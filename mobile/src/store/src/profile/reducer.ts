@@ -1,18 +1,21 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {
+  loadCurrentUser,
   setEmail,
   setFirstName,
   setLastName,
   setPassword,
   setPasswordConfirmed,
+  setProfileUpdateData,
   setUsername,
+  updateProfile,
 } from './actions';
 import {getInitialState} from './initialState';
 
 const initialState = getInitialState();
 
-export const reportSlice = createSlice({
-  name: 'reports',
+export const profileSlice = createSlice({
+  name: 'profile',
   initialState,
   reducers: {},
   extraReducers: builder => {
@@ -34,8 +37,17 @@ export const reportSlice = createSlice({
       })
       .addCase(setPasswordConfirmed, (state, {payload}) => {
         state.newRegistration.passwordConfirmed = payload;
+      })
+      .addCase(setProfileUpdateData, (state, {payload}) => {
+        state.newUpdateData = {...state.newUpdateData, ...payload};
+      })
+      .addCase(loadCurrentUser.fulfilled, (state, {payload}) => {
+        state.user = payload;
+      })
+      .addCase(updateProfile.fulfilled, (state, {payload}) => {
+        state.user = payload;
       });
   },
 });
 
-export const authenticationReducer = reportSlice.reducer;
+export const profileReducer = profileSlice.reducer;

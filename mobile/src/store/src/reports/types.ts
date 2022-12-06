@@ -1,7 +1,7 @@
 import {
   LiteViolationResponseDto,
   ViolationResponseDto,
-  UsersDto,
+  UserDto,
 } from '../../../infrastructure/apiTypes';
 
 export type NewReport = {
@@ -45,5 +45,4 @@ export type ReportState = {
   violations: ViolationResponseDto[];
   liteViolations: LiteViolationResponseDto[];
   violationsFilter: ViolationFilter;
-  users: UsersDto;
 };

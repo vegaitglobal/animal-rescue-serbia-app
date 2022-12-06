@@ -14,8 +14,8 @@ import {
   setPassword,
   setPasswordConfirmed,
   setUsername,
-} from '../store/src/authentication/actions';
-import {getNewRegistration} from '../store/src/authentication/selectors';
+} from '../store/src/profile/actions';
+import {getNewRegistration} from '../store/src/profile/selectors';
 
 export const RegistrationScreen = () => {
   const headerTitle = 'Registracija';
@@ -54,7 +54,7 @@ export const RegistrationScreen = () => {
   }, [dispatch, navigation, registrationData]);
 
   return (
-    <ScreenRootContainer title={headerTitle} showLogo hideGoBack>
+    <ScreenRootContainer title={headerTitle} showLogo>
       <View style={style.container}>
         <View style={style.rootInputContainer}>
           <View style={style.inputContainer}>

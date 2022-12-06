@@ -26,5 +26,3 @@ export const getFilterLocation = (state: RootState) =>
 
 export const getFilterCategory = (state: RootState) =>
   state.report.violationsFilter.violationCategoryId;
-
-export const getUsers = (state: RootState) => state.report.users;

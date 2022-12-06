@@ -3,48 +3,54 @@ import {AppThunkApiConfig} from '../../../hooks/storeHooks';
 import {
   LogInResponseDto,
   RegisterResponseDto,
+  UserDto,
 } from '../../../infrastructure/apiTypes';
 import {arsApi} from '../../../infrastructure/arsApi';
 import {directUpdateAction} from '../util/helpers';
-import {LogInData, NewRegistration} from './types';
+import {LogInData, NewRegistration, ProfileUpdateData} from './types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Constants} from '../../../Constants';
 
 export const setFirstName = createAction(
-  'authentication/setFirstName',
+  'profile/setFirstName',
   directUpdateAction<string>(),
 );
 
 export const setLastName = createAction(
-  'authentication/setLastName',
+  'profile/setLastName',
   directUpdateAction<string>(),
 );
 
 export const setEmail = createAction(
-  'authentication/setEmail',
+  'profile/setEmail',
   directUpdateAction<string>(),
 );
 
 export const setPassword = createAction(
-  'authentication/setPassword',
+  'profile/setPassword',
   directUpdateAction<string>(),
 );
 
 export const setPasswordConfirmed = createAction(
-  'authentication/setPasswordConfirmed',
+  'profile/setPasswordConfirmed',
   directUpdateAction<string>(),
 );
 
 export const setUsername = createAction(
-  'authentication/setUsername',
+  'profile/setUsername',
   directUpdateAction<string>(),
+);
+
+export const setProfileUpdateData = createAction(
+  'profile/setProfileUpdateData',
+  directUpdateAction<Partial<ProfileUpdateData>>(),
 );
 
 export const logIn = createAsyncThunk<
   LogInResponseDto,
   LogInData,
   AppThunkApiConfig
->('authentication/logIn', async (data, {extra}) => {
+>('profile/logIn', async (data, {extra}) => {
   const client = extra.apiClient;
   const api = arsApi(client);
 
@@ -63,7 +69,7 @@ export const register = createAsyncThunk<
   NewRegistration,
   AppThunkApiConfig
 >(
-  'authentication/register',
+  'profile/register',
   async (
     {email, firstName, lastName, password, passwordConfirmed, username},
     {extra},
@@ -84,3 +90,29 @@ export const register = createAsyncThunk<
     return result;
   },
 );
+
+export const updateProfile = createAsyncThunk<UserDto, void, AppThunkApiConfig>(
+  'profile/updateProfile',
+  async (_, {extra, getState}) => {
+    const api = arsApi(extra.apiClient);
+
+    const state = getState();
+    const {
+      profile: {
+        newUpdateData,
+        user: {id: userId},
+      },
+    } = state;
+
+    return await api.putUpdateProfile(userId, newUpdateData);
+  },
+);
+
+export const loadCurrentUser = createAsyncThunk<
+  UserDto,
+  void,
+  AppThunkApiConfig
+>('reports/loadUsers', async (_, {extra}) => {
+  const api = arsApi(extra.apiClient);
+  return await api.getCurrentUser();
+});

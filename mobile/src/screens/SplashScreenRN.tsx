@@ -19,6 +19,7 @@ export const SplashScreenRN = () => {
 
   const checkTokenAndPrefetch = useCallback(async () => {
     const token = await AsyncStorage.getItem(Constants.tokenPersistanceKey); //TODO: Try using/creating auth manager
+
     SplashScreen.hide();
     if (!token) {
       navigation.replace('Login');

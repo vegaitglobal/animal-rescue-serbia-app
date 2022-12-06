@@ -1,15 +1,15 @@
 import React, {useCallback, useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {CustomButton} from '../components/CustomButton';
 import {EmptySpace} from '../components/EmptySpace';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
 import UserAvatar from '../assets/icons/userAvatar.svg';
 import {useAppDispatch, useAppSelector} from '../hooks/storeHooks';
-import {signOut} from '../store/src/authentication/actions';
+import {signOut} from '../store/src/profile/actions';
 import {useNavigation} from '@react-navigation/native';
-import {loadUsers} from '../store/src/reports/actions';
-import {getUsers} from '../store/src/reports/selectors';
+import {loadCurrentUser} from '../store/src/profile/actions';
+import {getUsers} from '../store/src/profile/selectors';
 
 export const ProfileScreen = () => {
   const dispatch = useAppDispatch();
@@ -17,11 +17,11 @@ export const ProfileScreen = () => {
 
   const handleSignOut = () => {
     dispatch(signOut());
-    navigation.navigate('Login');
+    navigation.replace('Login');
   };
 
   const loadUsersData = useCallback(async () => {
-    await dispatch(loadUsers());
+    await dispatch(loadCurrentUser());
   }, [dispatch]);
 
   useEffect(() => {
@@ -29,6 +29,8 @@ export const ProfileScreen = () => {
   }, [loadUsersData]);
 
   const user = useAppSelector(getUsers);
+
+  const handleProfileUpdatePress = () => navigation.navigate('ProfileUpdate');
 
   return (
     <ScreenRootContainer title="Profil" showLogo>
@@ -49,9 +51,11 @@ export const ProfileScreen = () => {
 
             <EmptySpace height={16} />
 
-            <View style={styles.bubbleButtonContainer}>
-              <Text style={styles.bubbleButtonText}>Uredi profil</Text>
-            </View>
+            <Pressable onPress={handleProfileUpdatePress}>
+              <View style={styles.bubbleButtonContainer}>
+                <Text style={styles.bubbleButtonText}>Uredi profil</Text>
+              </View>
+            </Pressable>
           </View>
         </View>
 
@@ -68,6 +72,10 @@ export const ProfileScreen = () => {
         <CustomButton text="Moji oglasi" onPress={() => {}} /> */}
 
         <EmptySpace height={buttonSpacing} />
+
+        <CustomButton text="Promeni lozinku" onPress={handleSignOut} />
+
+        <EmptySpace height={40} />
 
         <CustomButton text="Odjavi se" onPress={handleSignOut} />
       </View>

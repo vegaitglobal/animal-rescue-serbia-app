@@ -6,9 +6,11 @@ import {
   LocationsDto,
   LogInRequestDto,
   LogInResponseDto,
+  PasswordRequestDto,
+  ProfileRequestDto,
   RegisterResponseDto,
   RegistrationDto,
-  UsersDto,
+  UserDto,
   ViolationCategoryDto,
   ViolationResponseDto,
   ViolationsDto,
@@ -23,6 +25,8 @@ const violationsUri = '/Violations';
 const liteViolationsUri = '/LiteViolations';
 const registrationUri = '/Users/register';
 const userUri = '/Users/me';
+const usersUri = '/Users';
+const userCredentialsUri = `${userUri}/updateCredentials`;
 
 export const arsApi = (apiClient: IApiClient) => ({
   getArticleCategories: () => {
@@ -102,10 +106,24 @@ export const arsApi = (apiClient: IApiClient) => ({
       method: 'get',
     });
   },
-  getUsers: () => {
-    return apiClient.request<UsersDto>({
+  getCurrentUser: () => {
+    return apiClient.request<UserDto>({
       url: userUri,
       method: 'get',
+    });
+  },
+  putUpdateProfile: (userId: string, profileData: ProfileRequestDto) => {
+    return apiClient.request<UserDto>({
+      url: `${usersUri}/${userId}`,
+      method: 'put',
+      data: profileData,
+    });
+  },
+  putUpdatePassword: (userId: string, passwordData: PasswordRequestDto) => {
+    return apiClient.request<UserDto>({
+      url: `${userCredentialsUri}/${userId}`,
+      method: 'put',
+      data: passwordData,
     });
   },
 });

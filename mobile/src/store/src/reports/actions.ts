@@ -4,7 +4,7 @@ import {
   ArticleCategoriesDto,
   LiteViolationResponseDto,
   LocationsDto,
-  UsersDto,
+  UserDto,
   ViolationCategoryDto,
   ViolationResponseDto,
   ViolationsDto,
@@ -130,11 +130,3 @@ export const sendLiteViolation = createAsyncThunk<
   const api = arsApi(extra.apiClient);
   return await api.postLiteViolation(data);
 });
-
-export const loadUsers = createAsyncThunk<UsersDto, void, AppThunkApiConfig>(
-  'reports/loadUsers',
-  async (_, {extra}) => {
-    const api = arsApi(extra.apiClient);
-    return await api.getUsers();
-  },
-);

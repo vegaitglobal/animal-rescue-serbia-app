@@ -7,7 +7,7 @@ import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {TextInput} from '../components/TextInput';
 import {ColorPallet} from '../resources/ColorPallet';
 import {useAppDispatch} from '../hooks/storeHooks';
-import {logIn} from '../store/src/authentication/actions';
+import {logIn} from '../store/src/profile/actions';
 import {
   loadLocations,
   loadViolationCategories,

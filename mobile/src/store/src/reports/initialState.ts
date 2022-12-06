@@ -7,12 +7,6 @@ export const getInitialState = (): ReportState => ({
   locations: [],
   newViolation: getNewViolationInitialState(),
   violationsFilter: {location: '', violationCategoryId: ''},
-  users: {
-    id: '',
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-    isActive: '',
-  },
+  violations: [],
+  liteViolations: [],
 });
