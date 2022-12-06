@@ -48,8 +48,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   activeSegmentButton: {
-    borderBottomWidth: 2,
-    borderBottomColor: ColorPallet.plainWhite,
+    textDecorationLine: 'underline',
   },
   buttonContainer: {
     paddingHorizontal: 20,
