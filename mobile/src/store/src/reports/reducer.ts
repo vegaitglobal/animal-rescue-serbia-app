@@ -14,6 +14,7 @@ import {
   loadLiteViolations,
   setFilterLocation,
   setFilterCategory,
+  loadUsers,
 } from './actions';
 import {getInitialState, getNewViolationInitialState} from './initialState';
 
@@ -66,6 +67,9 @@ export const reportSlice = createSlice({
       })
       .addCase(setFilterCategory, (state, {payload}) => {
         state.violationsFilter.violationCategoryId = payload;
+      })
+      .addCase(loadUsers.fulfilled, (state, {payload}) => {
+        state.users = payload;
       });
   },
 });

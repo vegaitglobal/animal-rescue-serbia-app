@@ -26,7 +26,11 @@ import {useAndroidBackNavigationOverride} from '../../hooks/useAndroidBackNaviga
 import {ViolationResponseDto} from '../../infrastructure/apiTypes';
 import {ColorPallet} from '../../resources/ColorPallet';
 import {loadViolations} from '../../store/src/reports/actions';
-import {getViolations} from '../../store/src/reports/selectors';
+import {
+  getFilterCategory,
+  getFilterLocation,
+  getViolations,
+} from '../../store/src/reports/selectors';
 import {bind} from '../../util/helpers';
 import {ImageListModal} from '../ImageListModal';
 
@@ -62,6 +66,9 @@ export const FullViolationList = ({
 
   const [selectedViolationId, setSelectedViolationId] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const filterCategory = useAppSelector(getFilterCategory);
+  const filterLocation = useAppSelector(getFilterLocation);
 
   const violations = useAppSelector(getViolations);
   const {mediaContent: selectedViolationMediaContent = []} = useMemo(
@@ -147,9 +154,58 @@ export const FullViolationList = ({
     [handleImageRowPress],
   );
 
+  const getFilteredDataNew = (vCategory: string, fLocation: string) => {
+    if (vCategory && !fLocation) {
+      const filterByKey = violationsByGroup.filter(violation =>
+        violation.data.find(v => v.violationCategory.name === vCategory),
+      );
+
+      const filterData = filterByKey.map(item => ({
+        ...item,
+        data: [...item.data].filter(
+          list => list.violationCategory.name === vCategory,
+        ),
+      }));
+
+      return filterData;
+    } else if (fLocation && !vCategory) {
+      const filterByKey = violationsByGroup.filter(violation =>
+        violation.data.find(v => v.location === fLocation),
+      );
+
+      const filterData = filterByKey.map(item => ({
+        ...item,
+        data: [...item.data].filter(list => list.location === fLocation),
+      }));
+      return filterData;
+    } else if (vCategory && fLocation) {
+      const filterByKey = violationsByGroup.filter(violation =>
+        violation.data.find(
+          v =>
+            v.location === fLocation && v.violationCategory.name === vCategory,
+        ),
+      );
+
+      const filterData = filterByKey.map(item => ({
+        ...item,
+        data: [...item.data].filter(
+          list =>
+            list.location === fLocation &&
+            list.violationCategory.name === vCategory,
+        ),
+      }));
+      return filterData;
+    } else {
+      return violationsByGroup;
+    }
+  };
+
   return isLoadingData && !violationsByGroup.length ? null : (
     <View style={styles.rootContainer}>
       <SectionList
+        ListEmptyComponent={() => (
+          <Text style={styles.container}>Ne postoje filtrirane opcije</Text>
+        )}
         refreshControl={
           <RefreshControl
             refreshing={isLoadingData}
@@ -157,7 +213,7 @@ export const FullViolationList = ({
             progressViewOffset={250}
           />
         }
-        sections={violationsByGroup}
+        sections={getFilteredDataNew(filterCategory, filterLocation)}
         renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
         SectionSeparatorComponent={() => <EmptySpace height={16} />}
@@ -225,5 +281,9 @@ const styles = StyleSheet.create({
   topSpacer: {
     height: 24,
     backgroundColor: ColorPallet.gray,
+  },
+  container: {
+    alignSelf: 'center',
+    fontSize: 18,
   },
 });

@@ -8,6 +8,7 @@ import {
   LogInResponseDto,
   RegisterResponseDto,
   RegistrationDto,
+  UsersDto,
   ViolationCategoryDto,
   ViolationResponseDto,
   ViolationsDto,
@@ -21,6 +22,7 @@ const violationCategories = '/ViolationCategories';
 const violationsUri = '/Violations';
 const liteViolationsUri = '/LiteViolations';
 const registrationUri = '/Users/register';
+const userUri = '/Users/me';
 
 export const arsApi = (apiClient: IApiClient) => ({
   getArticleCategories: () => {
@@ -97,6 +99,12 @@ export const arsApi = (apiClient: IApiClient) => ({
   getLiteViolations: () => {
     return apiClient.request<LiteViolationResponseDto[]>({
       url: liteViolationsUri,
+      method: 'get',
+    });
+  },
+  getUsers: () => {
+    return apiClient.request<UsersDto>({
+      url: userUri,
       method: 'get',
     });
   },

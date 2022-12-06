@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {CustomButton} from '../components/CustomButton';
 import {EmptySpace} from '../components/EmptySpace';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
 import UserAvatar from '../assets/icons/userAvatar.svg';
-import {useAppDispatch} from '../hooks/storeHooks';
+import {useAppDispatch, useAppSelector} from '../hooks/storeHooks';
 import {signOut} from '../store/src/authentication/actions';
 import {useNavigation} from '@react-navigation/native';
+import {loadUsers} from '../store/src/reports/actions';
+import {getUsers} from '../store/src/reports/selectors';
 
 export const ProfileScreen = () => {
   const dispatch = useAppDispatch();
@@ -17,6 +19,17 @@ export const ProfileScreen = () => {
     dispatch(signOut());
     navigation.navigate('Login');
   };
+
+  const loadUsersData = useCallback(async () => {
+    await dispatch(loadUsers());
+  }, [dispatch]);
+
+  useEffect(() => {
+    loadUsersData();
+  }, [loadUsersData]);
+
+  const user = useAppSelector(getUsers);
+
   return (
     <ScreenRootContainer title="Profil" showLogo>
       <View style={styles.container}>
@@ -28,11 +41,11 @@ export const ProfileScreen = () => {
           <EmptySpace width={30} />
 
           <View style={styles.userInfoContainer}>
-            <Text style={styles.userFullNameText}>John Doe</Text>
-
+            <Text style={styles.userFullNameText}>{user.firstName}</Text>
+            <Text style={styles.userFullNameText}>{user.lastName}</Text>
             <EmptySpace height={4} />
 
-            <Text style={styles.emailText}>j.doe@gmail.com</Text>
+            <Text style={styles.emailText}>{user.email}</Text>
 
             <EmptySpace height={16} />
 
@@ -43,7 +56,7 @@ export const ProfileScreen = () => {
         </View>
 
         <EmptySpace height={50} />
-
+        {/*
         <CustomButton text="Istorija prijava" onPress={() => {}} />
 
         <EmptySpace height={buttonSpacing} />
@@ -52,7 +65,7 @@ export const ProfileScreen = () => {
 
         <EmptySpace height={buttonSpacing} />
 
-        <CustomButton text="Moji oglasi" onPress={() => {}} />
+        <CustomButton text="Moji oglasi" onPress={() => {}} /> */}
 
         <EmptySpace height={buttonSpacing} />
 

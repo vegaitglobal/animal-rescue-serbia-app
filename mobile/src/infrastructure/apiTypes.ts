@@ -4,6 +4,15 @@ export type ArticleCategoriesDto = {
   isEnabled: boolean;
 };
 
+export type UsersDto = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  isActive: string;
+};
+
 export type LogInRequestDto = {
   email: string;
   password: string;

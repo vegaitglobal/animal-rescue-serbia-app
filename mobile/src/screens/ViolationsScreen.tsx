@@ -26,6 +26,8 @@ export const ViolationsScreen = () => {
 
   const onSegmentChange = (segment: Segment) => {
     setIsFullViolationList(segment === 'left');
+    dispatch(setFilterCategory(''));
+    dispatch(setFilterLocation(''));
   };
 
   const renderListHeader = () => (
