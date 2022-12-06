@@ -154,7 +154,7 @@ export const FullViolationList = ({
           <RefreshControl
             refreshing={isLoadingData}
             onRefresh={loadViolationData}
-            progressViewOffset={150}
+            progressViewOffset={250}
           />
         }
         sections={violationsByGroup}

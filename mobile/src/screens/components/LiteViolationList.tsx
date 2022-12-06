@@ -100,7 +100,7 @@ export const LiteViolationList = ({
         <RefreshControl
           refreshing={isLoading}
           onRefresh={loadViolations}
-          progressViewOffset={150}
+          progressViewOffset={250}
         />
       }
     />
@@ -114,4 +114,5 @@ const styles = StyleSheet.create({
   },
 });
 
+//TODO: Style extraction
 //TODONF: Consider moving these from components folder which indicates reusability
