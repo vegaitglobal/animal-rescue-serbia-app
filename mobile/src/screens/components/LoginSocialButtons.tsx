@@ -8,7 +8,7 @@ import Instagram from '../../assets/icons/instagram.svg';
 type IconType = 'viber' | 'instagram' | 'facebook';
 
 export const LoginSocialButtons = () => {
-  const viberNumber = '+38164 8210200'; //TODO: Extract settings like this into constants/settings object accessible globally
+  const viberNumber = '+381648210200'; //TODO: Extract settings like this into constants/settings object accessible globally
   const onPress = (id: IconType) => {
     switch (id) {
       case 'viber': {

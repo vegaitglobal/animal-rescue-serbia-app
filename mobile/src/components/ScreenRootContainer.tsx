@@ -41,7 +41,7 @@ export const ScreenRootContainer = ({
             </Text>
           </View>
         </View>
-        <View>
+        <View style={styles.rootHeaderContainer}>
           {showLogo ? (
             <View style={styles.headerLogoContainer}>
               <Logo width={64} height={64} />
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   headerLogoContainer: {
     position: 'absolute',
-    zIndex: 1,
+    zIndex: 3,
     transform: [{translateY: -24}],
     alignSelf: 'center',
   },
@@ -94,8 +94,12 @@ const styles = StyleSheet.create({
     height: 180,
     flexGrow: 1,
     marginBottom: Platform.OS === 'ios' ? -40 : 0,
+    backgroundColor: ColorPallet.gray,
   },
   loadingIndicator: {
     flexGrow: 1,
+  },
+  rootHeaderContainer: {
+    zIndex: 2,
   },
 });
