@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Toast from 'react-native-toast-message';
 import {CustomButton} from '../components/CustomButton';
@@ -8,6 +8,7 @@ import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {TextInput} from '../components/TextInput';
 import {useAppDispatch} from '../hooks/storeHooks';
 import {
+  clearProfileUpdateData,
   setProfileUpdateData,
   updateProfile,
 } from '../store/src/profile/actions';
@@ -16,8 +17,17 @@ export const ProfileUpdateScreen = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
 
+  const [isSaving, setIsSaving] = useState(false);
+
   const handleUpdateUserInfo = async () => {
+    setIsSaving(true);
+
     const result = await dispatch(updateProfile());
+
+    setIsSaving(false);
+
+    dispatch(clearProfileUpdateData());
+
     if (result.meta.requestStatus === 'rejected') {
       Toast.show({
         type: 'error',
@@ -58,7 +68,11 @@ export const ProfileUpdateScreen = () => {
           }
         />
         <EmptySpace height={40} />
-        <CustomButton text={'Sacuvaj'} onPress={handleUpdateUserInfo} />
+        <CustomButton
+          isLoading={isSaving}
+          text={'Sacuvaj'}
+          onPress={handleUpdateUserInfo}
+        />
       </View>
     </ScreenRootContainer>
   );

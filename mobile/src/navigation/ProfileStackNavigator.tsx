@@ -10,7 +10,7 @@ export const ProfileStackNavigator = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={'Profile'}
+      initialRouteName={'ProfileNavigator'}
       screenOptions={{
         headerShown: false,
         animation: 'none',

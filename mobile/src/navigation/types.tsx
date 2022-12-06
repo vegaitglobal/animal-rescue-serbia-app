@@ -22,6 +22,7 @@ export type RootStackNavigatorParams = {
   Education?: DefaultScreenParams;
   ProfileUpdate?: DefaultScreenParams;
   PasswordUpdate?: DefaultScreenParams;
+  ProfileNavigator?: DefaultScreenParams;
 };
 
 declare global {

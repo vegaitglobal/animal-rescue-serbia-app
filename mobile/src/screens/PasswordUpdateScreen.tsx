@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Toast from 'react-native-toast-message';
 import {CustomButton} from '../components/CustomButton';
@@ -8,6 +8,7 @@ import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {TextInput} from '../components/TextInput';
 import {useAppDispatch, useAppSelector} from '../hooks/storeHooks';
 import {
+  clearPasswordUpdateData,
   setPasswordUpdateData,
   updatePassword,
 } from '../store/src/profile/actions';
@@ -21,8 +22,16 @@ export const PasswordUpdateScreen = () => {
     getPasswordUpdateData,
   );
 
+  const [isSaving, setIsSaving] = useState(false);
+
   const handleSave = async () => {
+    setIsSaving(true);
+
     const result = await dispatch(updatePassword());
+
+    setIsSaving(false);
+    dispatch(clearPasswordUpdateData());
+
     if (result.meta.requestStatus === 'rejected') {
       Toast.show({
         type: 'error',
@@ -30,6 +39,7 @@ export const PasswordUpdateScreen = () => {
         text2: 'Proverite podatke i pokusajte ponovo',
         position: 'bottom',
       });
+      return;
     }
 
     Toast.show({
@@ -45,6 +55,9 @@ export const PasswordUpdateScreen = () => {
       {/* // TODONFFF: Util for this */}
       <View style={styles.screenContainer}>
         <TextInput
+          secureTextEntry
+          keyboardType={'default'}
+          textContentType={'password'}
           autoCapitalize={'none'}
           value={oldPassword}
           placeholder="Stara lozinka"
@@ -77,7 +90,11 @@ export const PasswordUpdateScreen = () => {
 
         <EmptySpace height={40} />
 
-        <CustomButton text="Sacuvaj" onPress={handleSave} />
+        <CustomButton
+          isLoading={isSaving}
+          text="Sacuvaj"
+          onPress={handleSave}
+        />
       </View>
     </ScreenRootContainer>
   );
