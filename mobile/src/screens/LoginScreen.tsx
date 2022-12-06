@@ -96,6 +96,9 @@ export const LoginScreen = () => {
           onChangeText={text => setPassword(text.trim())}
           value={password}
           secureTextEntry
+          keyboardType={'default'}
+          textContentType={'password'}
+          autoCapitalize={'none'}
           placeholder={lozinka}
           placeholderTextColor={ColorPallet.lightGray}
         />

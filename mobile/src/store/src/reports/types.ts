@@ -1,7 +1,6 @@
 import {
   LiteViolationResponseDto,
   ViolationResponseDto,
-  UserDto,
 } from '../../../infrastructure/apiTypes';
 
 export type NewReport = {

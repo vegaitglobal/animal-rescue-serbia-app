@@ -29,10 +29,24 @@ export const apiClient = (
             'Povezivanje nije uspelo, molimo, proverite internet konekciju',
           position: 'bottom',
         });
+        return Promise.reject(error);
       }
 
       if (error?.response?.status === 401) {
         // TODO: Maybe move into authentication manager
+
+        // No token so it's login request failing
+        if (error?.response.config?.headers?.Authorization === undefined) {
+          Toast.show({
+            type: 'error',
+            text1: 'Prijava neuspesna',
+            text2: 'Proverite kredencijale i pokusajte ponovo',
+            position: 'bottom',
+          });
+
+          return Promise.reject(error);
+        }
+
         Toast.show({
           type: 'info',
           text1: 'Sesija je istekla, molimo prijavite se ponovo.',
@@ -42,6 +56,7 @@ export const apiClient = (
         AsyncStorage.setItem(Constants.tokenPersistanceKey, '');
 
         navigationService.resetToRoute('Login'); // Once token expires we want to request user to re-sign-in
+        return Promise.reject(error);
       }
 
       console.log('Error: ', error);

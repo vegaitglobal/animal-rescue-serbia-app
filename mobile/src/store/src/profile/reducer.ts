@@ -1,16 +1,24 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {
+  clearPasswordUpdateData,
+  clearProfileUpdateData,
   loadCurrentUser,
   setEmail,
   setFirstName,
   setLastName,
   setPassword,
   setPasswordConfirmed,
+  setPasswordUpdateData,
   setProfileUpdateData,
   setUsername,
+  updatePassword,
   updateProfile,
 } from './actions';
-import {getInitialState} from './initialState';
+import {
+  getInitialNewPasswordUpdateState,
+  getInitialNewProfileUpdateState,
+  getInitialState,
+} from './initialState';
 
 const initialState = getInitialState();
 
@@ -46,6 +54,18 @@ export const profileSlice = createSlice({
       })
       .addCase(updateProfile.fulfilled, (state, {payload}) => {
         state.user = payload;
+      })
+      .addCase(updatePassword.fulfilled, (state, {payload}) => {
+        state.user = payload;
+      })
+      .addCase(setPasswordUpdateData, (state, {payload}) => {
+        state.newPasswordData = {...state.newPasswordData, ...payload};
+      })
+      .addCase(clearPasswordUpdateData, state => {
+        state.newPasswordData = getInitialNewPasswordUpdateState();
+      })
+      .addCase(clearProfileUpdateData, state => {
+        state.newUpdateData = getInitialNewProfileUpdateState();
       });
   },
 });

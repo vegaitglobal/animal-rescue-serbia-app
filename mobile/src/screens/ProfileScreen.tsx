@@ -31,6 +31,7 @@ export const ProfileScreen = () => {
   const user = useAppSelector(getUsers);
 
   const handleProfileUpdatePress = () => navigation.navigate('ProfileUpdate');
+  const handleChangePasswordPress = () => navigation.navigate('PasswordUpdate');
 
   return (
     <ScreenRootContainer title="Profil" showLogo>
@@ -73,7 +74,10 @@ export const ProfileScreen = () => {
 
         <EmptySpace height={buttonSpacing} />
 
-        <CustomButton text="Promeni lozinku" onPress={handleSignOut} />
+        <CustomButton
+          text="Promeni lozinku"
+          onPress={handleChangePasswordPress}
+        />
 
         <EmptySpace height={20} />
 

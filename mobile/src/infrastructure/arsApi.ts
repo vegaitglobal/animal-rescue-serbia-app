@@ -26,7 +26,7 @@ const liteViolationsUri = '/LiteViolations';
 const registrationUri = '/Users/register';
 const userUri = '/Users/me';
 const usersUri = '/Users';
-const userCredentialsUri = `${userUri}/updateCredentials`;
+const userCredentialsUri = `${usersUri}/updateCredentials`;
 
 export const arsApi = (apiClient: IApiClient) => ({
   getArticleCategories: () => {

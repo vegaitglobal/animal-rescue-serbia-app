@@ -7,7 +7,12 @@ import {
 } from '../../../infrastructure/apiTypes';
 import {arsApi} from '../../../infrastructure/arsApi';
 import {directUpdateAction} from '../util/helpers';
-import {LogInData, NewRegistration, ProfileUpdateData} from './types';
+import {
+  LogInData,
+  NewRegistration,
+  PasswordUpdateData,
+  ProfileUpdateData,
+} from './types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Constants} from '../../../Constants';
 
@@ -44,6 +49,21 @@ export const setUsername = createAction(
 export const setProfileUpdateData = createAction(
   'profile/setProfileUpdateData',
   directUpdateAction<Partial<ProfileUpdateData>>(),
+);
+
+export const clearProfileUpdateData = createAction(
+  'profile/clearProfileUpdateData',
+  directUpdateAction<void>(),
+);
+
+export const setPasswordUpdateData = createAction(
+  'profile/setPasswordUpdateData',
+  directUpdateAction<Partial<PasswordUpdateData>>(),
+);
+
+export const clearPasswordUpdateData = createAction(
+  'profile/clearPasswordUpdateData',
+  directUpdateAction<void>(),
 );
 
 export const logIn = createAsyncThunk<
@@ -115,4 +135,22 @@ export const loadCurrentUser = createAsyncThunk<
 >('reports/loadUsers', async (_, {extra}) => {
   const api = arsApi(extra.apiClient);
   return await api.getCurrentUser();
+});
+
+export const updatePassword = createAsyncThunk<
+  UserDto,
+  void,
+  AppThunkApiConfig
+>('profile/updatePassword', async (_, {extra, getState}) => {
+  const api = arsApi(extra.apiClient);
+
+  const state = getState();
+  const {
+    profile: {
+      user: {id: userId},
+      newPasswordData,
+    },
+  } = state;
+
+  return await api.putUpdatePassword(userId, newPasswordData);
 });

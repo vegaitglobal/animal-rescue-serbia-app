@@ -1,4 +1,9 @@
-import {ProfileState, NewRegistration, ProfileUpdateData} from './types';
+import {
+  ProfileState,
+  NewRegistration,
+  ProfileUpdateData,
+  PasswordUpdateData,
+} from './types';
 
 export const getInitialNewRegistrationState = (): NewRegistration => ({
   firstName: '',
@@ -15,6 +20,12 @@ export const getInitialNewProfileUpdateState = (): ProfileUpdateData => ({
   username: '',
 });
 
+export const getInitialNewPasswordUpdateState = (): PasswordUpdateData => ({
+  oldPassword: '',
+  password: '',
+  passwordConfirm: '',
+});
+
 export const getInitialState = (): ProfileState => ({
   newUpdateData: getInitialNewProfileUpdateState(),
   newRegistration: getInitialNewRegistrationState(),
@@ -26,4 +37,5 @@ export const getInitialState = (): ProfileState => ({
     email: '',
     isActive: '',
   },
+  newPasswordData: getInitialNewPasswordUpdateState(),
 });
