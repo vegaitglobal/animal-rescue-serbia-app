@@ -1,18 +1,19 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {CustomButton} from '../components/CustomButton';
 import {EmptySpace} from '../components/EmptySpace';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
 import {useAppDispatch, useAppSelector} from '../hooks/storeHooks';
-import {signOut} from '../store/src/profile/actions';
 import {useNavigation} from '@react-navigation/native';
-import {loadCurrentUser} from '../store/src/profile/actions';
 import {getUsers} from '../store/src/profile/selectors';
+import {loadCurrentUser, signOut} from '../store/src/profile/actions';
+import {ActivityIndicator} from '../components/ActivityIndicator';
 
 export const ProfileScreen = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleSignOut = () => {
     dispatch(signOut());
@@ -20,7 +21,11 @@ export const ProfileScreen = () => {
   };
 
   const loadUsersData = useCallback(async () => {
+    setIsLoading(true);
+
     await dispatch(loadCurrentUser());
+
+    setIsLoading(false);
   }, [dispatch]);
 
   useEffect(() => {
@@ -36,24 +41,28 @@ export const ProfileScreen = () => {
     <ScreenRootContainer title="Profil" showLogo>
       <View style={styles.container}>
         <View style={styles.userDataHeaderContainer}>
-          <View style={styles.userInfoContainer}>
-            <Text
-              style={
-                styles.userFullNameText
-              }>{`${user.firstName} ${user.lastName}`}</Text>
+          {isLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <View style={styles.userInfoContainer}>
+              <Text
+                style={
+                  styles.userFullNameText
+                }>{`${user.firstName} ${user.lastName}`}</Text>
 
-            <EmptySpace height={4} />
+              <EmptySpace height={4} />
 
-            <Text style={styles.emailText}>{user.email}</Text>
+              <Text style={styles.emailText}>{user.email}</Text>
 
-            <EmptySpace height={16} />
+              <EmptySpace height={16} />
 
-            <Pressable onPress={handleProfileUpdatePress}>
-              <View style={styles.bubbleButtonContainer}>
-                <Text style={styles.bubbleButtonText}>Uredi profil</Text>
-              </View>
-            </Pressable>
-          </View>
+              <Pressable onPress={handleProfileUpdatePress}>
+                <View style={styles.bubbleButtonContainer}>
+                  <Text style={styles.bubbleButtonText}>Uredi profil</Text>
+                </View>
+              </Pressable>
+            </View>
+          )}
         </View>
 
         <EmptySpace height={50} />
