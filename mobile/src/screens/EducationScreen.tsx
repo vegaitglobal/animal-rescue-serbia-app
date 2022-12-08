@@ -1,5 +1,12 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {Dimensions, FlatList, StyleSheet, Text, View} from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {ActivityIndicator} from '../components/ActivityIndicator';
 import {EmptySpace} from '../components/EmptySpace';
 import {MediaContentBox} from '../components/MediaContentBox';
@@ -77,24 +84,32 @@ export const EducationScreen = () => {
     );
   }, []);
 
+  const isLoadingInitially = isLoading && currentArticlePage === 1;
+
   return (
     <ScreenRootContainer title="Edukacija">
-      {isLoading && currentArticlePage === 0 ? (
-        <ActivityIndicator style={styles.fullScreenLoadingIndicator} />
-      ) : (
-        <View style={styles.rootContainer}>
-          <FlatList
-            data={paginatedArticles}
-            renderItem={renderItem}
-            ItemSeparatorComponent={() => <EmptySpace height={20} />}
-            ListFooterComponent={
-              <Footer loadedFullList={isLastPageAlreadyLoaded} />
-            }
-            showsVerticalScrollIndicator={false}
-            onEndReached={makeNextPageActive}
-          />
-        </View>
-      )}
+      <View style={styles.rootContainer}>
+        <FlatList
+          data={paginatedArticles}
+          renderItem={renderItem}
+          ItemSeparatorComponent={() => <EmptySpace height={20} />}
+          ListFooterComponent={
+            <Footer loadedFullList={isLastPageAlreadyLoaded} />
+          }
+          refreshControl={
+            <RefreshControl
+              refreshing={isLoadingInitially}
+              onRefresh={() => {
+                dispatch(clearLoadedArticles());
+                loadPaginatedArticles();
+              }}
+              progressViewOffset={50}
+            />
+          }
+          showsVerticalScrollIndicator={false}
+          onEndReached={makeNextPageActive}
+        />
+      </View>
     </ScreenRootContainer>
   );
 };
