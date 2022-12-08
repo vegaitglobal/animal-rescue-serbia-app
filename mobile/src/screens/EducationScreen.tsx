@@ -18,11 +18,16 @@ export const EducationScreen = () => {
   const paginatedArticlesTotalCount = useAppSelector(
     getFilteredArticlesTotalCount,
   );
-  const [currentArticlePage, setCurrentArticlePage] = useState(0);
+  const [currentArticlePage, setCurrentArticlePage] = useState(1);
   const pageSize = 10;
+  const [isLoading, setIsLoading] = useState(true);
 
   const loadPaginatedArticles = useCallback(async () => {
+    setIsLoading(true);
+
     await dispatch(loadArticles({pageNumber: currentArticlePage, pageSize}));
+
+    setIsLoading(false);
   }, [currentArticlePage, dispatch]);
 
   useEffect(() => {
@@ -52,7 +57,7 @@ export const EducationScreen = () => {
   const renderItem = useCallback(({item}: {item: ArticleResponseDto}) => {
     return (
       <View>
-        <Text style={{fontSize: 20, fontWeight: '800'}}>{item.title}</Text>
+        <Text style={styles.title}>{item.title}</Text>
 
         <EmptySpace height={20} />
 
@@ -74,19 +79,22 @@ export const EducationScreen = () => {
 
   return (
     <ScreenRootContainer title="Edukacija">
-      <Text>{'PAGE: ' + currentArticlePage}</Text>
-      <View style={styles.rootContainer}>
-        <FlatList
-          data={paginatedArticles}
-          renderItem={renderItem}
-          ItemSeparatorComponent={() => <EmptySpace height={20} />}
-          ListFooterComponent={
-            <Footer loadedFullList={isLastPageAlreadyLoaded} />
-          }
-          showsVerticalScrollIndicator={false}
-          onEndReached={makeNextPageActive}
-        />
-      </View>
+      {isLoading && currentArticlePage === 0 ? (
+        <ActivityIndicator style={styles.fullScreenLoadingIndicator} />
+      ) : (
+        <View style={styles.rootContainer}>
+          <FlatList
+            data={paginatedArticles}
+            renderItem={renderItem}
+            ItemSeparatorComponent={() => <EmptySpace height={20} />}
+            ListFooterComponent={
+              <Footer loadedFullList={isLastPageAlreadyLoaded} />
+            }
+            showsVerticalScrollIndicator={false}
+            onEndReached={makeNextPageActive}
+          />
+        </View>
+      )}
     </ScreenRootContainer>
   );
 };
@@ -118,5 +126,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 20,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: '800',
+  },
+  fullScreenLoadingIndicator: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
