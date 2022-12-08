@@ -8,7 +8,7 @@ import { Back } from '../../../../shared/Back';
 import Layout from '../../../../shared/Layout';
 import { selectStyles } from '../../../../styles/selectStyles';
 
-interface IPage {
+interface IArticle {
   title: string;
   type: string;
   category: string;
@@ -23,11 +23,11 @@ interface ITypeSelect {
 }
 
 const typeOptions: ITypeSelect[] = [
-  { label: 'Stranica', value: 'Page' },
+  { label: 'Stranica', value: 'Article' },
   { label: 'Blog', value: 'Article' },
 ];
 
-const initialData: IPage = {
+const initialData: IArticle = {
   title: '',
   type: '',
   category: '',
@@ -36,10 +36,10 @@ const initialData: IPage = {
   description: '',
 };
 
-const PageForm = () => {
+const ArticleForm = () => {
   const { data: categories, isLoading: categoriesLoading } =
     useGetArticleCategories();
-  const [data, setData] = useState<IPage>(initialData);
+  const [data, setData] = useState<IArticle>(initialData);
   const navigate = useNavigate();
   const { mutate: postArticle } = usePostArticle({
     onSuccess: () => navigate('/stranice'),
@@ -188,4 +188,4 @@ const PageForm = () => {
   );
 };
 
-export default PageForm;
+export default ArticleForm;
