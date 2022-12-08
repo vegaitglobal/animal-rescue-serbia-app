@@ -8,5 +8,9 @@ public class ViolationEntityTypeConfiguration : IEntityTypeConfiguration<Violati
 {
     public void Configure(EntityTypeBuilder<Violation> entity)
     {
+        entity
+            .HasMany<ViolationMediaContent>(x => x.MediaContent)
+            .WithOne()
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

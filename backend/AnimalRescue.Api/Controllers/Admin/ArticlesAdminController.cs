@@ -5,12 +5,13 @@ using AnimalRescue.Contracts.FilterRequests;
 using AnimalRescue.Contracts.Pagination;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace AnimalRescue.Api.Controllers.Admin;
 
 [Route("api/admin/articles")]
 [ApiController]
-[Authorize(Roles = Roles.AdminRole)]
+[Authorize(Roles = Roles.ModeratorRole)]
 public class ArticlesAdminController : ControllerBase
 {
     private readonly IArticleService _articleService;
@@ -30,8 +31,8 @@ public class ArticlesAdminController : ControllerBase
         return Ok(violations);
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<ArticleDto>> GetAsync(Guid id)
+    [HttpGet("{id}", Name = "GetArticleAsync")]
+    public async Task<ActionResult<ArticleDto>> GetArticleAsync(Guid id)
     {
         var article = await _articleService.GetAsync(id);
 
@@ -40,10 +41,19 @@ public class ArticlesAdminController : ControllerBase
             : Ok(article);
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult<ArticleDto>> UpdateAsync(Guid id, ArticleUpdateDto updateDto)
+    [HttpPost]
+    [ProducesResponseType((int)HttpStatusCode.Created)]
+    public async Task<ActionResult> CreateAsync([FromForm] ArticleCreateDto dto)
     {
-        var updated = await _articleService.UpdateAsync(id, updateDto);
+        var created = await _articleService.AddAsync(dto);
+
+        return CreatedAtRoute("GetArticleAsync", new { id = created.Id }, null);
+    }
+
+    [HttpPatch("{id}")]
+    public async Task<ActionResult<ArticleDto>> PatchAsync(Guid id, [FromForm] ArticleUpdateDto updateDto)
+    {
+        var updated = await _articleService.PatchAsync(id, updateDto);
 
         return Ok(updated);
     }

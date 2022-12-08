@@ -67,8 +67,14 @@ public class SecurityService : ISecurityService
             new(ClaimTypes.Role, Roles.UserRole),
         };
 
+        if (userRole is UserRoles.Moderator)
+        {
+            roles.Add(new(ClaimTypes.Role, Roles.ModeratorRole));
+        }
+
         if (userRole is UserRoles.Admin)
         {
+            roles.Add(new(ClaimTypes.Role, Roles.ModeratorRole));
             roles.Add(new(ClaimTypes.Role, Roles.AdminRole));
         }
 

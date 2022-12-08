@@ -31,6 +31,9 @@ public class AnimalRescueDbContext : DbContext
                     .ApplyConfiguration(new LiteViolationEntityTypeConfiguration())
                     .ApplyConfiguration(new ViolationEntityTypeConfiguration())
                     .ApplyConfiguration(new UserEntityTypeConfiguration())
-                    .ApplyConfiguration(new ArticleCategoryEntityTypeConfiguration());
+                    .ApplyConfiguration(new ArticleCategoryEntityTypeConfiguration())
+                    .ApplyConfiguration(new ArticleEntityTypeConfiguration())
+                    .ApplyConfiguration(new ArticleMediaContentEntityTypeConfiguration())
+                    .ApplyConfiguration(new ViolationMediaContentEntityTypeConfiguration());
     }
 }

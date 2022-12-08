@@ -1,4 +1,5 @@
 using AnimalRescue.Api.Extensions;
+using AnimalRescue.Api.Filters;
 using AnimalRescue.Application.Constants;
 using AnimalRescue.Application.Extensions;
 using AnimalRescue.DataAccess;
@@ -36,10 +37,20 @@ public class Program
         {
             options.AddDefaultPolicy(builder =>
             {
-                builder.WithOrigins(configuration.GetSection(AppSettingKeys.CorsOrigins).Get<string[]>())
-                    .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowCredentials();
+                if (webHostEnvironment.IsDevelopment())
+                {
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                }
+                else
+                {
+                    builder.WithOrigins(configuration.GetSection(AppSettingKeys.CorsOrigins).Get<string[]>())
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                }
             });
         });
 
@@ -58,8 +69,9 @@ public class Program
             {
                 Name = "Authorization",
                 In = ParameterLocation.Header,
-                Type = SecuritySchemeType.ApiKey,
+                Type = SecuritySchemeType.Http,
                 Scheme = "Bearer",
+                BearerFormat = "JWT",
             });
             config.AddSecurityRequirement(new OpenApiSecurityRequirement()
             {
@@ -80,7 +92,10 @@ public class Program
             });
         });
 
-        services.AddControllers()
+        services.AddControllers(options =>
+            {
+                options.Filters.Add(new CheckIsUserActiveAttribute());
+            })
             .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(allowIntegerValues: false));
@@ -122,11 +137,10 @@ public class Program
                 using var scope = applicationBuilder.ApplicationServices.CreateScope();
                 var dataSeeder = scope.ServiceProvider.GetRequiredService<SeedData>();
                 dataSeeder.SeedTestData();
+                SeedSuperUser(applicationBuilder);
             }
             catch (Exception ex) { }
         }
-
-        SeedSuperUser(applicationBuilder);
 
         applicationBuilder
             .UseProblemDetails()

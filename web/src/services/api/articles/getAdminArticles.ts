@@ -10,12 +10,13 @@ export interface IAdminArticleMediaContent {
   id: string;
   fileName: string;
   filePath: string;
+  relativeFilePath: string;
 }
 
 export interface IAdminArticle {
   id: string;
   title: string;
-  description: string;
+  decription: string;
   type: string;
   category: IAdminArticleCategory;
   mediaContent: IAdminArticleMediaContent;
@@ -28,10 +29,14 @@ export interface IAdminArticlesPageResponse {
 }
 
 export const getAdminArticles = async (
-  pageParam: number
+  pageParam: number,
+  search: string
 ): Promise<IAdminArticlesPageResponse> => {
-  console.log('usao');
-  const baseUrl = `/api/admin/articles/PaginatedArticles?PageSize=9&PageNumber=${pageParam}`;
+  const searchParam = search ? `&SearchTerm=${search}` : '';
+  const baseUrl =
+    `/api/admin/articles/PaginatedArticles?PageSize=9&PageNumber=${pageParam}` +
+    searchParam;
+
   const { data } = await axiosRequest('GET', baseUrl);
 
   return data;

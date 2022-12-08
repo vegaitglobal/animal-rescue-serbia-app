@@ -5,7 +5,7 @@ export const selectStyles = {
     ...provided,
     border: `2px solid ${state.isFocused ? '#3e3d3d' : '#3e3d3d'}`,
     boxShadow: `inset 0 0 0 0 ${state.isFocused ? '#3e3d3d' : '#3e3d3d'}`,
-    width: '190px',
+    width: '460px',
     '&:hover': {
       cursor: 'pointer',
       borderColor: '#3e3d3d',

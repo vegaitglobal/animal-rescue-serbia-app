@@ -11,7 +11,7 @@ type UseGetCategoriesOptions = Omit<
     ICategoryResponse[],
     Array<string>
   >,
-  'queryKey' | 'queruFn'
+  'queryKey' | 'queryFn'
 >;
 
 export const useGetCategories = (queryOptions?: UseGetCategoriesOptions) => {

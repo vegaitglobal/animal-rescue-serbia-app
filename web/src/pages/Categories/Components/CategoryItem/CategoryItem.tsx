@@ -4,6 +4,7 @@ import { usePutCategory } from '../../../../hooks/api/Categories/usePutCategory'
 import { ICategoryResponse } from '../../../../services/api/Categories/getCategories';
 import { Pencil } from '../../../../shared/Icons';
 import Trashcan from '../../../../shared/Icons/Trashcan/Trashcan';
+import Unarchive from '../../../../shared/Icons/Unarchive/Unarchive';
 import Modal from '../../../../shared/Modal/Modal';
 
 type Props = {
@@ -50,12 +51,12 @@ const CategoryItem: React.FC<Props> = ({ category }) => {
     setShowDeleteModal(false);
   };
 
-  const handleDeleteApprove = () => {
+  const handleToggleArchiveApprove = () => {
     updateSubmit({
       id: category.id,
       putData: {
         name: name,
-        isEnabled: false,
+        isEnabled: !category.isEnabled,
       },
     });
     setShowDeleteModal(false);
@@ -71,13 +72,15 @@ const CategoryItem: React.FC<Props> = ({ category }) => {
 
   return (
     <>
-      <span className="category__name">
+      <span
+        className={`category__name ${category.isEnabled ? '' : 'disabled'}`}
+      >
         {category.name}
         <button className="category__btn" onClick={handleEditClick}>
           <Pencil />
         </button>
         <button className="category__btn" onClick={handleTrashcanClick}>
-          <Trashcan />
+          {category.isEnabled ? <Trashcan /> : <Unarchive />}
         </button>
       </span>
       {showEditModal && (
@@ -97,10 +100,14 @@ const CategoryItem: React.FC<Props> = ({ category }) => {
       )}
       {showDeleteModal && (
         <Modal
-          title="Brisanje kategorije"
-          handleApprove={handleDeleteApprove}
+          title="Arhiviranje kategorije"
+          handleApprove={handleToggleArchiveApprove}
           handleCancel={handleDeleteCancel}
-          content="Da li ste sigurni da zelite da obrisete kategoriju?"
+          content={
+            category.isEnabled
+              ? 'Da li ste sigurni da zelite da arhivirate kategoriju?'
+              : 'Da li ste sigurni da zelite aktivirati kategoriju?'
+          }
         />
       )}
     </>

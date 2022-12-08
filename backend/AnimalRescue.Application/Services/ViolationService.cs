@@ -3,8 +3,8 @@ using AnimalRescue.Contracts.Abstractions.Repositories;
 using AnimalRescue.Contracts.Abstractions.Services;
 using AnimalRescue.Contracts.Dto;
 using AnimalRescue.Contracts.FilterRequests;
-using AnimalRescue.Contracts.Pagination;
 using AnimalRescue.Contracts.Options;
+using AnimalRescue.Contracts.Pagination;
 using AnimalRescue.Domain.Exceptions;
 using AnimalRescue.Domain.Models;
 using AnimalRescue.HtmlTemplates;
@@ -57,8 +57,8 @@ public class ViolationService : IViolationService
 
         var user = await _userRepository.GetByEmailAsync(currentUser.Email);
 
-        var fileUploadTasks = violationDto.Files?.Select(f => _mediaContentService.UploadMediaContentAsync(f));
-        var mediaContent = Array.Empty<MediaContent>();
+        var fileUploadTasks = violationDto.Files?.Select(f => _mediaContentService.UploadViolationMediaContentAsync(f));
+        var mediaContent = Array.Empty<ViolationMediaContent>();
         if (fileUploadTasks is not null)
         {
             mediaContent = await Task.WhenAll(fileUploadTasks);
@@ -81,7 +81,7 @@ public class ViolationService : IViolationService
 
         var created = await _violationRepository.AddAsync(violationToCreate);
 
-        await SendEmailAsync(violationToCreate.Id);
+        await SendEmailAsync(violationToCreate.Id, currentUser.Email);
 
         return created.ToDto();
     }
@@ -119,6 +119,13 @@ public class ViolationService : IViolationService
         return entity?.ToDto();
     }
 
+    public async Task<ViolationDto?> GetApprovedAsync(Guid id)
+    {
+        var entity = await _violationRepository.GetApprovedAsync(id);
+
+        return entity?.ToDto();
+    }
+
     public async Task<AdminViolationDto?> GetForAdminAsync(Guid id)
     {
         var entity = await _violationRepository.GetAsync(id);
@@ -143,10 +150,11 @@ public class ViolationService : IViolationService
         return updated.ToAdminDto();
     }
 
-    private async Task SendEmailAsync(Guid id)
+    private async Task SendEmailAsync(Guid id, string userEmail)
     {
+
         var urlToForwardTo = string.Format(_notificationOptions.UrlTemplate, id);
-        var htmlMessageBody = await GenerateHtmlMessageBody(urlToForwardTo);
+        var htmlMessageBody = await GenerateHtmlMessageBody(userEmail, urlToForwardTo, _notificationOptions.LogoUrl);
         var emailRequest = new EmailRequestDto
         {
             Subject = _notificationOptions.Subject,
@@ -164,11 +172,13 @@ public class ViolationService : IViolationService
         }
     }
 
-    private static Task<string> GenerateHtmlMessageBody(string url)
+    private static Task<string> GenerateHtmlMessageBody(string userEmail, string urlToForwardTo, string logoUrl)
     {
         var templateModel = new ViolationSubmittedTemplateModel
         {
-            Url = url,
+            Url = urlToForwardTo,
+            Email = userEmail,
+            LogoUrl = logoUrl,
         };
 
         return RazorTemplateEngine.RenderAsync("/ViolationSubmittedTemplate.cshtml", templateModel);

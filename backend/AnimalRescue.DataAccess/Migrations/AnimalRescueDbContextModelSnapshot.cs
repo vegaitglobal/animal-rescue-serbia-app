@@ -35,9 +35,6 @@ namespace AnimalRescue.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("MediaContentId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -51,8 +48,6 @@ namespace AnimalRescue.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("MediaContentId");
 
                     b.HasIndex("UserId");
 
@@ -78,6 +73,32 @@ namespace AnimalRescue.DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("ArticleCategories");
+                });
+
+            modelBuilder.Entity("AnimalRescue.Domain.Models.ArticleMediaContent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RelativePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ArticleMediaContent");
                 });
 
             modelBuilder.Entity("AnimalRescue.Domain.Models.LiteViolation", b =>
@@ -109,30 +130,6 @@ namespace AnimalRescue.DataAccess.Migrations
                     b.ToTable("LiteViolations");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("LiteViolation");
-                });
-
-            modelBuilder.Entity("AnimalRescue.Domain.Models.MediaContent", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("ViolationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ViolationId");
-
-                    b.ToTable("MediaContent");
                 });
 
             modelBuilder.Entity("AnimalRescue.Domain.Models.User", b =>
@@ -201,6 +198,38 @@ namespace AnimalRescue.DataAccess.Migrations
                     b.ToTable("ViolationCategories");
                 });
 
+            modelBuilder.Entity("AnimalRescue.Domain.Models.ViolationMediaContent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RelativePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ViolationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ViolationId");
+
+                    b.ToTable("ViolationMediaContent");
+                });
+
             modelBuilder.Entity("AnimalRescue.Domain.Models.Violation", b =>
                 {
                     b.HasBaseType("AnimalRescue.Domain.Models.LiteViolation");
@@ -237,10 +266,6 @@ namespace AnimalRescue.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AnimalRescue.Domain.Models.MediaContent", "MediaContent")
-                        .WithMany()
-                        .HasForeignKey("MediaContentId");
-
                     b.HasOne("AnimalRescue.Domain.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -249,9 +274,16 @@ namespace AnimalRescue.DataAccess.Migrations
 
                     b.Navigation("Category");
 
-                    b.Navigation("MediaContent");
-
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AnimalRescue.Domain.Models.ArticleMediaContent", b =>
+                {
+                    b.HasOne("AnimalRescue.Domain.Models.Article", null)
+                        .WithOne("MediaContent")
+                        .HasForeignKey("AnimalRescue.Domain.Models.ArticleMediaContent", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("AnimalRescue.Domain.Models.LiteViolation", b =>
@@ -273,11 +305,17 @@ namespace AnimalRescue.DataAccess.Migrations
                     b.Navigation("ViolationCategory");
                 });
 
-            modelBuilder.Entity("AnimalRescue.Domain.Models.MediaContent", b =>
+            modelBuilder.Entity("AnimalRescue.Domain.Models.ViolationMediaContent", b =>
                 {
                     b.HasOne("AnimalRescue.Domain.Models.Violation", null)
                         .WithMany("MediaContent")
-                        .HasForeignKey("ViolationId");
+                        .HasForeignKey("ViolationId")
+                        .OnDelete(DeleteBehavior.NoAction);
+                });
+
+            modelBuilder.Entity("AnimalRescue.Domain.Models.Article", b =>
+                {
+                    b.Navigation("MediaContent");
                 });
 
             modelBuilder.Entity("AnimalRescue.Domain.Models.Violation", b =>

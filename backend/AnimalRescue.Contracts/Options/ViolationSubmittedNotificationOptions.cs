@@ -7,4 +7,6 @@ public class ViolationSubmittedNotificationOptions
     public string Subject { get; set; } = string.Empty;
 
     public string UrlTemplate { get; set; } = string.Empty;
+
+    public string LogoUrl { get; set; } = string.Empty;
 }

@@ -5,6 +5,8 @@ namespace AnimalRescue.Contracts.Abstractions.Services
 {
     public interface IMediaContentService
     {
-        Task<MediaContent> UploadMediaContentAsync(IFormFile fileToUpload);
+        Task<ViolationMediaContent> UploadViolationMediaContentAsync(IFormFile fileToUpload);
+
+        Task<ArticleMediaContent> UploadArticleMediaContentAsync(IFormFile fileToUpload);
     }
 }

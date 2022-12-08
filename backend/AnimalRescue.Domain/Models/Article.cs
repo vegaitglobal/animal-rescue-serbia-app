@@ -14,5 +14,5 @@ public class Article
 
     public virtual User User { get; set; }
 
-    public virtual MediaContent? MediaContent { get; set; }
+    public virtual ArticleMediaContent? MediaContent { get; set; }
 }

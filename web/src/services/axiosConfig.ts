@@ -29,7 +29,7 @@ export const axiosRequest = <T = any>(
 
   axios.interceptors.request.use((config) => {
     const accessToken = storageApi.getToken();
-    if (config.headers && config.url !== '/Users/login' && !!accessToken) {
+    if (config.headers && config.url !== '/api/Users/login' && !!accessToken) {
       config.headers['Authorization'] = 'Bearer ' + accessToken;
     }
     return config;
