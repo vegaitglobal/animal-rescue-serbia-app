@@ -12,7 +12,7 @@ public class Violation : LiteViolation
 
     public string? AdminNotes { get; set; }
 
-    public virtual IEnumerable<MediaContent> MediaContent { get; set; } = new List<MediaContent>();
+    public virtual IEnumerable<ViolationMediaContent> MediaContent { get; set; } = new List<ViolationMediaContent>();
 
     public ViolationStatus Status { get; set; }
 }

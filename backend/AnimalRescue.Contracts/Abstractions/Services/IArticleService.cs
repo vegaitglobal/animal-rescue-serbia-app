@@ -13,5 +13,5 @@ public interface IArticleService
 
     Task<ArticleDto> AddAsync(ArticleCreateDto createDto);
 
-    Task<ArticleDto> UpdateAsync(Guid id, ArticleUpdateDto article);
+    Task<ArticleDto> PatchAsync(Guid id, ArticleUpdateDto article);
 }

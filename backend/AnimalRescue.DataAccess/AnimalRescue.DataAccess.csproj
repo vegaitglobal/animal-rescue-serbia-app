@@ -21,8 +21,4 @@
     <ProjectReference Include="..\AnimalRescue.Domain\AnimalRescue.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DbModelsConfigurations\" />
-  </ItemGroup>
-
 </Project>

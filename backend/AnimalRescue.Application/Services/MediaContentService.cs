@@ -15,10 +15,35 @@ namespace AnimalRescue.Application.Services
             _mediaContentRepository = mediaContentRepository;
         }
 
-        public async Task<MediaContent> UploadMediaContentAsync(IFormFile fileToUpload)
+        public async Task<ArticleMediaContent> UploadArticleMediaContentAsync(IFormFile fileToUpload)
+        {
+            // TODO allow only images
+            MediaValidator.ValidateMedia(fileToUpload);
+            var media = await _mediaContentRepository.UploadMediaContentAsync(fileToUpload);
+
+            return new ArticleMediaContent
+            {
+                Id = media.Id,
+                FileName = media.FileName,
+                ContentType = media.ContentType,
+                FilePath = media.FilePath,
+                RelativePath = media.RelativePath,
+            };
+        }
+
+        public async Task<ViolationMediaContent> UploadViolationMediaContentAsync(IFormFile fileToUpload)
         {
             MediaValidator.ValidateMedia(fileToUpload);
-            return await _mediaContentRepository.UploadMediaContentAsync(fileToUpload);
+            var media = await _mediaContentRepository.UploadMediaContentAsync(fileToUpload);
+
+            return new ViolationMediaContent
+            {
+                Id = media.Id,
+                FileName = media.FileName,
+                ContentType = media.ContentType,
+                FilePath = media.FilePath,
+                RelativePath = media.RelativePath,
+            };
         }
     }
 }
