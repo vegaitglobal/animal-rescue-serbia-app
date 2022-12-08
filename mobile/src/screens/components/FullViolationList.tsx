@@ -154,6 +154,8 @@ export const FullViolationList = ({
     [handleImageRowPress],
   );
 
+  console.log('violationsByGroup.length ', violationsByGroup.length);
+
   const getFilteredDataNew = (vCategory: string, fLocation: string) => {
     if (vCategory && !fLocation) {
       const filterByKey = violationsByGroup.filter(violation =>
@@ -226,7 +228,7 @@ export const FullViolationList = ({
         )}
         ListFooterComponent={() => (
           <View style={styles.footerContainer}>
-            <Separator />
+            {violationsByGroup.length ? <Separator /> : null}
             <EmptySpace height={200} />
           </View>
         )}
@@ -283,6 +285,7 @@ const styles = StyleSheet.create({
     backgroundColor: ColorPallet.gray,
   },
   container: {
+    marginTop: 20,
     alignSelf: 'center',
     fontSize: 18,
   },
