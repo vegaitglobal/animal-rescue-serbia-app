@@ -105,7 +105,7 @@ const Footer = ({loadedFullList}: {loadedFullList: boolean}) => {
   }
 
   return (
-    <View style={styles.footerLoadingIndicatorCointainer}>
+    <View style={styles.footerLoadingIndicatorContainer}>
       <ActivityIndicator />
     </View>
   );
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   rootContainer: {
     padding: screenPadding,
   },
-  footerLoadingIndicatorCointainer: {
+  footerLoadingIndicatorContainer: {
     flex: 1,
     height: 50,
     justifyContent: 'center',
