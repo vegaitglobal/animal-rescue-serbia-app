@@ -138,7 +138,6 @@ export const arsApi = (apiClient: IApiClient) => ({
       uriBuilder.append('SearchTerm', searchTerm);
     }
 
-    console.log('uriBuilder', uriBuilder.toString());
     return apiClient.request<PaginatedData<ArticleResponseDto>>({
       url: `${articlesUri}?${uriBuilder.toString()}`,
       method: 'get',
