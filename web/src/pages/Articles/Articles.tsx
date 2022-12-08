@@ -22,7 +22,7 @@ const Articles: React.FC<IProps> = ({ searchQuery }) => {
         id={article.id}
         photoUrl={article.mediaContent?.relativeFilePath}
         title={article.title}
-        description={article.description}
+        description={article.decription}
         type={article.type}
       />
     ))

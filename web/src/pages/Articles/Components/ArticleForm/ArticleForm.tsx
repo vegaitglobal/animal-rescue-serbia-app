@@ -86,7 +86,6 @@ const ArticleForm = () => {
       !data.category ||
       !data.description ||
       !data.file ||
-      !data.slug ||
       !data.type
     ) {
       alert('Molimo Vas, popunite sva polja i pokušajte ponovo.');
@@ -94,7 +93,6 @@ const ArticleForm = () => {
     }
 
     const article = new FormData();
-    console.log(data.category);
 
     article.append('Title', data.title);
     article.append('Decription', data.description);
@@ -158,16 +156,6 @@ const ArticleForm = () => {
               accept="image/png, image/jpg, image/webp"
               className="post__btn"
               onChange={handleFileInputChange}
-            />
-          </div>
-          <div className="post__item">
-            <span className="post__name">Slug:</span>
-            <input
-              type="text"
-              name="slug"
-              value={data.slug}
-              onChange={handleInputChange}
-              className="post__input"
             />
           </div>
           <div className="post__item">

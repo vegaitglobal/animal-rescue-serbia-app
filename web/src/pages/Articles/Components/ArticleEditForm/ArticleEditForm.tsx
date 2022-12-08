@@ -1,21 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Select, { SingleValue } from 'react-select';
 import { useGetArticleCategories } from '../../../../hooks/api/ArticleCategories/useGetArticleCategories';
-import { IArticleCategory } from '../../../../services/api/articleCategories/getArticleCategories';
+import { useEditArticle } from '../../../../hooks/api/articles/useEditArticle';
+import { useGetArticle } from '../../../../hooks/api/articles/useGetArticle';
 import { Back } from '../../../../shared/Back';
 import Layout from '../../../../shared/Layout';
 import { selectStyles } from '../../../../styles/selectStyles';
 
 interface IArticle {
-  title: string;
-  type: string;
-  category: string;
-  file: File | string;
-  slug: string;
-  description: string;
+  title?: string;
+  type?: ITypeSelect;
+  category?: ICategorySelect;
+  file?: File | string | null;
+  slug?: string;
+  description?: string;
+}
+interface ITypeSelect {
+  value: string;
+  label: string;
 }
 
-interface ITypeSelect {
+interface ICategorySelect {
   value: string;
   label: string;
 }
@@ -25,23 +31,56 @@ const typeOptions: ITypeSelect[] = [
   { label: 'Blog', value: 'Article' },
 ];
 
-const initialData: IArticle = {
-  title: '',
-  type: '',
-  category: '',
-  file: '',
-  slug: '',
-  description: '',
-};
-
 const ArticleEditForm = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const { mutate: editArticle } = useEditArticle({
+    onSuccess: () => navigate('/stranice'),
+  });
+
   const { data: categories, isLoading: categoriesLoading } =
     useGetArticleCategories();
-  const [data, setData] = useState<IArticle>(initialData);
+
+  const [dropdownCategories, setDropdownCategories] = useState<
+    ICategorySelect[]
+  >([]);
+
+  const [article, setArticle] = useState<IArticle>();
+
+  const { data } = useGetArticle(id || '');
+
+  useEffect(() => {
+    let typeName = '';
+    if (data?.type === 'Article') typeName = 'Blog';
+    else typeName = 'Stranica';
+
+    setArticle({
+      title: data?.title,
+      type: { label: typeName, value: data?.type || '' },
+      category: {
+        label: data?.category.name || '',
+        value: data?.category.id || '',
+      },
+      description: data?.decription,
+      file: data?.mediaContent?.filePath,
+      slug: '',
+    });
+  }, [data]);
+
+  useEffect(() => {
+    categories?.map((category) =>
+      setDropdownCategories((current) => [
+        ...current,
+        { label: category.name, value: category.id },
+      ])
+    );
+  }, [categories]);
+
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setData({ ...data, [event.target.name]: event.target.value });
+    setArticle({ ...article, [event.target.name]: event.target.value });
   };
 
   const handleFileInputChange = (
@@ -59,44 +98,48 @@ const ArticleEditForm = () => {
     }
 
     if (event.target.files?.[0])
-      setData({ ...data, file: event.target.files[0] });
+      setArticle({ ...article, file: event.target.files[0] });
   };
 
   const handleTypeSelectChange = (option: SingleValue<ITypeSelect>) => {
-    if (option?.value) setData({ ...data, type: option.value });
+    if (option?.value)
+      setArticle({
+        ...article,
+        type: { value: option.value, label: option.label },
+      });
   };
 
   const handleArticleCategoryChange = (
-    option: SingleValue<IArticleCategory>
+    option: SingleValue<ICategorySelect>
   ) => {
-    if (option?.id) setData({ ...data, category: option.id });
+    if (option?.value)
+      setArticle({
+        ...article,
+        category: { value: option.value, label: option.label },
+      });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(article);
 
     if (
-      !data.title ||
-      !data.category ||
-      !data.description ||
-      !data.file ||
-      !data.slug ||
-      !data.type
+      !article?.title ||
+      !article?.category ||
+      !article?.description ||
+      !article?.type
     ) {
       alert('Molimo Vas, popunite sva polja i pokušajte ponovo.');
       return;
     }
 
-    const article = new FormData();
-    console.log(data.category);
-
-    article.append('Title', data.title);
-    article.append('Decription', data.description);
-    article.append('Type', data.type);
-    article.append('CategoryId', data.category);
-    article.append('File', data.file);
-
-    // postArticle({ article });
+    const articleEdit = new FormData();
+    articleEdit.append('Title', article.title);
+    articleEdit.append('Decription', article.description);
+    articleEdit.append('Type', article.type.value);
+    articleEdit.append('CategoryId', article.category.value);
+    if (article.file) articleEdit.append('File', article.file);
+    editArticle({ id: id || '', article: articleEdit });
   };
 
   return (
@@ -113,7 +156,7 @@ const ArticleEditForm = () => {
             <input
               type="text"
               name="title"
-              value={data.title}
+              value={article?.title}
               onChange={handleInputChange}
               className="post__input"
             />
@@ -121,6 +164,7 @@ const ArticleEditForm = () => {
           <div className="post__item">
             <span className="post__name">Tip:</span>
             <Select
+              value={article?.type}
               styles={selectStyles}
               options={typeOptions}
               getOptionLabel={(type) => type.label}
@@ -131,11 +175,12 @@ const ArticleEditForm = () => {
           <div className="post__item">
             <span className="post__name">Kategorija:</span>
             <Select
+              value={article?.category}
               isLoading={categoriesLoading}
               styles={selectStyles}
-              options={categories}
-              getOptionLabel={(category) => category.name}
-              getOptionValue={(category) => category.id}
+              options={dropdownCategories}
+              getOptionLabel={(category) => category.label}
+              getOptionValue={(category) => category.value}
               onChange={handleArticleCategoryChange}
             />
           </div>
@@ -155,21 +200,11 @@ const ArticleEditForm = () => {
             />
           </div>
           <div className="post__item">
-            <span className="post__name">Slug:</span>
-            <input
-              type="text"
-              name="slug"
-              value={data.slug}
-              onChange={handleInputChange}
-              className="post__input"
-            />
-          </div>
-          <div className="post__item">
             <span className="post__name">Opis:</span>
             <textarea
               className="post__editor"
               name="description"
-              value={data.description}
+              value={article?.description}
               onChange={handleInputChange}
             />
           </div>
