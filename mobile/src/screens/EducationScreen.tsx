@@ -1,24 +1,53 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Dimensions, FlatList, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator} from '../components/ActivityIndicator';
 import {EmptySpace} from '../components/EmptySpace';
 import {MediaContentBox} from '../components/MediaContentBox';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {useAppDispatch, useAppSelector} from '../hooks/storeHooks';
 import {ArticleResponseDto} from '../infrastructure/apiTypes';
-import {loadArticles} from '../store/src/articles/actions';
-import {getPaginatedArticles} from '../store/src/articles/selectors';
+import {clearLoadedArticles, loadArticles} from '../store/src/articles/actions';
+import {
+  getFilteredArticlesTotalCount,
+  getPaginatedArticles,
+} from '../store/src/articles/selectors';
 
 export const EducationScreen = () => {
   const dispatch = useAppDispatch();
   const paginatedArticles = useAppSelector(getPaginatedArticles);
+  const paginatedArticlesTotalCount = useAppSelector(
+    getFilteredArticlesTotalCount,
+  );
+  const [currentArticlePage, setCurrentArticlePage] = useState(0);
+  const pageSize = 10;
 
   const loadPaginatedArticles = useCallback(async () => {
-    await dispatch(loadArticles({pageNumber: 1, pageSize: 10}));
-  }, [dispatch]);
+    await dispatch(loadArticles({pageNumber: currentArticlePage, pageSize}));
+  }, [currentArticlePage, dispatch]);
 
   useEffect(() => {
     loadPaginatedArticles();
-  }, [loadPaginatedArticles]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentArticlePage]);
+
+  useEffect(
+    () => () => {
+      dispatch(clearLoadedArticles());
+    },
+    [dispatch],
+  );
+
+  const isLastPageAlreadyLoaded = useMemo(() => {
+    const totalPages = paginatedArticlesTotalCount / pageSize;
+    return currentArticlePage >= totalPages;
+  }, [currentArticlePage, paginatedArticlesTotalCount]);
+
+  const makeNextPageActive = () => {
+    if (isLastPageAlreadyLoaded) {
+      return;
+    }
+    setCurrentArticlePage(current => ++current);
+  };
 
   const renderItem = useCallback(({item}: {item: ArticleResponseDto}) => {
     return (
@@ -45,15 +74,32 @@ export const EducationScreen = () => {
 
   return (
     <ScreenRootContainer title="Edukacija">
+      <Text>{'PAGE: ' + currentArticlePage}</Text>
       <View style={styles.rootContainer}>
         <FlatList
-          data={paginatedArticles.entities}
+          data={paginatedArticles}
           renderItem={renderItem}
           ItemSeparatorComponent={() => <EmptySpace height={20} />}
+          ListFooterComponent={
+            <Footer loadedFullList={isLastPageAlreadyLoaded} />
+          }
           showsVerticalScrollIndicator={false}
+          onEndReached={makeNextPageActive}
         />
       </View>
     </ScreenRootContainer>
+  );
+};
+
+const Footer = ({loadedFullList}: {loadedFullList: boolean}) => {
+  if (loadedFullList) {
+    return <EmptySpace height={50} />;
+  }
+
+  return (
+    <View style={styles.footerLoadingIndicatorCointainer}>
+      <ActivityIndicator />
+    </View>
   );
 };
 
@@ -65,5 +111,12 @@ const mediaContentHeightWithAspectRatio = availableWidth / (16 / 9);
 const styles = StyleSheet.create({
   rootContainer: {
     padding: screenPadding,
+  },
+  footerLoadingIndicatorCointainer: {
+    flex: 1,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 20,
   },
 });

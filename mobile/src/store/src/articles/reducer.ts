@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {loadArticles} from './actions';
+import {clearLoadedArticles, loadArticles} from './actions';
 import {getInitialState} from './initialState';
 
 const initialState = getInitialState();
@@ -9,9 +9,20 @@ export const articleSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: builder => {
-    builder.addCase(loadArticles.fulfilled, (state, {payload}) => {
-      state.articles = payload;
-    });
+    builder
+      .addCase(
+        loadArticles.fulfilled,
+        (state, {payload: {entities, filteredCount, pageNumber}}) => {
+          state.pageNumber = pageNumber;
+          state.filteredCount = filteredCount;
+          state.entities = [...state.entities, ...entities];
+        },
+      )
+      .addCase(clearLoadedArticles, state => {
+        state.entities = initialState.entities;
+        state.filteredCount = initialState.filteredCount;
+        state.pageNumber = initialState.pageNumber;
+      });
   },
 });
 
