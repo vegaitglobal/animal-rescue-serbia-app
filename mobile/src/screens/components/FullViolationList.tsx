@@ -231,6 +231,8 @@ export const FullViolationList = ({
           </View>
         )}
         ListHeaderComponent={renderListHeader}
+        keyExtractor={(item)=>item.id}
+        initialNumToRender={5}
       />
       <ImageListModal
         myRef={modalRef}
