@@ -226,7 +226,7 @@ export const FullViolationList = ({
         )}
         ListFooterComponent={() => (
           <View style={styles.footerContainer}>
-            <Separator />
+            {violationsByGroup.length ? <Separator /> : null}
             <EmptySpace height={200} />
           </View>
         )}
@@ -283,6 +283,7 @@ const styles = StyleSheet.create({
     backgroundColor: ColorPallet.gray,
   },
   container: {
+    marginTop: 20,
     alignSelf: 'center',
     fontSize: 18,
   },

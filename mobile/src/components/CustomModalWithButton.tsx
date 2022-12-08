@@ -22,6 +22,8 @@ type CustomModalWithButtonProps = {
   onPressPositiveBtn: () => void;
   onPressNegativeBtn?: () => void;
   isOneButtonModal?: boolean;
+  additionalButton?: ReactNode;
+  buttonStyle?: ViewStyle;
 };
 export const CustomModalWithButton = ({
   visible,
@@ -32,6 +34,8 @@ export const CustomModalWithButton = ({
   onPressNegativeBtn,
   isOneButtonModal,
   title,
+  additionalButton,
+  buttonStyle,
 }: CustomModalWithButtonProps) => {
   const dynamicStyle = useMemo(
     () => ({
@@ -78,8 +82,9 @@ export const CustomModalWithButton = ({
                 onPress={onPressPositiveBtn}
                 text={buttonPositive}
                 isSmall={true}
-                style={styles.buttonStyle}
+                style={[styles.buttonStyle, buttonStyle]}
               />
+              {additionalButton}
               {!isOneButtonModal && (
                 <CustomButton
                   textStyle={styles.textStyle}

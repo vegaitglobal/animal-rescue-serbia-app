@@ -93,6 +93,8 @@ export const ReportScreen = () => {
     navigation.goBack();
   }, [dispatch, isLiteReport, navigation, violation]);
 
+  const handleGoBack = () => setSendReport(false);
+
   const onFilesSelected = useCallback(
     async (selectedFiles: SelectionResult[]) => {
       const imagesOnly = selectedFiles.filter(file =>
@@ -243,7 +245,7 @@ export const ReportScreen = () => {
               onPress={() => {
                 setSendReport(true);
               }}
-              text="Prijavi"
+              text="Nastavi"
               style={style.mainButton}
             />
           </View>
@@ -267,15 +269,27 @@ export const ReportScreen = () => {
         visible={isDeclineModalVisible}
       />
       <CustomModalWithButton
+        buttonStyle={{marginHorizontal: 20}}
         isOneButtonModal
         title="Saglasnost"
         text={
           'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae dignissimos quasi aliquid '
         }
         icon={<Report width={100} height={100} />}
-        buttonPositive="U redu"
+        buttonPositive="Prijavi"
         onPressPositiveBtn={handleReport}
         visible={isSendReportModalVisible}
+        additionalButton={
+          <View style={style.buttonContainer}>
+            <CustomButton
+              textStyle={style.textStyle}
+              onPress={handleGoBack}
+              text={'Odustani'}
+              isSmall={true}
+              style={style.buttonStyle}
+            />
+          </View>
+        }
       />
       {isSendingReport ? (
         <View style={style.screenBlockingElement}>
@@ -334,5 +348,20 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  buttonStyle: {
+    backgroundColor: 'white',
+    borderColor: 'black',
+    borderWidth: 2,
+    marginBottom: 20,
+    marginTop: 30,
+    alignSelf: 'flex-end',
+    marginHorizontal: 20,
+  },
+  textStyle: {
+    fontSize: 12,
+  },
+  buttonContainer: {
+    flex: 1,
   },
 });

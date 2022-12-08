@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontWeight: '700',
     color: ColorPallet.plainBlack,
+    alignSelf: 'center',
   },
   userFullNameText: {
     fontSize: 20,
