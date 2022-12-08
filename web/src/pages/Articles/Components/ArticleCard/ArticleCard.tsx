@@ -1,15 +1,18 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Pencil } from '../../../../shared/Icons';
-import { PagesCardProps } from './PagesCard.data';
+import { ArticleCardProps } from './ArticleCard.data';
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
-const PagesCard = ({ photoUrl, type, title, description }: PagesCardProps) => {
+const ArticleCard = ({
+  id,
+  photoUrl,
+  type,
+  title,
+  description,
+}: ArticleCardProps) => {
   const formatedUrl = BASE_URL + '/' + photoUrl?.replaceAll('\\', '/');
-  const navigate = useNavigate();
-  const handleChange = () => {
-    navigate('/stranice/kreiranje');
-  };
+  const editLink = '/stranice/' + id;
 
   return (
     <div className="cards__card">
@@ -23,13 +26,13 @@ const PagesCard = ({ photoUrl, type, title, description }: PagesCardProps) => {
         </span>
         <h3 className="cards__title">{title}</h3>
         <p className="cards__text">{description}</p>
-        <button type="button" className="cards__edit" onClick={handleChange}>
+        <Link type="button" className="cards__edit" to={editLink}>
           <Pencil />
           Izmeni
-        </button>
+        </Link>
       </div>
     </div>
   );
 };
 
-export default PagesCard;
+export default ArticleCard;

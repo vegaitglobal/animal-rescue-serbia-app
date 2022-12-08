@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Pages from '.';
 import { Create } from '../../shared/Icons';
 import Layout from '../../shared/Layout';
 import Search from '../../shared/Search';
+import Articles from './Articles';
 
-const PagesContainer = () => {
+const ArticlesPage = () => {
   const navigate = useNavigate();
 
   const handleCreatePageClick = () => navigate('/stranice/kreiranje');
@@ -30,9 +30,9 @@ const PagesContainer = () => {
         </div>
         <Search value={searchQuery} handleValueChange={handleSearchChange} />
       </div>
-      <Pages searchQuery={searchQuery} />
+      <Articles searchQuery={searchQuery} />
     </Layout>
   );
 };
 
-export default PagesContainer;
+export default ArticlesPage;

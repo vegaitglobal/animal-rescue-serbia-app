@@ -6,7 +6,7 @@ import { Back } from '../../../../shared/Back';
 import Layout from '../../../../shared/Layout';
 import { selectStyles } from '../../../../styles/selectStyles';
 
-interface IPage {
+interface IArticle {
   title: string;
   type: string;
   category: string;
@@ -25,7 +25,7 @@ const typeOptions: ITypeSelect[] = [
   { label: 'Blog', value: 'Article' },
 ];
 
-const initialData: IPage = {
+const initialData: IArticle = {
   title: '',
   type: '',
   category: '',
@@ -34,10 +34,10 @@ const initialData: IPage = {
   description: '',
 };
 
-const PageEditForm = () => {
+const ArticleEditForm = () => {
   const { data: categories, isLoading: categoriesLoading } =
     useGetArticleCategories();
-  const [data, setData] = useState<IPage>(initialData);
+  const [data, setData] = useState<IArticle>(initialData);
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -182,4 +182,4 @@ const PageEditForm = () => {
   );
 };
 
-export default PageEditForm;
+export default ArticleEditForm;
