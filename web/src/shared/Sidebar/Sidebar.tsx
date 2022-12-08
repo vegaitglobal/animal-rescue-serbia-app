@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/logo.png';
+import jwtTokenApi from '../../services/jwt.service';
 import storageApi from '../../services/storage.service';
 
 const Sidebar = () => {
@@ -7,6 +8,7 @@ const Sidebar = () => {
   const firstName = localStorage.getItem('firstName');
   const lastName = localStorage.getItem('lastName');
   const email = localStorage.getItem('email');
+  const isAdmin = jwtTokenApi.isAdmin();
 
   const handleLogOut = () => {
     localStorage.removeItem('firstName');
@@ -43,16 +45,18 @@ const Sidebar = () => {
               Stranice
             </NavLink>
           </li>
-          <li className="nav__item">
-            <NavLink
-              to="/korisnici"
-              className={({ isActive }) =>
-                isActive ? 'nav__btn nav__btn--active' : 'nav__btn'
-              }
-            >
-              Korisnici
-            </NavLink>
-          </li>
+          {isAdmin && (
+            <li className="nav__item">
+              <NavLink
+                to="/korisnici"
+                className={({ isActive }) =>
+                  isActive ? 'nav__btn nav__btn--active' : 'nav__btn'
+                }
+              >
+                Korisnici
+              </NavLink>
+            </li>
+          )}
           <li className="nav__item">
             <NavLink
               to="/kategorije"
