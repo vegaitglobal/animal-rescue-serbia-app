@@ -241,7 +241,6 @@ export const ReportScreen = () => {
             />
             <EmptySpace width={16} />
             <CustomButton
-              isLoading={isSendingReport}
               onPress={() => {
                 setSendReport(true);
               }}

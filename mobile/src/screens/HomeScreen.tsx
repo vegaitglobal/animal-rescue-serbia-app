@@ -1,10 +1,9 @@
 import React, {useCallback} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
 import Report from '../assets/icons/report.svg';
 import Inform from '../assets/icons/inform.svg';
-import Add from '../assets/icons/add.svg';
 import Education from '../assets/icons/education.svg';
 import {CustomButton} from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
@@ -12,6 +11,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {EmptySpace} from '../components/EmptySpace';
 import {SquareGrid} from '../components/SquareGrid/SquareGrid';
 import {GridIcon} from '../components/SquareGrid/GridIcon';
+import Toast from 'react-native-toast-message';
 
 export const HomeScreen = () => {
   const headerTitle = 'Prijavi';
@@ -39,7 +39,11 @@ export const HomeScreen = () => {
       }
 
       if (columnIndex === 0) {
-        // Do something Ads related
+        Toast.show({
+          type: 'info',
+          text1: 'Oglašavanje trenutno nije u funkciji',
+          position: 'bottom',
+        });
         return;
       }
       navigation.navigate('Information');
@@ -67,7 +71,10 @@ export const HomeScreen = () => {
                 ],
                 [
                   <GridIcon label={oglasavanje}>
-                    <Add width={100} height={100} />
+                    <Image
+                      style={style.adIllustration}
+                      source={require('../assets/icons/adsIllustration.png')}
+                    />
                   </GridIcon>,
                   <GridIcon label={informisanje}>
                     <Inform width={100} height={100} />
@@ -124,5 +131,9 @@ const style = StyleSheet.create({
   },
   violationListButtonLabel: {
     color: ColorPallet.plainWhite,
+  },
+  adIllustration: {
+    width: 83,
+    height: 100,
   },
 });
