@@ -154,8 +154,6 @@ export const FullViolationList = ({
     [handleImageRowPress],
   );
 
-  console.log('violationsByGroup.length ', violationsByGroup.length);
-
   const getFilteredDataNew = (vCategory: string, fLocation: string) => {
     if (vCategory && !fLocation) {
       const filterByKey = violationsByGroup.filter(violation =>
