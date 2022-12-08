@@ -10,6 +10,7 @@ import Users from './pages/Users';
 import Categories from './pages/Categories/Categories';
 import ReportsContainer from './pages/Reports/ReportsContainer';
 import PagesContainer from './pages/Pages/PagesContainer';
+import jwtTokenApi from './services/jwt.service';
 
 const GlobalRouter: React.FC = () => {
   return (
@@ -22,14 +23,41 @@ const GlobalRouter: React.FC = () => {
           <Route path="/prijave/:id" element={<EditReport />} />
           <Route path="/stranice" element={<PagesContainer />} />
           <Route path="/stranice/kreiranje" element={<PageForm />} />
-          <Route path="/korisnici" element={<Users />} />
-          <Route path="/korisnici/:id" element={<EditUser />} />
+          <Route
+            path="/korisnici"
+            element={
+              <ProtectedRoute>
+                <Users />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/korisnici/:id"
+            element={
+              <ProtectedRoute>
+                <EditUser />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/kategorije" element={<Categories />} />
           <Route path="/" element={<Navigate to="/prijave" replace />} />
         </Route>
       </Routes>
     </BrowserRouter>
   );
+};
+
+type Props = {
+  children: JSX.Element;
+};
+
+const ProtectedRoute = ({ children }: Props) => {
+  const isAdmin = jwtTokenApi.isAdmin();
+  if (!isAdmin) {
+    return <Navigate to={'/prijave'} replace />;
+  }
+
+  return children;
 };
 
 export default GlobalRouter;
