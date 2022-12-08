@@ -1,10 +1,12 @@
 import {AnyAction, combineReducers} from 'redux';
+import {articleReducer} from './articles/reducer';
 import {profileReducer} from './profile/reducer';
 import {reportReducer} from './reports/reducer';
 
 const combinedReducer = combineReducers({
   report: reportReducer,
   profile: profileReducer,
+  article: articleReducer,
 });
 
 export const rootReducer = (

@@ -10,8 +10,8 @@ export const useVideoThumbnailsCreator = (mediaContent: MediaContentDto[]) => {
 
   const createVideoThumbnailsAsync = useCallback(
     async (mediaContentParam: MediaContentDto[]) => {
-      const videoOnly = mediaContentParam.filter(file =>
-        isPathVideo(file.relativeFilePath),
+      const videoOnly = mediaContentParam.filter(
+        file => isPathVideo(file.relativeFilePath), //TODONFFF: Replace with content type
       );
 
       videoOnly.forEach(async ({id, relativeFilePath}) => {

@@ -62,6 +62,12 @@ export type PasswordRequestDto = {
   passwordConfirm: string;
 };
 
+export type ArticleRequestDto = {
+  pageNumber: number;
+  pageSize: number;
+  searchTerm?: string;
+};
+
 export type RegisterResponseDto = {
   email: string;
   accessToken: string;
@@ -71,6 +77,7 @@ export type MediaContentDto = {
   id: string;
   fileName: string;
   relativeFilePath: string;
+  contentType: string;
 };
 
 export type ViolationResponseDto = {
@@ -91,4 +98,23 @@ export type LiteViolationResponseDto = {
 export type LiteViolationRequestDto = {
   location: string;
   violationCategoryId: string;
+};
+
+export type ArticleResponseDto = {
+  id: string;
+  title: string;
+  decription: string;
+  type: string;
+  category: {
+    id: string;
+    name: string;
+    isEnabled: boolean;
+  };
+  mediaContent?: MediaContentDto;
+};
+
+export type PaginatedData<T extends unknown> = {
+  pageNumber: number;
+  filteredCount: number;
+  entities: T[];
 };

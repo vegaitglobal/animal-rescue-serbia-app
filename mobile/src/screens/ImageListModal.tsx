@@ -13,6 +13,8 @@ import {MediaContentDto} from '../infrastructure/apiTypes';
 import {ColorPallet} from '../resources/ColorPallet';
 import {isPathVideo} from '../util/helpers';
 
+//TODONFFF: Rename to something like MediaContenListModal
+
 type ImageListModalProps = {
   myRef: React.Ref<BottomSheetModalMethods>;
   data: MediaContentDto[];
@@ -50,7 +52,7 @@ export const ImageListModal = ({
       ) : (
         <ImageWithLoadingAnimation
           width={imageWidth}
-          height={imageHeightWithAspectRation}
+          height={imageHeightWithAspectRatio}
           key={id}
           style={styles.image}
           source={{
@@ -63,7 +65,7 @@ export const ImageListModal = ({
   );
 
   const dynamicModalSnappingPoint =
-    data?.length * imageHeightWithAspectRation +
+    data?.length * imageHeightWithAspectRatio +
     verticalListPadding * 2 +
     30 +
     iconSize +
@@ -107,13 +109,13 @@ const maxModalSnappingPoint = 800;
 const itemSeparatorSize = 8;
 const footerHeight = 20;
 const imageWidth = Dimensions.get('screen').width;
-const imageHeightWithAspectRation = imageWidth / (16 / 9);
+const imageHeightWithAspectRatio = imageWidth / (16 / 9);
 
 const styles = StyleSheet.create({
   image: {
     borderWidth: 1,
     borderColor: ColorPallet.gray,
     width: imageWidth,
-    height: imageHeightWithAspectRation,
+    height: imageHeightWithAspectRatio,
   },
 });

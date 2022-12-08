@@ -1,11 +1,14 @@
 import {Violation} from '../store/src/reports/types';
 import {
   ArticleCategoriesDto,
+  ArticleRequestDto,
+  ArticleResponseDto,
   LiteViolationRequestDto,
   LiteViolationResponseDto,
   LocationsDto,
   LogInRequestDto,
   LogInResponseDto,
+  PaginatedData,
   PasswordRequestDto,
   ProfileRequestDto,
   RegisterResponseDto,
@@ -27,6 +30,7 @@ const registrationUri = '/Users/register';
 const userUri = '/Users/me';
 const usersUri = '/Users';
 const userCredentialsUri = `${usersUri}/updateCredentials`;
+const articlesUri = '/Articles/PaginatedArticles';
 
 export const arsApi = (apiClient: IApiClient) => ({
   getArticleCategories: () => {
@@ -124,6 +128,20 @@ export const arsApi = (apiClient: IApiClient) => ({
       url: `${userCredentialsUri}/${userId}`,
       method: 'put',
       data: passwordData,
+    });
+  },
+  getArticles: ({pageNumber, pageSize, searchTerm}: ArticleRequestDto) => {
+    const uriBuilder = new URLSearchParams();
+    uriBuilder.append('PageNumber', pageNumber.toString());
+    uriBuilder.append('PageSize', pageSize.toString());
+    if (searchTerm) {
+      uriBuilder.append('SearchTerm', searchTerm);
+    }
+
+    console.log('uriBuilder', uriBuilder.toString());
+    return apiClient.request<PaginatedData<ArticleResponseDto>>({
+      url: `${articlesUri}?${uriBuilder.toString()}`,
+      method: 'get',
     });
   },
 });
