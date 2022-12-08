@@ -60,7 +60,7 @@ export const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="ProfileNavigator"
         component={ProfileStackNavigator}
         options={{
           tabBarIcon: renderTabIcon({

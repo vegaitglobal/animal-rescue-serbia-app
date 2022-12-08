@@ -4,7 +4,6 @@ import {CustomButton} from '../components/CustomButton';
 import {EmptySpace} from '../components/EmptySpace';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
-import UserAvatar from '../assets/icons/userAvatar.svg';
 import {useAppDispatch, useAppSelector} from '../hooks/storeHooks';
 import {signOut} from '../store/src/profile/actions';
 import {useNavigation} from '@react-navigation/native';
@@ -37,15 +36,12 @@ export const ProfileScreen = () => {
     <ScreenRootContainer title="Profil" showLogo>
       <View style={styles.container}>
         <View style={styles.userDataHeaderContainer}>
-          <View style={styles.profilePicturePlaceholderContainer}>
-            <UserAvatar width={100} height={100} />
-          </View>
-
-          <EmptySpace width={30} />
-
           <View style={styles.userInfoContainer}>
-            <Text style={styles.userFullNameText}>{user.firstName}</Text>
-            <Text style={styles.userFullNameText}>{user.lastName}</Text>
+            <Text
+              style={
+                styles.userFullNameText
+              }>{`${user.firstName} ${user.lastName}`}</Text>
+
             <EmptySpace height={4} />
 
             <Text style={styles.emailText}>{user.email}</Text>
@@ -111,17 +107,20 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: ColorPallet.plainBlack,
     alignSelf: 'center',
+    fontSize: 17,
   },
   userFullNameText: {
-    fontSize: 20,
+    fontSize: 40,
     fontWeight: '700',
     color: ColorPallet.plainBlack,
   },
   emailText: {
+    fontSize: 25,
     fontWeight: '600',
   },
   userInfoContainer: {
-    justifyContent: 'flex-end',
+    alignItems: 'center',
+    flex: 1,
   },
   profilePicturePlaceholderContainer: {
     borderWidth: 2,
