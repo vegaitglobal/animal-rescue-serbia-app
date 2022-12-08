@@ -16,7 +16,7 @@ export interface IAdminArticleMediaContent {
 export interface IAdminArticle {
   id: string;
   title: string;
-  description: string;
+  decription: string;
   type: string;
   category: IAdminArticleCategory;
   mediaContent: IAdminArticleMediaContent;

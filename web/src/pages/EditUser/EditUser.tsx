@@ -1,12 +1,12 @@
+import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
-import { Pencil } from '../../shared/Icons';
-import Layout from '../../shared/Layout';
+import { useParams } from 'react-router-dom';
 import Select, { CSSObjectWithLabel } from 'react-select';
 import { useGetSingleUser } from '../../hooks/api/Users/useGetSingleUser';
-import { useParams } from 'react-router-dom';
-import { IUserResponse, UserRole } from '../../services/api/users/getUsers';
 import { usePutUsers } from '../../hooks/api/Users/usePutUsers';
-import { useQueryClient } from '@tanstack/react-query';
+import { IUserResponse, UserRole } from '../../services/api/users/getUsers';
+import { Pencil } from '../../shared/Icons';
+import Layout from '../../shared/Layout';
 
 const EditUser: React.FC = () => {
   const { id } = useParams();
