@@ -11,6 +11,7 @@ import NotFound from './pages/NotFound';
 import ReportsContainer from './pages/Reports/ReportsContainer';
 import Users from './pages/Users';
 import jwtTokenApi from './services/jwt.service';
+import ArticleCategories from './pages/ArticleCategories/ArticleCategories';
 
 const GlobalRouter: React.FC = () => {
   return (
@@ -43,6 +44,7 @@ const GlobalRouter: React.FC = () => {
           <Route path="/korisnici" element={<Users />} />
           <Route path="/korisnici/:id" element={<EditUser />} />
           <Route path="/kategorije" element={<Categories />} />
+          <Route path="/kategorije-stranice" element={<ArticleCategories />} />
           <Route path="/" element={<Navigate to="/prijave" replace />} />
         </Route>
       </Routes>
