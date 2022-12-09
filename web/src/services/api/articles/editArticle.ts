@@ -8,7 +8,7 @@ export interface IEditArticle {
 export const editArticle = async (params: IEditArticle) => {
   const { data } = await axiosRequest<IEditArticle>(
     'PATCH',
-    '/admin/articles/' + params.id,
+    '/api/admin/articles/' + params.id,
     { data: params.article }
   );
 

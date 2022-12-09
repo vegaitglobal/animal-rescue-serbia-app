@@ -17,9 +17,13 @@ export interface IPutUsersWithId {
 export const putUsers = async (
   updateData: IPutUsersWithId
 ): Promise<IUserResponse> => {
-  const { data } = await axiosRequest('PUT', '/admin/Users/' + updateData.id, {
-    data: updateData.putData,
-  });
+  const { data } = await axiosRequest(
+    'PUT',
+    '/api/admin/Users/' + updateData.id,
+    {
+      data: updateData.putData,
+    }
+  );
 
   return data;
 };
