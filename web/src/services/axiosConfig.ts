@@ -16,7 +16,7 @@ export const axiosRequest = <T = any>(
     baseURL: BASE_URL,
     headers: {
       'Access-Control-Allow-Origin': '*',
-    }
+    },
   };
 
   axios.interceptors.response.use(
@@ -27,7 +27,9 @@ export const axiosRequest = <T = any>(
       if (err.response.status === 401 || err.response.status === 403) {
         storageApi.clearToken();
         window.location.href = '/prijavljivanje';
+        return;
       }
+      return err.response;
     }
   );
 

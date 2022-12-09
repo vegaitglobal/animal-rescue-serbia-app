@@ -55,7 +55,7 @@ const EditUser: React.FC = () => {
   };
 
   const roleOptions = [
-    { value: UserRole.Admin, label: 'Admin' },
+    { value: UserRole.Moderator, label: 'Moderator' },
     { value: UserRole.User, label: 'Korisnik' },
   ];
 

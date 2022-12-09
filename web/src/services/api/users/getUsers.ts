@@ -13,6 +13,7 @@ export interface IUserResponse {
 export enum UserRole {
   Admin = 'Admin',
   User = 'User',
+  Moderator = 'Moderator',
 }
 
 export const getUsers = async (): Promise<IUserResponse[]> => {
