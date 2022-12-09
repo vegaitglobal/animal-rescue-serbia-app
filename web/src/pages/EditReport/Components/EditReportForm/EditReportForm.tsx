@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../../../../config';
 import { useUpdateReport } from '../../../../hooks/api/reports/useUpdateReport';
 import {
   IReportsResponse,
@@ -11,7 +12,7 @@ type Props = {
   report: IReportsResponse;
 };
 
-const API_BASE_URL = process.env.REACT_APP_API_URL;
+const API_BASE_URL = API_URL;
 
 const EditReportForm: React.FC<Props> = ({ report }) => {
   const navigate = useNavigate();

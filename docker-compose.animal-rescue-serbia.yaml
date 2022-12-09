@@ -18,9 +18,6 @@ services:
     container_name: animal-rescue-web
     ports:
       - "22000:3000"
-    environment:
-      - REACT_APP_API_URL=https://api.ars.codeforacause.rs
-
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
     container_name: animal-rescue-db

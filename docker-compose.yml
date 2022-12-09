@@ -21,10 +21,10 @@ services:
     build:
       context: ./web
       dockerfile: Dockerfile
+      args:
+      - API_URL=http://localhost:5113 
     ports:
       - "3000:3000"
-    environment:
-      - REACT_APP_API_URL=http://localhost:5113
 
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
