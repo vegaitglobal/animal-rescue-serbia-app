@@ -12,6 +12,7 @@ import ReportsContainer from './pages/Reports/ReportsContainer';
 import Users from './pages/Users';
 import jwtTokenApi from './services/jwt.service';
 import ArticleCategories from './pages/ArticleCategories/ArticleCategories';
+import AddModerator from './pages/AddModerator/AddModerator';
 
 const GlobalRouter: React.FC = () => {
   return (
@@ -38,11 +39,17 @@ const GlobalRouter: React.FC = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/korisnici/dodaj"
+            element={
+              <ProtectedRoute>
+                <AddModerator />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/stranice" element={<ArticlesPage />} />
           <Route path="/stranice/kreiranje" element={<ArticleForm />} />
           <Route path="/stranice/:id" element={<ArticleEditForm />} />
-          <Route path="/korisnici" element={<Users />} />
-          <Route path="/korisnici/:id" element={<EditUser />} />
           <Route path="/kategorije" element={<Categories />} />
           <Route path="/kategorije-stranice" element={<ArticleCategories />} />
           <Route path="/" element={<Navigate to="/prijave" replace />} />
