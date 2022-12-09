@@ -1,34 +1,34 @@
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { useGetCategories } from '../../hooks/api/Categories/useGetCategories';
-import { usePostCategory } from '../../hooks/api/Categories/usePostCategory';
+import { useGetArticleCategories } from '../../hooks/api/articles/useGetArticleCategories';
+import { usePostArticleCategory } from '../../hooks/api/articles/usePostArticleCategory';
 import Plus from '../../shared/Icons/Plus/Plus';
 import Layout from '../../shared/Layout';
 import Loader from '../../shared/Loader';
-import CategoryItem from './Components/CategoryItem';
+import ArticleCategoryItem from './components/ArticleCategoryItem';
 
-const Categories = () => {
+const ArticleCategories = () => {
   const queryClient = useQueryClient();
 
   const handlePostSuccess = () => {
-    queryClient.refetchQueries(['getCategories']);
+    queryClient.refetchQueries(['getArticleCategories']);
   };
 
   const [name, setName] = useState('');
 
-  const { data: categories, isLoading } = useGetCategories();
-
-  const { mutate: postSubmit } = usePostCategory({
+  const { mutate: postSubmit } = usePostArticleCategory({
     onSuccess: handlePostSuccess,
   });
 
-  const categoryEnabledItemsHTML = categories
-    ?.filter((category) => category.isEnabled)
-    .map((item) => <CategoryItem category={item} key={item.id} />);
+  const { data: articleCategories, isLoading } = useGetArticleCategories();
 
-  const categoryDisabledItemsHTML = categories
+  const articleCategoryEnabledItemsHTML = articleCategories
+    ?.filter((category) => category.isEnabled)
+    .map((item) => <ArticleCategoryItem category={item} key={item.id} />);
+
+  const articleCategoryDisabledItemsHTML = articleCategories
     ?.filter((category) => !category.isEnabled)
-    .map((item) => <CategoryItem category={item} key={item.id} />);
+    .map((item) => <ArticleCategoryItem category={item} key={item.id} />);
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -49,7 +49,7 @@ const Categories = () => {
         </div>
       </div>
       <div className="category">
-        <h3 className="category__title">Kategorije za Prijave</h3>
+        <h3 className="category__title">Kategorije za Stranice</h3>
         <div className="category__container">
           <div className="category__holder">
             <input
@@ -68,11 +68,15 @@ const Categories = () => {
           </div>
           <div className="category__container">
             <h3>Aktivne Kategorije</h3>
-            <div className="category__buttons">{categoryEnabledItemsHTML}</div>
+            <div className="category__buttons">
+              {articleCategoryEnabledItemsHTML}
+            </div>
           </div>
           <div className="category__container">
             <h3>Arhivirane Kategorije</h3>
-            <div className="category__buttons">{categoryDisabledItemsHTML}</div>
+            <div className="category__buttons">
+              {articleCategoryDisabledItemsHTML}
+            </div>
           </div>
         </div>
       </div>
@@ -80,4 +84,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default ArticleCategories;
