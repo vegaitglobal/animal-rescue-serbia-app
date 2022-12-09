@@ -16,6 +16,5 @@ public class UserDto
 
     public bool IsActive{ get; set; }
 
-    public UserRoles Role { get; set; } 
-
+    public UserRoles Role { get; set; }
 }

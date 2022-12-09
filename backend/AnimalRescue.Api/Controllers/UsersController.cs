@@ -1,6 +1,7 @@
 ﻿using AnimalRescue.Application.Constants;
 using AnimalRescue.Contracts.Abstractions.Services;
 using AnimalRescue.Contracts.Dto;
+using AnimalRescue.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,6 +47,7 @@ namespace AnimalRescue.Api.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<LoggedInUserDto>> Register([FromBody] UserCreateDto createDto)
         {
+            createDto.Role = UserRoles.User;
             var created = await _userService.AddAsync(createDto);
             var accessToken = await _securityService.CreateToken(created.Email);
 

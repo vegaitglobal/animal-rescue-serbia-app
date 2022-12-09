@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using AnimalRescue.Domain.Models;
 
 namespace AnimalRescue.Contracts.Dto;
 
@@ -19,4 +21,7 @@ public class UserCreateDto
 
     [Required(AllowEmptyStrings = false)]
     public string PasswordConfirm { get; set; }
+
+    [JsonIgnore]
+    public UserRoles Role { get; set; } = UserRoles.User;
 }

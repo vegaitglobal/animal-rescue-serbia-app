@@ -1,6 +1,7 @@
 ﻿using AnimalRescue.Application.Constants;
 using AnimalRescue.Contracts.Abstractions.Services;
 using AnimalRescue.Contracts.Dto;
+using AnimalRescue.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,15 @@ namespace AnimalRescue.Api.Controllers.Admin
             _userService = userService;
         }
 
+        [HttpPost]
+        public async Task<ActionResult<UserDto>> CreateAsync([FromBody] UserCreateDto createDto)
+        {
+            createDto.Role = UserRoles.Moderator;
+            var created = await _userService.AddAsync(createDto);
+
+            return CreatedAtRoute("AdminGetUserById", new { id = created.Id }, null);
+        }
+
         [HttpPut("{id}")]
         public async Task<ActionResult<UserDto>> UpdateAsync(Guid id, UserAdminUpdateDto userUpdateDto)
         {
@@ -26,7 +36,7 @@ namespace AnimalRescue.Api.Controllers.Admin
             return Ok(updated);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "AdminGetUserById")]
         public async Task<ActionResult<UserDto>> GetByIdAsync(Guid id)
         {
             var user = await _userService.GetByIdAsync(id);
