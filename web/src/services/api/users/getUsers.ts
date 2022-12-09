@@ -16,6 +16,6 @@ export enum UserRole {
 }
 
 export const getUsers = async (): Promise<IUserResponse[]> => {
-  const { data } = await axiosRequest('GET', '/api/admin/Users');
+  const { data } = await axiosRequest('GET', '/admin/Users');
   return data;
 };

@@ -7,13 +7,9 @@ export interface IPostArticle {
 export const postArticle = async (
   article: IPostArticle
 ): Promise<IPostArticle> => {
-  const { data } = await axiosRequest<IPostArticle>(
-    'POST',
-    '/api/admin/articles',
-    {
-      data: article.article,
-    }
-  );
+  const { data } = await axiosRequest<IPostArticle>('POST', '/admin/articles', {
+    data: article.article,
+  });
 
   return data;
 };
