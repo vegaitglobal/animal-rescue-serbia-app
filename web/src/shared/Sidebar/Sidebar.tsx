@@ -64,7 +64,17 @@ const Sidebar = () => {
                 isActive ? 'nav__btn nav__btn--active' : 'nav__btn'
               }
             >
-              Kategorije
+              Kategorije za Prijave
+            </NavLink>
+          </li>
+          <li className="nav__item">
+            <NavLink
+              to="/kategorije-stranice"
+              className={({ isActive }) =>
+                isActive ? 'nav__btn nav__btn--active' : 'nav__btn'
+              }
+            >
+              Kategorije za Stranice
             </NavLink>
           </li>
         </ul>

@@ -11,6 +11,7 @@ import Categories from './pages/Categories/Categories';
 import ReportsContainer from './pages/Reports/ReportsContainer';
 import PagesContainer from './pages/Pages/PagesContainer';
 import jwtTokenApi from './services/jwt.service';
+import ArticleCategories from './pages/ArticleCategories/ArticleCategories';
 
 const GlobalRouter: React.FC = () => {
   return (
@@ -40,6 +41,7 @@ const GlobalRouter: React.FC = () => {
             }
           />
           <Route path="/kategorije" element={<Categories />} />
+          <Route path="/kategorije-stranice" element={<ArticleCategories />} />
           <Route path="/" element={<Navigate to="/prijave" replace />} />
         </Route>
       </Routes>
