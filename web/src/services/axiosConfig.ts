@@ -13,6 +13,9 @@ export const axiosRequest = <T = any>(
     method: method,
     ...config,
     baseURL: BASE_URL,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    }
   };
 
   axios.interceptors.response.use(
