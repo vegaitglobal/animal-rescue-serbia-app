@@ -17,7 +17,7 @@ export const putSingleReport = async (
 ): Promise<IReportsResponse> => {
   const { data } = await axiosRequest(
     'PUT',
-    '/api/admin/violations/' + updateData.id,
+    '/admin/violations/' + updateData.id,
     {
       data: updateData.putData,
     }

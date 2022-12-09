@@ -7,6 +7,6 @@ export interface ICategoryResponse {
 }
 
 export const getCategories = async (): Promise<ICategoryResponse[]> => {
-  const { data } = await axiosRequest('GET', '/api/admin/ViolationCategories');
+  const { data } = await axiosRequest('GET', '/admin/ViolationCategories');
   return data;
 };
