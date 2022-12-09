@@ -46,6 +46,7 @@ export const ProfileScreen = () => {
           ) : (
             <View style={styles.userInfoContainer}>
               <Text
+                numberOfLines={2}
                 style={
                   styles.userFullNameText
                 }>{`${user.firstName} ${user.lastName}`}</Text>
@@ -143,5 +144,6 @@ const styles = StyleSheet.create({
   },
   userDataHeaderContainer: {
     flexDirection: 'row',
+    height: 132,
   },
 });
