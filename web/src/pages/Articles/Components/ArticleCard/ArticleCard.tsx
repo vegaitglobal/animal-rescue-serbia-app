@@ -16,10 +16,13 @@ const ArticleCard = ({
 
   return (
     <div className="cards__card">
-      <div
+      {photoUrl ? <div
         className="cards__bg has-cover"
         style={{ backgroundImage: `url(${formatedUrl})` }}
-      ></div>
+      ></div> : <div
+      className="cards__bg has-cover"
+      style={{ background: 'gray' }}
+    ></div>}
       <div className="cards__content">
         <span className="cards__type">
           <strong>TIP:</strong> {type}
