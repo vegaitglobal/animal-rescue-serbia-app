@@ -13,7 +13,7 @@ export interface ILoginRequest {
 export const login = async (
   loginData: ILoginRequest
 ): Promise<ILoginResponse> => {
-  const { data } = await axiosRequest('POST', '/Users/login', {
+  const { data } = await axiosRequest('POST', '/api/Users/login', {
     data: loginData,
   });
 

@@ -7,6 +7,6 @@ export interface IArticleCategory {
 }
 
 export const getArticleCategories = async (): Promise<IArticleCategory[]> => {
-  const { data } = await axiosRequest('GET', '/admin/ArticleCategories');
+  const { data } = await axiosRequest('GET', '/api/admin/ArticleCategories');
   return data;
 };
