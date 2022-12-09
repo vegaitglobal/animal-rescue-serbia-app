@@ -66,6 +66,7 @@ export type ArticleRequestDto = {
   pageNumber: number;
   pageSize: number;
   searchTerm?: string;
+  type?: 'Article' | 'Page';
 };
 
 export type RegisterResponseDto = {

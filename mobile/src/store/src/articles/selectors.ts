@@ -5,3 +5,9 @@ export const getPaginatedArticles = (state: RootState) =>
 
 export const getFilteredArticlesTotalCount = (state: RootState) =>
   state.article.filteredCount;
+
+export const getPaginatedPages = (state: RootState) =>
+  state.article.pages.entities;
+
+export const getFilteredPagesTotalCount = (state: RootState) =>
+  state.article.pages.filteredCount;

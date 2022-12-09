@@ -130,12 +130,20 @@ export const arsApi = (apiClient: IApiClient) => ({
       data: passwordData,
     });
   },
-  getArticles: ({pageNumber, pageSize, searchTerm}: ArticleRequestDto) => {
+  getArticles: ({
+    pageNumber,
+    pageSize,
+    searchTerm,
+    type,
+  }: ArticleRequestDto) => {
     const uriBuilder = new URLSearchParams();
     uriBuilder.append('PageNumber', pageNumber.toString());
     uriBuilder.append('PageSize', pageSize.toString());
     if (searchTerm) {
       uriBuilder.append('SearchTerm', searchTerm);
+    }
+    if (type) {
+      uriBuilder.append('SearchTerm', type);
     }
 
     return apiClient.request<PaginatedData<ArticleResponseDto>>({

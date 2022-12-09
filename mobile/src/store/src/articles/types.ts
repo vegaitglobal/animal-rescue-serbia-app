@@ -3,4 +3,6 @@ import {
   PaginatedData,
 } from '../../../infrastructure/apiTypes';
 
-export type ArticleState = PaginatedData<ArticleResponseDto> & {};
+export type ArticleState = PaginatedData<ArticleResponseDto> & {
+  pages: PaginatedData<ArticleResponseDto>;
+};

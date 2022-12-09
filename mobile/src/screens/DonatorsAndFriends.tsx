@@ -46,7 +46,7 @@ export const DonatorsAndFriends = () => {
 export const bioSpacing = 24;
 export const accentedTextBoxSpacing = 20;
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   accentedTextBoxContainer: {
     paddingHorizontal: 28,
   },
