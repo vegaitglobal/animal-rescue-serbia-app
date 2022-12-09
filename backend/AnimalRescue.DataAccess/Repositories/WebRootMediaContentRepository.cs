@@ -1,4 +1,5 @@
-﻿using AnimalRescue.Contracts.Abstractions.Repositories;
+﻿using System.IO;
+using AnimalRescue.Contracts.Abstractions.Repositories;
 using AnimalRescue.Domain.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -23,15 +24,15 @@ namespace AnimalRescue.DataAccess.Repositories
             var fileName = Path.GetFileName(fileToUpload.FileName);
             var extension = Path.GetExtension(fileToUpload.FileName);
 
-            var uploadDirectoryPath = $"{rootFilePath}\\{UploadsFolderName}";
+            var uploadDirectoryPath = $"{rootFilePath}{Path.DirectorySeparatorChar}{UploadsFolderName}";
 
             if (!Directory.Exists(uploadDirectoryPath))
             {
                 Directory.CreateDirectory(uploadDirectoryPath);
             }
 
-            var relativePath = $"{UploadsFolderName}\\{fileId}{extension}";
-            var fullPath = $"{rootFilePath}\\{relativePath}";
+            var relativePath = $"{UploadsFolderName}{Path.DirectorySeparatorChar}{fileId}{extension}";
+            var fullPath = $"{rootFilePath}{Path.DirectorySeparatorChar}{relativePath}";
 
             using (var stream = File.Create(fullPath))
             {

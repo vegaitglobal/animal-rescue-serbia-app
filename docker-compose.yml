@@ -15,6 +15,8 @@ services:
       - ConnectionStrings__AnimalRescueDbContext=Server=db;Database=arserbia;user id=sa;password=MySecret123!hahaha;
       - JwtAuthentication__Key="[DONOTCOMMITDONOTCOMMITDONOTCOMMITDONOTCOMMIT]"
       - JwtAuthentication__Salt="[DONOTCOMMITDONOTCOMMITDONOTCOMMITDONOTCOMMIT]"
+    volumes:
+      - "./uploads:/app/uploads"
   web:
     image: web
     container_name: animal-rescue-web
