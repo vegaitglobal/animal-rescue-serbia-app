@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
+import { API_URL } from '../../../../config';
 import { Pencil } from '../../../../shared/Icons';
 import { ArticleCardProps } from './ArticleCard.data';
 
-const BASE_URL = process.env.REACT_APP_API_URL;
+const BASE_URL = API_URL;
 
 const ArticleCard = ({
   id,

@@ -1,7 +1,8 @@
 import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
+import { API_URL } from '../config';
 import storageApi from './storage.service';
 
-const BASE_URL = process.env.REACT_APP_API_URL;
+const BASE_URL = API_URL;
 
 export const axiosRequest = <T = any>(
   method: 'POST' | 'GET' | 'PATCH' | 'DELETE' | 'PUT',
