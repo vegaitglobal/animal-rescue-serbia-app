@@ -13,11 +13,13 @@ services:
       - Cors__Origins__0=https://ars.codeforacause.rs
       - JwtAuthentication__Key="#{JWT_KEY}#"
       - JwtAuthentication__Salt="#{JWT_SALT}#"
+    restart: always
   web:
     image: codeforacause/animal-rescue-serbia-app:web-#{TAG_NUMBER}#
     container_name: animal-rescue-web
     ports:
       - "22000:3000"
+    restart: always
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
     container_name: animal-rescue-db
@@ -28,3 +30,4 @@ services:
       - MSSQL_SA_PASSWORD=#{DB_PASSWORD}#
     volumes:
       - ".:/app:rw"
+    restart: always
