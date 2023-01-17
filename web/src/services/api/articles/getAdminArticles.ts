@@ -10,12 +10,13 @@ export interface IAdminArticleMediaContent {
   id: string;
   fileName: string;
   filePath: string;
+  relativeFilePath: string;
 }
 
 export interface IAdminArticle {
   id: string;
   title: string;
-  description: string;
+  decription: string;
   type: string;
   category: IAdminArticleCategory;
   mediaContent: IAdminArticleMediaContent;

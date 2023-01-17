@@ -57,8 +57,8 @@ public class ViolationService : IViolationService
 
         var user = await _userRepository.GetByEmailAsync(currentUser.Email);
 
-        var fileUploadTasks = violationDto.Files?.Select(f => _mediaContentService.UploadMediaContentAsync(f));
-        var mediaContent = Array.Empty<MediaContent>();
+        var fileUploadTasks = violationDto.Files?.Select(f => _mediaContentService.UploadViolationMediaContentAsync(f));
+        var mediaContent = Array.Empty<ViolationMediaContent>();
         if (fileUploadTasks is not null)
         {
             mediaContent = await Task.WhenAll(fileUploadTasks);

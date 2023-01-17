@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useGetUsers } from '../../hooks/api/Users/useGetUsers';
 import { IUserResponse } from '../../services/api/users/getUsers';
+import Plus from '../../shared/Icons/Plus/Plus';
 import Layout from '../../shared/Layout';
 import Loader from '../../shared/Loader';
 import UserItem from './Components/UserItem';
@@ -27,6 +29,12 @@ function Users() {
           <button type="button" className="intro__back-btn">
             Korisnici
           </button>
+          <Link to={'/korisnici/dodaj'}>
+            <button className="category__add-btn">
+              <Plus />
+              Dodaj Moderatora
+            </button>
+          </Link>
         </div>
       </div>
       <div className="users">

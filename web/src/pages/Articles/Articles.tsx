@@ -1,13 +1,13 @@
 import React from 'react';
 import { useAdminArticles } from '../../hooks/api/articles/useAdminArticles';
 import Loader from '../../shared/Loader';
-import { PagesCard } from './Components';
+import { ArticleCard } from './Components';
 
 interface IProps {
   searchQuery: string;
 }
 
-const Pages: React.FC<IProps> = ({ searchQuery }) => {
+const Articles: React.FC<IProps> = ({ searchQuery }) => {
   const {
     data: adminArticles,
     isLoading,
@@ -17,11 +17,12 @@ const Pages: React.FC<IProps> = ({ searchQuery }) => {
 
   const renderAdminArticles = adminArticles?.pages?.map((page) =>
     page?.entities?.map((article) => (
-      <PagesCard
+      <ArticleCard
         key={article.id}
-        photoUrl={article.mediaContent?.filePath}
+        id={article.id}
+        photoUrl={article.mediaContent?.relativeFilePath}
         title={article.title}
-        description={article.description}
+        description={article.decription}
         type={article.type}
       />
     ))
@@ -43,4 +44,4 @@ const Pages: React.FC<IProps> = ({ searchQuery }) => {
   );
 };
 
-export default Pages;
+export default Articles;

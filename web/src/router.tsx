@@ -1,16 +1,18 @@
 import React from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import App from './App';
+import { ArticlesPage } from './pages/Articles';
+import { ArticleEditForm, ArticleForm } from './pages/Articles/Components';
+import Categories from './pages/Categories/Categories';
 import { EditReport } from './pages/EditReport';
+import EditUser from './pages/EditUser';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
-import { PageForm } from './pages/Pages/Components';
-import EditUser from './pages/EditUser';
-import Users from './pages/Users';
-import Categories from './pages/Categories/Categories';
 import ReportsContainer from './pages/Reports/ReportsContainer';
-import PagesContainer from './pages/Pages/PagesContainer';
+import Users from './pages/Users';
 import jwtTokenApi from './services/jwt.service';
+import ArticleCategories from './pages/ArticleCategories/ArticleCategories';
+import AddModerator from './pages/AddModerator/AddModerator';
 
 const GlobalRouter: React.FC = () => {
   return (
@@ -21,8 +23,6 @@ const GlobalRouter: React.FC = () => {
         <Route path="/" element={<App />}>
           <Route path="/prijave" element={<ReportsContainer />} />
           <Route path="/prijave/:id" element={<EditReport />} />
-          <Route path="/stranice" element={<PagesContainer />} />
-          <Route path="/stranice/kreiranje" element={<PageForm />} />
           <Route
             path="/korisnici"
             element={
@@ -39,7 +39,19 @@ const GlobalRouter: React.FC = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/korisnici/dodaj"
+            element={
+              <ProtectedRoute>
+                <AddModerator />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/stranice" element={<ArticlesPage />} />
+          <Route path="/stranice/kreiranje" element={<ArticleForm />} />
+          <Route path="/stranice/:id" element={<ArticleEditForm />} />
           <Route path="/kategorije" element={<Categories />} />
+          <Route path="/kategorije-stranice" element={<ArticleCategories />} />
           <Route path="/" element={<Navigate to="/prijave" replace />} />
         </Route>
       </Routes>

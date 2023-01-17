@@ -1,5 +1,4 @@
 ﻿using AnimalRescue.Application.Extensions;
-using AnimalRescue.Application.Validators;
 using AnimalRescue.Contracts.Abstractions.Repositories;
 using AnimalRescue.Contracts.Abstractions.Services;
 using AnimalRescue.Contracts.Dto;
@@ -44,11 +43,10 @@ public class ArticleService : IArticleService
 
         var user = await _userRepository.GetByEmailAsync(currentUser!.Email);
 
-        MediaContent media = null;
+        ArticleMediaContent media = null;
         if (createDto.File is not null)
         {
-            MediaValidator.ValidateImage(createDto.File);
-            media = await _mediaContentService.UploadMediaContentAsync(createDto.File);
+            media = await _mediaContentService.UploadArticleMediaContentAsync(createDto.File);
         }
 
         var articleToCreate = new Article
@@ -86,7 +84,7 @@ public class ArticleService : IArticleService
         return entity?.ToDto();
     }
 
-    public async Task<ArticleDto> UpdateAsync(Guid id, ArticleUpdateDto article)
+    public async Task<ArticleDto> PatchAsync(Guid id, ArticleUpdateDto article)
     {
         var existing = await _articleRepository.GetAsync(id);
         if (existing is null)
@@ -94,9 +92,38 @@ public class ArticleService : IArticleService
             throw new EntityNotFoundException($"Article with id: '{id}' does not exist!");
         }
 
-        existing.Decription = article.Decription;
-        existing.Title = article.Title;
-        existing.Type = article.Type;
+        if (!string.IsNullOrWhiteSpace(article.Title))
+        {
+            existing.Title = article.Title;
+        }
+
+        if (article.Decription is not null)
+        {
+            existing.Decription = article.Decription;
+        }
+
+        if (article.Type.HasValue)
+        {
+            existing.Type = article.Type.Value;
+        }
+
+        if (article.CategoryId.HasValue)
+        {
+            var category = await _articleCategoryRepository.GetAsync(article.CategoryId.Value);
+            if (category is null)
+            {
+                throw new ValidationException("Chosen category does not exist.");
+            }
+
+            existing.Category = category;
+        }
+
+        if (article.File is not null)
+        {
+            var media = await _mediaContentService.UploadArticleMediaContentAsync(article.File);
+
+            existing.MediaContent = media;
+        }
 
         var updated = await _articleRepository.UpdateAsync(existing);
 

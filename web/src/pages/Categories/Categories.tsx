@@ -1,6 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useGetCategories } from '../../hooks/api/Categories/useGetCategories';
 import { usePostCategory } from '../../hooks/api/Categories/usePostCategory';
 import Plus from '../../shared/Icons/Plus/Plus';
@@ -9,7 +8,6 @@ import Loader from '../../shared/Loader';
 import CategoryItem from './Components/CategoryItem';
 
 const Categories = () => {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const handlePostSuccess = () => {
@@ -47,11 +45,11 @@ const Categories = () => {
     <Layout>
       <div className="intro">
         <div className="intro__left">
-          <h1 className="intro__title">Kategorije i Tipovi</h1>
+          <h1 className="intro__title">Kategorije </h1>
         </div>
       </div>
       <div className="category">
-        <h3 className="category__title">Kategorije</h3>
+        <h3 className="category__title">Kategorije za Prijave</h3>
         <div className="category__container">
           <div className="category__holder">
             <input

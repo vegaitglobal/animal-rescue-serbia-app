@@ -15,16 +15,18 @@ services:
       - ConnectionStrings__AnimalRescueDbContext=Server=db;Database=arserbia;user id=sa;password=MySecret123!hahaha;
       - JwtAuthentication__Key="[DONOTCOMMITDONOTCOMMITDONOTCOMMITDONOTCOMMIT]"
       - JwtAuthentication__Salt="[DONOTCOMMITDONOTCOMMITDONOTCOMMITDONOTCOMMIT]"
+    volumes:
+      - "./uploads:/app/uploads"
   web:
     image: web
     container_name: animal-rescue-web
     build:
       context: ./web
       dockerfile: Dockerfile
+      args:
+      - API_URL=http://localhost:5113 
     ports:
       - "3000:3000"
-    environment:
-      - REACT_APP_API_URL=api
 
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest

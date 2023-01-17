@@ -36,7 +36,7 @@ public class UserService : IUserService
             LastName = userCreateDto.LastName,
             Username = userCreateDto.Username,
             Password = _securityService.HashPassword(userCreateDto.Password),
-            Role = UserRoles.User,
+            Role = userCreateDto.Role,
             IsActive = true,
         };
 

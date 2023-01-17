@@ -37,10 +37,20 @@ public class Program
         {
             options.AddDefaultPolicy(builder =>
             {
-                builder.WithOrigins(configuration.GetSection(AppSettingKeys.CorsOrigins).Get<string[]>())
-                    .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowCredentials();
+                if (webHostEnvironment.IsDevelopment())
+                {
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                }
+                else
+                {
+                    builder.WithOrigins(configuration.GetSection(AppSettingKeys.CorsOrigins).Get<string[]>())
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                }
             });
         });
 
@@ -127,10 +137,11 @@ public class Program
                 using var scope = applicationBuilder.ApplicationServices.CreateScope();
                 var dataSeeder = scope.ServiceProvider.GetRequiredService<SeedData>();
                 dataSeeder.SeedTestData();
-                SeedSuperUser(applicationBuilder);
             }
             catch (Exception ex) { }
         }
+
+        SeedSuperUser(applicationBuilder);
 
         applicationBuilder
             .UseProblemDetails()
@@ -142,8 +153,12 @@ public class Program
 
     private static void SeedSuperUser(IApplicationBuilder applicationBuilder)
     {
-        using var scope = applicationBuilder.ApplicationServices.CreateScope();
-        var dataSeeder = scope.ServiceProvider.GetRequiredService<SeedData>();
-        dataSeeder.SeedSuperUser();
+        try
+        {
+            using var scope = applicationBuilder.ApplicationServices.CreateScope();
+            var dataSeeder = scope.ServiceProvider.GetRequiredService<SeedData>();
+            dataSeeder.SeedSuperUser();
+        }
+        catch (Exception ex) { }
     }
 }

@@ -50,10 +50,10 @@ public class ArticlesAdminController : ControllerBase
         return CreatedAtRoute("GetArticleAsync", new { id = created.Id }, null);
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult<ArticleDto>> UpdateAsync(Guid id, ArticleUpdateDto updateDto)
+    [HttpPatch("{id}")]
+    public async Task<ActionResult<ArticleDto>> PatchAsync(Guid id, [FromForm] ArticleUpdateDto updateDto)
     {
-        var updated = await _articleService.UpdateAsync(id, updateDto);
+        var updated = await _articleService.PatchAsync(id, updateDto);
 
         return Ok(updated);
     }
