@@ -2,7 +2,6 @@ import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, {useCallback, useMemo} from 'react';
 import {Dimensions, ListRenderItemInfo, StyleSheet} from 'react-native';
-import Config from 'react-native-config';
 import VideoPlayer from 'react-native-video-player';
 import {CustomBottomSheetModal} from '../components/CustomBottomSheetModal';
 import {EmptySpace} from '../components/EmptySpace';
@@ -11,6 +10,7 @@ import {StripedBar} from '../components/StripedBar';
 import {useVideoThumbnailsCreator} from '../hooks/useVideoThumbnails';
 import {MediaContentDto} from '../infrastructure/apiTypes';
 import {ColorPallet} from '../resources/ColorPallet';
+import {Constants} from '../resources/Constants';
 import {isPathVideo} from '../util/helpers';
 
 //TODONFFF: Rename to something like MediaContenListModal
@@ -32,7 +32,7 @@ export const ImageListModal = ({
 
   const renderItem = useCallback(
     ({item: {id, relativeFilePath}}: ListRenderItemInfo<MediaContentDto>) => {
-      const fullPath = `${Config.BASE_URL}/${relativeFilePath}`;
+      const fullPath = `${Constants.baseUrl}/${relativeFilePath}`;
       return isPathVideo(relativeFilePath) ? (
         <VideoPlayer
           video={{

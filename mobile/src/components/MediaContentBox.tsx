@@ -1,9 +1,9 @@
 import React from 'react';
-import Config from 'react-native-config';
 import VideoPlayer from 'react-native-video-player';
 import {useVideoThumbnailsCreator} from '../hooks/useVideoThumbnails';
 import {MediaContentDto} from '../infrastructure/apiTypes';
 import {ColorPallet} from '../resources/ColorPallet';
+import {Constants} from '../resources/Constants';
 import {ImageWithLoadingAnimation} from './ImageWithLoadingAnimation';
 
 type MediaContentBoxProps = {
@@ -12,7 +12,7 @@ type MediaContentBoxProps = {
   mediaContent: MediaContentDto;
 };
 
-const BASE_URL = Config.BASE_URL;
+const BASE_URL = Constants.baseUrl;
 
 export const MediaContentBox = ({
   mediaContent,

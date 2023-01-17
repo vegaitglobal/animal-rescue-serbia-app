@@ -10,7 +10,7 @@ import {
   loadViolationCategories,
 } from '../store/src/reports/actions';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
-import {Constants} from '../Constants';
+import {Constants} from '../resources/Constants';
 
 export const SplashScreenRN = () => {
   const dispatch = useAppDispatch();

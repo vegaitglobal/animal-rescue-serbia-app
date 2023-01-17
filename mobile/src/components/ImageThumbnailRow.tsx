@@ -11,10 +11,10 @@ import {ColorPallet} from '../resources/ColorPallet';
 import {Chevron, Orientation} from './Chevron';
 import {EmptySpace} from './EmptySpace';
 import {isPathVideo} from '../util/helpers';
-import Config from 'react-native-config';
 import {useVideoThumbnailsCreator} from '../hooks/useVideoThumbnails';
 import {ImageWithLoadingAnimation} from './ImageWithLoadingAnimation';
 import PlayIcon from '../assets/icons/play.svg';
+import {Constants} from '../resources/Constants';
 
 type ImageThumbnailRowProps = {
   mediaContent: MediaContentDto[];
@@ -48,7 +48,7 @@ export const ImageThumbnailRow = ({
 
   const renderItem = useCallback(
     (id: string, relativeFilePath: string) => {
-      const fullPath = `${Config.BASE_URL}/${relativeFilePath}`;
+      const fullPath = `${Constants.baseUrl}/${relativeFilePath}`;
 
       const isVideo = isPathVideo(relativeFilePath);
       const processedPath = isVideo

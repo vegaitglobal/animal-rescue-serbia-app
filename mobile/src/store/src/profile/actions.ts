@@ -14,7 +14,7 @@ import {
   ProfileUpdateData,
 } from './types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Constants} from '../../../Constants';
+import {Constants} from '../../../resources/Constants';
 
 export const setFirstName = createAction(
   'profile/setFirstName',

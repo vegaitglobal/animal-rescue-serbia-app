@@ -1,8 +1,8 @@
 import {useCallback, useEffect, useState} from 'react';
-import Config from 'react-native-config';
 import {createThumbnail} from 'react-native-create-thumbnail';
 import {ThumbnailData} from '../components/types';
 import {MediaContentDto} from '../infrastructure/apiTypes';
+import {Constants} from '../resources/Constants';
 import {isPathVideo} from '../util/helpers';
 
 export const useVideoThumbnailsCreator = (mediaContent: MediaContentDto[]) => {
@@ -16,7 +16,7 @@ export const useVideoThumbnailsCreator = (mediaContent: MediaContentDto[]) => {
 
       videoOnly.forEach(async ({id, relativeFilePath}) => {
         const res = await createThumbnail({
-          url: `${Config.BASE_URL}/${relativeFilePath}`,
+          url: `${Constants.baseUrl}/${relativeFilePath}`,
         });
         setVideoThumbnails(current => [...current, {id, fullPath: res.path}]);
       });

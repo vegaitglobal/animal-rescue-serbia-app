@@ -8,14 +8,13 @@ import {
 } from './types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
-import Config from 'react-native-config';
-import {Constants} from '../Constants';
+import {Constants} from '../resources/Constants';
 
 export const apiClient = (
   authManager: IAuthManager,
   navigationService: INavigationService,
 ): IApiClient => {
-  const baseURL = `${Config.BASE_URL}/api`;
+  const baseURL = `${Constants.baseUrl}/api`;
 
   axios?.interceptors?.response?.use?.(
     config => {
