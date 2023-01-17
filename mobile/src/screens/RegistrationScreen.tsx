@@ -1,6 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useCallback, useState} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {CustomButton} from '../components/CustomButton';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {TextInput} from '../components/TextInput';
@@ -55,70 +61,74 @@ export const RegistrationScreen = () => {
 
   return (
     <ScreenRootContainer title={headerTitle} showLogo>
-      <View style={style.container}>
-        <View style={style.rootInputContainer}>
-          <View style={style.inputContainer}>
-            <TextInput
-              value={firstName}
-              //Try creating bind function for this scenario
-              onChangeText={text => dispatch(setFirstName(text))}
-              placeholder={ime}
-              placeholderTextColor={ColorPallet.lightGray}
-            />
+      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <KeyboardAvoidingView style={{flex: 1}}>
+          <View style={style.container}>
+            <View style={style.rootInputContainer}>
+              <View style={style.inputContainer}>
+                <TextInput
+                  value={firstName}
+                  //Try creating bind function for this scenario
+                  onChangeText={text => dispatch(setFirstName(text))}
+                  placeholder={ime}
+                  placeholderTextColor={ColorPallet.lightGray}
+                />
+              </View>
+              <View style={style.inputContainer}>
+                <TextInput
+                  value={lastName}
+                  onChangeText={text => dispatch(setLastName(text))}
+                  placeholder={prezime}
+                  placeholderTextColor={ColorPallet.lightGray}
+                />
+              </View>
+              <View style={style.inputContainer}>
+                <TextInput
+                  value={email}
+                  onChangeText={text => dispatch(setEmail(text))}
+                  placeholder={emailPlaceholder}
+                  placeholderTextColor={ColorPallet.lightGray}
+                />
+              </View>
+              <View style={style.inputContainer}>
+                <TextInput
+                  value={username}
+                  onChangeText={text => dispatch(setUsername(text))}
+                  placeholder={usernamePlaceholder}
+                  placeholderTextColor={ColorPallet.lightGray}
+                />
+              </View>
+              <TextInput
+                value={password}
+                onChangeText={text => dispatch(setPassword(text))}
+                secureTextEntry={true}
+                keyboardType={'default'}
+                textContentType={'password'}
+                autoCapitalize={'none'}
+                placeholder={lozinka}
+                placeholderTextColor={ColorPallet.lightGray}
+              />
+              <TextInput
+                value={passwordConfirmed}
+                onChangeText={text => dispatch(setPasswordConfirmed(text))}
+                secureTextEntry={true}
+                keyboardType={'default'}
+                textContentType={'password'}
+                autoCapitalize={'none'}
+                placeholder={confirmPasswordPlaceholder}
+                placeholderTextColor={ColorPallet.lightGray}
+              />
+            </View>
+            <View style={style.buttonContainer}>
+              <CustomButton
+                isLoading={isLoading}
+                onPress={onRegisterPress}
+                text={uredu}
+              />
+            </View>
           </View>
-          <View style={style.inputContainer}>
-            <TextInput
-              value={lastName}
-              onChangeText={text => dispatch(setLastName(text))}
-              placeholder={prezime}
-              placeholderTextColor={ColorPallet.lightGray}
-            />
-          </View>
-          <View style={style.inputContainer}>
-            <TextInput
-              value={email}
-              onChangeText={text => dispatch(setEmail(text))}
-              placeholder={emailPlaceholder}
-              placeholderTextColor={ColorPallet.lightGray}
-            />
-          </View>
-          <View style={style.inputContainer}>
-            <TextInput
-              value={username}
-              onChangeText={text => dispatch(setUsername(text))}
-              placeholder={usernamePlaceholder}
-              placeholderTextColor={ColorPallet.lightGray}
-            />
-          </View>
-          <TextInput
-            value={password}
-            onChangeText={text => dispatch(setPassword(text))}
-            secureTextEntry={true}
-            keyboardType={'default'}
-            textContentType={'password'}
-            autoCapitalize={'none'}
-            placeholder={lozinka}
-            placeholderTextColor={ColorPallet.lightGray}
-          />
-          <TextInput
-            value={passwordConfirmed}
-            onChangeText={text => dispatch(setPasswordConfirmed(text))}
-            secureTextEntry={true}
-            keyboardType={'default'}
-            textContentType={'password'}
-            autoCapitalize={'none'}
-            placeholder={confirmPasswordPlaceholder}
-            placeholderTextColor={ColorPallet.lightGray}
-          />
-        </View>
-        <View style={style.buttonContainer}>
-          <CustomButton
-            isLoading={isLoading}
-            onPress={onRegisterPress}
-            text={uredu}
-          />
-        </View>
-      </View>
+        </KeyboardAvoidingView>
+      </ScrollView>
     </ScreenRootContainer>
   );
 };
@@ -159,7 +169,7 @@ const style = StyleSheet.create({
   },
   buttonContainer: {
     alignItems: 'flex-start',
-    paddingBottom: 20,
+    paddingVertical: 20,
   },
   rootInputContainer: {
     flex: 1,
