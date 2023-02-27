@@ -1,10 +1,11 @@
 import React, {useCallback} from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
-import Report from '../assets/icons/report.svg';
-import Inform from '../assets/icons/inform.svg';
-import Education from '../assets/icons/education.svg';
+import Report from '../assets/icons/prijava.svg';
+import Inform from '../assets/icons/informisanje.svg';
+import Education from '../assets/icons/edukacija.svg';
+import Ads from '../assets/icons/oglasavanje.svg';
 import {CustomButton} from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -65,17 +66,16 @@ export const HomeScreen = () => {
                   <GridIcon label={prijava}>
                     <Report width={100} height={100} />
                   </GridIcon>,
+
                   <GridIcon label={edukacija}>
                     <Education width={100} height={100} />
                   </GridIcon>,
                 ],
                 [
                   <GridIcon label={oglasavanje}>
-                    <Image
-                      style={style.adIllustration}
-                      source={require('../assets/icons/adsIllustration.png')}
-                    />
+                    <Ads width={100} height={100} />
                   </GridIcon>,
+
                   <GridIcon label={informisanje}>
                     <Inform width={100} height={100} />
                   </GridIcon>,
@@ -131,9 +131,5 @@ const style = StyleSheet.create({
   },
   violationListButtonLabel: {
     color: ColorPallet.plainWhite,
-  },
-  adIllustration: {
-    width: 83,
-    height: 100,
   },
 });
