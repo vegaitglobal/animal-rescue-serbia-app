@@ -38,22 +38,6 @@ export const ViolationsScreen = () => {
         inputBackgroundColor={ColorPallet.gray}
         placeholderTextColor={ColorPallet.plainWhite}
         hasFilter={true}
-        handleClearFilter={() => dispatch(setFilterCategory(''))}
-        onValueSelected={item => dispatch(setFilterCategory(item.label))}
-        data={violationCategories?.map(
-          item =>
-            ({
-              id: item.id,
-              label: item.name,
-            } ?? []),
-        )}
-        placeholderLabel={'Filtriranje po vrsti prijave'}
-      />
-      <SelectionInput
-        inputAccentColor={ColorPallet.plainWhite}
-        inputBackgroundColor={ColorPallet.gray}
-        placeholderTextColor={ColorPallet.plainWhite}
-        hasFilter={true}
         handleClearFilter={() => dispatch(setFilterLocation(''))}
         onValueSelected={item => dispatch(setFilterLocation(item.label))}
         data={violationLocations?.map(
@@ -65,10 +49,26 @@ export const ViolationsScreen = () => {
         )}
         placeholderLabel={'Filtriranje po opštinama'}
       />
+      <SelectionInput
+        inputAccentColor={ColorPallet.plainWhite}
+        inputBackgroundColor={ColorPallet.gray}
+        placeholderTextColor={ColorPallet.plainWhite}
+        hasFilter={true}
+        handleClearFilter={() => dispatch(setFilterCategory(''))}
+        onValueSelected={item => dispatch(setFilterCategory(item.label))}
+        data={violationCategories?.map(
+          item =>
+            ({
+              id: item.id,
+              label: item.name,
+            } ?? []),
+        )}
+        placeholderLabel={'Filtriranje po vrsti prijave'}
+      />
       <SegmentedControl
         activeSegment={isFullViolationList ? 'left' : 'right'}
         onSegmentChange={onSegmentChange}
-        segmentNames={{left: 'Potpuni prekršaji', right: 'Brzi prekršaji'}}
+        segmentNames={{left: 'Sa dokazima', right: 'Bez dokaza'}}
       />
     </>
   );
