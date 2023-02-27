@@ -1,22 +1,26 @@
 import React, {useState} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, View} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 import Check from '../assets/icons/check.svg';
+import {Link} from './Link';
 
 export const Checkbox = ({
   style,
   onCheck,
+  linkText,
+  onPress,
 }: {
+  onPress: () => void;
   style?: any;
-  onCheck?: () => void;
+  onCheck?: (checked: boolean) => void;
   linkText?: string;
-  onPress?: () => void;
 }) => {
   const [checked, setChecked] = useState(false);
 
   const handleOnPress = () => {
-    setChecked(!checked);
-    onCheck!();
+    const newState = !checked;
+    setChecked(newState);
+    onCheck?.(newState);
   };
 
   return (
@@ -24,13 +28,15 @@ export const Checkbox = ({
       <Pressable style={styles.pressable} onPress={handleOnPress}>
         {checked ? (
           <View style={styles.checkedCheckbox}>
-            <Check width={20} height={20} />
+            <Check width={15} height={15} />
           </View>
         ) : (
           <View style={styles.uncheckedCheckbox} />
         )}
       </Pressable>
-      <Text style={styles.text}>test</Text>
+      <Link textStyle={styles.text} onPress={onPress}>
+        {linkText}
+      </Link>
     </View>
   );
 };
@@ -41,14 +47,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    color: ColorPallet.lightGray,
-    fontSize: 18,
+    marginStart: 15,
   },
   checkedCheckbox: {
     borderColor: ColorPallet.lightGray,
     borderWidth: 2,
-    width: 35,
-    height: 35,
+    width: 30,
+    height: 30,
     borderRadius: 6,
     backgroundColor: ColorPallet.plainWhite,
     alignItems: 'center',
@@ -58,8 +63,8 @@ const styles = StyleSheet.create({
   uncheckedCheckbox: {
     borderColor: ColorPallet.lightGray,
     borderWidth: 2,
-    width: 35,
-    height: 35,
+    width: 30,
+    height: 30,
     borderRadius: 6,
     backgroundColor: ColorPallet.plainWhite,
   },

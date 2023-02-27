@@ -16,6 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 import {getUsers} from '../store/src/profile/selectors';
 import {loadCurrentUser, signOut} from '../store/src/profile/actions';
 import {ActivityIndicator} from '../components/ActivityIndicator';
+import {Constants} from '../resources/Constants';
 
 export const ProfileScreen = () => {
   const dispatch = useAppDispatch();
@@ -90,11 +91,7 @@ export const ProfileScreen = () => {
 
           <CustomButton
             text="Uslovi korišćenja i sadržaj"
-            onPress={() =>
-              Linking.openURL(
-                'https://animalrescueserbia.org/downloads/uslovi_i_sadrzaj.pdf',
-              )
-            }
+            onPress={() => Linking.openURL(Constants.termsAndConditionsUrl)}
           />
 
           <EmptySpace height={20} />

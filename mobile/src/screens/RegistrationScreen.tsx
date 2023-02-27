@@ -2,16 +2,19 @@ import {useNavigation} from '@react-navigation/native';
 import React, {useCallback, useState} from 'react';
 import {
   KeyboardAvoidingView,
+  Linking,
   Platform,
   ScrollView,
   StyleSheet,
   View,
 } from 'react-native';
+import {Checkbox} from '../components/Checkbox';
 import {CustomButton} from '../components/CustomButton';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {TextInput} from '../components/TextInput';
 import {useAppDispatch, useAppSelector} from '../hooks/storeHooks';
 import {ColorPallet} from '../resources/ColorPallet';
+import {Constants} from '../resources/Constants';
 import {
   register,
   setEmail,
@@ -25,13 +28,13 @@ import {getNewRegistration} from '../store/src/profile/selectors';
 
 export const RegistrationScreen = () => {
   const headerTitle = 'Registracija';
-  const ime = 'Ime';
-  const prezime = 'Prezime';
-  const emailPlaceholder = 'E-mail';
+  const ime = 'Ime*';
+  const prezime = 'Prezime*';
+  const emailPlaceholder = 'E-mail*';
   const uredu = 'u redu';
-  const lozinka = 'Lozinka';
-  const confirmPasswordPlaceholder = 'Potvrdi lozinku';
-  const usernamePlaceholder = 'Korisnicko ime';
+  const lozinka = 'Lozinka*';
+  const confirmPasswordPlaceholder = 'Potvrdi lozinku*';
+  const usernamePlaceholder = 'Korisnicko ime*';
 
   const dispatch = useAppDispatch();
 
@@ -43,6 +46,8 @@ export const RegistrationScreen = () => {
     registrationData;
 
   const [isLoading, setIsLoading] = useState(false);
+  const [hasAcceptedTermsAndConditions, setHasAcceptedTermsAndConditions] =
+    useState(false);
 
   const onRegisterPress = useCallback(async () => {
     setIsLoading(true);
@@ -58,6 +63,10 @@ export const RegistrationScreen = () => {
 
     navigation.replace('TabNavigator');
   }, [dispatch, navigation, registrationData]);
+
+  const handleTermsAndConditionsLinkPress = () => {
+    Linking.openURL(Constants.termsAndConditionsUrl);
+  };
 
   return (
     <ScreenRootContainer title={headerTitle} showLogo>
@@ -118,12 +127,19 @@ export const RegistrationScreen = () => {
                 placeholder={confirmPasswordPlaceholder}
                 placeholderTextColor={ColorPallet.lightGray}
               />
+              <Checkbox
+                style={{paddingTop: 30}}
+                onCheck={setHasAcceptedTermsAndConditions}
+                linkText="Uslovi korišćenja i sadržaj"
+                onPress={handleTermsAndConditionsLinkPress}
+              />
             </View>
             <View style={style.buttonContainer}>
               <CustomButton
                 isLoading={isLoading}
                 onPress={onRegisterPress}
                 text={uredu}
+                disabled={!hasAcceptedTermsAndConditions}
               />
             </View>
           </View>

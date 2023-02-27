@@ -18,6 +18,7 @@ type CustomButtonProps = {
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   isLoading?: boolean;
+  disabled?: boolean;
 };
 export const CustomButton = ({
   text,
@@ -26,6 +27,7 @@ export const CustomButton = ({
   style,
   textStyle,
   isLoading,
+  disabled,
 }: CustomButtonProps) => {
   const dynamicStyle = useMemo(
     () => ({
@@ -33,21 +35,19 @@ export const CustomButton = ({
         alignSelf: isSmall ? 'flex-start' : 'stretch',
         paddingHorizontal: isSmall ? 20 : 0,
         height: isSmall ? 40 : 50,
-      },
+        backgroundColor: disabled ? ColorPallet.lightGray : ColorPallet.yellow,
+      } as ViewStyle,
       font: {
         fontSize: isSmall ? 14 : 18,
       },
     }),
-    [isSmall],
+    [disabled, isSmall],
   );
 
   return (
     <Pressable
-      style={[
-        styles.buttonContainer,
-        dynamicStyle.item as StyleProp<ViewStyle>,
-        style,
-      ]}
+      disabled={disabled}
+      style={[styles.buttonContainer, dynamicStyle.item as ViewStyle, style]}
       onPress={onPress}>
       {isLoading ? (
         <ActivityIndicator />
@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 20,
     justifyContent: 'center',
-    backgroundColor: ColorPallet.yellow,
     flexDirection: 'row',
   },
   text: {
