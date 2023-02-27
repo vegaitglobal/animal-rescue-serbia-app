@@ -1,5 +1,12 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  Linking,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {CustomButton} from '../components/CustomButton';
 import {EmptySpace} from '../components/EmptySpace';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
@@ -33,41 +40,42 @@ export const ProfileScreen = () => {
   }, [loadUsersData]);
 
   const user = useAppSelector(getUsers);
+  user.firstName = 'Admin first';
+  user.lastName = 'name Admin';
 
   const handleProfileUpdatePress = () => navigation.navigate('ProfileUpdate');
   const handleChangePasswordPress = () => navigation.navigate('PasswordUpdate');
 
   return (
     <ScreenRootContainer title="Profil" showLogo>
-      <View style={styles.container}>
-        <View style={styles.userDataHeaderContainer}>
-          {isLoading ? (
-            <ActivityIndicator />
-          ) : (
-            <View style={styles.userInfoContainer}>
-              <Text
-                numberOfLines={2}
-                style={
-                  styles.userFullNameText
-                }>{`${user.firstName} ${user.lastName}`}</Text>
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.userDataHeaderContainer}>
+            {isLoading ? (
+              <ActivityIndicator />
+            ) : (
+              <View style={styles.userInfoContainer}>
+                <Text
+                  numberOfLines={2}
+                  style={styles.userFirstNameText}>{`${user.firstName}`}</Text>
 
-              <EmptySpace height={4} />
+                <EmptySpace height={4} />
 
-              <Text style={styles.emailText}>{user.email}</Text>
+                <Text style={styles.emailText}>{user.email}</Text>
 
-              <EmptySpace height={16} />
+                <EmptySpace height={16} />
 
-              <Pressable onPress={handleProfileUpdatePress}>
-                <View style={styles.bubbleButtonContainer}>
-                  <Text style={styles.bubbleButtonText}>Uredi profil</Text>
-                </View>
-              </Pressable>
-            </View>
-          )}
-        </View>
+                <Pressable onPress={handleProfileUpdatePress}>
+                  <View style={styles.bubbleButtonContainer}>
+                    <Text style={styles.bubbleButtonText}>Uredi profil</Text>
+                  </View>
+                </Pressable>
+              </View>
+            )}
+          </View>
 
-        <EmptySpace height={50} />
-        {/*
+          <EmptySpace height={50} />
+          {/*
         <CustomButton text="Istorija prijava" onPress={() => {}} />
 
         <EmptySpace height={buttonSpacing} />
@@ -78,17 +86,29 @@ export const ProfileScreen = () => {
 
         <CustomButton text="Moji oglasi" onPress={() => {}} /> */}
 
-        <EmptySpace height={buttonSpacing} />
+          <EmptySpace height={buttonSpacing} />
 
-        <CustomButton
-          text="Promeni lozinku"
-          onPress={handleChangePasswordPress}
-        />
+          <CustomButton
+            text="Uslovi korišćenja i sadržaj"
+            onPress={() =>
+              Linking.openURL(
+                'https://animalrescueserbia.org/downloads/uslovi_i_sadrzaj.pdf',
+              )
+            }
+          />
 
-        <EmptySpace height={20} />
+          <EmptySpace height={20} />
 
-        <CustomButton text="Odjavi se" onPress={handleSignOut} />
-      </View>
+          <CustomButton
+            text="Promeni lozinku"
+            onPress={handleChangePasswordPress}
+          />
+
+          <EmptySpace height={20} />
+
+          <CustomButton text="Odjavi se" onPress={handleSignOut} />
+        </View>
+      </ScrollView>
     </ScreenRootContainer>
   );
 };
@@ -119,10 +139,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 17,
   },
-  userFullNameText: {
+  userFirstNameText: {
     fontSize: 40,
     fontWeight: '700',
     color: ColorPallet.plainBlack,
+    textAlign: 'center',
   },
   emailText: {
     fontSize: 25,
@@ -144,6 +165,5 @@ const styles = StyleSheet.create({
   },
   userDataHeaderContainer: {
     flexDirection: 'row',
-    height: 132,
   },
 });
