@@ -45,6 +45,10 @@ export const RegistrationScreen = () => {
   const {email, username, firstName, lastName, password, passwordConfirmed} =
     registrationData;
 
+  const isFormValid = Object.values(registrationData).every(
+    field => field.length,
+  );
+
   const [isLoading, setIsLoading] = useState(false);
   const [hasAcceptedTermsAndConditions, setHasAcceptedTermsAndConditions] =
     useState(false);
@@ -139,7 +143,7 @@ export const RegistrationScreen = () => {
                 isLoading={isLoading}
                 onPress={onRegisterPress}
                 text={uredu}
-                disabled={!hasAcceptedTermsAndConditions}
+                disabled={!hasAcceptedTermsAndConditions || !isFormValid}
               />
             </View>
           </View>
