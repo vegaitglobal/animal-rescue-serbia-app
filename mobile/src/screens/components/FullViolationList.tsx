@@ -200,6 +200,8 @@ export const FullViolationList = ({
     }
   };
 
+  const filteredSections = getFilteredDataNew(filterCategory, filterLocation);
+
   return isLoadingData && !violationsByGroup.length ? null : (
     <View style={styles.rootContainer}>
       <SectionList
@@ -213,7 +215,7 @@ export const FullViolationList = ({
             progressViewOffset={250}
           />
         }
-        sections={getFilteredDataNew(filterCategory, filterLocation)}
+        sections={filteredSections}
         renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
         SectionSeparatorComponent={() => <EmptySpace height={16} />}
@@ -226,12 +228,12 @@ export const FullViolationList = ({
         )}
         ListFooterComponent={() => (
           <View style={styles.footerContainer}>
-            {violationsByGroup.length ? <Separator /> : null}
+            {filteredSections.length ? <Separator /> : null}
             <EmptySpace height={200} />
           </View>
         )}
         ListHeaderComponent={renderListHeader}
-        keyExtractor={(item)=>item.id}
+        keyExtractor={item => item.id}
         initialNumToRender={5}
       />
       <ImageListModal

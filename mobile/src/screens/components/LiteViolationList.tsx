@@ -103,7 +103,7 @@ export const LiteViolationList = ({
           progressViewOffset={250}
         />
       }
-      keyExtractor={(item)=>item.id}
+      keyExtractor={item => item.id}
       initialNumToRender={5}
     />
   );

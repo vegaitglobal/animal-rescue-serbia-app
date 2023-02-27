@@ -15,6 +15,7 @@ import {
 import {LoginSocialButtons} from './components/LoginSocialButtons';
 import {unwrapResult} from '@reduxjs/toolkit';
 import {DefaultSocialButtons} from '../components/DefaultSocialButtons';
+import {EmptySpace} from '../components/EmptySpace';
 
 export const LoginScreen = () => {
   const headerTitle = 'Dobro došli';
@@ -103,7 +104,8 @@ export const LoginScreen = () => {
           placeholder={lozinka}
           placeholderTextColor={ColorPallet.lightGray}
         />
-        <Text style={styles.password}>{zaboravljenaLozinka}</Text>
+        {/* <Text style={styles.password}>{zaboravljenaLozinka}</Text> */}
+        <EmptySpace height={10} />
         <View style={styles.buttonContainer}>
           <CustomButton
             text={prijaviteSe}

@@ -49,6 +49,8 @@ const styles = StyleSheet.create({
   },
   activeSegmentButton: {
     textDecorationLine: 'underline',
+    fontWeight: 'bold',
+    color: ColorPallet.yellow,
   },
   buttonContainer: {
     paddingHorizontal: 20,
