@@ -8,7 +8,7 @@ type IconData<T extends unknown> = {
   icon: ReactElement;
 };
 
-type SocialButtonsProps<T extends unknown> = {
+export type SocialButtonsProps<T extends unknown> = {
   onPress: (id: T) => void;
   icons: IconData<T>[];
   bubbleSize?: number;

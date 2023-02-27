@@ -14,6 +14,7 @@ import {
 } from '../store/src/reports/actions';
 import {LoginSocialButtons} from './components/LoginSocialButtons';
 import {unwrapResult} from '@reduxjs/toolkit';
+import {DefaultSocialButtons} from '../components/DefaultSocialButtons';
 
 export const LoginScreen = () => {
   const headerTitle = 'Dobro došli';
@@ -119,7 +120,7 @@ export const LoginScreen = () => {
             />
           </View>
           <View style={styles.socialButtonContainer}>
-            <LoginSocialButtons />
+            <DefaultSocialButtons bubbleSize={50} />
           </View>
         </View>
       </View>
