@@ -47,7 +47,7 @@ export const ViolationsScreen = () => {
               label: item.name,
             } ?? []),
         )}
-        placeholderLabel={'Filtriranje po kategoriji'}
+        placeholderLabel={'Filtriranje po vrsti prijave'}
       />
       <SelectionInput
         inputAccentColor={ColorPallet.plainWhite}
@@ -63,7 +63,7 @@ export const ViolationsScreen = () => {
               id: index.toString(),
             } as ItemData),
         )}
-        placeholderLabel={'Filtriranje po lokaciji'}
+        placeholderLabel={'Filtriranje po opštinama'}
       />
       <SegmentedControl
         activeSegment={isFullViolationList ? 'left' : 'right'}
@@ -74,7 +74,7 @@ export const ViolationsScreen = () => {
   );
 
   return (
-    <ScreenRootContainer title="Prekršaji" showLogo>
+    <ScreenRootContainer title="Lista prijava" showLogo>
       {isFullViolationList ? (
         <FullViolationList renderListHeader={renderListHeader} />
       ) : (

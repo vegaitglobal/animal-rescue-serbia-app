@@ -23,7 +23,7 @@ export const HomeScreen = () => {
   const edukacija = 'Edukacija';
   const oglasavanje = 'Oglasavanje';
   const informisanje = 'Informisanje';
-  const violationListButtonLabel = 'Lista prekršaja';
+  const violationListButtonLabel = 'Lista prijava';
 
   const navigation = useNavigation();
 
