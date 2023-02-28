@@ -127,6 +127,10 @@ export const FullViolationList = ({
     ({item: violation}: SectionListRenderItemInfo<ViolationResponseDto>) => {
       const {address, description, location, mediaContent, id} = violation;
 
+      const descriptionGuarded =
+        description === undefined || description === 'undefined'
+          ? ''
+          : description;
       return (
         <View key={id} style={styles.itemRootContainer}>
           <View style={styles.titleRowContainer}>
@@ -138,9 +142,9 @@ export const FullViolationList = ({
             </Text>
           </View>
           <EmptySpace height={8} />
-          {description ? (
+          {descriptionGuarded ? (
             <Text numberOfLines={3} style={styles.descriptionText}>
-              {description}
+              {descriptionGuarded}
             </Text>
           ) : null}
           <EmptySpace height={16} />

@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {CustomModal} from '../components/CustomModal';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
@@ -37,7 +37,7 @@ import {EmptySpace} from '../components/EmptySpace';
 import {useAndroidBackNavigationOverride} from '../hooks/useAndroidBackNavigationOverride';
 import {ActivityIndicator} from '../components/ActivityIndicator';
 import {FormFile} from '../store/src/reports/types';
-import {Switch} from '../components/Switch';
+import Toast from 'react-native-toast-message';
 
 export const ReportScreen = () => {
   const violationCategories = useAppSelector(getViolationCategories);
@@ -45,15 +45,15 @@ export const ReportScreen = () => {
 
   const dispatch = useAppDispatch();
 
-  const headerTitle = 'Prijava prekršaja';
+  const headerTitle = 'Prijava';
   const text =
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!';
+    'Molimo Vas da prjavljujete samo slučajeve u kojima ste direktni učesnik, svedok ili oštećena strana (prijave koje se temelje na glasinama nećemo obrađivati).';
 
-  const imeIPrezime = 'Ime i Prezime';
-  const lokacija = 'Lokacija prekršaja';
-  const adresa = 'Adresa prekršaja';
-  const brTelefona = 'Broj telefona';
-  const tipPrekrsaja = 'Tip prekršaja';
+  const imeIPrezime = 'Ime i Prezime*';
+  const lokacija = 'Lokacija prekršaja*';
+  const adresa = 'Adresa prekršaja*';
+  const brTelefona = 'Broj telefona*';
+  const tipPrekrsaja = 'Tip prekršaja*';
   const fotoVideo = 'Fotografija / video';
 
   const navigation = useNavigation();
@@ -85,11 +85,18 @@ export const ReportScreen = () => {
     const result = await dispatch(actionToDispatch as any);
     if (result.meta.requestStatus === 'rejected') {
       console.log('Report failed');
+      Toast.show({
+        text1: 'Prijava neuspešna',
+        text2: 'Molimo proverite podatke i probajte ponovo',
+        position: 'bottom',
+        type: 'error',
+      });
       setIsSendingReport(false);
       return;
     }
 
     setIsSendingReport(false);
+    Toast.show({text1: 'Uspešno ste prijavili slučaj', position: 'bottom'});
     navigation.goBack();
   }, [dispatch, isLiteReport, navigation, violation]);
 
