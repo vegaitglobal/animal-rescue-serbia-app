@@ -154,15 +154,17 @@ export const ReportScreen = () => {
 
   return (
     <ScreenRootContainer title={headerTitle} showLogo>
-      <ScrollView contentContainerStyle={style.scroll}>
-        <View style={style.container}>
-          <View style={style.toggleContainer}>
-            <Text>Brza prijava</Text>
-            <Switch
-              value={isLiteReport}
-              onValueChange={handleReportTypeChange}
-            />
-          </View>
+      <ScrollView contentContainerStyle={styles.scroll}>
+        <View style={styles.container}>
+          {!isLiteReport ? (
+            <View style={styles.liteReportContainer}>
+              <CustomButton
+                onPress={handleReportTypeChange}
+                text="Brza prijava"
+                style={styles.mainButton}
+              />
+            </View>
+          ) : null}
           {!isLiteReport ? (
             <TextInput
               value={violation.fullName}
@@ -220,7 +222,7 @@ export const ReportScreen = () => {
           </View>
           {!isLiteReport ? (
             <>
-              <View style={style.photoContainer}>
+              <View style={styles.photoContainer}>
                 <ImageUploadElement
                   placeholderText={fotoVideo}
                   onFilesSelected={onFilesSelected}
@@ -228,16 +230,16 @@ export const ReportScreen = () => {
               </View>
               <MultilineTextInput
                 onChangeText={value => dispatch(setDescription(value))}
-                style={style.textInputContainer}
+                style={styles.textInputContainer}
                 placeholder="Opis"
               />
             </>
           ) : null}
-          <View style={style.buttonsContainer}>
+          <View style={styles.buttonsContainer}>
             <CustomButton
               onPress={() => setDeclineModalVisible(true)}
               text="Odustani"
-              style={style.mainButton}
+              style={styles.mainButton}
             />
             <EmptySpace width={16} />
             <CustomButton
@@ -245,7 +247,7 @@ export const ReportScreen = () => {
                 setSendReport(true);
               }}
               text="Nastavi"
-              style={style.mainButton}
+              style={styles.mainButton}
             />
           </View>
           <EmptySpace height={60} />
@@ -279,19 +281,19 @@ export const ReportScreen = () => {
         onPressPositiveBtn={handleReport}
         visible={isSendReportModalVisible}
         additionalButton={
-          <View style={style.buttonContainer}>
+          <View style={styles.buttonContainer}>
             <CustomButton
-              textStyle={style.textStyle}
+              textStyle={styles.textStyle}
               onPress={handleGoBack}
               text={'Odustani'}
               isSmall={true}
-              style={style.buttonStyle}
+              style={styles.buttonStyle}
             />
           </View>
         }
       />
       {isSendingReport ? (
-        <View style={style.screenBlockingElement}>
+        <View style={styles.screenBlockingElement}>
           <ActivityIndicator />
         </View>
       ) : null}
@@ -299,7 +301,7 @@ export const ReportScreen = () => {
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 30,
     paddingTop: 25,
@@ -343,10 +345,11 @@ const style = StyleSheet.create({
     left: 0,
     right: 0,
   },
-  toggleContainer: {
+  liteReportContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginVertical: 10,
   },
   buttonStyle: {
     backgroundColor: 'white',
