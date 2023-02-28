@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {CustomModal} from '../components/CustomModal';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
@@ -108,6 +108,14 @@ export const ReportScreen = () => {
 
   const onFilesSelected = useCallback(
     async (selectedFiles: SelectionResult[]) => {
+      if (
+        Platform.OS === 'ios' &&
+        selectedFiles.find(file => file.mime === 'image/png')
+      ) {
+        Toast.show({text1: "PNG images aren't supported", position: 'bottom'});
+        return;
+      }
+
       const imagesOnly = selectedFiles.filter(file =>
         file.mime.startsWith('image'),
       );
