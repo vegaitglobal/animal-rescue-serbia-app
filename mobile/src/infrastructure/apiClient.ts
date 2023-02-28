@@ -47,7 +47,7 @@ export const apiClient = (
         }
 
         Toast.show({
-          type: 'info',
+          type: 'error',
           text1: 'Sesija je istekla, molimo prijavite se ponovo.',
           position: 'bottom',
         });
