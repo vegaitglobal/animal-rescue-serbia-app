@@ -5,6 +5,7 @@ import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {StripedBar} from '../components/StripedBar';
 import Logo from '../assets/icons/megaphoneLogo.svg';
 import {ColorPallet} from '../resources/ColorPallet';
+import Toast from 'react-native-toast-message';
 
 export const SosScreen = () => {
   const phoneNumber = '+38164 8210200';
@@ -22,14 +23,26 @@ export const SosScreen = () => {
           </Text>
           <Text style={[styles.commonText, styles.messageText]}>
             {
-              'Klikom na SOS, upućujete poziv Animal Rescue Serbia koji vam može pomoći sa problemom u kom se nalazite.'
+              'Klikom na SOS, upućujete poziv Animal Rescue Serbia koji vam može pomoći oko problema u kom se nalazite.'
             }
           </Text>
           <Text style={styles.commonText}>
             {'*poziv se ne naplaćuje, već važe cene operatera'}
           </Text>
+          <Text style={[styles.commonText, styles.additionalNote]}>
+            {
+              '*odazivamo se samo na telefonske pozive sa identifikacionim brojem, a svi pozivi se snimaju u svrhu poboljšanja usluga'
+            }
+          </Text>
           <CustomButton
-            onPress={() => Linking.openURL(`tel:${phoneNumber}`)}
+            onPress={() => {
+              Toast.show({
+                text1: 'Poziv za tehničko spasavanje trenutno nije u funkciji',
+                position: 'bottom',
+                type: 'info',
+              });
+              //Linking.openURL(`tel:${phoneNumber}`);
+            }}
             text="Pozovi"
             style={styles.button}
           />
@@ -80,5 +93,8 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     paddingBottom: 20,
+  },
+  additionalNote: {
+    paddingTop: 10,
   },
 });
