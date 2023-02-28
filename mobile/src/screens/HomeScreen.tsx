@@ -18,7 +18,7 @@ export const HomeScreen = () => {
   const headerTitle = 'Prijavi';
   const ars = 'Animal Rescue Serbia';
   const donatori = 'Donatori i prijatelji';
-  const doniranje = 'Doniranje';
+  const doniranje = 'Doniraj';
   const prijava = 'Prijava ';
   const edukacija = 'Edukacija';
   const oglasavanje = 'Oglasavanje';
