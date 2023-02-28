@@ -3,6 +3,46 @@ import {RNFFmpeg} from 'react-native-ffmpeg';
 import {Dirs} from 'react-native-file-access';
 import {ImageOrVideo} from 'react-native-image-crop-picker';
 import UUID from 'react-native-uuid';
+import * as FileSystem from 'expo-file-system';
+import {SelectionResult} from '../components/types';
+
+const guardiOSJpegImage = async (
+  imageData: SelectionResult,
+): Promise<SelectionResult> => {
+  if (
+    imageData.mime !== 'image/jpeg' &&
+    imageData.mime !== 'image/jpg' &&
+    imageData.mime !== 'image/heic'
+  ) {
+    console.log('imageMime: ', imageData.mime);
+    return imageData;
+  }
+
+  const originalUri = 'file:///' + imageData.path.substring(1); //TODONF: Create prefix constant
+
+  const newUri =
+    'file://' +
+    `${FileSystem.documentDirectory?.substring(
+      7,
+    )}resumableUploadManager-${extractFileNameFromPath(imageData.path)}.jpeg`;
+
+  await FileSystem.copyAsync({
+    from: originalUri,
+    to: newUri,
+  });
+
+  return {path: newUri, mime: 'image/jpeg'};
+};
+
+/**
+ * There is an issue on iOS with certain image files which causes them to
+ * get erroneously big size which is then blocked by out backend.
+ * This is a workaround for that issue.
+ */
+export const guardIOSJpegImages = async (imageData: SelectionResult[]) =>
+  Platform.OS === 'ios'
+    ? await Promise.all(imageData.map(guardiOSJpegImage))
+    : imageData;
 
 export const extractFileNameFromPath = (filePath: string) => {
   const segmentedPath = filePath.split('/');
