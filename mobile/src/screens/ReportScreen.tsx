@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Image, Platform, StyleSheet, View} from 'react-native';
 import {CustomModal} from '../components/CustomModal';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
@@ -38,6 +38,7 @@ import {useAndroidBackNavigationOverride} from '../hooks/useAndroidBackNavigatio
 import {ActivityIndicator} from '../components/ActivityIndicator';
 import {FormFile} from '../store/src/reports/types';
 import Toast from 'react-native-toast-message';
+import * as FileSystem from 'expo-file-system';
 
 export const ReportScreen = () => {
   const violationCategories = useAppSelector(getViolationCategories);
@@ -137,11 +138,36 @@ export const ReportScreen = () => {
 
       console.log('COMPRESSSED TO SEND: ', videosToSend);
 
-      const imagesToSend = imagesOnly.map(file => ({
-        name: extractFileNameFromPath(file.path),
-        type: file.mime,
-        uri: file.path,
-      }));
+      const file = imagesOnly[0];
+
+      //if (Platform.OS === 'ios' && file.mime === 'image/jpeg') {
+      const originalUri = 'file:///' + file.path.substring(1);
+      //FileSystem.
+      const newUri =
+        'file://' +
+        `${FileSystem.documentDirectory?.substring(
+          7,
+        )}resumableUploadManager-${extractFileNameFromPath(file.path)}.jpeg`;
+
+      console.log('ORIGINALLL: ', originalUri);
+      console.log('newURI: ', newUri);
+
+      await FileSystem.copyAsync({
+        from: originalUri,
+        to: newUri,
+      });
+      // blob = new Blob([await (await fetch(uri)).blob()], {
+      //   type: 'image/jpeg',
+      // });
+      //}
+
+      const imagesToSend =
+        //imagesOnly
+        [{path: newUri, mime: 'image/jpeg'}].map(file2 => ({
+          name: extractFileNameFromPath(file2.path),
+          type: file2.mime,
+          uri: file2.path,
+        }));
 
       dispatch(setFiles([...videosToSend, ...imagesToSend]));
     },
