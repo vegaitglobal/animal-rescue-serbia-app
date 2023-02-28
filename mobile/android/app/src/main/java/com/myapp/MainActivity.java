@@ -1,4 +1,5 @@
 package com.myapp;
+import expo.modules.ReactActivityDelegateWrapper;
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
@@ -35,7 +36,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected ReactActivityDelegate createReactActivityDelegate() {
-    return new MainActivityDelegate(this, getMainComponentName());
+    return new ReactActivityDelegateWrapper(this, BuildConfig.IS_NEW_ARCHITECTURE_ENABLED, new MainActivityDelegate(this, getMainComponentName()));
   }
 
   public static class MainActivityDelegate extends ReactActivityDelegate {
