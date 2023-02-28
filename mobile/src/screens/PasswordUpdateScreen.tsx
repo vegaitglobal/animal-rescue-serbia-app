@@ -60,7 +60,7 @@ export const PasswordUpdateScreen = () => {
           textContentType={'password'}
           autoCapitalize={'none'}
           value={oldPassword}
-          placeholder="Stara lozinka"
+          placeholder="Stara lozinka*"
           onChangeText={text =>
             dispatch(setPasswordUpdateData({oldPassword: text}))
           }
@@ -71,7 +71,7 @@ export const PasswordUpdateScreen = () => {
           textContentType={'password'}
           autoCapitalize={'none'}
           value={password}
-          placeholder="Nova lozinka"
+          placeholder="Nova lozinka*"
           onChangeText={text =>
             dispatch(setPasswordUpdateData({password: text}))
           }
@@ -82,7 +82,7 @@ export const PasswordUpdateScreen = () => {
           textContentType={'password'}
           autoCapitalize={'none'}
           value={passwordConfirm}
-          placeholder="Ponovi novu lozinku"
+          placeholder="Ponovi novu lozinku*"
           onChangeText={text =>
             dispatch(setPasswordUpdateData({passwordConfirm: text}))
           }
@@ -92,7 +92,7 @@ export const PasswordUpdateScreen = () => {
 
         <CustomButton
           isLoading={isSaving}
-          text="Sacuvaj"
+          text="Sačuvaj"
           onPress={handleSave}
         />
       </View>
