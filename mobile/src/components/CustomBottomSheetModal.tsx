@@ -65,7 +65,7 @@ export const CustomBottomSheetModal = ({
           <IconButton
             onPress={handleClearFilter!}
             contentContainerStyle={style.clearContainer}>
-            <Text style={{color: ColorPallet.plainWhite}}>Obrisi filter</Text>
+            <Text style={{color: ColorPallet.plainWhite}}>Obriši filter</Text>
           </IconButton>
         ) : null}
       </View>
