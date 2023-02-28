@@ -51,7 +51,7 @@ export const PasswordUpdateScreen = () => {
     navigation.goBack();
   };
   return (
-    <ScreenRootContainer title="Promeni lozinku">
+    <ScreenRootContainer title="Promeni lozinku" showLogo>
       {/* // TODONFFF: Util for this */}
       <View style={styles.screenContainer}>
         <TextInput

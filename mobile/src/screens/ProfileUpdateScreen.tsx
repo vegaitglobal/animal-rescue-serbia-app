@@ -47,22 +47,22 @@ export const ProfileUpdateScreen = () => {
   };
 
   return (
-    <ScreenRootContainer title="Uredi profil">
+    <ScreenRootContainer title="Uredi profil" showLogo>
       <View style={styles.screenContainer}>
         <TextInput
-          placeholder={'Ime'}
+          placeholder={'Ime*'}
           onChangeText={text =>
             dispatch(setProfileUpdateData({firstName: text}))
           }
         />
         <TextInput
-          placeholder={'Prezime'}
+          placeholder={'Prezime*'}
           onChangeText={text =>
             dispatch(setProfileUpdateData({lastName: text}))
           }
         />
         <TextInput
-          placeholder={'Korisnicko ime'}
+          placeholder={'Korisničko ime*'}
           onChangeText={text =>
             dispatch(setProfileUpdateData({username: text}))
           }
@@ -70,7 +70,7 @@ export const ProfileUpdateScreen = () => {
         <EmptySpace height={40} />
         <CustomButton
           isLoading={isSaving}
-          text={'Sacuvaj'}
+          text={'Sačuvaj'}
           onPress={handleUpdateUserInfo}
         />
       </View>
