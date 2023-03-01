@@ -16,7 +16,7 @@ export const InformationScreen = () => {
   }, []);
 
   const text =
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!';
+    'Ovde možete pronaći sve važne kontakte za teritoriju opštine na koju izaberete (institucije, službe, veterinari, pet šopovi, organizacije i sl.)';
 
   return (
     <ScreenRootContainer title={'Informisanje'} showLogo>
