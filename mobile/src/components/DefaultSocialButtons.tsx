@@ -1,5 +1,5 @@
 import React from 'react';
-import {Linking} from 'react-native';
+import {Linking, StyleProp, ViewStyle} from 'react-native';
 import {SocialButtons, SocialButtonsProps} from './SocialButtons';
 import Facebook from '../assets/icons/facebook.svg';
 import Instagram from '../assets/icons/instagram.svg';
@@ -8,10 +8,13 @@ import Globe from '../assets/icons/globe.svg';
 type SocialIconType = 'instagram' | 'facebook' | 'website';
 
 type BubbleSizeType = Pick<SocialButtonsProps<T>, 'bubbleSize'>;
-type DefaultSocialButtonsPRops = BubbleSizeType;
+type DefaultSocialButtonsPRops = BubbleSizeType & {
+  style: StyleProp<ViewStyle>;
+};
 
 export const DefaultSocialButtons = ({
   bubbleSize,
+  style,
 }: DefaultSocialButtonsPRops) => {
   const handleSocialIconPress = (id: SocialIconType) => {
     switch (id) {
@@ -39,6 +42,7 @@ export const DefaultSocialButtons = ({
         {id: 'website', icon: <Globe />},
       ]}
       onPress={handleSocialIconPress}
+      style={style}
     />
   );
 };
