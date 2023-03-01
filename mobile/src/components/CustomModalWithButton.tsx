@@ -1,20 +1,14 @@
 import React, {ReactElement, ReactNode, useMemo} from 'react';
-import {
-  Modal,
-  StyleProp,
-  StyleSheet,
-  Text,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {Modal, StyleSheet, Text, View, ViewStyle} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 import {CustomButton} from './CustomButton';
+import {EmptySpace} from './EmptySpace';
 import {StripedBar} from './StripedBar';
 
 type CustomModalWithButtonProps = {
   visible: boolean;
   title?: string;
-  text?: string;
+  message?: string;
   children?: ReactNode;
   icon?: ReactElement;
   buttonPositive: string;
@@ -22,25 +16,27 @@ type CustomModalWithButtonProps = {
   onPressPositiveBtn: () => void;
   onPressNegativeBtn?: () => void;
   isOneButtonModal?: boolean;
-  additionalButton?: ReactNode;
+  middleButtonLabel?: string;
+  onMiddleButtonPress?: () => void;
   buttonStyle?: ViewStyle;
 };
 export const CustomModalWithButton = ({
   visible,
-  text,
+  message,
   buttonPositive,
   buttonNegative,
   onPressPositiveBtn,
   onPressNegativeBtn,
   isOneButtonModal,
   title,
-  additionalButton,
+  onMiddleButtonPress,
+  middleButtonLabel,
   buttonStyle,
 }: CustomModalWithButtonProps) => {
   const dynamicStyle = useMemo(
     () => ({
       bgColor: {
-        backgroundColor: isOneButtonModal
+        backgroundColor: isOneButtonModal //TODONF: get rid of this one button concept
           ? ColorPallet.yellow_20
           : ColorPallet.black_20,
       },
@@ -56,9 +52,6 @@ export const CustomModalWithButton = ({
         paddingTop: isOneButtonModal ? 40 : 0,
         paddingHorizontal: isOneButtonModal ? 10 : 0,
       },
-      buttonsContainer: {
-        justifyContent: isOneButtonModal ? 'center' : 'space-between',
-      },
     }),
     [isOneButtonModal],
   );
@@ -66,26 +59,28 @@ export const CustomModalWithButton = ({
   return (
     <Modal transparent visible={visible} statusBarTranslucent={true}>
       <View style={[styles.modalBg, dynamicStyle.bgColor]}>
-        <View style={[styles.modalContainer, dynamicStyle.containerColor]}>
+        <View
+          style={[
+            styles.modalContainer,
+            dynamicStyle.containerColor,
+            {
+              borderRadius: 20,
+              overflow: 'hidden',
+              borderColor: ColorPallet.lightGray,
+              borderWidth: 1,
+              height: '30%',
+            },
+          ]}>
           {isOneButtonModal && <StripedBar />}
 
           <View style={dynamicStyle.textContainer}>
             {isOneButtonModal && <Text style={styles.title}>{title}</Text>}
-            <Text style={styles.text}>{text}</Text>
-            <View
-              style={[
-                styles.buttonsContainer,
-                dynamicStyle.buttonsContainer as StyleProp<ViewStyle>,
-              ]}>
-              <CustomButton
-                textStyle={styles.textStyle}
-                onPress={onPressPositiveBtn}
-                text={buttonPositive}
-                isSmall={true}
-                style={[styles.buttonStyle, buttonStyle]}
-              />
-              {additionalButton}
-              {!isOneButtonModal && (
+            <Text style={styles.message}>{message}</Text>
+          </View>
+          <View style={{flex: 1}} />
+          <View style={styles.buttonsContainer}>
+            {!isOneButtonModal && (
+              <>
                 <CustomButton
                   textStyle={styles.textStyle}
                   onPress={onPressNegativeBtn!}
@@ -93,8 +88,28 @@ export const CustomModalWithButton = ({
                   isSmall={true}
                   style={styles.buttonStyle}
                 />
-              )}
-            </View>
+                <EmptySpace width={10} />
+              </>
+            )}
+            {middleButtonLabel && (
+              <>
+                <CustomButton
+                  textStyle={styles.textStyle}
+                  onPress={onMiddleButtonPress}
+                  text={middleButtonLabel}
+                  isSmall={true}
+                  style={styles.buttonStyle}
+                />
+                <EmptySpace width={10} />
+              </>
+            )}
+            <CustomButton
+              textStyle={styles.textStyle}
+              onPress={onPressPositiveBtn}
+              text={buttonPositive}
+              isSmall={true}
+              style={[styles.buttonStyle, styles.primaryButton, buttonStyle]}
+            />
           </View>
         </View>
       </View>
@@ -117,7 +132,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     alignItems: 'flex-end',
   },
-  text: {
+  message: {
     fontSize: 16,
     alignSelf: 'center',
   },
@@ -129,16 +144,20 @@ const styles = StyleSheet.create({
     zIndex: 1,
     paddingBottom: 120,
   },
+  primaryButton: {
+    backgroundColor: ColorPallet.yellow_20,
+  },
   buttonStyle: {
     backgroundColor: 'white',
     borderColor: 'black',
     borderWidth: 2,
-    marginBottom: 20,
-    marginTop: 30,
+    flex: 1,
   },
   buttonsContainer: {
-    alignItems: 'center',
+    paddingBottom: 15,
+    paddingHorizontal: 10,
     flexDirection: 'row',
+    alignSelf: 'flex-end',
   },
   textStyle: {
     fontSize: 12,
@@ -147,5 +166,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textTransform: 'uppercase',
     paddingBottom: 15,
+    fontWeight: 'bold',
   },
 });

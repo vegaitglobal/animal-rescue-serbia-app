@@ -50,8 +50,12 @@ export const ReportScreen = () => {
   const dispatch = useAppDispatch();
 
   const headerTitle = 'Prijava';
-  const text =
+
+  const reportConfirmationText =
     'Molimo Vas da prjavljujete samo slučajeve u kojima ste direktni učesnik, svedok ili oštećena strana (prijave koje se temelje na glasinama nećemo obrađivati).';
+
+  const exitConfirmationText =
+    'Da li ste sigurni da želite da odustanete od vaše prijave? Klikom na Odustani ona neće biti sačuvana.';
 
   const imeIPrezime = 'Ime i Prezime*';
   const lokacija = 'Lokacija prekršaja*';
@@ -273,44 +277,42 @@ export const ReportScreen = () => {
           <EmptySpace height={60} />
         </View>
       </ScrollView>
+
+      {/** Entry modal */}
       <CustomModal
         title={headerTitle}
-        text={text}
+        text={reportConfirmationText}
         icon={<Report width={100} height={100} />}
         onPress={() => setIsEntryModalVisible(false)}
         visible={isEntryModalVisible}
       />
+
+      {/** Exit confirmation */}
       <CustomModalWithButton
-        text={text}
+        isOneButtonModal
+        title={'Da li ste sigurni da želite da odustanete?'}
+        message={exitConfirmationText}
         icon={<Report width={100} height={100} />}
         buttonPositive="Vrati se na tekst"
-        buttonNegative="Odustani"
         onPressPositiveBtn={() => setDeclineModalVisible(false)}
-        onPressNegativeBtn={() => navigation.goBack()}
+        middleButtonLabel="Odustani"
+        onMiddleButtonPress={() => navigation.goBack()}
         visible={isDeclineModalVisible}
       />
+
+      {/** Confirm sending report */}
       <CustomModalWithButton
-        buttonStyle={{marginHorizontal: 20}}
         isOneButtonModal
         title="Saglasnost"
-        text={
+        message={
           'Hvala vam na popunjenoj prijavi. U slučaju potrebe za dodatnim informacijama bićemo slobodni da vas kontaktiramo. Ukoliko podaci nisu tačni vaša prijava neće biti procesuirana.'
         }
         icon={<Report width={100} height={100} />}
         buttonPositive="Prijavi"
         onPressPositiveBtn={handleReport}
+        middleButtonLabel={'Odustani'}
+        onMiddleButtonPress={handleGoBack}
         visible={isSendReportModalVisible}
-        additionalButton={
-          <View style={styles.buttonContainer}>
-            <CustomButton
-              textStyle={styles.textStyle}
-              onPress={handleGoBack}
-              text={'Odustani'}
-              isSmall={true}
-              style={styles.buttonStyle}
-            />
-          </View>
-        }
       />
       {isSendingReport ? (
         <View style={styles.screenBlockingElement}>
@@ -375,15 +377,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: 'black',
     borderWidth: 2,
-    marginBottom: 20,
-    marginTop: 30,
-    alignSelf: 'flex-end',
-    marginHorizontal: 20,
   },
   textStyle: {
     fontSize: 12,
-  },
-  buttonContainer: {
-    flex: 1,
   },
 });

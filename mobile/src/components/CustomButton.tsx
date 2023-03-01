@@ -13,7 +13,7 @@ import {ColorPallet} from '../resources/ColorPallet';
 type CustomButtonProps = {
   text?: string;
   isSmall?: boolean;
-  onPress: () => void;
+  onPress?: () => void;
   isWhite?: boolean;
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
@@ -63,11 +63,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 20,
     justifyContent: 'center',
-    flexDirection: 'row',
+    alignItems: 'center',
   },
   text: {
     fontSize: 18,
     textTransform: 'uppercase',
-    alignSelf: 'center',
+    textAlign: 'center',
   },
 });
