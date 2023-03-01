@@ -16,7 +16,18 @@ export const SosScreen = () => {
         <View style={styles.logoContainer}>
           <Logo width={100} height={100} />
         </View>
-        <StripedBar />
+        <View
+          style={{
+            borderTopStartRadius: 20,
+            borderTopEndRadius: 20,
+            overflow: 'hidden',
+            borderColor: ColorPallet.lightGray,
+            borderTopWidth: 1,
+            borderStartWidth: 1,
+            borderEndWidth: 1,
+          }}>
+          <StripedBar />
+        </View>
         <View style={styles.textContainer}>
           <Text style={styles.text}>
             {'Da li ste sigurni da želite uputiti poziv?'}
@@ -72,6 +83,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomEndRadius: 20,
     borderBottomStartRadius: 20,
+    borderColor: ColorPallet.lightGray,
+    borderStartWidth: 1,
+    borderEndWidth: 1,
+    borderBottomWidth: 1,
   },
   button: {
     backgroundColor: ColorPallet.plainWhite,

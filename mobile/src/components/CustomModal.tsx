@@ -47,8 +47,10 @@ const styles = StyleSheet.create({
   modalContainer: {
     width: '80%',
     paddingHorizontal: 20,
-    paddingVertical: 15,
+    paddingTop: 20,
+    paddingBottom: 30,
     backgroundColor: ColorPallet.plainWhite,
+    borderRadius: 20,
   },
   iconContainer: {
     alignItems: 'flex-end',
