@@ -12,6 +12,7 @@
 -keep class com.swmansion.reanimated.** { *; }
 -keep class com.facebook.react.turbomodule.** { *; }
 -keep class com.myapp.BuildConfig { *; }
+-keep public class com.horcrux.svg.** {*;}
 -keep class com.arthenica.mobileffmpeg.Config {
     native <methods>;
     void log(int, byte[]);
