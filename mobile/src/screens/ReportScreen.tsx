@@ -294,7 +294,7 @@ export const ReportScreen = () => {
         isOneButtonModal
         title="Saglasnost"
         text={
-          'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae dignissimos quasi aliquid '
+          'Hvala vam na popunjenoj prijavi. U slučaju potrebe za dodatnim informacijama bićemo slobodni da vas kontaktiramo. Ukoliko podaci nisu tačni vaša prijava neće biti procesuirana.'
         }
         icon={<Report width={100} height={100} />}
         buttonPositive="Prijavi"
