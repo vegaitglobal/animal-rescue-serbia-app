@@ -58,10 +58,10 @@ export const ReportScreen = () => {
     'Da li ste sigurni da želite da odustanete od vaše prijave? Klikom na Odustani ona neće biti sačuvana.';
 
   const imeIPrezime = 'Ime i Prezime*';
-  const lokacija = 'Lokacija prekršaja*';
+  const lokacija = 'Opština*';
   const adresa = 'Adresa prekršaja*';
   const brTelefona = 'Broj telefona*';
-  const tipPrekrsaja = 'Tip prekršaja*';
+  const tipPrekrsaja = 'Kategorija prijave*';
   const fotoVideo = 'Fotografija / video';
 
   const navigation = useNavigation();
