@@ -87,7 +87,7 @@ export const EducationScreen = () => {
   const isLoadingInitially = isLoading && currentArticlePage === 1;
 
   return (
-    <ScreenRootContainer title="Edukacija">
+    <ScreenRootContainer title="Edukacija" showLogo>
       <View style={styles.rootContainer}>
         <FlatList
           data={paginatedArticles}
