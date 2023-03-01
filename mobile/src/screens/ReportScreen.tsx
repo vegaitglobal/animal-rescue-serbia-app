@@ -293,10 +293,10 @@ export const ReportScreen = () => {
         title={'Da li ste sigurni da želite da odustanete?'}
         message={exitConfirmationText}
         icon={<Report width={100} height={100} />}
-        buttonPositive="Vrati se na tekst"
-        onPressPositiveBtn={() => setDeclineModalVisible(false)}
-        middleButtonLabel="Odustani"
-        onMiddleButtonPress={() => navigation.goBack()}
+        buttonPositive="Odustani"
+        onPressPositiveBtn={() => navigation.goBack()}
+        middleButtonLabel="Vrati se na tekst"
+        onMiddleButtonPress={() => setDeclineModalVisible(false)}
         visible={isDeclineModalVisible}
       />
 
