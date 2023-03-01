@@ -8,10 +8,10 @@ import {DefaultSocialButtons} from '../components/DefaultSocialButtons';
 
 export const ArsInfoScreen = () => {
   const aboutUs =
-    'Animal Rescue Serbia (ARS) je prvo zvanično neprofitno udruženje građana koje dobrovoljno spasava životinje u Srbiji. Finansirano od strane donacija, vrši besplatno spasavanje u 5 opština: Beograd, Novi Sad, Niš, Srbobran i Vršac.';
+    'Animal Rescue Serbia je volonterska neprofitna organizacija koja je posvećena poboljšanju položaja životinja u Srbiji, kroz spasavanje, pomoć, edukaciju, saradnju sa institucijama i organizacijama, kao i podršku onima koji se brinu o životinjama.';
 
   //const telephoneNumber = '+38164 8210200';
-  const email = 'ars@ars.com';
+  const email = 'info@animalrescueserbia.org';
 
   return (
     <ScreenRootContainer title="Animal rescue serbia">
