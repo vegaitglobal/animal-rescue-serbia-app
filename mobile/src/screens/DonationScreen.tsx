@@ -1,31 +1,43 @@
+import Clipboard from '@react-native-clipboard/clipboard';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {AccentedTextBox} from '../components/AccentedTextBox';
+import {
+  AccentedTextBox,
+  AccentedTextBoxProps,
+} from '../components/AccentedTextBox';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
+import CopyIcon from '../assets/icons/copy.svg';
+import {Toast} from 'react-native-toast-message/lib/src/Toast';
+import {ScrollView} from 'react-native-gesture-handler';
 
 export const DonationScreen = () => {
-  const text =
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!';
-
   return (
-    <ScreenRootContainer title={'Donacije'} showLogo>
-      <View style={style.container}>
-        <Text style={style.text}>{text}</Text>
-        <View style={style.donationContainer}>
-          <AccentedTextBox title="Devizni racun:">
-            374245455400126
-          </AccentedTextBox>
+    <ScreenRootContainer title={'Doniraj'} showLogo>
+      <ScrollView>
+        <View style={style.container}>
+          <View style={style.donationContainer}>
+            <AccentedBoxWithCopyOption title="Devizni racun:">
+              IBAN RS35205007080004418763
+            </AccentedBoxWithCopyOption>
+          </View>
+          <View style={style.donationContainer}>
+            <AccentedBoxWithCopyOption title="Dinarski racun:">
+              205-230047-05
+            </AccentedBoxWithCopyOption>
+          </View>
+          <View style={style.donationContainer}>
+            <AccentedBoxWithCopyOption title="PayPal:">
+              info@animalrescueserbia.org
+            </AccentedBoxWithCopyOption>
+          </View>
+          <Text style={{textAlign: 'justify', paddingTop: 20}}>
+            {
+              'Svrhe uplate: \n\nDonacija za PRIJAVI\nDonacija za RC\nDonacija za SPASAVANJE\nDonacija za MVE\nDonacija za STH\nDonacija za prava životinja\nDonacija za BPKŽ\nDonacija za BPP\nDonacija za kućice\nDonacija za ARS'
+            }
+          </Text>
         </View>
-        <View style={style.donationContainer}>
-          <AccentedTextBox title="Dinarski racun:">
-            374245455400126
-          </AccentedTextBox>
-        </View>
-        <View style={style.donationContainer}>
-          <AccentedTextBox title="PayPal:">374245455400126</AccentedTextBox>
-        </View>
-      </View>
+      </ScrollView>
     </ScreenRootContainer>
   );
 };
@@ -37,11 +49,6 @@ const style = StyleSheet.create({
     backgroundColor: ColorPallet.plainWhite,
     flex: 1,
   },
-  text: {
-    fontSize: 16,
-    alignSelf: 'center',
-    paddingBottom: 20,
-  },
   donationContainer: {
     paddingTop: 10,
   },
@@ -51,3 +58,29 @@ const style = StyleSheet.create({
     paddingBottom: 5,
   },
 });
+
+export const AccentedBoxWithCopyOption = ({
+  title,
+  children,
+  ...accentedTextBoxProps
+}: AccentedTextBoxProps & {children: string}) => {
+  const copyToClipboard = () => {
+    Clipboard.setString(children);
+    Toast.show({
+      text1: 'Tekst uspešno kopiran',
+      text2: children,
+      position: 'bottom',
+      type: 'info',
+    });
+  };
+
+  return (
+    <AccentedTextBox
+      rightSideElement={<CopyIcon width={30} height={30} />}
+      onPress={copyToClipboard}
+      title={title}
+      {...accentedTextBoxProps}>
+      {children}
+    </AccentedTextBox>
+  );
+};
