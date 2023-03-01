@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Linking, StyleSheet, Text, View} from 'react-native';
 import {AccentedTextBox} from '../components/AccentedTextBox';
 import {EmptySpace} from '../components/EmptySpace';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
@@ -9,6 +9,9 @@ import {DefaultSocialButtons} from '../components/DefaultSocialButtons';
 export const ArsInfoScreen = () => {
   const aboutUs =
     'Animal Rescue Serbia (ARS) je prvo zvanično neprofitno udruženje građana koje dobrovoljno spasava životinje u Srbiji. Finansirano od strane donacija, vrši besplatno spasavanje u 5 opština: Beograd, Novi Sad, Niš, Srbobran i Vršac.';
+
+  //const telephoneNumber = '+38164 8210200';
+  const email = 'ars@ars.com';
 
   return (
     <ScreenRootContainer title="Animal rescue serbia">
@@ -28,11 +31,19 @@ export const ArsInfoScreen = () => {
 
         <EmptySpace height={16} />
 
-        <AccentedTextBox title="Telefon:">+38164 8210200</AccentedTextBox>
+        {/* <AccentedTextBox
+          title="Telefon:"
+          onPress={() => Linking.openURL(`tel:${telephoneNumber}`)}>
+          {telephoneNumber}
+        </AccentedTextBox> */}
 
         <EmptySpace height={textBoxSpacing} />
 
-        <AccentedTextBox title="e-Pošta">ars@ars.com</AccentedTextBox>
+        <AccentedTextBox
+          title="e-Pošta"
+          onPress={() => Linking.openURL(`mailto:${email}`)}>
+          {email}
+        </AccentedTextBox>
       </View>
     </ScreenRootContainer>
   );

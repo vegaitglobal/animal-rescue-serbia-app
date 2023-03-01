@@ -1,23 +1,25 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 
 type AccentedTextBoxProps = {
   title?: string;
   children: string;
+  onPress?: () => void;
 };
 
 export const AccentedTextBox = ({
   children: textContent,
   title,
+  onPress,
 }: AccentedTextBoxProps) => {
   return (
-    <>
+    <TouchableOpacity onPress={onPress}>
       {title ? <Text style={styles.titleText}>{title}</Text> : null}
       <View style={styles.yellowContainer}>
         <Text>{textContent}</Text>
       </View>
-    </>
+    </TouchableOpacity>
   );
 };
 
