@@ -48,12 +48,12 @@ export const HomeScreen = () => {
         return;
       }
 
-      Toast.show({
-        type: 'info',
-        text1: 'Informisanje trenutno nije u funkciji',
-        position: 'bottom',
-      });
-      //navigation.navigate('Information');
+      // Toast.show({
+      //   type: 'info',
+      //   text1: 'Informisanje trenutno nije u funkciji',
+      //   position: 'bottom',
+      // });
+      navigation.navigate('Information');
       return;
     },
     [navigation],
