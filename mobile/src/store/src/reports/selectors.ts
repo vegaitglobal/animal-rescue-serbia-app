@@ -6,7 +6,23 @@ export const getNewViolation = (state: RootState) => state.report.newViolation;
 export const getViolationCategories = (state: RootState) =>
   state.report.violationCategories;
 
-export const getLocations = (state: RootState) => state.report.locations;
+const removeAccents = (text: string) => {
+  return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+};
+
+export const getLocations = (state: RootState) => {
+  const filtered = state.report.locations.filter((loc, index) => {
+    if (loc === 'Belgrade') {
+      return false;
+    }
+
+    return !state.report.locations
+      .slice(index + 1)
+      .find(location => loc === removeAccents(location));
+  });
+
+  return [...filtered].sort((a, b) => a.localeCompare(b));
+};
 
 export const getViolations = (state: RootState) => state.report.violations;
 
