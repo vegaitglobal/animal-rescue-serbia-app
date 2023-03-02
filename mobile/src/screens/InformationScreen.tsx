@@ -1,27 +1,29 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {CustomModal} from '../components/CustomModal';
 import {ScreenRootContainer} from '../components/ScreenRootContainer';
 import {ColorPallet} from '../resources/ColorPallet';
 import Report from '../assets/icons/educationGrayBg.svg';
 import {TextInput} from '../components/TextInput';
-import {SelectionInput} from '../components/SelectionInput';
-import {CustomButton} from '../components/CustomButton';
 import {ScrollView} from 'react-native-gesture-handler';
-import {Chevron, Orientation} from '../components/Chevron';
-import {EmptySpace} from '../components/EmptySpace';
+import MagnifyingGlass from '../assets/icons/magnifyingGlass.svg';
 
 export const InformationScreen = () => {
   const [visible, setVisible] = useState(false);
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     setVisible(true);
   }, []);
 
-  const introText =
-    'Ovde možete pronaći sve važne kontakte za teritoriju opštine na koju izaberete (institucije, službe, veterinari, pet šopovi, organizacije i sl.)';
+  const introText = useMemo(
+    () =>
+      'Ovde možete pronaći sve važne kontakte za teritoriju opštine na koju izaberete (institucije, službe, veterinari, pet šopovi, organizacije i sl.)',
+    [],
+  );
 
-  const infoText = `Delatnost službe:\n\n 1. SPASAVANJE\n\n ARS Beograd +381 (0) 64 8 210
+  const infoText = useMemo(
+    () => `Delatnost službe:\n\n 1. SPASAVANJE\n\n ARS Beograd +381 (0) 64 8 210
   200\n\n ARS Novi Sad +381 (0) 64 8 210 200\n\n ARS Niš +381 (0) 64 8
   210 200\n\n ARS Vrčac +381 (0) 64 8 210 200\n\n\n\n 2. LEČENJE,
   STERILIZACIJA I KASTRACIJA\n\n Beograd:\n\n\n\n JKP „Veterina
@@ -46,15 +48,52 @@ export const InformationScreen = () => {
   www.prihvatilistedrazevac.wordpress.com\n Napomena: Psi i mačke\n\n
   Azil „Oaza” Avala\n +381 (0) 65 8901 189\n +381 (0) 63 2362 40\n
   Napomena: Psi\n\n Novi Sad:\n\n Udruženje za zaštitu životinja „S.O.S.
-  For Dogs”\n\n +381 (0) 21 89 788\n\n Napomena: Psi`;
+  For Dogs”\n\n +381 (0) 21 89 788\n\n Napomena: Psi`,
+    [],
+  );
 
+  //////
+  //const text1 = infoText; //String('12312313123162312141414124'.toString());
+  const parts = useMemo(
+    () => (searchText.length ? infoText.split(searchText) : [infoText]),
+    [infoText, searchText],
+  ); //split(text1, 'slu');,[]);
+  //console.log('DELOVI', parts);
+
+  const spannableText = useMemo(
+    () =>
+      parts.map((part, index) => (
+        <Text key={part + index}>
+          <Text>{part}</Text>
+          <Text style={{backgroundColor: ColorPallet.yellow}}>
+            {searchText}
+          </Text>
+        </Text>
+      )),
+    [parts, searchText],
+  );
   return (
     <ScreenRootContainer title={'Informisanje'} showLogo>
       <ScrollView>
         <View style={style.container}>
-          <Text style={{paddingTop: 40}}>{infoText}</Text>
+          <View style={{flexDirection: 'row'}}>
+            <TextInput
+              placeholder="Pretraži"
+              placeholderTextColor={ColorPallet.lightGray}
+              style={{flex: 1}}
+              onChangeText={setSearchText}
+            />
+            <View style={style.chevronContainer}>
+              <MagnifyingGlass width={15} height={15} />
+            </View>
+          </View>
+
+          <Text style={{paddingTop: 40}}>
+            {spannableText}
+            {/* <Text style={{backgroundColor: ColorPallet.yellow}}>mark me</Text> */}
+            {/* <Text>{infoText}</Text> */}
+          </Text>
         </View>
-        <EmptySpace height={50} />
       </ScrollView>
       <CustomModal
         title={'Informisanje'}
@@ -70,13 +109,13 @@ export const InformationScreen = () => {
 const style = StyleSheet.create({
   container: {
     paddingHorizontal: 30,
-    paddingTop: 20,
+    paddingTop: 50,
     backgroundColor: ColorPallet.plainWhite,
     flex: 1,
   },
   chevronContainer: {
     position: 'absolute',
-    right: 5,
+    right: '3%',
     bottom: '30%',
     justifyContent: 'center',
     alignItems: 'center',

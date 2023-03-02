@@ -20,6 +20,10 @@ export const TextInput = (props: TextInputProps) => {
       keyboardType={props.keyboardType}
       placeholderTextColor={ColorPallet.lightGray}
       style={[commonStyles.inputField, style.text, props.style]}
+      autoCapitalize={'none'}
+      // autoComplete={'off'}
+      // autoCorrect={false}
+      // textContentType={'none'}
     />
   );
 };
