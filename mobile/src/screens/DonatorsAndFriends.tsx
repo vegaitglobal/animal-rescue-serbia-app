@@ -53,7 +53,7 @@ export const DonatorsAndFriends = () => {
           <Text style={{fontSize: 20, fontWeight: 'bold'}}>
             {contactUsTitle}
           </Text>
-          <DefaultSocialButtons addEmail style={{width: 160}} />
+          <DefaultSocialButtons addEmail style={{width: 160}} bubbleSize={35} />
         </View>
 
         <EmptySpace height={30} />
