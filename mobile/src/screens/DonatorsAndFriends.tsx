@@ -53,14 +53,10 @@ export const DonatorsAndFriends = () => {
           <Text style={{fontSize: 20, fontWeight: 'bold'}}>
             {contactUsTitle}
           </Text>
-          <DefaultSocialButtons style={{width: 120}} />
+          <DefaultSocialButtons addEmail style={{width: 160}} />
         </View>
 
         <EmptySpace height={30} />
-
-        <AccentedTextBox onPress={() => Linking.openURL(`mailto:${arsMail}`)}>
-          {arsMail}
-        </AccentedTextBox>
       </View>
     </ScreenRootContainer>
   );

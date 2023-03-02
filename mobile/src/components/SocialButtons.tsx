@@ -3,7 +3,7 @@ import {Pressable, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 import {bind} from '../util/helpers';
 
-type IconData<T extends unknown> = {
+export type IconData<T extends unknown> = {
   id: T;
   icon: ReactElement;
 };
