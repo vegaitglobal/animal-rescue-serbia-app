@@ -9,6 +9,7 @@ import {SelectionInput} from '../components/SelectionInput';
 import {CustomButton} from '../components/CustomButton';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Chevron, Orientation} from '../components/Chevron';
+import {EmptySpace} from '../components/EmptySpace';
 
 export const InformationScreen = () => {
   const [visible, setVisible] = useState(false);
@@ -53,6 +54,7 @@ export const InformationScreen = () => {
         <View style={style.container}>
           <Text style={{paddingTop: 40}}>{infoText}</Text>
         </View>
+        <EmptySpace height={50} />
       </ScrollView>
       <CustomModal
         title={'Informisanje'}
