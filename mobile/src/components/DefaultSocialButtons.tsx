@@ -48,7 +48,7 @@ export const DefaultSocialButtons = ({
   ];
 
   const dynamicDataSet: IconData<SocialIconType>[] = addEmail
-    ? [...baseDataSet, {id: 'email', icon: <Envelope width={20} height={20} />}]
+    ? [...baseDataSet, {id: 'email', icon: <Envelope width={22} height={22} />}]
     : baseDataSet;
 
   return (
