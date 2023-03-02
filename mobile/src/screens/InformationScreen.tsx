@@ -53,13 +53,10 @@ export const InformationScreen = () => {
     [],
   );
 
-  //////
-  //const text1 = infoText; //String('12312313123162312141414124'.toString());
   const parts = useMemo(
     () => (searchText.length ? infoText.split(searchText) : [infoText]),
     [infoText, searchText],
-  ); //split(text1, 'slu');,[]);
-  //console.log('DELOVI', parts);
+  );
 
   const spannableText = useMemo(
     () =>
@@ -91,11 +88,7 @@ export const InformationScreen = () => {
             </View>
           </View>
 
-          <Text style={{paddingTop: 40}}>
-            {spannableText}
-            {/* <Text style={{backgroundColor: ColorPallet.yellow}}>mark me</Text> */}
-            {/* <Text>{infoText}</Text> */}
-          </Text>
+          <Text style={{paddingTop: 40}}>{spannableText}</Text>
         </View>
 
         <EmptySpace height={50} />
