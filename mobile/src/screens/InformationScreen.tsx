@@ -51,20 +51,6 @@ export const InformationScreen = () => {
     <ScreenRootContainer title={'Informisanje'} showLogo>
       <ScrollView>
         <View style={style.container}>
-          <View style={{flexDirection: 'row'}}>
-            <TextInput
-              placeholder="Delatnost službe"
-              placeholderTextColor={ColorPallet.lightGray}
-              style={{flex: 1}}
-            />
-            <View style={style.chevronContainer}>
-              <Chevron
-                orientation={Orientation.Forward}
-                color={ColorPallet.mediumGray}
-              />
-            </View>
-          </View>
-
           <Text style={{paddingTop: 40}}>{infoText}</Text>
         </View>
       </ScrollView>
@@ -82,7 +68,7 @@ export const InformationScreen = () => {
 const style = StyleSheet.create({
   container: {
     paddingHorizontal: 30,
-    paddingTop: 50,
+    paddingTop: 20,
     backgroundColor: ColorPallet.plainWhite,
     flex: 1,
   },
