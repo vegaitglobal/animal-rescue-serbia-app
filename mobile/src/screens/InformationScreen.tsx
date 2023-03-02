@@ -7,6 +7,7 @@ import Report from '../assets/icons/educationGrayBg.svg';
 import {TextInput} from '../components/TextInput';
 import {ScrollView} from 'react-native-gesture-handler';
 import MagnifyingGlass from '../assets/icons/magnifyingGlass.svg';
+import {EmptySpace} from '../components/EmptySpace';
 
 export const InformationScreen = () => {
   const [visible, setVisible] = useState(false);
@@ -94,6 +95,8 @@ export const InformationScreen = () => {
             {/* <Text>{infoText}</Text> */}
           </Text>
         </View>
+
+        <EmptySpace height={50} />
       </ScrollView>
       <CustomModal
         title={'Informisanje'}
