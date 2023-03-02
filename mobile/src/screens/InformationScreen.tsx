@@ -66,9 +66,11 @@ export const InformationScreen = () => {
       parts.map((part, index) => (
         <Text key={part + index}>
           <Text>{part}</Text>
-          <Text style={{backgroundColor: ColorPallet.yellow}}>
-            {searchText}
-          </Text>
+          {index === parts.length - 1 ? null : (
+            <Text style={{backgroundColor: ColorPallet.yellow}}>
+              {searchText}
+            </Text>
+          )}
         </Text>
       )),
     [parts, searchText],
