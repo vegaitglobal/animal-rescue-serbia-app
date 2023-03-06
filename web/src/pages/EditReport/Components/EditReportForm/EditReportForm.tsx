@@ -135,6 +135,14 @@ const EditReportForm: React.FC<Props> = ({ report }) => {
       >
         Odbij
       </button>
+
+      <button
+        type="button"
+        className="edit__btn edit__btn--ignore"
+        onClick={() => handleClick(ReportsStatus.Processed)}
+      >
+        Označi kao procesuirano
+      </button>
     </div>
   );
 };
