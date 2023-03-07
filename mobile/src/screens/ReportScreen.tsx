@@ -70,7 +70,7 @@ export const ReportScreen = () => {
   const [isSendReportModalVisible, setSendReport] = useState(false);
   const violation = useAppSelector(getNewViolation);
   const [isSendingReport, setIsSendingReport] = useState(false);
-  const [isProceedButtonEnabled, setIsProceedButtonEnabled] = useState(true);
+  const [isCompressingVideo, setIsCompressingVideo] = useState(false);
 
   useEffect(() => setIsEntryModalVisible(true), []);
 
@@ -121,7 +121,13 @@ export const ReportScreen = () => {
         return;
       }
 
-      setIsProceedButtonEnabled(false);
+      const includesVideoFile = selectedFiles.find(file =>
+        file.mime.includes('video'),
+      );
+
+      if (includesVideoFile) {
+        setIsCompressingVideo(true);
+      }
 
       const imagesOnly = selectedFiles.filter(file =>
         file.mime.startsWith('image'),
@@ -165,7 +171,9 @@ export const ReportScreen = () => {
 
       dispatch(setFiles([...videosToSend, ...imagesToSend]));
 
-      setIsProceedButtonEnabled(true);
+      if (includesVideoFile) {
+        setIsCompressingVideo(false);
+      }
     },
     [dispatch],
   );
@@ -253,8 +261,14 @@ export const ReportScreen = () => {
             <>
               <View style={styles.photoContainer}>
                 <ImageUploadElement
+                  isLoading={isCompressingVideo}
                   placeholderText={fotoVideo}
                   onFilesSelected={onFilesSelected}
+                  customBodyText={
+                    isCompressingVideo
+                      ? 'Kompresujemo video, molimo sacekajte...'
+                      : undefined
+                  }
                 />
               </View>
               <MultilineTextInput
@@ -272,7 +286,7 @@ export const ReportScreen = () => {
             />
             <EmptySpace width={16} />
             <CustomButton
-              disabled={!isProceedButtonEnabled}
+              disabled={isCompressingVideo}
               onPress={() => {
                 setSendReport(true);
               }}

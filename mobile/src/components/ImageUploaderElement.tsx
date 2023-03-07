@@ -10,13 +10,17 @@ import {SelectionResult} from './types';
 type ImageUploadElementProps = {
   placeholderText: string;
   buttonLabel?: string;
+  customBodyText?: string;
   onFilesSelected: (data: SelectionResult[]) => void;
+  isLoading?: boolean;
 };
 
 export const ImageUploadElement = ({
   buttonLabel,
   placeholderText,
   onFilesSelected,
+  customBodyText,
+  isLoading,
 }: ImageUploadElementProps) => {
   const [fileLogs, setFileLogs] = useState<string[]>([]);
 
@@ -37,7 +41,9 @@ export const ImageUploadElement = ({
   return (
     <View style={styles.rootContainer}>
       <View style={styles.fileLogContainer}>
-        {fileLogs.length ? (
+        {customBodyText ? (
+          <Text style={styles.text}>{customBodyText}</Text>
+        ) : fileLogs.length ? (
           fileLogs.slice(0, 3).map(fileLog => (
             <Text key={fileLog} numberOfLines={1} style={[styles.text]}>
               {fileLog}
@@ -51,6 +57,7 @@ export const ImageUploadElement = ({
       <EmptySpace width={20} />
       <View>
         <CustomButton
+          isLoading={isLoading}
           text={buttonLabel ?? 'Dodaj'}
           isSmall={true}
           onPress={onPress}
