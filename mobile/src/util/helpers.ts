@@ -143,6 +143,9 @@ const compressVideoFFMPEG = async (fullEntryPath: string) => {
 
   console.log('Video compression result: ', compressionResult);
 
+  const info = await FileSystem.getInfoAsync(fullVideoPath);
+  console.log('Video size after compression: ', info.size);
+
   // result===1 means that compression failed
   return compressionResult === 1 ? undefined : fullVideoPath;
 };

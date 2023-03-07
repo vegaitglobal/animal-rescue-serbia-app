@@ -70,6 +70,7 @@ export const ReportScreen = () => {
   const [isSendReportModalVisible, setSendReport] = useState(false);
   const violation = useAppSelector(getNewViolation);
   const [isSendingReport, setIsSendingReport] = useState(false);
+  const [isProceedButtonEnabled, setIsProceedButtonEnabled] = useState(true);
 
   useEffect(() => setIsEntryModalVisible(true), []);
 
@@ -120,6 +121,8 @@ export const ReportScreen = () => {
         return;
       }
 
+      setIsProceedButtonEnabled(false);
+
       const imagesOnly = selectedFiles.filter(file =>
         file.mime.startsWith('image'),
       );
@@ -161,6 +164,8 @@ export const ReportScreen = () => {
       }));
 
       dispatch(setFiles([...videosToSend, ...imagesToSend]));
+
+      setIsProceedButtonEnabled(true);
     },
     [dispatch],
   );
@@ -267,6 +272,7 @@ export const ReportScreen = () => {
             />
             <EmptySpace width={16} />
             <CustomButton
+              disabled={!isProceedButtonEnabled}
               onPress={() => {
                 setSendReport(true);
               }}
