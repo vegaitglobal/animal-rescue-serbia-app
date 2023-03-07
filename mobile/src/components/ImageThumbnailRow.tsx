@@ -67,10 +67,7 @@ export const ImageThumbnailRow = ({
               <PlayIcon color={ColorPallet.plainWhite} width={15} height={15} />
             ) : undefined
           }
-          style={[
-            styles.thumbnail,
-            {width: thumbnailSize, height: thumbnailSize},
-          ]}
+          style={{width: thumbnailSize, height: thumbnailSize}}
           source={{
             uri: processedPath,
           }}
@@ -128,9 +125,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
-  thumbnail: {
-    backgroundColor: ColorPallet.lightGray,
-  },
   moreButtonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -146,5 +140,7 @@ const styles = StyleSheet.create({
   thumbnailContainer: {
     borderRadius: 5,
     overflow: 'hidden',
+    borderWidth: 0.4,
+    borderColor: ColorPallet.faintGray,
   },
 });

@@ -1,18 +1,27 @@
 import React, {ReactElement, useState} from 'react';
 import ContentLoader, {Rect} from 'react-content-loader/native';
-import {Image, ImageProps, StyleSheet, View} from 'react-native';
+import {
+  Image,
+  ImageProps,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 import {bind} from '../util/helpers';
 
 type ImageWithLoadingAnimationProps = {
   width: number;
   height: number;
+  style?: StyleProp<ViewStyle>;
   overlayIcon?: ReactElement;
 } & ImageProps;
 
 export const ImageWithLoadingAnimation = ({
   width = 50,
   height = 50,
+  style,
   overlayIcon,
   ...imageProps
 }: ImageWithLoadingAnimationProps) => {
@@ -22,7 +31,7 @@ export const ImageWithLoadingAnimation = ({
   const hasUri = imageProps?.source?.uri;
 
   return (
-    <View>
+    <View style={style}>
       {isLoading || !hasUri ? (
         <View style={styles.loadingAnimationElement}>
           <ContentLoader

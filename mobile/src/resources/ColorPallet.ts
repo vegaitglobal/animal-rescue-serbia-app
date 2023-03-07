@@ -11,4 +11,5 @@ export const ColorPallet = {
   black_20: 'rgba(0, 0, 0, 0.5)',
   loadingBackground: '#E3E2E2',
   loadingForeground: '#BAB9B9',
+  faintGray: '#999',
 };
