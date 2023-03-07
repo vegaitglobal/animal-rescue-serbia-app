@@ -16,6 +16,7 @@ const ReportItem: React.FC<Props> = ({ singleReport }) => {
   const statusText = () => {
     if (singleReport.status === ReportsStatus.Accepted) return 'Prihvaćen';
     if (singleReport.status === ReportsStatus.Rejected) return 'Odbijen';
+    if (singleReport.status === ReportsStatus.Processed) return 'Procesuiran';
     return 'Na čekanju';
   };
 
@@ -24,6 +25,7 @@ const ReportItem: React.FC<Props> = ({ singleReport }) => {
       className={classNames('panel__item', {
         'panel__item--declined': singleReport.status === ReportsStatus.Rejected,
         'panel__item--approved': singleReport.status === ReportsStatus.Accepted,
+        'panel__item--ignored': singleReport.status === ReportsStatus.Processed,
       })}
     >
       <div>
@@ -37,7 +39,9 @@ const ReportItem: React.FC<Props> = ({ singleReport }) => {
               'panel__status--red':
                 singleReport.status === ReportsStatus.Rejected,
               'panel__status--green':
-                singleReport.status === ReportsStatus.Accepted,
+              singleReport.status === ReportsStatus.Accepted,
+              'panel__status--blue':
+                singleReport.status === ReportsStatus.Processed,
             })}
           >
             {statusText()}

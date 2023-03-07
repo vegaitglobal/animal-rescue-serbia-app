@@ -197,7 +197,7 @@ export const ReportScreen = () => {
             <View style={styles.liteReportContainer}>
               <CustomButton
                 onPress={handleReportTypeChange}
-                text="Brza prijava"
+                text="Prijava bez dokaza"
                 style={styles.mainButton}
               />
             </View>

@@ -14,6 +14,10 @@
   border-color: $green;
 }
 
+.panel__item--ignored {
+  border-color: $blue;
+}
+
 .panel__address {
   display: block;
   margin-bottom: 12px;
@@ -71,4 +75,8 @@
 
 .panel__status--green {
   background-color: $green;
+}
+
+.panel__status--blue {
+  background-color: $blue;
 }
