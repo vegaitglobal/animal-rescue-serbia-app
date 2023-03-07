@@ -48,17 +48,17 @@ export const ImageThumbnailRow = ({
 
   const renderItem = useCallback(
     (id: string, relativeFilePath: string) => {
-      const fullPath = `${Constants.baseUrl}/${relativeFilePath}`;
+      const fullImagePath = `${Constants.baseUrl}/${relativeFilePath}`;
 
       const isVideo = isPathVideo(relativeFilePath);
       const processedPath = isVideo
         ? videoThumbnails.find(thumbnailData => thumbnailData.id === id)
-            ?.fullPath ?? undefined
-        : fullPath;
+            ?.fullPath
+        : fullImagePath;
 
       // What's isEnabled on violation category (Lite)
       //TODO: Use backend file mime type instead
-      return processedPath ? (
+      return (
         <ImageWithLoadingAnimation
           width={thumbnailSize}
           height={thumbnailSize}
@@ -72,10 +72,10 @@ export const ImageThumbnailRow = ({
             {width: thumbnailSize, height: thumbnailSize},
           ]}
           source={{
-            uri: relativeFilePath ? processedPath : undefined,
+            uri: processedPath,
           }}
         />
-      ) : null;
+      );
     },
     [thumbnailSize, videoThumbnails],
   );

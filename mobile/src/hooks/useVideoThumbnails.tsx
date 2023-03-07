@@ -15,10 +15,18 @@ export const useVideoThumbnailsCreator = (mediaContent: MediaContentDto[]) => {
       );
 
       videoOnly.forEach(async ({id, relativeFilePath}) => {
-        const res = await createThumbnail({
-          url: `${Constants.baseUrl}/${relativeFilePath}`,
-        });
-        setVideoThumbnails(current => [...current, {id, fullPath: res.path}]);
+        if (!relativeFilePath) {
+          return;
+        }
+
+        try {
+          const res = await createThumbnail({
+            url: `${Constants.baseUrl}/${relativeFilePath}`,
+          });
+          setVideoThumbnails(current => [...current, {id, fullPath: res.path}]);
+        } catch (error) {
+          console.log('Error creating thumbnail: ', error);
+        }
       });
     },
     [],
