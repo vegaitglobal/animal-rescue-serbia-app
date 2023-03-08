@@ -1,5 +1,11 @@
-import React, {useCallback, useMemo, useState} from 'react';
-import {LayoutChangeEvent, StyleSheet, View} from 'react-native';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {
+  Animated,
+  Easing,
+  LayoutChangeEvent,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {ColorPallet} from '../resources/ColorPallet';
 
 const boxHeight = 18;
@@ -10,9 +16,11 @@ const Box = ({color}: {color: string}) => (
 );
 
 export const StripedBar = ({
+  isAnimating = false,
   backgroundColor = ColorPallet.gray,
   width,
 }: {
+  isAnimating?: boolean;
   backgroundColor?: string;
   width?: number;
 }) => {
@@ -24,17 +32,49 @@ export const StripedBar = ({
   );
 
   const numberOfSegments = useMemo(
-    () => Math.round(dynamicWidth / boxWidth),
+    () => Math.round(dynamicWidth / boxWidth) + 20,
     [dynamicWidth],
   );
 
+  const spacingLeft = new Animated.Value(0);
+
+  const runLoadingAnimationRecursively = () => {
+    spacingLeft.setValue(0);
+
+    Animated.loop(
+      Animated.timing(spacingLeft, {
+        toValue: 10,
+        duration: 330,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }),
+    ).start();
+  };
+
+  useEffect(() => {
+    if (isAnimating) {
+      runLoadingAnimationRecursively();
+      return;
+    }
+
+    spacingLeft.stopAnimation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [spacingLeft, isAnimating]);
+
+  const currentPaddingLeft = spacingLeft.interpolate({
+    inputRange: [0, 10],
+    outputRange: [0, 40],
+  });
+
   return (
     <View onLayout={width ? undefined : onLayout}>
-      <View style={[style.itemListContainer, {backgroundColor}]}>
-        {[...Array(numberOfSegments).keys()].map((_, index) => (
-          <Box key={index} color={ColorPallet.yellow} />
-        ))}
-      </View>
+      <Animated.View style={{transform: [{translateX: currentPaddingLeft}]}}>
+        <View style={[style.itemListContainer, {backgroundColor}]}>
+          {[...Array(numberOfSegments).keys()].map((_, index) => (
+            <Box key={index} color={ColorPallet.yellow} />
+          ))}
+        </View>
+      </Animated.View>
     </View>
   );
 };
@@ -45,6 +85,8 @@ const style = StyleSheet.create({
     overflow: 'hidden',
     height: boxHeight,
     alignItems: 'center',
+    justifyContent: 'center',
+    marginStart: -50,
   },
 });
 

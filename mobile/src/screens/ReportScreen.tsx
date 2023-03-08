@@ -39,7 +39,6 @@ import {ItemData} from '../components/commonTypes';
 import {ScrollView} from 'react-native-gesture-handler';
 import {EmptySpace} from '../components/EmptySpace';
 import {useAndroidBackNavigationOverride} from '../hooks/useAndroidBackNavigationOverride';
-import {ActivityIndicator} from '../components/ActivityIndicator';
 import {FormFile} from '../store/src/reports/types';
 import Toast from 'react-native-toast-message';
 
@@ -190,7 +189,10 @@ export const ReportScreen = () => {
   };
 
   return (
-    <ScreenRootContainer title={headerTitle} showLogo>
+    <ScreenRootContainer
+      title={headerTitle}
+      showLogo
+      isLoading={isSendingReport}>
       <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.container}>
           {!isLiteReport ? (
@@ -334,11 +336,7 @@ export const ReportScreen = () => {
         onMiddleButtonPress={handleGoBack}
         visible={isSendReportModalVisible}
       />
-      {isSendingReport ? (
-        <View style={styles.screenBlockingElement}>
-          <ActivityIndicator />
-        </View>
-      ) : null}
+      {isSendingReport ? <View style={styles.screenBlockingElement} /> : null}
     </ScreenRootContainer>
   );
 };
@@ -379,7 +377,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    backgroundColor: ColorPallet.black_20,
     zIndex: 10,
     flex: 1,
     bottom: 0,

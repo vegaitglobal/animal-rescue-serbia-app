@@ -47,15 +47,9 @@ export const ScreenRootContainer = ({
               <Logo width={64} height={64} />
             </View>
           ) : null}
-          <StripedBar />
+          <StripedBar isAnimating={isLoading} />
         </View>
-        {isLoading ? (
-          <View style={styles.loadingIndicator}>
-            <ActivityIndicator />
-          </View>
-        ) : (
-          <View style={styles.contentContainer}>{children}</View>
-        )}
+        <View style={styles.contentContainer}>{children}</View>
       </>
     </SafeAreaView>
   );
