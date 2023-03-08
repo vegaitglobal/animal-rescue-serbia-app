@@ -16,6 +16,7 @@ import {
   setFilterCategory,
   setFilterLocation,
 } from '../store/src/reports/actions';
+import {Separator} from '../components/Separator';
 
 export const ViolationsScreen = () => {
   const [isFullViolationList, setIsFullViolationList] = useState(true);
@@ -70,6 +71,7 @@ export const ViolationsScreen = () => {
         onSegmentChange={onSegmentChange}
         segmentNames={{left: 'Sa dokazima', right: 'Bez dokaza'}}
       />
+      <Separator color={ColorPallet.plainWhite} />
     </>
   );
 

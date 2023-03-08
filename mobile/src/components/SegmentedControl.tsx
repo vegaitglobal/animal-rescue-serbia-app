@@ -46,6 +46,8 @@ const styles = StyleSheet.create({
   tabButtons: {
     color: ColorPallet.plainWhite,
     textTransform: 'uppercase',
+    padding: 10,
+    fontSize: 16,
   },
   activeSegmentButton: {
     textDecorationLine: 'underline',
@@ -54,8 +56,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingHorizontal: 20,
-    paddingBottom: 20,
-    paddingTop: 35,
+    paddingBottom: 10,
+    paddingTop: 25,
     flexDirection: 'row',
     backgroundColor: ColorPallet.gray,
     justifyContent: 'center',
