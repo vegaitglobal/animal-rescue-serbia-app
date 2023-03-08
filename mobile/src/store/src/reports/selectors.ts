@@ -28,15 +28,20 @@ export const getLocations = (state: RootState) => {
 
 export const getViolations = (state: RootState) => state.report.violations;
 
-export const getLiteViolations = (state: RootState) => {
-  const {violations, liteViolations} = state.report;
-  return liteViolations.filter(violation =>
-    violations.find(v => v.id === violation.id),
-  );
-};
+export const getLiteViolations = (state: RootState) =>
+  state.report.liteViolations;
+
+export const getLiteViolationsOnly = createSelector(
+  getViolations,
+  getLiteViolations,
+  (violations, liteViolations) =>
+    liteViolations.filter(
+      violation => !violations.find(v => v.id === violation.id),
+    ),
+);
 
 export const getSortedLiteViolations = createSelector(
-  getLiteViolations,
+  getLiteViolationsOnly,
   violations =>
     violations
       ? [...violations].sort((a, b) => a.location.localeCompare(b.location))
