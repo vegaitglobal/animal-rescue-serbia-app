@@ -41,8 +41,6 @@ export const ProfileScreen = () => {
   }, [loadUsersData]);
 
   const user = useAppSelector(getUsers);
-  user.firstName = 'Admin first';
-  user.lastName = 'name Admin';
 
   const handleProfileUpdatePress = () => navigation.navigate('ProfileUpdate');
   const handleChangePasswordPress = () => navigation.navigate('PasswordUpdate');
