@@ -1,6 +1,9 @@
-# Getting Started with mobile app
+# Getting Started with mobile Prijavi app
 
 Setup development environment following 'React Native CLI Quick start' tab from [this link](https://reactnative.dev/docs/environment-setup).
+
+## Additional required setup (ARM only)
+Project uses [FFMPEG based](https://github.com/tanersener/react-native-ffmpeg) library to compress videos. This library doesn't yet support ARM architecture. Android will handle it automatically but iOS/XCode won't. To resolve this, you simply need to install [Rosetta Compatibility layer](https://support.apple.com/en-us/HT211861) then start XCode in Rosetta compatibility regime (which is also described in the *'Which apps need Rosetta?'*  segment of the same document)
 
 ## Recommended setup
 
