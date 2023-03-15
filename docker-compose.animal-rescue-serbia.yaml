@@ -13,6 +13,8 @@ services:
       - Cors__Origins__0=https://ars.codeforacause.rs
       - JwtAuthentication__Key="#{JWT_KEY}#"
       - JwtAuthentication__Salt="#{JWT_SALT}#"
+    volumes:
+        - ars_api_upload:/app/uploads
     restart: always
   web:
     image: codeforacause/animal-rescue-serbia-app:web-#{TAG_NUMBER}#
@@ -31,3 +33,5 @@ services:
     volumes:
       - ".:/app:rw"
     restart: always
+volumes:
+  ars_api_upload:
