@@ -15,6 +15,7 @@ services:
       - JwtAuthentication__Salt="#{JWT_SALT}#"
     volumes:
         - ars_api_upload:/app/uploads
+        - ars_api_wwwroot_upload:/app/wwwroot/uploads
     restart: always
   web:
     image: codeforacause/animal-rescue-serbia-app:web-#{TAG_NUMBER}#
@@ -35,3 +36,4 @@ services:
     restart: always
 volumes:
   ars_api_upload:
+  ars_api_wwwroot_upload:
