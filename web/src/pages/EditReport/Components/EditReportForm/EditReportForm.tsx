@@ -48,14 +48,19 @@ const EditReportForm: React.FC<Props> = ({ report }) => {
   const mediaContentHTML = report.mediaContent.map((item) => {
     const mediaSource: string = API_BASE_URL + '/' + item.relativeFilePath;
 
+    const downloadFile = async () => {
+      await fetch(mediaSource)
+        .then(res => res.blob())
+        .then(data => {
+          const a = document.createElement('a');
+          a.href = window.URL.createObjectURL(data);
+          a.download = item.fileName;
+          a.click();
+        });
+    }
+
     return (
-      <a
-        href={mediaSource}
-        className="media"
-        download={item.fileName}
-      >
-        {item.fileName}
-      </a>
+      <span style={{cursor: 'pointer', color: 'blue'}} onClick={downloadFile}>Download {item.fileName}</span>
     );
   });
 
@@ -109,7 +114,7 @@ const EditReportForm: React.FC<Props> = ({ report }) => {
         </div>
         <div className="edit__item">
           <label className="edit__label">Fotografija / video</label>
-          <span>{mediaContentHTML}</span>
+          {mediaContentHTML}
         </div>
         <div className="edit__item edit__item--full">
           <label className="edit__label">Opis prekrsaja</label>
