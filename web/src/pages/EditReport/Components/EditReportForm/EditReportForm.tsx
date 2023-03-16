@@ -52,7 +52,7 @@ const EditReportForm: React.FC<Props> = ({ report }) => {
       <a
         href={mediaSource}
         className="media"
-        download
+        download={item.fileName}
       >
         {item.fileName}
       </a>
@@ -99,10 +99,6 @@ const EditReportForm: React.FC<Props> = ({ report }) => {
           />
         </div>
         <div className="edit__item">
-          <label className="edit__label">Fotografija / video</label>
-          <span>{mediaContentHTML}</span>
-        </div>
-        <div className="edit__item">
           <label className="edit__label">Tip prekrsaja</label>
           <input
             type="text"
@@ -110,6 +106,10 @@ const EditReportForm: React.FC<Props> = ({ report }) => {
             value={report.violationCategory.name}
             readOnly
           />
+        </div>
+        <div className="edit__item">
+          <label className="edit__label">Fotografija / video</label>
+          <span>{mediaContentHTML}</span>
         </div>
         <div className="edit__item edit__item--full">
           <label className="edit__label">Opis prekrsaja</label>
