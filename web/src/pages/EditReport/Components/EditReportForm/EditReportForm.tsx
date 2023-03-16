@@ -48,38 +48,14 @@ const EditReportForm: React.FC<Props> = ({ report }) => {
   const mediaContentHTML = report.mediaContent.map((item) => {
     const mediaSource: string = API_BASE_URL + '/' + item.relativeFilePath;
 
-    const MediaViewer = (): JSX.Element | null => {
-      const style: React.CSSProperties = {width: '100%'};
-
-      if (!item.fileName.endsWith('mp4')) {
-        return (
-          <a href={mediaSource} target="_blank" rel="noreferrer">
-            <img src={mediaSource} alt='Media' style={style}/>
-          </a>
-        );
-      }
-
-      return (
-        <video controls={true} style={style} preload="none" playsInline={true}>
-          <source src={mediaSource} type="video/mp4"/>
-          Your browser don't support mp4 encoding
-        </video>
-      );
-    }
-
     return (
-      <>
-        <a
+      <a
         href={mediaSource}
-        target="_blank"
-        rel="noreferrer"
         className="media"
+        download
       >
         {item.fileName}
       </a>
-      <br/>
-      <MediaViewer/>
-      </>
     );
   });
 
@@ -123,6 +99,10 @@ const EditReportForm: React.FC<Props> = ({ report }) => {
           />
         </div>
         <div className="edit__item">
+          <label className="edit__label">Fotografija / video</label>
+          <span>{mediaContentHTML}</span>
+        </div>
+        <div className="edit__item">
           <label className="edit__label">Tip prekrsaja</label>
           <input
             type="text"
@@ -164,14 +144,6 @@ const EditReportForm: React.FC<Props> = ({ report }) => {
       >
         Označi kao procesuirano
       </button>
-        <div className="edit__item" style={{width: '100%'}}>
-          <br/>
-          <hr/>
-          <h3 style={{textAlign: 'center'}}>Media content</h3>
-          <hr/>
-          <label className="edit__label">Fotografija / video</label>
-          <span>{mediaContentHTML}</span>
-        </div>
     </div>
   );
 };
