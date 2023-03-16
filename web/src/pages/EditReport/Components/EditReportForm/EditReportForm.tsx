@@ -69,7 +69,7 @@ const EditReportForm: React.FC<Props> = ({ report }) => {
         </p>
         <p>
           <p>Pokreni u pregledaču (možda neće raditi jer su potrebni kodeci):</p>
-          <a style={{cursor: 'pointer', color: 'blue'}} href={mediaSource} alt={item.fileName} target="_blank">
+          <a style={{color: 'blue'}} href={mediaSource} target="_blank">
             Otvori {item.fileName}
           </a>
         </p>
