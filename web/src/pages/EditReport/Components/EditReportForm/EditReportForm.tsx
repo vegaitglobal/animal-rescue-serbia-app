@@ -60,7 +60,20 @@ const EditReportForm: React.FC<Props> = ({ report }) => {
     }
 
     return (
-      <span style={{cursor: 'pointer', color: 'blue'}} onClick={downloadFile}>{item.fileName}</span>
+      <>
+        <p>
+          <p>Preuzmi:</p>
+          <span style={{cursor: 'pointer', color: 'blue'}} onClick={downloadFile}>
+            Preuzmi {item.fileName}
+          </span>
+        </p>
+        <p>
+          <p>Pokreni u pregledaču (možda neće raditi jer su potrebni kodeci):</p>
+          <a style={{cursor: 'pointer', color: 'blue'}} href={mediaSource} alt={item.fileName} target="_blank">
+            Otvori {item.fileName}
+          </a>
+        </p>
+      </>
     );
   });
 
