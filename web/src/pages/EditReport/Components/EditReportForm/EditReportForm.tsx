@@ -60,7 +60,7 @@ const EditReportForm: React.FC<Props> = ({ report }) => {
     }
 
     return (
-      <span style={{cursor: 'pointer', color: 'blue'}} onClick={downloadFile}>Download {item.fileName}</span>
+      <span style={{cursor: 'pointer', color: 'blue'}} onClick={downloadFile}>{item.fileName}</span>
     );
   });
 
