@@ -131,14 +131,9 @@ const compressVideoFFMPEG = async (fullEntryPath: string) => {
 
   console.log('FULL PATH: ', fullVideoPath);
 
-  // TODO: These are setup constants and can be extracted into separate file
-  const framerate = 24;
-  const resolutionWidth = 1280;
-  const resolutionHeight = 720;
-
   //TODO: File size warning to user (ask backend to increase value)
   const compressionResult = await RNFFmpeg.execute(
-    `-i ${fullEntryPath} -c:v mpeg4 -vf scale=${resolutionWidth}:${resolutionHeight} -r ${framerate} ${fullVideoPath}`,
+    `-i ${fullEntryPath} -vcodec libx264 -crf 28 -preset slow ${fullVideoPath}`,
   );
 
   console.log('Video compression result: ', compressionResult);

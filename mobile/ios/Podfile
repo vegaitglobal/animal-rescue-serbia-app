@@ -15,6 +15,7 @@ target 'MyApp' do
     end
   end
   pod 'react-native-ffmpeg', :podspec => '../node_modules/react-native-ffmpeg/react-native-ffmpeg.podspec'
+  pod 'react-native-ffmpeg/https-gpl-lts', :podspec => '../node_modules/react-native-ffmpeg/react-native-ffmpeg.podspec'
 
   config = use_native_modules!
 
