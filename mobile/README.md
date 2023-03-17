@@ -3,7 +3,7 @@
 Setup development environment following 'React Native CLI Quick start' tab from [this link](https://reactnative.dev/docs/environment-setup).
 
 ## Additional required setup (ARM only)
-Project uses [FFMPEG based](https://github.com/tanersener/react-native-ffmpeg) library to compress videos. This library doesn't yet support ARM architecture. Android will handle it automatically but iOS/XCode won't. To resolve this, you simply need to install [Rosetta Compatibility layer](https://support.apple.com/en-us/HT211861) then start XCode in Rosetta compatibility regime (which is also described in the *'Which apps need Rosetta?'*  segment of the same document)
+Project uses [FFMPEG based](https://github.com/tanersener/react-native-ffmpeg) library to compress videos. This library doesn't yet support ARM architecture. Android will handle it automatically but iOS/XCode won't. To resolve this, you simply need to install [Rosetta Compatibility layer](https://support.apple.com/en-us/HT211861) then start XCode in Rosetta compatibility regime (which is also described in the *'Which apps need Rosetta?'*  segment of the same document).
 
 ## Recommended setup
 
@@ -13,9 +13,15 @@ Project uses [FFMPEG based](https://github.com/tanersener/react-native-ffmpeg) l
 4. [Latest Android studio](https://developer.android.com/studio)
 5. [Latest XCode with Command Line Tools](https://apps.apple.com/us/app/xcode/id497799835?mt=12)
 
+## Recommended VSCode plugins
+
+1. [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+2. [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+3. [Glean](https://marketplace.visualstudio.com/items?itemName=wix.glean)
+
 ## Available Scripts
 
-In the project directory root, you can run:
+In the mobile project directory root, you can run:
 
 ### `yarn start`
 
@@ -33,7 +39,7 @@ This will build your **iOS** app in development mode. If  **Metro** isn't starte
 
 ### `yarn test`
 
-This runs unit tests you have written on project.
+This runs unit tests you have written for project.
 
 ### `yarn lint`
 
@@ -41,4 +47,4 @@ This will do a static code analysis of your code and notify you if something doe
 
 ## Learn More
 
-//TODO
+If you're getting started or need more information check out [React Native official documentation](https://reactnative.dev/docs/getting-started). For Redux related information see [Redux Toolkit official documentation](https://redux-toolkit.js.org/introduction/getting-started).
