@@ -68,14 +68,16 @@ export const CustomModalWithButton = ({
               overflow: 'hidden',
               borderColor: ColorPallet.lightGray,
               borderWidth: 1,
-              height: '30%',
+              height: 330,
             },
           ]}>
           {isOneButtonModal && <StripedBar />}
 
           <View style={dynamicStyle.textContainer}>
             {isOneButtonModal && <Text style={styles.title}>{title}</Text>}
-            <Text style={styles.message}>{message}</Text>
+            <Text numberOfLines={5} style={styles.message}>
+              {message}
+            </Text>
           </View>
           <View style={{flex: 1}} />
           <View style={styles.buttonsContainer}>
