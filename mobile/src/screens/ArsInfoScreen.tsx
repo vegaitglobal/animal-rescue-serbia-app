@@ -14,7 +14,7 @@ export const ArsInfoScreen = () => {
   const email = 'info@animalrescueserbia.org';
 
   return (
-    <ScreenRootContainer title="Animal rescue serbia">
+    <ScreenRootContainer showLogo title="Animal rescue serbia">
       <View style={styles.rootContainer}>
         <EmptySpace height={60} />
 
