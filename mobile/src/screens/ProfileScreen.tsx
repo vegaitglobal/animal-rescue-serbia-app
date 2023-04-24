@@ -95,6 +95,13 @@ export const ProfileScreen = () => {
           <EmptySpace height={20} />
 
           <CustomButton
+            text="Zaštita podataka"
+            onPress={() => Linking.openURL(Constants.termsAndConditionsUrl)}
+          />
+
+          <EmptySpace height={20} />
+
+          <CustomButton
             text="Promeni lozinku"
             onPress={handleChangePasswordPress}
           />

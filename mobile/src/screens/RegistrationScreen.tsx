@@ -25,6 +25,7 @@ import {
   setUsername,
 } from '../store/src/profile/actions';
 import {getNewRegistration} from '../store/src/profile/selectors';
+import {Link} from '../components/Link';
 
 export const RegistrationScreen = () => {
   const headerTitle = 'Registracija';
@@ -70,6 +71,10 @@ export const RegistrationScreen = () => {
 
   const handleTermsAndConditionsLinkPress = () => {
     Linking.openURL(Constants.termsAndConditionsUrl);
+  };
+
+  const handlePrivacyPolicyLinkPress = () => {
+    Linking.openURL(Constants.privacyPolicyUrl);
   };
 
   return (
@@ -137,6 +142,12 @@ export const RegistrationScreen = () => {
                 linkText="Uslovi korišćenja i sadržaj"
                 onPress={handleTermsAndConditionsLinkPress}
               />
+
+              <Link
+                textStyle={{marginTop: 15, marginStart: 45}}
+                onPress={handlePrivacyPolicyLinkPress}>
+                Zaštita podataka
+              </Link>
             </View>
             <View style={style.buttonContainer}>
               <CustomButton
