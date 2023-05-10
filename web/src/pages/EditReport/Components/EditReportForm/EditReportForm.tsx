@@ -48,29 +48,11 @@ const EditReportForm: React.FC<Props> = ({ report }) => {
   const mediaContentHTML = report.mediaContent.map((item) => {
     const mediaSource: string = API_BASE_URL + '/' + item.relativeFilePath;
 
-    const downloadFile = async () => {
-      await fetch(mediaSource)
-        .then(res => res.blob())
-        .then(data => {
-          const a = document.createElement('a');
-          a.href = window.URL.createObjectURL(data);
-          a.download = item.fileName;
-          a.click();
-        });
-    }
-
     return (
       <>
         <p>
-          <p>Preuzmi:</p>
-          <span style={{cursor: 'pointer', color: 'blue'}} onClick={downloadFile}>
-            Preuzmi {item.fileName}
-          </span>
-        </p>
-        <p>
-          <p>Pokreni u pregledaču (možda neće raditi jer su potrebni kodeci):</p>
-          <a style={{color: 'blue'}} href={mediaSource} target="_blank">
-            Otvori {item.fileName}
+          <a style={{color: 'blue'}} href={mediaSource} target="_blank" rel="noreferrer">
+            {item.fileName}
           </a>
         </p>
       </>
