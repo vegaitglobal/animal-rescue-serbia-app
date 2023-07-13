@@ -96,7 +96,7 @@ export const ProfileScreen = () => {
 
           <CustomButton
             text="Zaštita podataka"
-            onPress={() => Linking.openURL(Constants.termsAndConditionsUrl)}
+            onPress={() => Linking.openURL(Constants.privacyPolicyUrl)}
           />
 
           <EmptySpace height={20} />

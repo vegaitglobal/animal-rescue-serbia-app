@@ -10,15 +10,12 @@ const removeAccents = (text: string) => {
   return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 };
 
-const ENGLISH_CITIES = ['Belgrade'];
-
 export const getLocations = (state: RootState) => {
-  const filtered = state.report.locations.filter((loc, index) => {
-    if (ENGLISH_CITIES.includes(loc)) {
-      return false;
-    }
-
-    return !state.report.locations
+  const mapped = state.report.locations.map(item =>
+    item === 'Belgrade' ? 'Beograd' : item,
+  );
+  const filtered = mapped.filter((loc, index) => {
+    return !mapped
       .slice(index + 1)
       .find(location => loc === removeAccents(location));
   });
